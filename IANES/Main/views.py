@@ -16,8 +16,7 @@ def auth(request):
             login(request, user)
             return redirect('index')
         else:
-            error_message = "Erro Inesperado"
-            return render(request, 'auth.html', error_message)
+            return render(request, 'auth.html')
     return render(request, 'auth.html')
 
 @csrf_exempt
