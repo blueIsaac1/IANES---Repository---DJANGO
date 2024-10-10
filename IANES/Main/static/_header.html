@@ -1,0 +1,49 @@
+<!-- Logo -->
+<div class="logo_div">
+    <div class="logo_div_inside">
+        <div class="logoImg_imgDiv">
+            <img id="logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+        </div>
+        <div class="tooltip" id="tooltip_logo">IAnes aqui!</div>
+    </div>
+</div>
+<!-- Configurações -->     
+<div class="settings_div">
+    <div class="change_lang_div">
+        <ion-icon name="globe-outline" class="icon_globe" id="logo_globIcon" onclick="openPopup_lang()"></ion-icon>
+        <div class="tooltip" id="tooltip_mudaridioma">Alterar Idioma</div>
+        <!-- PopUp -->
+        <div class="popup_language" id="popup_language">
+            <div id="title_mudaridioma" class="lang_title">Selecione seu Idioma</div>
+            <div class="langOption_list" id="langOption_list">
+                <!-- Os Idiomas são adicionados aqui, usando JS -->
+            </div>
+        </div>
+    </div>
+
+    <div class="change_theme_div">
+        
+        <div class="tema_btn" id="tema_btn" onclick="openPopup_tema()">
+            <div class="t_light" id="btn_light_theme">
+                <ion-icon name="sunny-outline" class="icon_lightMode"></ion-icon>
+            </div>
+            <!-- <div class="t_booth" id="btn_booth_theme">
+                <ion-icon name="reload-outline" class="icon_contrast"></ion-icon>
+            </div> -->
+            <div class="t_dark" id="btn_dark_theme">
+                <ion-icon name="moon-outline" class="icon_darkMode"></ion-icon>
+            </div>
+        </div>
+        
+        <div class="tooltip" id="tooltip_mudartema">Alterar Aparência</div>
+            
+        <!-- PopUp -->
+        <div id="popup_tema" class="popup_tema">
+            <div id="title_mudartema" class="tema_title">Selecione a Aparência</div>
+            <div class="temaOption_list" id="temaOption_list">
+                <!-- Os Temas são adicionados aqui, usando JS -->
+            </div>
+        </div>
+
+    </div>    
+</div>

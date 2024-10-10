@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset='utf-8'>
+    <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!-- Define a: Controle do Chache, nesse caso "private" então o cache é armazenado para um usuário específico -->
+    <meta http-equiv="cache-control" content="private" />
+    <!-- Define a: Linguagens do Conteudo -->
+    <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
+    <title>Bem-vindo ao IAnes!</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/_css/main.css' %}">
+
+    <!-- Import do CSS Cabeçalho e Rodapé -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/_css/head_foot.css' %}">
+
+    <!-- Import do CSS da Autenticação -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/_css/_index.css' %}">
+
+</head>
+<body id="corpoPagina">
+
+    <!-- Cabeçalho -->
+    <header id="header"></header>
+
+    <main>
+        <h1>Login</h1>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Usuário:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Entrar</button>
+    </form> 
+    </main>
+    
+    <!-- Rodapé -->
+    <footer id="footer"></footer>
+    
+    <!-- A Ordem de Chamar os <script> IMPORTA! -->
+    <!-- Chamando o Idioma e o Tema -->
+    <script src="_js/_idioma.js"></script>
+    <script src="_js/_tema.js"></script>
+    <!-- Chamando apenas a do Cabeçalho e Rodapé -->
+    <script src="_js/head_foot.js"></script>
+    <!-- Chamando o Principal GERAL pagina -->
+    <script src="_js/main.js"></script> 
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="_js/__auth.js"></script>
+
+</body>
+</html>

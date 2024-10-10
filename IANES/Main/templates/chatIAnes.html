@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset='utf-8'>
+    <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!-- Define a: Controle do Chache, nesse caso "private" então o cache é armazenado para um usuário específico -->
+    <meta http-equiv="cache-control" content="private" />
+    <!-- Define a: Linguagens do Conteudo -->
+    <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
+    <title>IAnes</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/main.css'>
+
+    <!-- Import do CSS Cabeçalho e Rodapé -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/head_foot.css'>
+
+    <!-- Import do CSS da pagina da IAa -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/__chatIAnes.css'>  
+
+</head>
+<body id="corpoPagina">
+
+    <!-- Cabeçalho -->
+    <header id="header"></header>
+
+    <main>
+        <div class="chatbot_container">
+            <div class="input_container">
+                <div class="message_div">
+                    <textarea rows="1" autofocus autocomplete="off" name="user_msg" id="user_msg" placeholder="Descreva o seu projeto..." oninput="toggleButton()"></textarea>
+                </div>
+                <div class="button_div">
+                    <div class="btn_enviar" id="btn_enviar" onclick="stopTyping(); enviarMensagem('normal')">
+                        <ion-icon id="icon_aviao" name="paper-plane-outline"></ion-icon>
+                        <ion-icon id="icon_quadrado" name="square"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resposta_container">
+                <div class="resposta_content">
+
+                    <!-- As mensagens serão adicionadas aqui dinamicamente -->
+
+                    <!-- <div class="userMSG_container">
+                        <div class="imgPic_user">
+                            <ion-icon id="userMSG_icon" name="person"></ion-icon>
+                        </div>
+                        <div class="userMSG_div">
+                            <p class="userMSG_p" id="userMSG_p"></p>
+                        </div>
+                    </div>
+
+                    <div class="ianesMSG_container">
+                        <div class="imgPic_ianes">
+                            <img src="_midia/logotipos/ianesLogo_PretaT.png" alt="" class="IAnesPic" id="IanesPic">
+                        </div>
+                        <div class="ianesMSG_div">
+                            <p class="ianesMSG_p" id="ianesMSG_p"></p>
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+
+            <div class="aviso_div">
+                <p>IAnes pode apresentar imprecisões. Recomenda-se a verificação de informações relevantes.</p>
+            </div>
+        </div>
+
+        <button id="scrollButton">
+            <ion-icon name="arrow-down"></ion-icon>
+        </button>
+
+        <div id="msgteste" onclick="enviarMensagem('teste')">
+        </div>
+        
+    </main>
+    
+    <!-- Rodapé -->
+    <!-- <footer id="footer"></footer> -->
+    
+    <!-- A Ordem de Chamar os <script> IMPORTA! -->
+    <!-- Chamando o Idioma e o Tema -->
+    <script src="_js/_idioma.js"></script>
+    <script src="_js/_tema.js"></script>
+    <!-- Chamando apenas a do Cabeçalho e Rodapé -->
+    <script src="_js/head_foot.js"></script>
+    <!-- Chamando o Principal GERAL pagina -->
+    <script src="_js/main.js"></script>
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="_js/__chatIAnes.js"></script>
+
+</body>
+</html>

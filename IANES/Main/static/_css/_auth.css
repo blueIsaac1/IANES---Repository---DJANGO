@@ -1,0 +1,13 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+/* Codigo Principal */
+
+body {
+    overflow: hidden;
+}
+
+main {
+    /* margin-top: MESMO tamanho da Header */
+    margin-top: 3vw;
+}

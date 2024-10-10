@@ -1,0 +1,30 @@
+"pt-BR": {
+    // Não alteram
+    "slogan": "A Inteligência para o seu Negócio",
+    "lang_ptBR": "Português",
+    "lang_en": "Inglês",
+    "tooltip_logo": "IAnes aqui!",
+    "tooltip_mudartema": "Alternar Aparência",
+    // Forms - Entrar
+    "title_log": "Olá! Bem-vindo de Volta",
+    "user_log": "Usuário",
+    "password_log": "Senha",
+    "forgot_pass": "Esqueci minha senha",
+    "entry_btn_log": "Entrar",
+    // Outro Lado - Entrar
+    "invite_p1_log": "Ainda não tem um Perfil?",
+    "invite_p2_log": "Junte-se ao IAnes!",
+    "criar_btn_go": "Crie seu Perfil",
+    // =====
+    // Forms - Criar
+    "title_reg": "Olá! Bem-vindo ao IAnes",
+    "user_reg": "Usuário",
+    "email_reg": "E-mail",
+    "password_reg": "Senha",
+    "conf_password_reg": "Confirmar Senha",
+    "create_btn_reg": "Criar",
+    // Outro Lado - Criar
+    "invite_p1_reg": "Já tem um Perfil?",
+    "invite_p2_reg": "Acesse-o agora!",
+    "entrar_btn_go": "Entre no seu Perfil"
+}

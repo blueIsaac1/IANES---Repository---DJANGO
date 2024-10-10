@@ -1,0 +1,512 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+:root {
+    --tamanho_fonts: 0.8vw;
+    --tamanho_icons_header: 1.4vw;
+    --tamanho_icons_footer: 1vw;
+}
+
+/* Coisas no Cabeçalho */
+
+header {
+    background-color: transparent;
+    backdrop-filter: blur(0.2vw);
+    width: 100%;
+    /* height: Tamanho do Cabeçalho */
+    height: 3vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    transition: top 0.3s;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.logo_div {
+    background-color: transparent;
+    margin-left: 2vw;
+    transition: 0.3s ease;
+    width: 50%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.logo_div_inside {
+    background-color: transparent;
+    padding: 0.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    cursor: pointer;
+}
+
+.logo_div .logoImg_imgDiv {
+    width: 2.5vw;
+    height: 2.5vw;
+    overflow: hidden;
+}
+
+.logo_div .logoImg_imgDiv img {
+    width: 100%;
+    height: 100%;
+}
+
+.settings_div {
+    background-color: transparent;
+    margin-right: 2vw;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    gap: 2vw;
+}
+
+.change_lang_div {
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--tamanho_icons_header);
+    height: var(--tamanho_icons_header);
+}
+
+.icon_globe {
+    color: #000000;
+    font-size: var(--tamanho_icons_header);
+    cursor: pointer;
+}
+
+.change_theme_div {
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--tamanho_icons_header);
+    height: var(--tamanho_icons_header);
+}
+
+.tema_btn {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.t_light, .t_dark, .t_booth {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Inicialmente visível */
+.t_light {
+    background-color: transparent;
+    z-index: 1;
+    opacity: 0;
+}
+
+.t_dark {
+    background-color: transparent;
+    z-index: 1;
+    opacity: 0;
+}
+
+.t_booth {
+    background-color: transparent;
+    opacity: 0;
+    z-index: 2;
+}
+
+.icon_lightMode, .icon_darkMode, .icon_contrast {
+    color: #000000;
+    font-size: var(--tamanho_icons_header);
+}
+
+/* .icon_contrast {
+    animation: balanco_icon infinite 2s linear;
+} */
+
+/* Quando o mouse está sobre a div, todos os elementos são afetados */
+/* .tema_btn:hover .t_light,
+.tema_btn:hover .t_dark {
+    display: none;
+}
+
+.tema_btn:hover .t_booth {
+    opacity: 1;
+} */
+
+/* Pop-Ups ==================================================== */
+
+/* Pop-Ups Alterar Idioma */
+
+/* Estilos para o popup */
+.popup_language {
+    display: none; /* Inicialmente escondido, será exibido ao clicar no botão */
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-100%);
+    background-color: var(--color-fundo-claro);
+    border: 0.1vw solid var(--color-cinza); 
+    border-radius: 0.6vw 0vw 0.6vw 0.6vw;
+    padding: 1vw;
+    z-index: 998;
+    gap: 1vw;
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* Estilo para o título do popup */
+.lang_title {
+    margin-left: 0vw;
+    font-size: 1vw;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+}
+
+.langOption_list  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+}
+
+/* Estilo para cada opção de idioma */
+.lang_option {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6vw;
+    border-bottom: 0.1vw solid #ddd;
+    gap: 0.6vw;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box; /* Inclui padding e borda nas dimensões */
+}
+
+.lang_option:hover {
+    /* background-color: color-mix(in srgb, var(--color-cinza) 20%, transparent 20%); */
+    background-color: var(--cinza_chat_bg_light);
+}
+
+.lang_option:last-child {
+    border-bottom: none; /* Remove a borda inferior da última opção */
+}
+
+.lang_option img {
+    width: 1vw;  /* Aproximadamente 19.2px */
+    height: 0.7vw; /* Aproximadamente 13.44px */
+}
+
+.lang_option p {
+    margin: 0;
+    flex: 1; /* Faz o texto ocupar o espaço disponível */
+    font-size: 0.8vw;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.lang_option .lang_check {
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+}
+
+.lang_option ion-icon {
+    color: #000000; /* Cor do ícone de seleção */
+    font-size: 1vw;
+}
+
+/* Pop-Ups Alterar o Tema */
+
+/* Estilos para o popup */
+.popup_tema {
+    display: none; /* Inicialmente escondido, será exibido ao clicar no botão */
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-100%);
+    background-color: var(--color-fundo-claro);
+    border: 0.1vw solid var(--color-cinza); 
+    border-radius: 0.6vw 0vw 0.6vw 0.6vw;
+    padding: 1vw;
+    z-index: 998;
+    gap: 1vw;
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* Estilo para o título do popup */
+.tema_title {
+    margin-left: 0vw;
+    font-size: 1vw;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+}
+
+.temaOption_list  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+}
+
+/* Estilo para cada opção de idioma */
+.tema_option {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6vw;
+    border-bottom: 0.1vw solid #ddd;
+    gap: 0.6vw;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box; /* Inclui padding e borda nas dimensões */
+}
+
+.tema_option:hover {
+    background-color: var(--cinza_chat_bg_light);
+}
+
+.tema_option:last-child {
+    border-bottom: none; /* Remove a borda inferior da última opção */
+}
+
+.tema_option .iconTemaPopup {
+    font-size: 1vw;
+}
+
+.tema_option p {
+    margin: 0;
+    flex: 1; /* Faz o texto ocupar o espaço disponível */
+    font-size: 0.8vw;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.tema_option .tema_check {
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+}
+
+.tema_option ion-icon {
+    color: #000000; /* Cor do ícone de seleção */
+    font-size: 1vw;
+}
+
+/* Adiciona um estilo para quando o popup está visível */
+.show_popup_lang {
+    display: flex;
+}
+
+/* Adiciona um estilo para quando o popup está visível */
+.show_popup_tema {
+    display: flex;
+}
+
+
+/* Animações */
+
+@keyframes balanco_icon {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltip's */
+
+.tooltip {
+    opacity: 0;
+    background-color: var(--color-azul-medio);
+    font-size: 0.8vw;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.2vw;
+    padding: 0.2vw;
+    position: absolute;
+    top: 90%; /* Coloca a tooltip logo abaixo do elemento pai */
+    left: 50%; /* Alinha horizontalmente ao centro do pai */
+    transform: translateX(-50%) translateY(0.5vw) scale(0.8); /* Ajusta a posição horizontal e vertical - Altera a Escala*/
+    white-space: nowrap;
+    z-index: 999;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Exibe a tooltip somente quando o mouse está sobre a imagem */
+#logo_img:hover + #tooltip_logo {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0.5vw) scale(1);
+}
+
+/* Exibe a tooltip somente quando o mouse está sobre o Globo */
+#logo_globIcon:hover + #tooltip_mudaridioma {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0.5vw) scale(1);
+}
+
+/* Exibe a tooltip somente quando o mouse está sobre o Tema */
+#tema_btn:hover + #tooltip_mudartema {
+    opacity: 1;
+    transform: translateX(-75%) translateY(0.5vw) scale(1);
+}
+
+/* Rodapé */
+
+footer {
+    background-color: var(--color-vermelho-medio);
+    width: 100%;
+    height: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: bottom 0.3s;
+    bottom: 0;
+    left: 0;
+}
+
+.footer_inside {
+    width: 98%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: #FFFFFF;
+}
+
+.copy_div {
+    background-color: transparent;
+    width: 25%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    & p {
+        font-size: var(--tamanho_fonts);
+        margin: 0;
+    }
+}
+
+.info_div {
+    background-color: transparent;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.4vw;
+    a {
+        font-size: var(--tamanho_fonts);
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    a:after {
+        content: ""; /* Necessário para que o pseudo-elemento funcione */
+        position: absolute;
+        bottom: -0.1vw;
+        left: 50%; /* Mantém o centro */
+        width: 100%;
+        height: 0.02vw;
+        background-color: var(--color-fundo-claro);
+        transform: translateX(-50%) scale(0); /* Começa com escala 0 */
+        opacity: 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+    
+    a:hover:after {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }  
+}
+
+.social_div {
+    background-color: transparent;
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.6vw;
+    a {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        transition: opacity 0.3s ease-in-out;
+    }
+    ion-icon {
+        font-size: var(--tamanho_icons_footer);
+        padding: 0.15vw;
+        border-radius: 0.4vw;
+        transition: 0.3s ease-in-out;
+    }
+}
+
+.social_div #youtube:hover {
+    background-color: #FF0000;
+}
+.social_div #instagram:hover {
+    /* background-color: rgb(249,206,52); */
+    transition: 0.3s ease-in-out;
+    background: linear-gradient(45deg, rgba(249,206,52,1) 0%, rgba(238,42,123,1) 50%, rgba(98,40,215,1) 100%);
+}
+.social_div #twitter:hover {
+    background-color: #1C96E8;
+}
+.social_div #linkedin:hover {
+    background-color: #0A66C2;
+}
+.social_div #github:hover {
+    background-color: #000000;
+}
+.social_div #discord:hover {
+    background-color: #5560E9;
+}
