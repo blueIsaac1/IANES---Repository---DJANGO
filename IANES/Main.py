@@ -184,8 +184,8 @@ def analise_page(content, inputs):
 
     try:
         analysis_lines = analysis.split('\n')
-        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0])
-        description = analysis_lines[1].strip()
+        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0]) # Ia faz score com base nos parametros
+        description = analysis_lines[1].strip() # Breve descrição
     except Exception as e:
         print(f"Erro ao processar a análise: {e}")
         score = 0
@@ -201,6 +201,7 @@ def recomenda_investimento(conteudos, inputs):
     for pagina in conteudos:
         colecao = pagina['colecao']
         content = pagina['conteudo']
+        object_id = conteudos['_id'] 
 
         # Verifica se o conteúdo é uma lista e pega o primeiro item
         if isinstance(content, list) and len(content) > 0:
@@ -212,7 +213,7 @@ def recomenda_investimento(conteudos, inputs):
 
         # Realiza a análise do conteúdo
         score, description = analise_page(content_str, inputs)
-        print(f"Coleção: {colecao} - Score: {score}.")
+        print(f"Coleção {object_id}: {colecao} - Score: {score}.")
 
         # Atualiza a melhor opção se a pontuação for maior
         if score > best_score:
@@ -247,6 +248,9 @@ def main():
         print(f"\nA melhor opção para investimento é '{melhor_opcao}'. Confira mais detalhes na URL: {melhor_url}.")
     else:
         print("Nenhuma opção relevante foi encontrada.")
+
+def teste()
+
 
 if __name__ == "__main__":
     print(connect_mongo())
