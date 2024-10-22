@@ -13,13 +13,13 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- Import do CSS Principal com Aplicações Gerais -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '_css/main.css' %}">
 
     <!-- Import do CSS Cabeçalho e Rodapé -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/head_foot.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '_css/head_foot.css' %}">
 
     <!-- Import do CSS da pagina da IAa -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/__chatIAnes.css'>  
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '_css/__chatIAnes.css' %}">  
 
 </head>
 <body id="corpoPagina">
@@ -31,40 +31,47 @@
         <div class="chatbot_container">
             <div class="input_container">
                 <div class="message_div">
-                    <textarea rows="1" autofocus autocomplete="off" name="user_msg" id="user_msg" placeholder="Descreva o seu projeto..." oninput="toggleButton()"></textarea>
-                </div>
-                <div class="button_div">
-                    <div class="btn_enviar" id="btn_enviar" onclick="stopTyping(); enviarMensagem('normal')">
-                        <ion-icon id="icon_aviao" name="paper-plane-outline"></ion-icon>
-                        <ion-icon id="icon_quadrado" name="square"></ion-icon>
-                    </div>
+                    <form action="{% url 'send_messages' %}" method="post" id="chat-form">
+                        {% csrf_token %}
+                        <textarea id="user_message" name="user_message" rows="1" autofocus autocomplete="off" placeholder="Descreva o seu projeto..."></textarea>
+                        <div class="button_div">
+                            <button type="submit" class="btn_enviar" id="btn_enviar">
+                                <ion-icon id="icon_aviao" name="paper-plane-outline"></ion-icon>
+                            </button>
+                            <button type="button" class="btn_cancelar" id="icon_quadrado" title="Cancelar">
+                                <ion-icon name="square"></ion-icon>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+        
 
             <div class="resposta_container">
+                
                 <div class="resposta_content">
-
-                    <!-- As mensagens serão adicionadas aqui dinamicamente -->
-
-                    <!-- <div class="userMSG_container">
+                    {% for message in messages %}
+                    <div class="userMSG_container">
                         <div class="imgPic_user">
                             <ion-icon id="userMSG_icon" name="person"></ion-icon>
                         </div>
                         <div class="userMSG_div">
-                            <p class="userMSG_p" id="userMSG_p"></p>
+                            <p class="userMSG_p" id="userMSG_p">{{ message.user_message }}</p>
                         </div>
                     </div>
 
                     <div class="ianesMSG_container">
                         <div class="imgPic_ianes">
-                            <img src="_midia/logotipos/ianesLogo_PretaT.png" alt="" class="IAnesPic" id="IanesPic">
+                            <img src="{% static '_midia/logotipos/ianesLogo_PretaT.png' %}" alt="" class="IAnesPic" id="IanesPic">
                         </div>
                         <div class="ianesMSG_div">
-                            <p class="ianesMSG_p" id="ianesMSG_p"></p>
+                            <p class="ianesMSG_p" id="ianesMSG_p">{{ message.bot_response }}</p>
                         </div>
-                    </div> -->
-                    
+                    </div>
+                    {% endfor %}
                 </div>
+                
             </div>
 
             <div class="aviso_div">
@@ -85,15 +92,10 @@
     <!-- <footer id="footer"></footer> -->
     
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
-    <!-- Chamando o Idioma e o Tema -->
-    <script src="_js/_idioma.js"></script>
-    <script src="_js/_tema.js"></script>
-    <!-- Chamando apenas a do Cabeçalho e Rodapé -->
-    <script src="_js/head_foot.js"></script>
-    <!-- Chamando o Principal GERAL pagina -->
-    <script src="_js/main.js"></script>
-    <!-- Chamando o Principal DESSA pagina -->
-    <script src="_js/__chatIAnes.js"></script>
+    <script src="{% static '_js/_idioma.js' %}"></script>
+    <script src="{% static '_js/_tema.js' %}"></script>
+    <script src="{% static '_js/head_foot.js' %}"></script>
+    <script src="{% static '_js/main.js' %}"></script>
 
 </body>
 </html>

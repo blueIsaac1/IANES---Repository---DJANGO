@@ -66,6 +66,7 @@ main {
     z-index: 2;
     bottom: 0;
     margin-bottom: 2vw;
+    margin-top: 10px;
 }
 
 .input_container.focused {
@@ -89,6 +90,7 @@ main {
 }
 
 .message_div textarea {
+    flex: 1;
     width: 100%;
     min-height: 1vw; /* Altura mínima */
     max-height: 10vw; /* Altura máxima */
@@ -133,8 +135,6 @@ main {
     /* Por Padrão está "desativado" */
     background-color: var(--color-cinza);
     border: 0vw var(--color-cinza) solid;
-    pointer-events: none;
-    opacity: 0.5;
 }
 
 .btn_enviar ion-icon {

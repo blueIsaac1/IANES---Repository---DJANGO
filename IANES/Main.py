@@ -6,12 +6,6 @@ from google.api_core import exceptions as google_exceptions
 from googletrans import Translator
 import re
 import requests
-from pymongo import MongoClient as mg
-
-def connect_mongo():
-    client = mg("mongodb://localhost:27017/")
-    return client['IANES']
-
 
 def obter_cotacao_dolar():
     url = 'https://economia.awesomeapi.com.br/json/last/USD-BRL'
@@ -51,14 +45,22 @@ def escolher_idioma():
                 print(f"{codigo}: {nome}")
 
 # Função para carregar o conteúdo das páginas a partir de um arquivo JSON
-def carregar_conteudo(db):
+def carregar_conteudo(pasta):
     todos_conteudos = []
-    colecoes = ['Conteudo_ANP', 'Conteudo_Embrapii', 'Conteudo_Fapesp', 'Conteudo_Finep', 'Conteudo_LeiDoBem']
-
-    for colecao in colecoes:
-        for documento in db[colecao].find():  # Itera sobre cada coleção
-            todos_conteudos.append({"colecao": colecao, "conteudo": documento.get("conteudo")})
-
+    for arquivo in os.listdir(pasta):
+        caminho_completo = os.path.join(pasta, arquivo)
+        if os.path.isfile(caminho_completo):
+            try:
+                with open(caminho_completo, 'r', encoding='utf-8') as f:
+                    conteudo = json.load(f)
+                    todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
+            except UnicodeDecodeError:
+                print(f"Erro de codificação ao ler o arquivo {arquivo}. Tentando com ISO-8859-1.")
+                with open(caminho_completo, 'r', encoding='ISO-8859-1') as f:
+                    conteudo = json.load(f)
+                    todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
+            except json.JSONDecodeError:
+                print(f"Erro ao decodificar JSON do arquivo {arquivo}. Pulando...")
     return todos_conteudos
 
 # Função para verificar se a língua é válida
@@ -184,8 +186,8 @@ def analise_page(content, inputs):
 
     try:
         analysis_lines = analysis.split('\n')
-        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0]) # Ia faz score com base nos parametros
-        description = analysis_lines[1].strip() # Breve descrição
+        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0])
+        description = analysis_lines[1].strip()
     except Exception as e:
         print(f"Erro ao processar a análise: {e}")
         score = 0
@@ -199,11 +201,9 @@ def recomenda_investimento(conteudos, inputs):
     best_url = None
 
     for pagina in conteudos:
-        colecao = pagina['colecao']
+        arquivo = pagina['arquivo']
         content = pagina['conteudo']
-        object_id = conteudos['_id'] 
 
-        # Verifica se o conteúdo é uma lista e pega o primeiro item
         if isinstance(content, list) and len(content) > 0:
             item = content[0]
         else:
@@ -211,24 +211,27 @@ def recomenda_investimento(conteudos, inputs):
 
         content_str = json.dumps(item) if isinstance(item, dict) else str(item)
 
-        # Realiza a análise do conteúdo
         score, description = analise_page(content_str, inputs)
-        print(f"Coleção {object_id}: {colecao} - Score: {score}.")
+        print(f"Arquivo: {arquivo} - Score: {score}.")
 
-        # Atualiza a melhor opção se a pontuação for maior
         if score > best_score:
             best_score = score
-            best_option = colecao
+            best_option = arquivo
             best_url = item.get('url', 'URL não encontrada') if isinstance(item, dict) else 'URL não encontrada'
 
-      # Pequeno delay entre as chamadas para evitar sobrecarga
+        time.sleep(1)  # Pequeno delay entre as chamadas para evitar sobrecarga
 
     return best_option, best_url
 
 def main():
-    db = connect_mongo()
-    
-    dados_paginas = carregar_conteudo(db)
+    pasta_dados = '../Json'  # Nome da pasta contendo os arquivos JSON
+
+    # Verifica se a pasta existe
+    if not os.path.exists(pasta_dados):
+        print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
+        return
+
+    dados_paginas = carregar_conteudo(pasta_dados)
 
     lingua = escolher_idioma()  # Usa a função que já retorna o código do idioma
 
@@ -249,9 +252,5 @@ def main():
     else:
         print("Nenhuma opção relevante foi encontrada.")
 
-def teste()
-
-
 if __name__ == "__main__":
-    print(connect_mongo())
     main()
