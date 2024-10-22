@@ -167,7 +167,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
     for attempt in range(max_retries):
         try:
             model = genai.GenerativeModel("gemini-1.5-flash")
-            prompt = f"Analise o seguinte conteúdo com base nas seguintes entradas do usuário:\n\nConteúdo: {content}\n\nEntradas do usuário: {user_inputs}\n\nForneça uma pontuação de relevância entre 0 e 10 e uma breve descrição da relevância."
+            prompt = f"Analise o seguinte conteúdo com base nas seguintes entradas do usuário:\n\nConteúdo: {content}\n\nEntradas do usuário: {user_inputs}\n\nApós a análise, forneça uma pontuação de relevância do conteúdo análisado com as entradas do usuário entre 0 e 10 e uma breve descrição da relevância."
             response = model.generate_content(prompt)
             return response.text
         except google_exceptions.ResourceExhausted:
@@ -212,7 +212,15 @@ def recomenda_investimento(conteudos, inputs):
         content_str = json.dumps(item) if isinstance(item, dict) else str(item)
 
         score, description = analise_page(content_str, inputs)
+<<<<<<< HEAD
         print(f"Arquivo: {arquivo} - Score: {score}.")
+=======
+<<<<<<< HEAD
+        print(f"Arquivo: {arquivo} - Score: {score}.")
+=======
+        print(f"Coleção {object_id}: {colecao} - Score: {score}.")
+>>>>>>> b6ed3b736813cf26605ee033586b7131d39e00dd
+>>>>>>> 94a9c2b80c839181a8ab3467a2c3e73f47b738ab
 
         if score > best_score:
             best_score = score
@@ -221,10 +229,14 @@ def recomenda_investimento(conteudos, inputs):
 
         time.sleep(1)  # Pequeno delay entre as chamadas para evitar sobrecarga
 
-    return best_option, best_url
+    return best_option, best_url  # Retornamos apenas dois valores
 
 def main():
+<<<<<<< HEAD
     pasta_dados = '../Json'  # Nome da pasta contendo os arquivos JSON
+=======
+    pasta_dados = 'Json'  # Nome da pasta contendo os arquivos JSON
+>>>>>>> 94a9c2b80c839181a8ab3467a2c3e73f47b738ab
 
     # Verifica se a pasta existe
     if not os.path.exists(pasta_dados):
@@ -248,9 +260,17 @@ def main():
     melhor_opcao, melhor_url = recomenda_investimento(dados_paginas, inputs_usuario)
 
     if melhor_opcao:
-        print(f"\nA melhor opção para investimento é '{melhor_opcao}'. Confira mais detalhes na URL: {melhor_url}.")
+        print(f"\nA melhor opção para investimento é '{melhor_opcao}'.")
+        if melhor_url != 'URL não encontrada':
+            print(f"Confira mais detalhes na URL: {melhor_url}")
+        else:
+            print("URL específica não encontrada para esta opção.")
     else:
         print("Nenhuma opção relevante foi encontrada.")
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     main()
+=======
+    main()
+>>>>>>> 94a9c2b80c839181a8ab3467a2c3e73f47b738ab
