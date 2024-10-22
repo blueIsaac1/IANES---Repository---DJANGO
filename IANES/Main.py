@@ -186,8 +186,8 @@ def analise_page(content, inputs):
 
     try:
         analysis_lines = analysis.split('\n')
-        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0])
-        description = analysis_lines[1].strip()
+        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0]) # Ia faz score com base nos parametros
+        description = analysis_lines[1].strip() # Breve descrição
     except Exception as e:
         print(f"Erro ao processar a análise: {e}")
         score = 0
@@ -203,6 +203,7 @@ def recomenda_investimento(conteudos, inputs):
     for pagina in conteudos:
         arquivo = pagina['arquivo']
         content = pagina['conteudo']
+        object_id = conteudos['_id'] 
 
         if isinstance(content, list) and len(content) > 0:
             item = content[0]
@@ -212,7 +213,11 @@ def recomenda_investimento(conteudos, inputs):
         content_str = json.dumps(item) if isinstance(item, dict) else str(item)
 
         score, description = analise_page(content_str, inputs)
+<<<<<<< HEAD
         print(f"Arquivo: {arquivo} - Score: {score}.")
+=======
+        print(f"Coleção {object_id}: {colecao} - Score: {score}.")
+>>>>>>> b6ed3b736813cf26605ee033586b7131d39e00dd
 
         if score > best_score:
             best_score = score
@@ -255,6 +260,9 @@ def main():
             print("URL específica não encontrada para esta opção.")
     else:
         print("Nenhuma opção relevante foi encontrada.")
+
+def teste()
+
 
 if __name__ == "__main__":
     main()
