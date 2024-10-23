@@ -1,23 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+{% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - {{ session.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% for message in messages %}
-    <div class = "user">
-        <strong>User:</strong> {{ message.user_message }}
-    </div>
-    <div class = "bot">
-        <strong>Bot:</strong> {{ message.bot_response }}
-    </div>
-    {% endfor %}
+    <header>
+        <h1>Chat - {{ session.title }}</h1>
+        <a href="{% url 'home' %}">Voltar para Home</a>
+    </header>
 
-    <form action="{% url 'send_messages' %}" method="post">
-        {% csrf_token %}
-        <textarea name="user_message"></textarea>
-        <input type="submit" value="Send">
-    </form>
+    <main>
+        <section id="messages">
+            <h2>Mensagens</h2>
+            <div id="message-list">
+                {% for user_message in user_messages %}
+                    <div class="message user-message">
+                        <strong>{{ user_message.user.first_name }}:</strong> {{ user_message.text }}
+                    </div>
+                {% endfor %}
+                {% for bot_response in bot_responses %}
+                    <div class="message bot-response">
+                        <strong>Bot:</strong> {{ bot_response.text }}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="send-message">
+            <h2>Enviar Mensagem</h2>
+            <form method="POST" action="{% url 'send_message' room.id %}">
+                {% csrf_token %}
+                <textarea name="user_message" rows="4" required placeholder="Digite sua mensagem..."></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Meu Chat</p>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Sala</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Criar Nova Sala</h1>
+        <a href="{% url 'home' %}">Voltar</a>
+    </header>
+
+    <main>
+        <form method="POST" action="{% url 'create_room' %}">
+            {% csrf_token %}
+            <input type="text" name="title" required placeholder="Título da sala">
+            <button type="submit">Criar Sala</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Meu Chat</p>
+    </footer>
+</body>
+</html>

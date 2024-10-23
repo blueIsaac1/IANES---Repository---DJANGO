@@ -48,10 +48,9 @@
         </div>
         
 
-            <div class="resposta_container">
-                
-                <div class="resposta_content">
-                    {% for message in messages %}
+        <div class="resposta_container">
+            <div class="resposta_content">
+                {% for message in messages %}
                     <div class="userMSG_container">
                         <div class="imgPic_user">
                             <ion-icon id="userMSG_icon" name="person"></ion-icon>
@@ -60,7 +59,7 @@
                             <p class="userMSG_p" id="userMSG_p">{{ message.user_message }}</p>
                         </div>
                     </div>
-
+        
                     <div class="ianesMSG_container">
                         <div class="imgPic_ianes">
                             <img src="{% static '_midia/logotipos/ianesLogo_PretaT.png' %}" alt="" class="IAnesPic" id="IanesPic">
@@ -69,10 +68,9 @@
                             <p class="ianesMSG_p" id="ianesMSG_p">{{ message.bot_response }}</p>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-                
+                {% endfor %}
             </div>
+        </div>
 
             <div class="aviso_div">
                 <p>IAnes pode apresentar imprecisões. Recomenda-se a verificação de informações relevantes.</p>
