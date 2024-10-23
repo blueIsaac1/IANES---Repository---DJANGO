@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - {{ session.title }}</title>
+    <title>Chat - {{ room.title }}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
-        <h1>Chat - {{ session.title }}</h1>
+        <h1>Chat - {{ room.title }}</h1>
         <a href="{% url 'home' %}">Voltar para Home</a>
     </header>
 
@@ -19,7 +19,7 @@
             <div id="message-list">
                 {% for user_message in user_messages %}
                     <div class="message user-message">
-                        <strong>{{ user_message.user.first_name }}:</strong> {{ user_message.text }}
+                        <strong>{{ user_message.user.username }}:</strong> {{ user_message.text }}
                     </div>
                 {% endfor %}
                 {% for bot_response in bot_responses %}

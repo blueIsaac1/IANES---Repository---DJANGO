@@ -1,0 +1,14 @@
+[
+    {
+        "room_id": 6,
+        "timestamp": "2024-10-23T23:10:08.830790+00:00",
+        "user_message": "oi",
+        "bot_response": "Oi! What can I do for you today? \n"
+    },
+    {
+        "room_id": 5,
+        "timestamp": "2024-10-23T23:10:44.428418+00:00",
+        "user_message": "dollar",
+        "bot_response": "A cotação do dólar é: R$5.69"
+    }
+]
