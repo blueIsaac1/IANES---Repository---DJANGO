@@ -182,7 +182,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
             return "0\nErro na análise."
 
 def analise_page(content, inputs):
-    analysis = get_gemini_analysis_with_retry(content, inputs)
+    analysis = get_gemini_analysis_with_retry(content, inputs) # relatório
 
     try:
         analysis_lines = analysis.split('\n')
@@ -252,5 +252,4 @@ def main():
     else:
         print("Nenhuma opção relevante foi encontrada.")
 
-if __name__ == "__main__":
-    main()
+main()

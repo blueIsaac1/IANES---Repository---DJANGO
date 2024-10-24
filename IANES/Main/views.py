@@ -17,6 +17,9 @@ from googletrans import Translator
 import re
 import requests
 
+pasta_dados = 'DADOS'
+
+
 def obter_cotacao_dolar():
     url = 'https://economia.awesomeapi.com.br/json/last/USD-BRL'
     response = requests.get(url)
@@ -28,24 +31,7 @@ def obter_cotacao_dolar():
     else:
         return "Não foi possível obter a cotação do dólar."
     
-translator = Translator()
-
-# Função para escolher o idioma
-def escolher_idioma():
-    idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim'}
-    print("Escolha um idioma:")
-    for codigo, nome in idiomas.items():
-        print(f"{codigo}: {nome}")
-
-    while True:
-        idioma_escolhido = input("Digite o código do idioma: ").lower()
-        if idioma_escolhido in idiomas:
-            return idioma_escolhido
-        else:
-            idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim'}
-            print("Escolha um idioma valido:")
-            for codigo, nome in idiomas.items():
-                print(f"{codigo}: {nome}")
+    translator = Translator()
 
 # Função para carregar o conteúdo das páginas a partir de um arquivo JSON
 def carregar_conteudo(pasta):
@@ -58,21 +44,16 @@ def carregar_conteudo(pasta):
                     conteudo = json.load(f)
                     todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
             except UnicodeDecodeError:
-                print(f"Erro de codificação ao ler o arquivo {arquivo}. Tentando com ISO-8859-1.")
+                return f"Erro de codificação ao ler o arquivo {arquivo}. Tentando com ISO-8859-1."
                 with open(caminho_completo, 'r', encoding='ISO-8859-1') as f:
                     conteudo = json.load(f)
                     todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
             except json.JSONDecodeError:
-                print(f"Erro ao decodificar JSON do arquivo {arquivo}. Pulando...")
+                return f"Erro ao decodificar JSON do arquivo {arquivo}. Pulando..."
     return todos_conteudos
 
-# Função para verificar se a língua é válida
-def lingua_valida(lingua):
-    valid_languages = ['en', 'pt', 'es', 'zh-cn']
-    return lingua in valid_languages
-
 # Função para obter inputs do usuário com tratamento de erro
-def obter_parametros_usuario(lingua):
+def obter_parametros_usuario():
     respostas = {}
     cotacao_dolar = obter_cotacao_dolar()
     if cotacao_dolar is None:
@@ -94,23 +75,12 @@ def obter_parametros_usuario(lingua):
         "itensfianciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
     }
 
-    # Verificação inicial da tradução
-    if not hasattr(translator, 'translate'):
-        print("O objeto translator não possui o método translate. Verifique a inicialização.")
-        return {}
-
     for chave, pergunta_original in perguntas.items():
         pergunta_traduzida = ""
 
-        # Tentamos traduzir uma única vez
-        try:
-            pergunta_traduzida = translator.translate(pergunta_original, dest=lingua).text
-        except AttributeError:
-            print(f"Erro ao traduzir a pergunta original: {pergunta_original}")
-
         # Se não conseguirmos traduzir, usamos a versão em português
         if not pergunta_traduzida:
-            print(f"Usando versão em português para '{pergunta_original}'")
+            return f"Usando versão em português para '{pergunta_original}'"
             pergunta_traduzida = pergunta_original
 
         while True:
@@ -121,7 +91,7 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print("Por favor, insira um valor válido. Este campo não pode ficar em branco.")
+                        return "Por favor, insira um valor válido. Este campo não pode ficar em branco."
                         continue
                 elif chave == "orcamento":
                     respostas[chave] = float(resposta)
@@ -130,7 +100,7 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Mundial.")
+                        return "Extensão inválida. Por favor, escolha entre Regional, Nacional ou Mundial."
                         continue
                 elif chave == "tempo":
                     respostas[chave] = int(resposta)
@@ -143,7 +113,7 @@ def obter_parametros_usuario(lingua):
                     elif re.match(r'\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}', resposta):
                         respostas[chave] = resposta
                     else:
-                        print("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não/No'.")
+                        return "CNP'J inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não/No'."
                         continue
                 elif chave in ["lfreembolso", "itensfianciaveis"]:
                     resposta = resposta.strip().lower()
@@ -151,18 +121,17 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta in ["sim", "yes"]
                         break
                     else:
-                        print("Por favor, responda com 'Sim/Yes' ou 'Não/No'.")
-                        continue
+                        return "Por favor, responda com 'Sim/Yes' ou 'Não/No'."
+                        continu
                 else:
                     respostas[chave] = resposta
                 break
             except ValueError as e:
-                print(f"Erro: {e}")
-
+                return f"Erro: {e}"
     return respostas
 
 
-# Função para obter análise da API Gemini
+# Função para obter análise da API Gemin
 def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_delay=1):
     for attempt in range(max_retries):
         try:
@@ -172,14 +141,14 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
             return response.text
         except google_exceptions.ResourceExhausted:
             if attempt == max_retries - 1:
-                print(f"Falha após {max_retries} tentativas. Retornando análise padrão.")
+                return f"Falha após {max_retries} tentativas. Retornando análise padrão."
                 return "0\nNão foi possível analisar devido a limitações da API."
             delay = initial_delay * (2 ** attempt)
-            print(f"Limite de recursos atingido. Tentando novamente em {delay} segundos...")
+            return f"Limite de recursos atingido. Tentando novamente em {delay} segundos..."
             time.sleep(delay)
         except Exception as e:
-            print(f"Erro inesperado: {e}")
-            return "0\nErro na análise."
+            return f"Erro inesperado: {e}"
+            return "Erro na análise."
 
 def analise_page(content, inputs):
     analysis = get_gemini_analysis_with_retry(content, inputs)
@@ -189,7 +158,7 @@ def analise_page(content, inputs):
         score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0])
         description = analysis_lines[1].strip()
     except Exception as e:
-        print(f"Erro ao processar a análise: {e}")
+        return f"Erro ao processar a análise: {e}"
         score = 0
         description = "Descrição não disponível"
 
@@ -212,7 +181,7 @@ def recomenda_investimento(conteudos, inputs):
         content_str = json.dumps(item) if isinstance(item, dict) else str(item)
 
         score, description = analise_page(content_str, inputs)
-        print(f"Arquivo: {arquivo} - Score: {score}.")
+        return f"Arquivo: {arquivo} - Score: {score}."
 
         if score > best_score:
             best_score = score
@@ -228,29 +197,23 @@ def main():
 
     # Verifica se a pasta existe
     if not os.path.exists(pasta_dados):
-        print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
+        return f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON."
         return
 
     dados_paginas = carregar_conteudo(pasta_dados)
 
-    lingua = escolher_idioma()  # Usa a função que já retorna o código do idioma
-
-    if not lingua_valida(lingua):
-        print("Língua inválida. Por favor, use uma das seguintes: 'en', 'pt', 'es', 'zh-cn'.")
-        return
-
     inputs_usuario = obter_parametros_usuario(lingua)
 
     if not inputs_usuario:
-        print("Nenhuma entrada do usuário foi fornecida. Encerrando o programa.")
+        return "Nenhuma entrada do usuário foi fornecida. Encerrando o programa."
         return
 
     melhor_opcao, melhor_url = recomenda_investimento(dados_paginas, inputs_usuario)
 
     if melhor_opcao:
-        print(f"\nA melhor opção para investimento é '{melhor_opcao}'. Confira mais detalhes na URL: {melhor_url}.")
+        return f"\nA melhor opção para investimento é '{melhor_opcao}'. Confira mais detalhes na URL: {melhor_url}."
     else:
-        print("Nenhuma opção relevante foi encontrada.")
+        return "Nenhuma opção relevante foi encontrada."
 
 if __name__ == "__main__":
     main()
@@ -343,14 +306,6 @@ def send_message(request, pk):  #Teste
                 text = user_message_text,
                 created_at = None
             )
-                        
-            if user_message_text == 'dollar':
-                cotacao = obter_cotacao_dolar()
-                if isinstance(cotacao, float):
-                    bot_response_text = f"A cotação do dólar é: R${cotacao:.2f}"
-                else:
-                    bot_response_text = cotacao
-
             bot_response_instance = BotResponse.objects.create(
                 text=bot_response_text
             )
