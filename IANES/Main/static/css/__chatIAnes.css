@@ -1,0 +1,650 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+/* Codigo Principal */
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto;
+    margin-top: 0vw;
+    background-color: gray;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Classes para configurações gerais (Pegar o costume de usar) */
+
+.trans_03s-width {
+    transition: .3s ease-in-out width;
+}
+.trans_03s-transform {
+    transition: .3s ease-in-out transform;
+}
+.trans_03s-margin-left {
+    transition: .3s ease-in-out margin-left;
+}
+
+/* --------------------- Container das Salas */
+
+.rooms_container  {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    z-index: 401;
+    overflow: visible;
+    position: relative;
+}
+
+.btn_expandirSalas {
+    z-index: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+
+    position: absolute;
+    padding: 0.4vw;
+    background-color: var(--color-vermelho-medio);
+    border: none;
+    cursor: pointer;
+    transition: .3s ease-in-out background-color, .3s ease-in-out transform, .3s ease-in-out border-radius;
+}
+
+.btn_expandirSalas-open {
+    top: 2%;
+    right: 0;
+    transform: translateX(100%);
+    border-radius: 0 0.4vw 0.4vw 0; 
+}
+
+.btn_expandirSalas-close {
+    top: 2%;
+    right: 0;
+    transform: translateX(-50%);
+    border-radius: 0.4vw; 
+}
+
+.icone_expandSidebar {
+    font-size: 2vw;
+    color: #ffffff;
+}
+
+.rotate90pos {
+    transform: rotate(-90deg);
+}
+
+.rotate90neg {
+    transform: rotate(90deg);
+}
+
+.rotate_flip {
+    transform: scaleX(-1);
+}
+
+.texto_expandSidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+    white-space: nowrap;
+
+    border: none;
+    border-radius: 0.6vw;
+    background-color: var(--color-azul-medio);
+    padding: 0.6vw;
+    position: absolute;
+    transition: opacity 0.3s ease-in-out;
+    
+    visibility: hidden;
+}
+
+/* Tooltip "Abrir" posicionada */
+.texto_expandSidebar-open {
+    bottom: 0;
+    left: 0;
+    transform: translateY(120%) translateX(10%);
+}
+
+/* Tooltip "Fechar" posicionada */
+.texto_expandSidebar-close {
+    bottom: 0;
+    left: 0;
+    transform: translateY(120%) translateX(-80%);
+}
+
+/* Mostra a tooltip ao passar o mouse */
+.btn_expandirSalas:hover #tp_texto_abrirSidebar,
+.btn_expandirSalas:hover #tp_texto_fecharSidebar {
+    visibility: visible;
+}
+
+.texto_expandSidebar-hide {
+    display: none;
+}
+
+/* Dentro da Barra Lateral */
+.sideBar_header {
+    width: 100%;
+    height: 15%;
+    background-color: yellow;
+}
+
+/* Conteudo da Barra Lateral */
+.rooms_content {
+    background-color: blue;
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vw;
+}
+
+.rooms_content h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 1.2vw;
+}
+
+/* Seção dos Botões */
+
+.rooms_section {
+    background-color: purple;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+}
+
+/* --------------------- Container do Chat */
+
+.chat_container {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    overflow: hidden;
+    position: relative;
+    z-index: 400;
+    overflow-y: auto;
+}
+
+.chats_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    background-color: transparent;
+    padding: 2vw 0vw 2vw 0vw;
+    position: relative;
+}
+
+.chat_messages {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.messages_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 80%;
+
+    min-height: 100%;
+    height: auto;
+
+    background-color: transparent;
+    box-sizing: border-box;
+    list-style: none;
+    list-style-type: none;
+}
+
+#ianes_pic {
+    width: 2.5vw;
+    height: auto;
+    position: absolute;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    transform: translateX(-150%) translateY(0%);
+}
+
+/* Area das Opções extras */
+.extraOptions_IAnes {
+    position: absolute;
+    background-color: transparent;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    transform: translateY(125%);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5vw;
+}
+
+.extraOptions_IAnes_Itens {
+    background-color: transparent;
+}
+
+.extraOptions_IAnes_Itens ion-icon {
+    font-size: 1.2vw;
+    color: #000000;
+    padding: 0.2vw;
+    border: none;
+    border-radius: 0.4vw;
+    cursor: pointer;
+    transition: .3s ease-in-out background-color;
+}
+
+.extraOptions_IAnes_Itens ion-icon:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.extraOptions_IAnes .tp_extraO_IA {
+    display: none;
+    position: absolute;
+    font-size: 0.8vw;
+    color: #ffffff;
+    white-space: nowrap;
+    padding: 0.2vw 0.6vw;
+    border: none;
+    border-radius: 0.4vw;
+    background-color: var(--color-azul-medio);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(15%);
+    z-index: 900;
+}
+
+.message {
+    max-width: 60%;
+    padding: 0.8vw;
+    overflow-wrap: anywhere;
+    display: flex;
+    position: relative;
+    margin-bottom: 2vw;
+
+}
+
+.message p {
+    font-size: 1.2rem;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.bot {
+    background-color: var(--color-azul-medio);
+    align-self: flex-start;
+    border: none;
+    border-radius: 0 0.4vw 0.4vw 0.4vw;
+    position: relative;
+}
+
+.bot:first-child {
+    margin-bottom: 0%;
+}
+
+.bot p {
+    color: #ffffff;
+}
+
+.user {
+    background-color: var(--color-cinza_chat_bg_light);
+    align-self: flex-end;
+    border: none;
+    border-radius: 0.4vw 0 0.4vw 0.4vw;
+}
+
+.user p {
+    color: #000000;
+}
+
+.chat_input_form {
+    margin-bottom: 0%;
+    position: absolute;
+    bottom: 1vw;
+    left: 50%;
+    transform: translateX(-50%) translateY(0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    width: 80%;
+    height: auto;
+    padding: 0.5vw;
+    background-color: #ffffff;
+    border-radius: 0.4vw;
+    transition: 0.1s ease-in-out border;
+    border: solid var(--color-cinza) 0.2vw;
+}
+
+.textarea_focused {
+    border: solid var(--color-vermelho-medio) 0.2vw;
+}
+
+.chat_input_form textarea {
+    padding: 0.4vw;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+    
+    width: 95%;
+
+    height: auto;
+    min-height: auto;
+    max-height: 12vw;
+    
+
+    font-size: 1.2rem;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #000000;
+}
+
+.chat_input_form button {
+    align-self: flex-end;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: .3s ease-in-out background-color;
+}
+
+.chat_input_form button:hover {
+    background-color: var(--color-azul-medio);
+}
+
+.chat_input_form button:hover #icon_aviao {
+    animation: aviao_animado 0.5s ease-in-out 1 forwards;
+}
+
+.chat_input_form button ion-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: none;
+    color: #ffffff;
+}
+
+/* Configuraçoes de Botao Ativiado ou Desativado */
+.btn_ativado {
+    background-color: var(--color-vermelho-medio);
+    pointer-events: all;
+}
+
+.btn_desativado {
+    background-color: var(--color-cinza);
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.chat_input_form svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#icon_aviao {
+    display: block;
+}
+
+#icon_quadrado {
+    display: none;
+} 
+
+/* 
+Posição inicial
+Move para o canto superior direito
+Move 10vw para baixo
+Move para a esquerda
+Retorna ao ponto inicial
+*/
+
+@keyframes aviao_animado {
+    0% {
+        transform: translate(0, 0); 
+    }
+    20% {
+        transform: translate(150%, -150%); 
+        opacity: 1;
+    }
+    40% {
+        transform: translate(150%, 150%);
+        opacity: 1;
+    }
+    70% {
+        transform: translate(-150%, 150%); 
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Botões Flutuantes */
+
+.btn_rolarConvesa {
+    z-index: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0vw;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    padding: 0.4vw;
+    background-color: #ffffff;
+    border-radius: 0.8vw 0.8vw 0vw 0vw;
+    cursor: pointer;
+    transition: .3s ease-in-out background-color, 0.1s ease-in-out border;;
+
+    padding-bottom: 0vw;
+    border: 0.2vw solid  var(--color-cinza);
+}
+
+.btn_rolarConvesa ion-icon {
+    font-size: 1.5rem;
+    color: #000000;
+    transform: translateY(0%);
+}
+
+.btn_rolarConvesa_focused {
+    border: 0.2vw solid  var(--color-vermelho-medio);
+}
+
+/* @keyframes kicking_arrow_scrollTo {
+    0% {transform: translateY(0%);}
+    33% {transform: translateY(-10%);}
+    66% {transform: translateY(10%);}
+    66% {transform: translateY(0%);}
+} */
+
+.btn_rolarConvesa:hover {
+    background-color: var(--color-azul-medio);
+}
+
+.btn_rolarConvesa:hover ion-icon {
+    color: #ffffff;
+    /* animation: kicking_arrow_scrollTo .5s linear infinite; */
+}
+
+.btn_baixarPDF {
+    z-index: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    transform: translateX(-80%);
+    padding: 0.4vw;
+    background-color: var(--color-vermelho-medio);
+    border: none;
+    border-radius: 0.4vw;
+    cursor: pointer;
+    transition: .3s ease-in-out background-color, .3s ease-in-out transform;
+}
+
+.btn_baixarPDF i {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.btn_baixarPDF p {
+    opacity: 0;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 0vw 0vw 0vw 1vw;
+    transition: .3s ease-in-out opacity;
+}
+
+.btn_baixarPDF:hover {
+    background-color: var(--color-azul-medio);
+    transform: translateX(-5%);
+}
+
+.btn_baixarPDF:hover p {
+    opacity: 1;
+}
+
+/* Pop-up de Confirmação */
+
+.confirms_popups {
+    background-color: var(--color-verde-sucesso);
+    border: none;
+    border-radius: 0.5vw;
+    
+    z-index: 500;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 1vw;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+.confirms_popups p {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.confirms_popups #loading {
+    background-color: transparent;
+    width: 100%;
+    height: 0.2vw;
+}
+
+.confirms_popups #loading #loading_bar {
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 2vw;
+}
+
+/* Contador de Caracteres */
+
+.ianesInput_contadorCaracteres {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1;
+    color: #000000;
+
+    position: absolute;
+    padding: 0.6vw 1vw;
+    background-color: #ffffff;
+    border-radius: 0.8vw 0.8vw 0vw 0vw;
+    top: 0;
+    right: 0;
+    transform: translateX(-5%) translateY(-100%);
+    transition: 0.1s ease-in-out border;
+    border: solid var(--color-cinza) 0.2vw;
+}
+
+.contadorCaracteres_focused {
+    border: solid var(--color-vermelho-medio) 0.2vw;
+}
+
+/* -------------- Configuração de Tamanho das Salas */
+
+.rooms_container-close {
+    width: 15%;
+    top: 0;
+    left: 0;
+    margin-left: -15%;
+}
+
+.rooms_container-open {
+    width: 15%;
+    top: 0;
+    left: 0;
+    margin-left: 0%;
+}
+
+.chat_container-full {
+    width: 100%;
+}
+
+.chat_container-half {
+    width: 85%;
+}
+
+/* Configurando individualmente as salas de chat que aparecem por padrão */
+
+.chat_messages {
+    display: none;
+}
+
+#chat_messages-chat-1 {
+    display: flex;
+}
+
+/* Temporario */

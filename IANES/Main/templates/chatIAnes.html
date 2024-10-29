@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!-- Define a: Controle do Chache, nesse caso "private" então o cache é armazenado para um usuário específico -->
+    <meta http-equiv="cache-control" content="private" />
+    <!-- Define a: Linguagens do Conteudo -->
+    <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
+    <title>Chat - {{ room.title }}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+     <!-- Import do CSS Principal com Aplicações Gerais -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/main.css' %}">
+
+     <!-- Import do CSS Cabeçalho e Rodapé -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--footer.css' %}">
+ 
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--header.css' %}">
+     <!-- Import do CSS da pagina da IA -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/__chatIAnes.css' %}">  
+
+    <!-- Biblioteca jsPDF, para baixar em pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body id="corpoPagina_chatIanes">
+
+    <!-- Cabeçalho -->
+    <header id="header"></header>
+
+    <main id="mainElement_chatIAnes">
+
+        <div id="rooms_container" class="rooms_container trans_03s-margin-left rooms_container-close">
+            <div class="sideBar_header">
+                <div onclick="expandSidebar()" aria-expanded="false" class="btn_expandirSalas btn_expandirSalas-open" id="btn_expandirSalas">
+                    <!-- <ion-icon id="icone_expandSidebar" class="icone_expandSidebar rotate90neg" name="push-outline"></ion-icon> -->
+                    <i id="icone_expandSidebar" class='bx bx-menu-alt-left icone_expandSidebar rotate_flip'></i>
+                    <p class="texto_expandSidebar texto_expandSidebar-open" id="tp_texto_abrirSidebar">Abrir painel lateral</p>
+                    <p class="texto_expandSidebar texto_expandSidebar-close texto_expandSidebar-hide" id="tp_texto_fecharSidebar">Fechar painel lateral</p>
+                </div>
+            </div>
+            <div class="rooms_content">
+                <h1 id="texto_chatIA_salasConversas">Salas de Conversas</h1>
+                
+                <div class="rooms_section">
+                    <ul>
+                        {% for room in rooms %}
+                            <li>
+                                <a href="{% url 'list_messages' room.id %}">{{ room.title }}</a>
+                            </li>
+                        {% empty %}
+                            <li>Nenhuma sala disponível.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="chat_container" class="chat_container trans_03s-width chat_container-full">
+
+            <div class="chats_section" id="chats_section">
+
+                <!-- As salas serão adicionadas automaticamente de acordo com o usuario -->
+                <!-- Por padrão, a sala 1 é sempre está disponivel -->
+
+                <iframe src="{% static 'html/_header.html' %}" frameborder="0"></iframe>
+
+                <div class="chat_messages" id="chat_messages-chat-1">
+                    <ul class="messages_list" id="messages_list">
+                        <li class="message bot">
+                            <img id="ianes_pic" src="" alt="IAnes Pic">
+                            <p id="texto_chatIA_botInicialMsg">1 - Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?</p>
+                        </li>
+                    
+                        {% for user_message, bot_response in messages %}
+                            {% if user_message %}
+                            <li class="message user">
+                                <strong>{{ user_message.user.username }}: </strong> <a> {{ user_message.text }}</a>
+                            </li>
+                            {% endif %}
+                            {% if bot_response %}
+                            <li class="message bot">
+                                <img id="ianes_pic" src="" alt="IAnes Pic">
+                                <p id="ianes_sala-1_msg">{{ bot_response.text }}</p>
+                                <div class="extraOptions_IAnes">
+                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip_chat('copy', '{{ forloop.counter }}')" onmouseout="hideTooltip_chat('copy', '{{ forloop.counter }}')">
+                                        <ion-icon name="copy-outline"></ion-icon>
+                                        <p class="tp_extraO_IA" id="tp_ia-{{ forloop.counter }}-copy">Copiar</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+    
+                </div>
+
+                <div class="chat_messages" id="chat_messages-chat-2">
+                    <ul class="messages_list" id="messages_list">
+                        <!-- Mensagem Inicial do Bot -->
+                        <li class="message bot">
+                            <img id="ianes_pic" src="" alt="IAnes Pic">
+                            <p id="texto_chatIA_botInicialMsg">2 - Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?</p>
+                        </li>
+                        <!-- Resto das Mensagens -->
+                        <!-- Mesangem do Usuario -->
+                        <!-- <li class="message user">
+                            <p>Mensagem LEGAL DO USUARIO</p>
+                        </li> -->
+                        <!-- Mesangem do IAnes -->
+                        <!-- <li class="message bot">
+                            <img id="ianes_pic" src="" alt="IAnes Pic">
+                            <p id="ianes_sala-1_msg-1">Mensagem LEGAL DO BOT</p>
+                            <div class="extraOptions_IAnes">
+                                <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('1')" onmouseover="showTooltip_chat('copy', '1')" onmouseout="hideTooltip_chat('copy', '1')">
+                                    <ion-icon name="copy-outline"></ion-icon>
+                                    <p class="tp_extraO_IA" id="tp_ia-1-copy">Copiar</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul> -->
+    
+                </div>
+
+            </div>
+
+            <section id="send-message">
+            <form method="POST"  action="{% url 'send_message' room.id %}" id="inputTo_ianes_form" class="chat_input_form">
+                {% csrf_token %}
+                <textarea name="user_message" maxlength="10000" rows="1" id="user_message" placeholder="Digite uma mensagem..."></textarea>
+                <button type="submit" id="inputTo_ianes_enviar" class="inputTo_ianes_enviar btn_ativado" onclick="enviarMensagem()">
+                    <ion-icon id="icon_aviao" name="paper-plane-outline"></ion-icon>
+                    <ion-icon id="icon_quadrado" name="square"></ion-icon>
+                </button>
+                <!-- Contador de Caracteres -->
+                <p class="ianesInput_contadorCaracteres" id="ianesInput_contadorCaracteres">0</p>
+                <!-- Botão para Rolar para Baixo -->
+                <div id="btn_rolarConvesa" class="btn_rolarConvesa" onclick="rolarConversa()">
+                    <ion-icon name="arrow-down-outline"></ion-icon>
+                </div>
+            </form>
+            </div>
+            
+            <div onclick="baixarConversaComoPDF()" class="btn_baixarPDF">
+                <p id="texto_chatIA_baixarPDF">Baixar a conversa em PDF</p>
+                <i class='bx bxs-file-pdf '></i>
+            </div>
+        </div>
+        
+    </main>
+    
+
+
+    <!-- Popup de confirmação de cópia -->
+    <div class="confirms_popups" id="popup_copyText">
+        <p id="texto_chatIA_copySucess">Texto copiado com sucesso</p>
+        <div id="loading">
+            <div id="loading_bar"></div>
+        </div>
+    </div>
+
+    <!-- A Ordem de Chamar os <script> IMPORTA! -->
+    <!-- Chamando o Idioma e o Tema -->
+    <script src="{% static 'js/+idioma.js' %}"></script>
+    <script src="{% static 'js/+tema.js' %}"></script>
+    <!-- Chamando apenas do Cabeçalho -->
+    <!-- <script src="{% static 'js/--header.js' %}"></script> -->
+    <!-- Chamando apenas do Rodapé -->
+    <script src="{% static 'js/--footer.js' %}"></script>
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Chamando o Principal GERAL pagina -->
+    <script src="{% static 'js/__chatIAnes.js' %}"></script>
+
+</body>
+</html>

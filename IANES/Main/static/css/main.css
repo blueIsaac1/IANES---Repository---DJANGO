@@ -1,0 +1,57 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--color-fundo-claro);
+    font-family: var(--font-montserrat);
+}
+
+main {
+    /* margin-top: MESMO tamanho da Header e Footer*/
+    margin-top: 6vw;
+    margin-bottom: 2vw;
+    /* min-height: 90vh; */
+}
+
+/* Altera a Cor ao Selecionar Texto/Coisas */
+
+::-moz-selection { /* Codigo para Mozilla */
+    background: var(--color-azul-medio_selecionado);
+}
+
+::selection {
+    background: var(--color-azul-medio_selecionado);
+}
+
+/* Altera o estilo da ScrollBar */
+
+/* Tamanho */
+::-webkit-scrollbar {
+    width: 0.7vw;
+}
+  
+/* Fundo */
+::-webkit-scrollbar-track {
+    background: var(--color-fundo-claro_var2);
+    border-radius: 0.2vw;
+}
+
+/* Barra em si */
+::-webkit-scrollbar-thumb {
+    background: var(--color-cinza);
+    border-radius: 0.2vw;
+    border: solid transparent 0vw;
+    cursor: pointer;
+}
+
+/* Barra com o mouse em cima */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-azul-medio);
+}

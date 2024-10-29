@@ -14,7 +14,7 @@
     </header>
 
     <main>
-        <section id="messages">
+        <div id="messages">
             <h2>Mensagens</h2>
             <div id="message-list">
                 {% for user_message in user_messages %}
@@ -28,16 +28,16 @@
                     </div>
                 {% endfor %}
             </div>
-        </section>
+        </div>
 
-        <section id="send-message">
+        <div id="send-message">
             <h2>Enviar Mensagem</h2>
             <form method="POST" action="{% url 'send_message' room.id %}">
                 {% csrf_token %}
                 <textarea name="user_message" rows="4" required placeholder="Digite sua mensagem..."></textarea>
                 <button type="submit">Enviar</button>
             </form>
-        </section>
+        </div>
     </main>
 
     <footer>

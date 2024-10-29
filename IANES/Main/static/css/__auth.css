@@ -1,0 +1,837 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+/* Codigo Principal */
+
+body {
+    overflow-x: hidden;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+/* Pré-feito uma Animação de Hover nos Links */
+
+.link_hover_animation {
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.link_hover_animation:after {
+    content: ""; /* Necessário para que o pseudo-elemento funcione */
+    position: absolute;
+    bottom: -0.1vw;
+    left: 50%; /* Mantém o centro */
+    width: 100%;
+    height: 0.02vw;
+    background-color: var(--color-vermelho-medio);
+    transform: translateX(-50%) scale(0); /* Começa com escala 0 */
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.link_hover_animation:hover:after {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Texto de Alerta */
+
+.div_alerts {
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.2vw;
+    padding: 0.2vw;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    width: 100%;
+    height: auto;
+    white-space: nowrap;
+}
+
+.alert_text {
+    color: var(--color-vermelho-main);
+    padding: 0;
+    margin: 0;
+    font-size: 0.8vw;
+    font-weight: 500;
+}
+
+.alert_icon {
+    color: var(--color-vermelho-main);
+    font-size: 1vw;
+}
+
+/* Erros Usuario */
+
+#div_user_inv {
+    display: none;
+}
+
+#div_user_exis {
+    display: none;
+}
+
+/* Erros Email */
+
+#div_email_inv {
+    display: none;
+}
+
+#div_email_exis {
+    display: none;
+}
+
+/* Erros do Confirmar Senha */
+
+#div_confSenha_nIgual {
+    display: none;
+}
+
+/* Container de Login */
+
+.container_login {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+/* Container de SignUp */
+
+.container_signup {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+/* Variaveis Gerais que aplicam configurações padrões para tela */
+
+.box_auth {
+    width: 50%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.box_auth_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    padding: 0.2vw;
+    width: 100%;
+}
+
+.box_auth_top_left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    padding: 0.2vw;
+    width: 50%;
+    height: 100%;
+    gap: 1vw;
+}
+
+.box_auth_top_left h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: left;
+    color: #000000;
+    line-height: 1;
+}
+
+.box_auth_top_right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    padding: 0.2vw;
+    width: 50%;
+    height: 100%;
+    gap: 1vw;
+}
+
+.box_auth_top_right p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8vw;
+    font-weight: 600;
+    text-align: right;
+    color: #000000;
+    line-height: 1;
+}
+
+.box_auth_top_right button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0.6vw;
+    border: #000000 0.15vw solid;
+    border-radius: 0.4vw;
+    gap: 0.5vw;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.box_auth_top_right button p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 1vw;
+    font-weight: 600;
+    text-align: left;
+    color: #000000;
+    line-height: 1;
+}
+
+.box_auth_top_right button ion-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 1vw;
+}
+
+.box_auth_top_right button:hover {
+    background-color: #000000;
+}
+
+.box_auth_top_right button:hover p {
+    color: #ffffff;
+}
+
+.box_auth_top_right button:hover ion-icon {
+    color: #ffffff;
+}
+
+/* Parte do Container */
+
+.box_auth_bot {
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    padding: 1vw;
+    border: var(--color-vermelho-medio) 0.2vw solid;
+    border-radius: 0.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+
+.box_auth_bot form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    padding: 0.2vw;
+    gap: 2vw;
+}
+
+/* A partir daqui, todos as seções são quase identicas */
+
+.box_auth_bot form .div_input_sec {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    padding: 0.2vw;
+    gap: 1vw;
+    position: relative;
+}
+
+.div_input_label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    padding: 0.2vw;
+}
+
+.div_input_label p {
+    margin: 0;
+    padding: 0;
+    font-size: 1vw;
+    font-weight: 600;
+    text-align: left;
+    color: #000000;
+    line-height: 1;
+}
+
+.div_input_label a {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8vw;
+    font-weight: 600;
+    text-align: left;
+    color: var(--color-vermelho-medio);
+    line-height: 1;
+    text-decoration: none;
+}
+
+.div_input_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    gap: 0.6vw;
+    border-bottom: var(--color-cinza) 0.15vw solid;
+    padding-bottom: 0.4vw;
+    padding: 0.4vw;
+    box-sizing: border-box;
+    transition: border-bottom 0.3s; /* Transição suave */
+}
+
+.div_input_area.active {
+    border-bottom: var(--color-vermelho-medio) 0.15vw solid;
+}
+
+.div_input_area .icon_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 5%;
+    background-color: transparent;
+}
+
+.div_input_area .input_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 90%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0.4vw;
+    font-size: 1vw;
+    font-weight: 400;
+    text-align: left;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 0.1vw;
+}
+
+.div_input_area .input_area:focus {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+/* Para evitar mudanças indesejadas ao selecionar sugestões */
+.input_area:-webkit-autofill {
+    background-color: red;
+}
+
+.input_extra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 5%;
+    height: auto;
+    background-color: transparent;
+}
+
+.input_extra_clickable {
+    background-color: transparent;
+    padding: 0.4vw;
+    border: none;
+    border-radius: 0.4vw;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_extra_clickable:hover {
+    background-color: transparent;
+    padding: 0.4vw;
+    border: none;
+    border-radius: 0.4vw;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+#texto_user_maximoChar {
+    margin: 0;
+    padding: 0vw;
+    font-size: 0.8vw;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-cinza);
+}
+
+.btn_executar_auth {
+    background-color: var(--color-vermelho-medio);
+    border: none;
+    border-radius: 0.2vw;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0.6vw;
+    font-size: 1vw;
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.btn_executar_auth:hover {
+    background-color: var(--color-azul-medio);
+}
+
+/* Concordo com os Termos e Politica */
+
+.div_concordoTermsPriv {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    padding: 0.4vw;
+    gap: 1vw;
+}
+
+#check_concordo_TermPriv[type="checkbox"] {
+    width: 1.5vw;
+    height: 1.5vw;
+    appearance: none;
+    border: 0.15vw solid var(--color-vermelho-medio);
+    border-radius: 0.2vw;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+}
+
+#check_concordo_TermPriv[type="checkbox"]:checked {
+    background-color: var(--color-vermelho-medio);
+    border-color: var(--color-vermelho-medio);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#check_concordo_TermPriv[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.3vw;
+    height: 0.7vw;
+    border: solid white;
+    border-width: 0vw 0.15vw 0.15vw 0vw;
+    border-radius: 0%;
+    transform: translate(-45%, -60%) rotate(45deg);
+}
+
+.div_texto_concordo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.div_texto_concordo p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+    padding: 0vw;
+    font-size: 1vw;
+    font-weight: 500;
+    text-align: center;
+    color: #000000;
+}
+
+.div_texto_concordo span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+    padding: 0vw;
+    font-size: 1vw;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-vermelho-medio);
+}
+
+#texto_auth_concordo_term {
+    margin: 0 0.4vw; /* Margem esquerda e direita */
+}
+
+#texto_auth_concordo_priv {
+    margin-left: 0.4vw; /* Apenas margem esquerda */
+}
+
+/* Parte Exclusiva do Senha do SignUp */
+
+.passwordValid_error {
+    color: var(--color-vermelho-main); 
+}
+
+.passwordValid_valid {
+    color: var(--color-verde-sucesso);
+}
+
+.div_input_forcaSenha {
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    padding: 0.2vw;
+    gap: 1vw;
+    position: relative;
+}
+
+.div_input_forcaSenha #texto_signup_forcaSenha {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8vw;
+    color: var(--color-cinza);
+    font-weight: 500;
+    width: auto;
+    height: 1.4vw;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.div_input_forcaSenha .forcaSenha_bar {
+    background-color: transparent;
+    width: auto;
+    height: 1.4vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.2vw;
+}
+
+.bar_senha_g {
+    width: 2vw;
+    height: 1vw;
+    background-color: var(--color-cinza);
+    border: none;
+    padding: 0;
+    opacity: 0.5;
+}
+
+#bar_senha_fraca {
+    border-radius: 2vw 0 0 2vw;
+}
+#bar_senha_media {
+    border-radius: 0;
+}
+#bar_senha_forte {
+    border-radius: 0 2vw 2vw 0;
+}
+
+.div_senhaInvalida {
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: solid var(--color-vermelho-medio) 0.2vw;
+    border-radius: 0.5vw;
+    padding: 1vw;
+    gap: 0.6vw;
+    box-sizing: border-box;
+    position: absolute;
+    top: 125%;
+    left: 0%;
+    z-index: 50;
+    width: 100%;
+    height: auto;
+}
+
+.div_senhaInvalida p {
+    margin: 0;
+    padding: 0;
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: left;
+    color: #000000;
+}
+
+.div_senhaInvalida ul {
+    margin: 0;
+    padding: 0;
+    padding-left: 1vw;
+    list-style: disc;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.div_senhaInvalida ul li {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8vw;
+    font-weight: 600;
+    text-align: left;
+    color: var(--color-cinza);
+    /* offset-x | offset-y | blur-radius | color */
+    /* text-shadow: 1px 2px 2px #000000; */
+}
+
+/* Apenas os Icones */
+
+/* Icone de Cima */
+
+#login_user_svg {
+    width: 3vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login_user_svg path {
+    fill: #000000;
+}
+
+#signup_user_svg {
+    width: 3vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signup_user_svg path {
+    fill: #000000;
+}
+
+/* Icone Container */
+
+#user_login_svg {
+    width: 1.8vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#user_login_svg path {
+    fill: var(--color-cinza);
+}
+
+#user_signup_svg {
+    width: 1.8vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#user_signup_svg path {
+    fill: var(--color-cinza);
+}
+
+.lockOpen_icons {
+    font-size: 1.6vw;
+    color: var(--color-cinza);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.6vw;
+    height: 1.6vw;
+}
+
+.icon_email_signup {
+    font-size: 1.6vw;
+    color: var(--color-cinza);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.6vw;
+    height: 1.6vw;
+}
+
+.eye_icons {
+    font-size: 1.4vw;
+    color: var(--color-cinza);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltip_show {
+    z-index: 51;
+    opacity: 1;
+    transition: display 0.3s ease-in-out;
+}
+
+.tooltip_hide {
+    z-index: 50;
+    opacity: 0;
+    transition: display 0.3s ease-in-out;
+}
+
+/* Tooltip */
+
+.input_extra_clickable {
+    position: relative; /* Para posicionar a tooltip */
+}
+
+.tooltip_auth {
+    display: none; /* Inicialmente escondido */
+    position: absolute;
+    background-color: var(--color-azul-medio);
+    color: #ffffff;
+    font-size: 1.2vw;
+    padding: 0.3vw;
+    border-radius: 0.2vw;
+    z-index: 1000;
+    top: 80%;
+    left: -25%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 50;
+}
+
+/* Linha Divisoria */
+
+.linha_divisoria {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.linha_divisoria hr {
+    width: 100%;
+    height: 0.015vw;
+    background-color: var(--color-cinza);
+    border: none;
+}
+
+.linha_divisoria .texto_auth_ou {
+    position: absolute;
+    margin: 0;
+    padding: 0.6vw;
+    font-size: 0.6vw;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-cinza);
+    background-color: #ffffff;
+}
+
+/* Outros Logins */
+
+.outros_auths {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 1vw;
+}
+
+.outros_auths button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #ffffff;
+    padding: 0.6vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border: #000000 solid 0.2vw;
+    border-radius: 0.6vw;
+    gap: 0.5vw;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.outros_auths button p {
+    margin: 0;
+    padding: 0.2vw;
+    font-size: 0.8vw;
+    font-weight: 700;
+    text-align: center;
+    color: #000000;
+}
+
+.outros_auths button img {
+    width: 2vw;
+    padding: 0.2vw;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+.outros_auths button:hover {
+    background-color: #000000;
+    /* background-color: var(--color-cinza_hover_bg_light); */
+    /* border: var(--color-cinza_hover_bg_light) solid 0.2vw; */
+}
+
+.outros_auths button:hover p {
+    color: #ffffff;
+}

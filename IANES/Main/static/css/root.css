@@ -1,0 +1,32 @@
+/* Importe da Fonte no CSS. Fonte: Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+:root {
+    --font-montserrat: 'Montserrat';
+
+    --color-fundo-claro: #FFFFFF;
+    --color-fundo-claro_var2: #dedede;
+    --color-fundo-claro_var3: #dedede;
+
+    --color-cinza_chat_bg_light: #8787872f;
+    --color-azul-escuro_bg: #000E1D;
+    --color-vermelho-forte_bg: #681413;
+
+    --color-cinza_hover_bg_light: #8787873d;
+
+    --color-azul-medio_selecionado: #1c3a6660;
+
+    --color-cinza: #878787;
+    
+    --color-vermelho-main: #E30613;
+    --color-vermelho-medio: #9A1915;
+    --color-vermelho-forte: #681413;
+
+    --color-azul-escuro: #000E1D;
+    --color-azul-medio: #1C3A66;
+    --color-azul-claro: #28425E;
+
+    --color-amarelo-neon: #E6FF2A;
+    --color-laranja-atomic: #EF8103;
+    --color-verde-sucesso: #4CAF50;
+}

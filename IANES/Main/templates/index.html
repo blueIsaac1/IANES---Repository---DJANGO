@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    <meta charset='utf-8'>
+    <!-- Define a: Descrição do Site; Palavras-Chaves; Autor -->
+    <meta name="description" content="Specialized Recommendation Artificial Intelligence">
+    <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Analysis, Smart Recommendations, Recommendation Systems">
+    <meta name="author" content="RAILO TEAM">
+    <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!-- Define a: Controle do Chache, nesse caso "private" então o cache é armazenado para um usuário específico -->
+    <meta http-equiv="cache-control" content="private" />
+    <!-- Define a: Linguagens do Conteudo -->
+    <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
+    <!-- Título da Página -->
+    <title>IAnes</title>
+    <!-- Ajuda a garantir que sua página web seja responsiva e se adapte bem a diferentes dispositivos, como smartphones e tablets. -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/main.css'>
+
+    <!-- Import do CSS Cabeçalho -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/--header.css'>
+    <!-- Import do CSS Rodapé -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/--footer.css'>
+
+    <!-- Import do CSS da Index -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/__index.css'>
+    <!-- Import do CSS da Index = Inicio -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/_inicio.css'>
+    <!-- Import do CSS da Index = Sobre -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/_sobre.css'>
+
+    <!-- Import do CSS da Loading -->
+    <link rel='stylesheet' type='text/css' media='screen' href='_css/loading.css'>
+
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header id="header"></header>
+
+    <main>
+
+        <p id="testesss"></p>
+
+        <div class="inicio_container" id="tela_inicio">
+            <!-- Banner de Tela -->
+            <div class="banner_apresent" id="banner_apresent">
+                <h1 textwrap="pretty" id="texto_banner_apresent_titulo">Uma nova Inteligência para o seu Negócio.</h1>
+                <img onclick="navigateTo('ianes_page', 'normal')" id="banner_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+                <p textwrap="pretty" id="texto_banner_apresent_titulo_desc">Recomendações precisas para otimizar projetos, conectar você a fornecedores e encontrar as melhores soluções.</p>
+                <button onclick="navigateTo('ianes_page', 'normal') "id="botao_banner_exp">Experimente Agora</button>
+            </div>
+            <!-- Banner Vantagens da Conta -->
+            <div class="banner_vantConta" id="banner_vantConta">
+                <div class="container_vantConta">
+                    <div class="div_titulo_vantConta">
+                        <h1 id="texto_vantConta_titulo">Crie um perfil para salvar suas conversas com o IAnes.</h1>
+                    </div>
+                    <div class="div_buttons_vantConta">
+                        <button class="btn_vantConta" onclick="navigateTo('auth_page', 'auth_signup')">
+                            <svg id="user_criar_svg" version="1.0" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                                <g transform="translate(0,256) scale(0.100000,-0.100000)"
+                                fill="#000000" stroke="none">
+                                <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107 -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259 65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2 -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                                <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5 -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 397 -3 398 -3 0 76 0 75 -375 0 c-359 0 -377 1 -419 21 -52 24 -109 76 -133 122 -22 42 -29 218 -13 330 25 171 101 347 176 406 36 29 79 47 132 56 38 6 51 2 159 -59 161 -89 215 -107 343 -113 162 -8 302 35 453 138 54 37 64 41 104 35 51 -7 130 -45 159 -78 12 -12 34 -42 49 -65 l28 -43 78 0 c44 0 79 3 79 6 0 3 -17 38 -37 76 -75 142 -183 226 -324 250 -87 15 -124 6 -211 -51 -95 -62 -119 -74 -202 -100 -90 -28 -205 -28 -285 -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z"/>
+                                <path d="M1797 892 c-14 -16 -17 -44 -17 -180 l0 -162 -158 0 c-141 0 -161 -2 -175 -18 -21 -23 -22 -46 -1 -66 13 -13 43 -16 175 -16 l159 0 0 -154 c0 -164 6 -186 50 -186 44 0 50 22 50 186 l0 154 159 0 c132 0 162 3 175 16 21 21 20 47 -2 67 -16 14 -43 17 -175 17 l-157 0 0 163 c0 146 -2 166 -18 180 -24 22 -45 21 -65 -1z"/>
+                                </g>
+                            </svg>
+                            <p id="texto_vantConta_criar">Criar</p>
+                        </button>
+                        <button class="btn_vantConta" onclick="navigateTo('auth_page', 'auth_login')">
+                            <svg id="user_entrar_svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            width="256" height="256" viewBox="0 0 256 256">
+                                <g transform="translate(0, 256) scale(0.100000,-0.100000)"
+                                fill="#000000" stroke="none">
+                                <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107 -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259 65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2 -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                                <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5 -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 397 -3 398 -3 0 76 0 75 -375 0 c-359 0 -377 1 -419 21 -52 24 -109 76 -133 122 -22 42 -29 218 -13 330 25 171 101 347 176 406 36 29 79 47 132 56 38 6 51 2 159 -59 161 -89 215 -107 343 -113 162 -8 302 35 453 138 54 37 64 41 104 35 51 -7 130 -45 159 -78 12 -12 34 -42 49 -65 l28 -43 78 0 c44 0 79 3 79 6 0 3 -17 38 -37 76 -75 142 -183 226 -324 250 -87 15 -124 6 -211 -51 -95 -62 -119 -74 -202 -100 -90 -28 -205 -28 -285 -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z"/>
+                                <path d="M1659 830 c-30 -29 -30 -29 -27 -136 3 -89 6 -109 21 -118 12 -8 22 -8 35 0 14 9 18 29 20 108 l3 96 189 0 190 0 0 -305 0 -305 -190 0 -189 0 -3 96 c-2 79 -6 99 -20 108 -13 8 -23 8 -35 0 -15 -9 -18 -29 -21 -118 -3 -107 -3 -107 27 -136 l29 -30 212 0 212 0 29 29 29 29 0 327 0 327 -29 29 -29 29 -212 0 -212 0 -29 -30z"/>
+                                <path d="M1807 693 c-17 -17 -2 -43 65 -110 l72 -73 -244 0 c-135 0 -251 -4 -259 -9 -8 -5 -11 -16 -6 -30 6 -21 10 -21 258 -21 l251 0 -73 -74 c-74 -74 -87 -107 -47 -114 21 -4 226 192 226 217 0 20 -200 221 -220 221 -9 0 -20 -3 -23 -7z"/>
+                                </g>
+                            </svg>
+                            <p id="texto_vantConta_entrar">Entrar</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="banner_maisSobre" id="banner_maisSobre">
+                <!-- Ondas -->
+                <svg id="wave_up_maisSobre_svg" width="100%" height="100%" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 36.5079L48 30.1587C96 23.8095 192 11.1111 288 4.7619C384 -1.5873 480 -1.5873 576 4.7619C672 11.1111 768 23.8095 864 36.5079C960 49.2063 1056 61.9048 1152 59.7884C1248 57.672 1344 40.7407 1392 32.2751L1440 23.8095V100H1392C1344 100 1248 100 1152 100C1056 100 960 100 864 100C768 100 672 100 576 100C480 100 384 100 288 100C192 100 96 100 48 100H0V36.5079Z" fill="#000000"/>
+                </svg>
+                <div class="container_maisSobre">
+                    <div class="container_maisSobre_cima container_maisSobre_g">
+                        <div class="container_maisSobre_cima_left container_maisSobre_left_g">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/e1b9ae5a232515b6f595519139393d0a8f14a5d5/_midia/_logotipos/ianes_avatar.png" alt="IAnes Avatar">
+                        </div>
+                        <div class="container_maisSobre_cima_right container_maisSobre_right_g">
+                            <h1 id="texto_maisSobre_h1IARE">O IAnes é uma IA-RE <br> (Inteligência Artificial de Recomendação Especializada)</h1>
+                            <div class="div_btn_maisSobre">
+                                <button id="btn_maisSobre" onclick="rolarPara('banner_maisIARE')">
+                                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                                    <p id="texto_maisSobre_iare" class="link_hover_maisSobre">Mais sobre a IA-RE</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container_maisSobre_baixo container_maisSobre_g">
+                        <div class="container_maisSobre_baixo_left container_maisSobre_left_g">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/e1b9ae5a232515b6f595519139393d0a8f14a5d5/_midia/_logotipos/railo_logo.png" alt="Railo Logo">
+                        </div>
+                        <div class="container_maisSobre_baixo_right container_maisSobre_right_g">
+                            <h1 id="texto_maisSobre_h1IARE">O IAnes foi desenvolvido pelo time RAILO em parceria com o SENAI</h1>
+                            <button id="btn_maisSobre" onclick="callScreen('sobre')">
+                                <ion-icon name="arrow-forward-outline"></ion-icon>
+                                <p id="texto_maisSobre_railo" class="link_hover_maisSobre">Mais sobre a RAILO</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ondas -->
+                <svg id="wave_down_maisSobre_svg" width="100%" height="100%" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1440 63.4921L1392 69.8413C1344 76.1905 1248 88.8889 1152 95.2381C1056 101.587 960 101.587 864 95.2381C768 88.8889 672 76.1905 576 63.4921C480 50.7937 384 38.0952 288 40.2116C192 42.328 96 59.2593 48 67.7249L0 76.1905V-7.15256e-07H48C96 -7.15256e-07 192 -7.15256e-07 288 -7.15256e-07C384 -7.15256e-07 480 -7.15256e-07 576 -7.15256e-07C672 -7.15256e-07 768 -7.15256e-07 864 -7.15256e-07C960 -7.15256e-07 1056 -7.15256e-07 1152 -7.15256e-07C1248 -7.15256e-07 1344 -7.15256e-07 1392 -7.15256e-07H1440V63.4921Z" fill="#000000"/>
+                </svg>
+            </div>
+            <div class="banner_maisIARE" id="banner_maisIARE">
+                <div class="container_maisIARE">
+                    <pre>
+                        ARRUMAR DEPOIS
+                        AO INVES DE SER UM ANIMAL E FAZER 5 CONTAINERS
+                        FAZER SÓ 2, BURRO
+                    </pre>
+                    <h1 id="texto_maisIARE_titulo">Saiba mais sobre a IA-RE</h1>
+                    <h2 id="texto_maisIARE_desc">(Inteligência Artificial de Recomendação Especializada)</h2>
+                    <div class="maisIARE_blocoNotas">
+                        <div class="maisIARE_blocoNotas_inside">
+                            <!-- Categoria -->
+                            <div onclick="updateBlocoNotas('oquee')" class="maisIARE_blocoNotas_categoria" id="blocoNotas-categoria-oquee">
+                                <div class="maisIARE_blocoNotas_titulo" id="blocoNotas-categoria-tit-oquee">
+                                    <h1 id="texto_maisIARE_oquee">Oque é</h1>
+                                </div>
+                                <div class="maisIARE_blocoNotas_box" id="blocoNotas-categoria-box-oquee">
+                                    <p id="maisIARE_blocoNotas_texto">O IAnes é uma Inteligência Artificial que, por meio de algoritmos avançados de análise de dados, ela entende as necessidades dos usuários e oferece recomendações precisas, como fornecedores, produtos, preços, ferramentas e mais. Sua função é simplificar o processo de decisão, agilizando o acesso a informações essenciais para qualquer negócio.</p>
+                                </div>
+                            </div>
+                            <!-- Categoria -->
+                            <div onclick="updateBlocoNotas('paraque')" class="maisIARE_blocoNotas_categoria" id="blocoNotas-categoria-paraque">
+                                <div class="maisIARE_blocoNotas_titulo" id="blocoNotas-categoria-tit-paraque">
+                                    <h1 id="texto_maisIARE_paraque">Para que serve</h1>
+                                </div>
+                                <div class="maisIARE_blocoNotas_box" id="blocoNotas-categoria-box-paraque">
+                                    <p id="maisIARE_blocoNotas_texto">Ela auxilia na busca por produtos e soluções, recomenda preços competitivos e conecta você aos melhores fornecedores do mercado. Ideal para empreendedores, inventores e criadores, a IA oferece um caminho rápido e eficiente para encontrar as informações necessárias, poupando tempo e esforço em pesquisas manuais.</p>
+                                </div>
+                            </div>
+                            <!-- Categoria -->
+                            <div onclick="updateBlocoNotas('porque')" class="maisIARE_blocoNotas_categoria" id="blocoNotas-categoria-porque">
+                                <div class="maisIARE_blocoNotas_titulo" id="blocoNotas-categoria-tit-porque">
+                                    <h1 id="texto_maisIARE_porque">Por que usar</h1>
+                                </div>
+                                <div class="maisIARE_blocoNotas_box" id="blocoNotas-categoria-box-porque">
+                                    <p id="maisIARE_blocoNotas_texto">Ao utilizar dados de mercado em tempo real, ela oferece recomendações precisas e relevantes para qualquer área de negócio, seja para construir um produto inovador, ou encontrar fornecedores de peças tecnológicas. A IA otimiza o processo de tomada de decisão, permitindo que você se concentre no que realmente importa: fazer seu negócio crescer.</p>
+                                </div>
+                            </div>
+                            <!-- Categoria -->
+                            <div onclick="updateBlocoNotas('comofun')" class="maisIARE_blocoNotas_categoria" id="blocoNotas-categoria-comofun">
+                                <div class="maisIARE_blocoNotas_titulo" id="blocoNotas-categoria-tit-comofun">
+                                    <h1 id="texto_maisIARE_comofun">Como funciona</h1>
+                                </div>
+                                <div class="maisIARE_blocoNotas_box" id="blocoNotas-categoria-box-comofun">
+                                    <p id="maisIARE_blocoNotas_texto">Ao especificar o que deseja criar ou comprar, como "quero construir um drone", a IA processa as informações e retorna com opções de produtos, estimativas de preço, fornecedores de confiança e até tendências de mercado. Com isso, você tem uma visão clara e prática de como transformar suas ideias em realidade.</p>
+                                </div>
+                            </div>
+                            <!-- Categoria -->
+                            <div onclick="updateBlocoNotas('vantagens')" class="maisIARE_blocoNotas_categoria" id="blocoNotas-categoria-vantagens">
+                                <div class="maisIARE_blocoNotas_titulo" id="blocoNotas-categoria-tit-vantagens">
+                                    <h1 id="texto_maisIARE_vantagens">Vantagens</h1>
+                                </div>
+                                <div class="maisIARE_blocoNotas_box" id="blocoNotas-categoria-box-vantagens">
+                                    <p id="maisIARE_blocoNotas_texto">
+                                        Precisão nas Recomendações: Com base nos dados fornecidos, a IA identifica as melhores opções disponíveis.
+                                        Economia de Tempo: Automatiza a busca por produtos e fornecedores, entregando resultados em segundos.
+                                        Personalização: As sugestões são personalizadas de acordo com as suas necessidades e objetivos de negócio.
+                                        Confiabilidade: Baseada em dados atualizados e de qualidade, garantindo decisões informadas.
+                                        Acessibilidade: Seja você um empreendedor iniciante ou experiente, essa IA facilita o acesso a recursos valiosos para qualquer estágio do negócio.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="inicio_container" id="tela_sobre">
+            
+        </div> -->
+
+        <p id="tela_sobre">TELA DE SOBRE</p>
+
+    </main>
+
+    <main style="display: none;">
+        <div id="tela_inicio" class="ladding_container">
+            <div class="up_container">
+                <div class="upC_left">
+                    <div class="logoSlogan">
+                        <div class="logoSlogan_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="IAnes">
+                        </div>
+                        <p>A Inteligência por trás <br> do o seu Negócio</p>
+                    </div>
+                    <div class="nav_apre">
+                        <div class="navIARE">
+                            <p>O IAnes <br>
+                                é uma Inteligência Artificial 
+                                <br> de
+                                Recomendação Especializada</p>
+                            <button onclick="rolarPara('info_iare')" >Mais sobre IA-RE</button>
+                        </div>
+                        <div class="navDEV">
+                            <p>Desenvolvida pela <br> equipe RAILO</p>
+                            <button onclick="callScreen('sobre')">Mais sobre RAILO</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="upC_right">
+                    <p>Descubra o que você precisa.</p>
+                    <p>Seu negócio mais <br>
+                        inteligente e eficiente.</p>
+                    <div class="button_div_upC_Right">
+                        <a href="auth.html"><button>Criar um Perfil</button></a>
+                        <a href="chatIAnes.html"><button>Ir para o IAnes</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="down_container">
+                <h1 id="info_iare">Saiba mais sobre a IA-RE</h1>
+                <h2>(Inteligência Artificial de Recomendação Especializada)</h2>
+                <div class="info_sections">
+                    <div class="info_sec">
+                        <h3>O que é</h3>
+                        <p>A <span>IA-RE</span> é um tipo de <span>Inteligência Artificial Generetiva</span>, por meio de algoritmos avançados de análise de dados, ela entende as necessidades dos usuários e oferece recomendações precisas, como fornecedores, produtos, preços, ferramentas e mais. Sua função é simplificar o processo de decisão, agilizando o acesso a informações essenciais para qualquer negócio.</p>
+                    </div>
+                    <div class="info_sec">
+                        <h3>Para que serve</h3>
+                        <p>Ela auxilia na busca por produtos e soluções, recomenda preços competitivos e conecta você aos melhores fornecedores do mercado. Ideal para empreendedores, inventores e criadores, a IA oferece um caminho rápido e eficiente para encontrar as informações necessárias, poupando tempo e esforço em pesquisas manuais.</p>
+                    </div>
+                    <div class="info_sec">
+                        <h3>Por que usar</h3>
+                        <p>Ao utilizar dados de mercado em tempo real, ela oferece recomendações precisas e relevantes para qualquer área de negócio, seja para construir um produto inovador, ou encontrar fornecedores de peças tecnológicas. A IA otimiza o processo de tomada de decisão, permitindo que você se concentre no que realmente importa: fazer seu negócio crescer.</p>
+                    </div>
+                    <div class="info_sec">
+                        <h3>Como funciona</h3>
+                        <p>Ao especificar o que deseja criar ou comprar, como "quero construir um drone", a IA processa as informações e retorna com opções de produtos, estimativas de preço, fornecedores de confiança e até tendências de mercado. Com isso, você tem uma visão clara e prática de como transformar suas ideias em realidade.</p>
+                    </div>
+                    <div class="info_sec">
+                        <h3 id="tit_vant">Vantagens</h3>
+                        <ul>
+                            <li><span>Precisão nas Recomendações</span>: Com base nos dados fornecidos, a IA identifica as melhores opções disponíveis.</li>
+                            <li><span>Economia de Tempo</span>: Automatiza a busca por produtos e fornecedores, entregando resultados em segundos.</li>
+                            <li><span>Personalização</span>: As sugestões são personalizadas de acordo com as suas necessidades e objetivos de negócio.</li>
+                            <li><span>Confiabilidade</span>: Baseada em dados atualizados e de qualidade, garantindo decisões informadas.</li>
+                            <li>Acessibilidade: Seja você um empreendedor iniciante ou experiente, essa IA facilita o acesso a recursos valiosos para qualquer estágio do negócio.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tela_sobre" class="sobre_container">
+            
+            <div class="div_btn_back">
+                <div onclick="callScreen('inicio')" class="btn_back">
+                    <ion-icon name="arrow-back"></ion-icon>
+                    <p id="voltar_inicio_t">Voltar para o Ínicio</p>
+                </div>
+                <h1>Sobre o <span>Time RAILO</span> e o <span>IAnes</span></h1>                 
+            </div>
+
+            <div class="div_text_sobre">
+                <h1>Time RAILO</h1>
+                <p>A RAILO surgiu como uma equipe dedicada à realização de projetos simples durante as aulas do curso de Desenvolvimento do SENAI, com foco em atividades práticas. Com o passar do tempo, a equipe evoluiu, adotando um logotipo e um slogan, e se tornou cada vez mais reconhecida. Para o Trabalho de Conclusão de Curso, decidimos coletivamente utilizar o nome Time RAILO para representar nossa equipe.</p>
+                <h1>O IAnes</h1>
+                <p>Recentemente, fomos desafiados a desenvolver uma inteligência artificial (IA) especializada na análise de projetos empresariais. Essa IA, carinhosamente apelidada de "IA-RE", que significa "Inteligência Artificial de Recomendação Especializada", tem como objetivo identificar dificuldades enfrentadas pelas empresas e oferecer recomendações didáticas e práticas sobre diversos aspectos, incluindo preços, fornecedores, vantagens e desafios.</p>
+            </div>
+
+            <div class="div_membros_container">
+                <h1>Nossa Equipe no Projeto</h1>
+                <div class="membros_superior">
+                    <div onclick="callMember('isaac')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p"><span>Isaac</span> Cleiton</p>
+                    </div>
+                    <div onclick="callMember('pedro')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_pedrosiqueira.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p"><span>Pedro</span> Siqueira</p>
+                    </div>
+                    <div onclick="callMember('renan')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_renanmattos.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p"><span>Renan</span> Mattos</p>
+                    </div>
+                    <div onclick="callMember('miguel')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_miguelvinicius.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p"><span>Miguel</span> Vinícius</p>
+                    </div>
+                    <div onclick="callMember('breno')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_brenoferracini.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p"><span>Breno</span> Ferracini</p>
+                    </div>
+                    <div onclick="callMember('luiz')" class="membros_sec">
+                        <div class="imgDiv_membroSec">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg" alt="">
+                        </div>
+                        <p id="membros_sec_p">Luiz <span>Francisco</span></p>
+                    </div>
+                </div>
+                <div class="membros_inferior">
+                    <img id="todos_membros" src="" alt="">
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div onclick="toggleOverlay()" id="membro_overlay" class="membro_overlay" style="display: none;">
+
+        <div id="ovMembro-luiz" class="ovMembro_container" onclick="event.stopPropagation();">
+            
+            <ion-icon onclick="toggleOverlay()" id="fecharOverlay" class="fecharOverlay" name="close"></ion-icon>
+        
+            <div class="ovMembroC_sup">
+                <div class="imgDiv_membroOverlay">
+                    <img id="fotoM_overlay" src="" alt="">
+                </div>
+                <p id="nomeM_overlay"></p> <!-- Esvaziado -->
+            </div>
+            <div class="ovMembroC_bot">
+                <h4>Função no Projeto</h4>
+                <ul class="external_ul">
+                    <li>
+                        <h5 id="devM_overlay"></h5> <!-- Esvaziado -->
+                        <ul id="lista_dev" class="internal_ul">
+                            <!-- Itens serão preenchidos dinamicamente -->
+                        </ul>
+                    </li>
+                    <li>
+                        <h5 id="plaM_overlay"></h5> <!-- Esvaziado -->
+                        <ul id="lista_pla" class="internal_ul">
+                            <!-- Itens serão preenchidos dinamicamente -->
+                        </ul>
+                    </li>
+                </ul>
+                <h4>Sociais</h4>
+                <div class="social_ul">
+                    <div>
+                        <div class="social_icone">
+                            <ion-icon name="logo-linkedin"></ion-icon>
+                        </div>
+                        <p>Linkedin</p>
+                        <span>👉</span>
+                        <a id="linkedin_memb" target="_blank" href=""></a> <!-- Esvaziado -->
+                    </div>
+                    <div>
+                        <div class="social_icone">
+                            <ion-icon name="logo-github"></ion-icon>
+                        </div>
+                        <p>Github</p>
+                        <span>👉</span>
+                        <a id="github_memb" target="_blank" href=""></a> <!-- Esvaziado -->
+                    </div>
+                    <div>
+                        <div class="social_icone">
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </div>
+                        <p>Email</p>
+                        <span>👉</span>
+                        <a href="#" id="email_memb" onclick="copyEmail(event)"></a> <!-- Esvaziado -->
+                    </div>                      
+                </div>
+            </div>
+        </div>
+
+        <div id="popup_copyEmail" class="popup_copyEmail" style="display: none;">
+            <p>Email copiado</p>
+            <div class="loading-bar">
+                <div id="loading" class="loading" style="width: 100%;"></div>
+            </div>
+        </div>
+
+    </div>  
+    
+    <div onclick="rolarPara('topo')" class="bubble_goTop" id="bubble_goTop" style="display: none;">
+        <ion-icon name="arrow-up"></ion-icon>
+        <p id="tooltip_bubTop">Voltar ao Topo</p>
+    </div>
+    
+    <!-- Rodapé -->
+    <footer id="footer"></footer>
+
+    <!-- Container de Carregamento -->
+    <div id="loading_container" class="loading_container">
+        <div class="lds-spinner">
+            <div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div id="loading_container" class="barra_carregamento">
+            <div id="loading_bar_fill" class="barra_preenchida"></div>
+        </div>    
+    </div>
+
+    <!-- A Ordem de Chamar os <script> IMPORTA! -->
+    <!-- Chamando o Idioma e o Tema -->
+    <script src="_js/+idioma.js"></script>
+    <script src="_js/+tema.js"></script>
+    <!-- Chamando apenas do Cabeçalho -->
+    <script src="_js/--header.js"></script>
+    <!-- Chamando apenas do Rodapé -->
+    <script src="_js/--footer.js"></script>
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="_js/__index.js"></script>
+    <!-- Chamando o Principal GERAL pagina -->
+    <script src="_js/main.js"></script>
+    <!-- Chmando o da tela de Inicio-->
+    <script src="_js/_inicio.js"></script>
+    <!-- Chmando o da tela de Sobre-->
+    <script src="_js/_sobre.js"></script>
+
+</body>
+</html>

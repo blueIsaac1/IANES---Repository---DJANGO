@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!-- Define a: Controle do Chache, nesse caso "private" então o cache é armazenado para um usuário específico -->
+    <meta http-equiv="cache-control" content="private" />
+    <!-- Define a: Linguagens do Conteudo -->
+    <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
+    <title>Bem-vindo ao IAnes!</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+     <!-- Import do CSS Principal com Aplicações Gerais -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/main.css' %}">
+
+     <!-- Import do CSS Cabeçalho e Rodapé -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--footer.css' %}">
+ 
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--header.css' %}">
+     <!-- Import do CSS da pagina da IA -->
+     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/__auth.css' %}">  
+</head>
+<body id="corpoPagina">
+
+    <!-- Cabeçalho -->
+    <header id="header"></header>
+
+    <main>
+
+        <div class="container_login" id="container_login">
+            <div class="box_login box_auth">
+                <div class="box_login_top box_auth_top">
+                    <div class="box_login_top_left box_auth_top_left">
+                        <svg id="login_user_svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            width="256" height="256" viewBox="0 0 256 256">
+
+                                <g transform="translate(0, 256) scale(0.100000,-0.100000)"
+                                fill="#000000" stroke="none">
+                                <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107
+                                -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259
+                                65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z
+                                m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2
+                                -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                                <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5
+                                -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 397 -3 398 -3 0 76 0
+                                75 -375 0 c-359 0 -377 1 -419 21 -52 24 -109 76 -133 122 -22 42 -29 218 -13
+                                330 25 171 101 347 176 406 36 29 79 47 132 56 38 6 51 2 159 -59 161 -89 215
+                                -107 343 -113 162 -8 302 35 453 138 54 37 64 41 104 35 51 -7 130 -45 159
+                                -78 12 -12 34 -42 49 -65 l28 -43 78 0 c44 0 79 3 79 6 0 3 -17 38 -37 76 -75
+                                142 -183 226 -324 250 -87 15 -124 6 -211 -51 -95 -62 -119 -74 -202 -100 -90
+                                -28 -205 -28 -285 -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z"/>
+                                <path d="M1659 830 c-30 -29 -30 -29 -27 -136 3 -89 6 -109 21 -118 12 -8 22
+                                -8 35 0 14 9 18 29 20 108 l3 96 189 0 190 0 0 -305 0 -305 -190 0 -189 0 -3
+                                96 c-2 79 -6 99 -20 108 -13 8 -23 8 -35 0 -15 -9 -18 -29 -21 -118 -3 -107
+                                -3 -107 27 -136 l29 -30 212 0 212 0 29 29 29 29 0 327 0 327 -29 29 -29 29
+                                -212 0 -212 0 -29 -30z"/>
+                                <path d="M1807 693 c-17 -17 -2 -43 65 -110 l72 -73 -244 0 c-135 0 -251 -4
+                                -259 -9 -8 -5 -11 -16 -6 -30 6 -21 10 -21 258 -21 l251 0 -73 -74 c-74 -74
+                                -87 -107 -47 -114 21 -4 226 192 226 217 0 20 -200 221 -220 221 -9 0 -20 -3
+                                -23 -7z"/>
+                                </g>
+                            </svg>
+                        <h1 id="texto_login_titulo">Entre no seu Perfil</h1>
+                    </div>
+                    <div class="box_login_top_right box_auth_top_right">
+                        <p id="texto_login_novoIAnes">Novo no IAnes?</p>
+                        <button onclick="navigateTo('auth_page', 'auth_signup')" id="button_goLogin">
+                            <p id="texto_login_entreperfil">Crie um Perfil</p>
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="box_login_bot box_auth_bot">
+                    <form action="" method="post" id="forms_login">
+                        <!-- Input 1: Usuario ou Email -->
+                        <div class="div_input_userEmail div_input_sec">
+                            <div class="div_input_userORemail_label div_input_label">
+                                <p id="texto_login_userORemail">Email ou Usuário</p>
+                            </div>
+                            <div class="div_input_userORemail_area div_input_area" id="div_input_userORemail_area">
+                                <svg class="icon_user_login" id="user_login_svg" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                                    <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
+                                    fill="#000000" stroke="none">
+                                    <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107
+                                    -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259
+                                    65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z
+                                    m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2
+                                    -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                                    <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5
+                                    -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 660 -3 c703 -3 738 -1
+                                    828 45 118 59 179 155 199 310 43 350 -97 730 -306 833 -72 36 -174 56 -228
+                                    46 -20 -3 -69 -28 -110 -55 -95 -62 -119 -74 -202 -100 -90 -28 -205 -28 -285
+                                    -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z m209 -204 c159 -88 213
+                                    -106 341 -112 162 -8 302 35 453 138 54 37 64 41 104 35 60 -8 135 -49 172
+                                    -93 44 -52 96 -164 123 -265 19 -70 23 -107 23 -243 0 -147 -2 -164 -24 -208
+                                    -13 -26 -38 -59 -57 -73 -70 -54 -75 -54 -771 -54 -630 0 -644 0 -687 21 -52
+                                    24 -109 76 -133 122 -22 42 -29 218 -13 330 26 177 103 351 181 409 44 32 102
+                                    54 153 57 10 0 71 -28 135 -64z"/>
+                                    </g>
+                                </svg>
+                                <input tabindex=1 class="input_login_userORemail input_area" type="text" name="Email or User" id="input_login_userORemail" placeholder="Digite o seu Usuário ou Email">
+                                <span class="input_extra"></span>
+                            </div>
+                        </div>
+                        <!-- Input 2: Senha Login -->
+                        <div class="div_input_senhaLogin div_input_sec">
+                            <div class="div_input_senhaLogin_label div_input_label">
+                                <p id="texto_login_senhaLogin">Senha</p>
+                                <a tabindex=1 id="texto_login_esqueceuSenha" onclick="navigateTo('auth_page', 'auth_resetPassword')" class="link_hover_animation" href="">Esqueceu sua senha?</a>
+                            </div>
+                            <div class="div_input_senhaLogin_area div_input_area" id="div_input_senhaLogin_area">
+                                <ion-icon class="icon_lockOpen_login lockOpen_icons" id="lockOpen_login_icon" name="lock-open-outline"></ion-icon>
+                                <!-- Id da Senha : 'login' --> 
+                                <input tabindex=2 class="input_login_area input_area" type="password" name="Senha" id="input_senha_login" placeholder="Digite sua Senha">
+                                <span class="input_extra">
+                                    <div tabindex=4 aria-state="pass_hide" class="input_extra_clickable" id="eye_password_login" 
+                                        onmouseover="showTooltip('tooltip_senha_login')" 
+                                        onmouseout="hideTooltip('tooltip_senha_login')" 
+                                        onclick="alterarEye('login')">
+                                        <ion-icon class="eye_icons" id="eye_icon_login" name="eye-outline"></ion-icon>
+                                        <p id="tooltip_eye_login_open" class="tooltip_auth tooltip_senha_login tooltip_show">Mostrar Senha</p>
+                                        <p id="tooltip_eye_login_close" class="tooltip_auth tooltip_senha_login tooltip_hide" style="display: none;">Esconder Senha</p>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <button tabindex=5 class="btn_executar_auth" id="btn_entrar_login">Entrar</button>
+                    </form>
+                    <div class="linha_divisoria">
+                        <hr>
+                        <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
+                    </div>
+                    <div class=" outros_authslogins outros_auths">
+                        <button>
+                            <p>Continue com</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo">
+                        </button>
+                        <button>
+                            <p>Continue com</p>
+                            <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container_signup" id="container_signup">
+            <div class="box_signup box_auth">
+                <div class="box_signup_top box_auth_top">
+                    <div class="box_signup_top_left box_auth_top_left">
+                        <svg id="signup_user_svg" version="1.0" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                            <g transform="translate(0,256) scale(0.100000,-0.100000)"
+                            fill="#000000" stroke="none">
+                            <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107
+                            -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259
+                            65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z
+                            m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2
+                            -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                            <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5
+                            -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 397 -3 398 -3 0 76 0
+                            75 -375 0 c-359 0 -377 1 -419 21 -52 24 -109 76 -133 122 -22 42 -29 218 -13
+                            330 25 171 101 347 176 406 36 29 79 47 132 56 38 6 51 2 159 -59 161 -89 215
+                            -107 343 -113 162 -8 302 35 453 138 54 37 64 41 104 35 51 -7 130 -45 159
+                            -78 12 -12 34 -42 49 -65 l28 -43 78 0 c44 0 79 3 79 6 0 3 -17 38 -37 76 -75
+                            142 -183 226 -324 250 -87 15 -124 6 -211 -51 -95 -62 -119 -74 -202 -100 -90
+                            -28 -205 -28 -285 -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z"/>
+                            <path d="M1797 892 c-14 -16 -17 -44 -17 -180 l0 -162 -158 0 c-141 0 -161 -2
+                            -175 -18 -21 -23 -22 -46 -1 -66 13 -13 43 -16 175 -16 l159 0 0 -154 c0 -164
+                            6 -186 50 -186 44 0 50 22 50 186 l0 154 159 0 c132 0 162 3 175 16 21 21 20
+                            47 -2 67 -16 14 -43 17 -175 17 l-157 0 0 163 c0 146 -2 166 -18 180 -24 22
+                            -45 21 -65 -1z"/>
+                            </g>
+                        </svg>
+                        <h1 id="texto_signup_titulo">Crie o seu Perfil</h1>
+                    </div>
+                    <div class="box_signup_top_right box_auth_top_right">
+                        <p id="texto_signup_novoIAnes">Já tem um perfil?</p>
+                        <button onclick="navigateTo('auth_page', 'auth_login')" id="button_goLogin">
+                            <p id="texto_signup_entreperfil">Acesse seu Perfil</p>
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="box_signup_bot box_auth_bot">
+                    <form action="#" method="post" id="forms_signup">
+                        <!-- Input 1: Usuario -->
+                        <div class="div_input_user div_input_sec">
+                            <div class="div_input_user_label div_input_label">
+                                <p id="texto_signup_user">Usuário</p>
+                            </div>
+                            <div class="div_input_user_area div_input_area" id="div_input_user_area">
+                                <svg class="icon_user_signup" id="user_signup_svg" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                                    <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
+                                    fill="#000000" stroke="none">
+                                    <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107
+                                    -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259
+                                    65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z
+                                    m247 -141 c201 -46 352 -235 351 -439 -1 -246 -206 -451 -450 -450 -286 2
+                                    -503 273 -439 549 45 198 231 348 434 350 33 0 80 -4 104 -10z"/>
+                                    <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5
+                                    -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 660 -3 c703 -3 738 -1
+                                    828 45 118 59 179 155 199 310 43 350 -97 730 -306 833 -72 36 -174 56 -228
+                                    46 -20 -3 -69 -28 -110 -55 -95 -62 -119 -74 -202 -100 -90 -28 -205 -28 -285
+                                    -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z m209 -204 c159 -88 213
+                                    -106 341 -112 162 -8 302 35 453 138 54 37 64 41 104 35 60 -8 135 -49 172
+                                    -93 44 -52 96 -164 123 -265 19 -70 23 -107 23 -243 0 -147 -2 -164 -24 -208
+                                    -13 -26 -38 -59 -57 -73 -70 -54 -75 -54 -771 -54 -630 0 -644 0 -687 21 -52
+                                    24 -109 76 -133 122 -22 42 -29 218 -13 330 26 177 103 351 181 409 44 32 102
+                                    54 153 57 10 0 71 -28 135 -64z"/>
+                                    </g>
+                                </svg>
+                                <input maxlength="30" class="input_signup_user_area input_area" type="text" name="Usuario Signup" id="input_signup_user" placeholder="Digite o seu Usuário">
+                                <span class="input_extra">
+                                    <span id="texto_user_maximoChar"></span>
+                                </span>
+                            </div>
+                            <!-- Erros Posiveis -->
+                            <div class="div_alerts" id="div_user_inv">
+                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
+                                <p class="alert_text" id="texto_alert_user_inv">Usuário Inválido!</p>
+                            </div>
+                            <div class="div_alerts" id="div_user_exis">
+                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
+                                <p class="alert_text" id="texto_alert_user_exis">Usuário já existe!</p>
+                            </div>
+                        </div>
+                        <!-- Input 2: Email -->
+                        <div class="div_input_user div_input_sec">
+                            <div class="div_input_user_label div_input_label">
+                                <p id="texto_signup_user">Email</p>
+                            </div>
+                            <div class="div_input_user_area div_input_area" id="div_input_user_area">
+                                <ion-icon class="icon_email_signup email_icons" id="email_signup_icon" name="mail-outline"></ion-icon>
+                                <input class="input_signup_email_area input_area" type="email" name="Email" id="input_signup_email" placeholder="Digite o seu Email">
+                                <span class="input_extra"></span>
+                            </div>
+                            <!-- Erros Posiveis -->
+                            <div class="div_alerts" id="div_email_inv">
+                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
+                                <p class="alert_text" id="texto_alert_email_inv">Email Inválido!</p>
+                            </div>
+                            <div class="div_alerts" id="div_email_exis">
+                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
+                                <p class="alert_text" id="texto_alert_email_exis">Email já usado!</p>
+                            </div>
+                        </div>
+                        <!-- Input 3: Signup -->
+                        <div class="div_input_senhaSignup div_input_sec">
+                            <div class="div_input_senhaSignup_label div_input_label">
+                                <p id="texto_signup_senhaSignup">Senha</p>
+                            </div>
+                            <div class="div_input_senhaSignup_area div_input_area" id="div_input_senhaSignup_area">
+                                <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_signup_icon" name="lock-open-outline"></ion-icon>
+                                <!-- Id da Senha : 'signup' -->
+                                <input class="input_senha_signup_area input_area" type="password" name="Senha" id="input_senha_signup" placeholder="Digite sua Senha">
+                                <span class="input_extra">
+                                    <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signup" 
+                                        onmouseover="showTooltip('tooltip_senha_signup')" 
+                                        onmouseout="hideTooltip('tooltip_senha_signup')" 
+                                        onclick="alterarEye('signup')">
+                                        <ion-icon class="eye_icons" id="eye_icon_signup" name="eye-outline"></ion-icon>
+                                        <p id="tooltip_eye_signup_open" class="tooltip_auth tooltip_senha_signup tooltip_show">Mostrar Senha</p>
+                                        <p id="tooltip_eye_signup_close" class="tooltip_auth tooltip_senha_signup tooltip_hide" style="display: none;">Esconder Senha</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="div_input_forcaSenha">
+                                <div class="div_input_forcaSenha">
+                                    <p id="texto_signup_forcaSenha">Força da Senha</p>
+                                    <div class="forcaSenha_bar">
+                                        <div class="bar_senha_g" id="bar_senha_fraca"></div>
+                                        <div class="bar_senha_g" id="bar_senha_media"></div>
+                                        <div class="bar_senha_g" id="bar_senha_forte"></div>
+                                    </div>
+                                    <div class="div_senhaInvalida" id="container_listaValidacoes">
+                                        <p id="texto_signup_senhaInvalida">Validações:</p>
+                                        <ul id="tooltip_senhaInvalida">
+                                            <li class="item_listaValidacoes" data-condition="length">A senha deve ter pelo menos 8 caracteres.</li>
+                                            <li class="item_listaValidacoes" data-condition="uppercase">A senha deve ter pelo menos uma letra maiúscula.</li>
+                                            <li class="item_listaValidacoes" data-condition="lowercase">A senha deve ter pelo menos uma letra minúscula.</li>
+                                            <li class="item_listaValidacoes" data-condition="numbers">A senha deve ter pelo menos 2 dígitos numéricos.</li>
+                                            <li class="item_listaValidacoes" data-condition="special">A senha deve ter pelo menos 2 caracteres especiais.</li>
+                                            <li class="item_listaValidacoes" data-condition="consecutive">Não pode ter mais de 2 dígitos ou letras iguais consecutivos.</li>
+                                            <li class="item_listaValidacoes" data-condition="irregular">A senha não pode conter caracteres irregulares como vírgulas, pontos, dois pontos ou espaços.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Input 4: Confirm Signup -->
+                        <div class="div_input_confSenhaSignup div_input_sec">
+                            <div class="div_input_confSenhaSignup_label div_input_label">
+                                <p id="texto_signup_confSenhaSignup">Confirme a Senha</p>
+                            </div>
+                            <div class="div_input_confSenhaSignup_area div_input_area" id="div_input_confSenhaSignup_area">
+                                <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_confSignup_icon" name="lock-open-outline"></ion-icon>
+                                <!-- Id da Senha : 'signupConf' -->
+                                <input class="input_senha_signupConf_area input_area" type="password" name="Senha" id="input_senha_signupConf" placeholder="Digite sua Senha">
+                                <span class="input_extra">
+                                    <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signupConf" 
+                                        onmouseover="showTooltip('tooltip_senha_signupConf')" 
+                                        onmouseout="hideTooltip('tooltip_senha_signupConf')" 
+                                        onclick="alterarEye('signupConf')">
+                                        <ion-icon class="eye_icons" id="eye_icon_signupConf" name="eye-outline"></ion-icon>
+                                        <p id="tooltip_eye_signupConf_open" class="tooltip_auth tooltip_senha_signupConf tooltip_show">Mostrar Senha</p>
+                                        <p id="tooltip_eye_signupConf_close" class="tooltip_auth tooltip_senha_signupConf tooltip_hide" style="display: none;">Esconder Senha</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <!-- Erros Posiveis -->
+                            <div class="div_alerts" id="div_confSenha_nIgual">
+                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
+                                <p class="alert_text" id="texto_alert_confSenha_nIgual">As senhas não coincidem</p>
+                            </div>
+                        </div>
+                        <div class="div_concordoTermsPriv">
+                            <input type="checkbox" name="CheckConcordo" id="check_concordo_TermPriv">
+                            <div class="div_texto_concordo">
+                                <p id="texto_auth_concordo_pt1">Concordo com os</p>    
+                                <span onclick="navigateTo('legal_page', 'legal_term')" class="link_hover_animation" id="texto_auth_concordo_term">Termos de Serviço</span>
+                                <p id="texto_auth_concordo_pt2">e</p>
+                                <span onclick="navigateTo('legal_page', 'legal_priv')" class="link_hover_animation" id="texto_auth_concordo_priv">Política de Privacidade</span>
+                                <p id="texto_auth_concordo_pt3">.</p>
+                            </div>
+                        </div>
+                        <button onclick="criarConta_ianes()" type="submit" class="btn_executar_auth" id="btn_entrar_signup">Criar</button>
+                    </form>
+                    <div class="linha_divisoria">
+                        <hr>
+                        <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
+                    </div>
+                    <div class="outros_signups outros_auths">
+                        <button>
+                            <p>Continue com</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo">
+                        </button>
+                        <button>
+                            <p>Continue com</p>
+                            <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p id="testizinho"></p>
+    </main>
+    
+    <!-- Rodapé -->
+    <footer id="footer"></footer>
+    
+    <!-- A Ordem de Chamar os <script> IMPORTA! -->
+    <!-- Chamando o Idioma e o Tema -->
+    <script src="{% static 'js/+idioma.js' %}"></script>
+    <script src="{% static 'js/+tema.js' %}"></script>
+    <!-- Chamando apenas do Cabeçalho -->
+    <script src="{% static 'js/--header.js' %}"></script>
+    <!-- Chamando apenas do Rodapé -->
+    <script src="{% static 'js/--footer.js' %}"></script>
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Chamando o Principal GERAL pagina -->
+    <script src="{% static 'js/__auth.js' %}"></script>
+    
+</body>
+</html>

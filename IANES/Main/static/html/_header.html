@@ -1,0 +1,45 @@
+<!-- Parte do Header -->
+<div id="header_top" class="header_top">
+
+    <!-- Parte da Esquerda -->
+    <div class="left_div">
+        <div class="logo_div">
+            <div class="logoImg_imgDiv" id="div_header_logo_img">
+                <img id="header_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+            </div>
+            <div class="tooltip" id="tooltip_logo">IAnes aqui!</div>
+        </div>
+    </div>
+
+    <!-- Parte da Direita -->
+    <div class="right_div">
+        <div class="user_div">
+            <div class="tooltip" id="tooltip_user">Clique para abrir</div>
+            <p id="user_name_t"></p>
+            <svg id="user_svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256">
+                <g transform="translate(0,256) scale(0.100000,-0.100000)"
+                fill="#000000" stroke="none">
+                <path d="M1132 2480 c-109 -29 -187 -74 -273 -160 -189 -188 -232 -465 -107
+                -703 49 -93 167 -208 259 -252 182 -86 379 -84 552 7 93 49 208 167 252 259
+                65 138 80 276 45 413 -29 113 -73 190 -160 277 -152 153 -363 212 -568 159z"/>
+                <path d="M700 1289 c-25 -5 -73 -22 -107 -39 -197 -97 -327 -426 -311 -781 5
+                -93 10 -117 36 -174 39 -82 110 -153 199 -197 l68 -33 660 -3 c703 -3 738 -1
+                828 45 118 59 179 155 199 310 43 350 -97 730 -306 833 -72 36 -174 56 -228
+                46 -20 -3 -69 -28 -110 -55 -95 -62 -119 -74 -202 -100 -90 -28 -205 -28 -285
+                -1 -32 11 -108 47 -167 80 -147 82 -174 88 -274 69z"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<!-- Parte da Navbar -->
+<div id="header_bot" class="header_bot">
+    <nav class="navbar">
+        <ul class="nav_list">
+            <li onclick="callScreen('inicio')" aria-selected="false" class="nav_item" id="nav_item-inicio">Início</li>
+            <li onclick="callScreen('sobre')" aria-selected="false" class="nav_item" id="nav_item-sobre">Sobre</li>
+            <li onclick="navigateTo('ianes_page', 'normal')" aria-selected="false" class="nav_item" id="nav_item-ianes">IAnes</li>
+        </ul>
+    </nav>
+</div>
