@@ -1,6 +1,0 @@
-Todas as Imagens que são colocadas no sistema, estão agora, em um repositório no GitHub.
-
-Isso foi feito para deixar o IAnes mais leve, retirando dele as imagens, que causariam lentidão ao sistema.
-
-Estão nesse repositório
-https://github.com/Francisco-Neves-15/ianes-front---repository.git
