@@ -3,3 +3,6 @@ Json
 __pycache__
 .json
 .idea
+venv
+env
+.env
