@@ -1,7 +1,8 @@
-// Caminho/URL para as Paginas
-const url_page_index_auth = "http://127.0.0.1:5500/index.html"
-const url_page_auth_auth = "http://127.0.0.1:5500/auth.html"
-const url_page_ianes_auth = "http://127.0.0.1:5500/IAnes.html"
+// // Caminho/URL para as Paginas
+const url_page_index_auth = "http://127.0.0.1:8000/"
+const url_page_auth_auth = "http://127.0.0.1:8000/auth"
+const url_page_ianes_auth = "http://127.0.0.1:8000/IAnes"
+
 
 // Função que exibe a tela correspondente
 window.detectar_auth = function() {

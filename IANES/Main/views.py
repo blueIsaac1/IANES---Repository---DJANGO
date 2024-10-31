@@ -18,6 +18,7 @@ import re
 import requests
 from itertools import zip_longest
 from django.contrib import messages 
+from django.contrib.auth import logout
 
 
 pasta_dados = 'DADOS'
@@ -54,6 +55,8 @@ def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
 
 @csrf_exempt
 def auth(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if request.method == 'GET':
         return render(request, 'auth.html')
     
@@ -94,11 +97,14 @@ def auth(request):
 # @csrf_exempt
 # def chat(request):
 #     return render(request, 'chatIAnes.html') api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
-    
-@login_required(login_url='')
+@csrf_exempt
+@login_required(login_url='/auth/') 
 def index(request):
+    if request.method == 'GET' and 'logout_function' in request.GET:
+        logout(request)
+        return redirect('auth')
     rooms = Room.objects.all().order_by('-created_at')
-    return render(request, 'home.html', {
+    return render(request, 'index.html', {
         'rooms': rooms,
     })
  
@@ -184,6 +190,8 @@ def send_message_obter_parametros(request, pk):
 
     return render(request, 'template.html', {'bot_response_text': bot_response_text})
 
+@csrf_exempt
+@login_required(login_url='/auth/') 
 def send_message(request, pk):
     current_room = get_object_or_404(Room, id=pk)
     if request.method == 'POST':
@@ -218,6 +226,8 @@ def send_message(request, pk):
             return redirect('list_messages', pk=pk)
     return redirect('home')
 
+@csrf_exempt
+@login_required(login_url='/auth/') 
 def create_room(request):
     if request.method == 'POST':
         room_title = request.POST.get('title')
@@ -229,6 +239,8 @@ def create_room(request):
     #     'r': room
     # })
 
+@csrf_exempt
+@login_required(login_url='/auth/') 
 def list_messages(request, pk):
     room = get_object_or_404(Room, id=pk)
     user_messages = room.user_message.all().order_by('created_at')

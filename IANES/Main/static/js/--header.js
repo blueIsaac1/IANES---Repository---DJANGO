@@ -1,7 +1,7 @@
 window.detectar_pagina = function() { 
-    // const url_page_index = "http://127.0.0.1:5500/index.html";
-    // const url_page_auth = "http://127.0.0.1:5500/auth.html";
-    // const url_page_ianes = "http://localhost:8000/list-messages/18";
+    const url_page_index = "http://127.0.0.1:8000/";
+    const url_page_auth = "http://127.0.0.1:8000/";
+    const url_page_ianes = "http://127.0.0.1:8000/IAnes";
 
     const currentUrl = window.location.href;
 
@@ -11,7 +11,7 @@ window.detectar_pagina = function() {
         pageType = "index";
     } else if (currentUrl === url_page_auth) {
         pageType = "auth";
-    } else if (currentUrl === url_page_ianes) {
+    } else if (currentUrl.startsWith(url_page_ianes)) {
         pageType = "ianes";
     } else {
         pageType = "unknown";

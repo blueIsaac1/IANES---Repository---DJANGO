@@ -26,7 +26,10 @@
 <body id="corpoPagina">
 
     <!-- Cabeçalho -->
-    <header id="header"></header>
+    <header id="header">
+        {% include 'head_foot_temp/_header.html' %}
+    </header>
+
 
     <main>
         <!-- form -->
@@ -354,7 +357,9 @@
     </main>
     
     <!-- Rodapé -->
-    <footer id="footer"></footer>
+    <header id="footer">
+        {% include 'head_foot_temp/_footer.html' %}
+    </header>
     
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
@@ -367,7 +372,7 @@
     <!-- Chamando o Principal DESSA pagina -->
     <script src="{% static 'js/main.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->
-    <script src="{% static 'js/__auth.js' %}"></script>
+    <script src="{% static 'js/--auth.js' %}"></script>
     
 </body>
 </html>

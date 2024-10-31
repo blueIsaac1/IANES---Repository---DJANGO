@@ -17,7 +17,7 @@ main {
     width: 100%;
     height: auto;
     margin-top: 0vw;
-    background-color: gray;
+    background-color: #ffffff;
     position: relative;
     overflow: hidden;
 }
@@ -43,39 +43,13 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: red;
-    z-index: 401;
+    /* background-color: var(--color-fundo-claro_var3); */
+    background-color: var(--color-azul-escuro);
+    border: none;
+    border-radius: 0 1vw 0 0;
+    z-index: 450;
     overflow: visible;
     position: relative;
-}
-
-.btn_expandirSalas {
-    z-index: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5vw;
-
-    position: absolute;
-    padding: 0.4vw;
-    background-color: var(--color-vermelho-medio);
-    border: none;
-    cursor: pointer;
-    transition: .3s ease-in-out background-color, .3s ease-in-out transform, .3s ease-in-out border-radius;
-}
-
-.btn_expandirSalas-open {
-    top: 2%;
-    right: 0;
-    transform: translateX(100%);
-    border-radius: 0 0.4vw 0.4vw 0; 
-}
-
-.btn_expandirSalas-close {
-    top: 2%;
-    right: 0;
-    transform: translateX(-50%);
-    border-radius: 0.4vw; 
 }
 
 .icone_expandSidebar {
@@ -95,8 +69,8 @@ main {
     transform: scaleX(-1);
 }
 
-.texto_expandSidebar {
-    display: flex;
+.tp_expandSidebar {
+    display: none;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
@@ -111,43 +85,29 @@ main {
     position: absolute;
     transition: opacity 0.3s ease-in-out;
     
-    visibility: hidden;
-}
-
-/* Tooltip "Abrir" posicionada */
-.texto_expandSidebar-open {
-    bottom: 0;
-    left: 0;
-    transform: translateY(120%) translateX(10%);
-}
-
-/* Tooltip "Fechar" posicionada */
-.texto_expandSidebar-close {
-    bottom: 0;
-    left: 0;
-    transform: translateY(120%) translateX(-80%);
-}
-
-/* Mostra a tooltip ao passar o mouse */
-.btn_expandirSalas:hover #tp_texto_abrirSidebar,
-.btn_expandirSalas:hover #tp_texto_fecharSidebar {
     visibility: visible;
 }
 
-.texto_expandSidebar-hide {
-    display: none;
+.tp_expandSidebar-hide {
+    visibility: hidden;
 }
 
 /* Dentro da Barra Lateral */
 .sideBar_header {
     width: 100%;
     height: 15%;
-    background-color: yellow;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vw;
+    position: relative;
 }
 
 /* Conteudo da Barra Lateral */
 .rooms_content {
-    background-color: blue;
+    background-color: transparent;
     width: 100%;
     height: 85%;
     display: flex;
@@ -160,13 +120,120 @@ main {
 .rooms_content h1 {
     padding: 0;
     margin: 0;
-    font-size: 1.2vw;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Botões */
+
+.btn_sideBar_header {
+    z-index: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+    
+    padding: 0.4vw;
+    background-color: var(--color-vermelho-medio);
+    border: none;
+    border-radius: 0.4vw; 
+    cursor: pointer;
+    transition: .3s ease-in-out background-color, .3s ease-in-out transform, .3s ease-in-out border-radius;
+    
+    position: absolute;
+    top: 20%;
+}
+.btn_sideBar_header:hover {
+    background-color: var(--color-azul-medio);
+}
+
+/* Botões Invidualmente */
+
+.btn_home {
+    left: 10%;
+    transform: translateX(0%);
+}
+
+.btn_novaSala {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn_expandirSalas {
+    right: 10%;
+}
+
+/* Configurações do Botao de Expandir em 2 Estados Diferentes*/
+
+.btn_expandirSalas-open {
+    transform: translateX(145%);
+    border-radius: 0 0.4vw 0.4vw 0; 
+}
+
+.btn_expandirSalas-close {
+    transform: translateX(0%);
+    border-radius: 0.4vw; 
+}
+    
+/* Tooltip "Abrir" posicionada */
+.tp_expandSidebar-open {
+    bottom: 0;
+    left: 0;
+    transform: translateY(120%) translateX(10%);
+}
+
+/* Tooltip "Fechar" posicionada */
+.tp_expandSidebar-close {
+    bottom: 0;
+    right: 0;
+    transform: translateY(120%) translateX(0%);
+}
+
+.tp_btn_home {
+    bottom: 0;
+    left: 0;
+    transform: translateY(120%) translateX(0%);
+}
+
+.tp_btn_criarSalas {
+    bottom: 0;
+    left: 50%;
+    transform: translateY(120%) translateX(-50%);
+}
+
+.icone_sideBar {
+    font-size: 2vw;
+    color: #ffffff;
+}
+
+/* Resto das Tooltips Simples */
+.tp_sideBar_header {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+    white-space: nowrap;
+
+    border: none;
+    border-radius: 0.6vw;
+    background-color: var(--color-azul-medio);
+    padding: 0.6vw;
+    position: absolute;
+    transition: opacity 0.3s ease-in-out;    
+}
+
+.tp_opcoes {
+    top: 0;
+    left: 50%;
+    transform: translateY(-120%) translateX(-50%);
 }
 
 /* Seção dos Botões */
 
 .rooms_section {
-    background-color: purple;
     width: 100%;
     height: 100%;
     display: flex;
@@ -174,7 +241,175 @@ main {
     justify-content: flex-start;
     align-items: center;
     overflow-y: auto;
+    overflow: visible;
+    padding: 0.4vw;
 }
+
+.container_btn_trocarSalas {
+    width: 100%;
+    min-height: 3vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.4vw;
+    transition: .3s ease-in-out background-color;
+    z-index: 451;
+}
+
+.btn_trocarSalas {
+    cursor: pointer;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0.4vw;
+    z-index: 452;
+}
+
+.btn_trocarSalas:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.btn_trocarSalas-select {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.roomsNames {
+    display: flex;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) translateX(0%);
+    z-index: 452;
+}
+
+.roomName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: var(--font-montserrat);
+    margin-left: 0.4vw;
+}
+
+.rename_area {
+    display: none;
+    font-size: 0.8rem;
+    font-family: var(--font-montserrat);
+    margin-left: 0.4vw;
+    font-weight: 400;
+    color: #ffffff; 
+    background-color: transparent;
+
+    width: 90%;
+    height: auto;
+    border: none;
+    outline: none;
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) translateX(0%);
+    z-index: 452;
+}
+
+.rename_area:focus {
+    border: solid 0.1vw var(--color-azul-bruto);
+}
+
+.btn_roomsEP {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) translateX(-25%);
+    z-index: 452;
+}
+
+.btn_roomsEP i {
+    border-radius: 0.2vw;
+    transition: .3s background-color ease-in-out;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1.4rem;
+    color: #ffffff;
+}
+
+.btn_roomsEP:hover i {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+/* Box das Opções extras */
+
+.roomsExtraOptions_box {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1vw;
+    position: absolute;
+    bottom: -50%;
+    right: 0;
+    transform: translateX(100%) translateY(80%);
+    padding: 0.6vw;
+    background-color: var(--color-azul-escuro);
+    border: #ffffff solid 0.1vw;
+    border-radius: 0 0.6vw 0.6vw 0.6vw;
+    z-index: 453;
+}
+
+.roomsExtraOptions_item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 1vw;
+    width: 100%;
+    background-color: transparent;
+    padding: 0.4vw;
+    border: none;
+    border-radius: 0.2vw;
+    cursor: pointer;
+    transition: .3s background-color ease-in-out;
+}
+
+.roomsExtraOptions_item:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.roomsExtraOptions_item i {
+    font-size: 1.4rem;
+    color: #ffffff;
+}
+
+.roomsExtraOptions_item p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.roomsExtraOptions_item .trash-icon {
+    color: var(--color-vermelho-main);
+}
+.roomsExtraOptions_item .trash-text {
+    color: var(--color-vermelho-main
+    );
+}
+
 
 /* --------------------- Container do Chat */
 
@@ -187,7 +422,6 @@ main {
     overflow: hidden;
     position: relative;
     z-index: 400;
-    overflow-y: auto;
 }
 
 .chats_section {
@@ -224,7 +458,6 @@ main {
     background-color: transparent;
     box-sizing: border-box;
     list-style: none;
-    list-style-type: none;
 }
 
 #ianes_pic {
@@ -619,7 +852,7 @@ Retorna ao ponto inicial
     width: 15%;
     top: 0;
     left: 0;
-    margin-left: -15%;
+    margin-left: -15%; 
 }
 
 .rooms_container-open {
@@ -646,5 +879,3 @@ Retorna ao ponto inicial
 #chat_messages-chat-1 {
     display: flex;
 }
-
-/* Temporario */

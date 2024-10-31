@@ -1,0 +1,44 @@
+{
+    "geral": [{
+        "page_title": "Welcome to IAnes!"
+    }],
+    "navbar": [{
+        "tooltip_logo": "IAnes here!",
+        "tooltip_mudaridioma": "Change Language",
+        "title_mudaridioma": "Select Your Language",
+        "lang_ptBR_p": "Portuguese",
+        "lang_en_p": "English",
+        "lang_fr_p": "French",
+        "tooltip_mudartema": "Change Appearance",
+        "title_mudartema": "Select Appearance",
+        "tema_claro_p": "Light Theme",
+        "tema_escuro_p": "Dark Theme",
+        "tema_device_p": "Use Device Theme"
+    }],
+    "footer": [{
+        "copyright": "IAnes © 2024-2024",
+        "company_info": "Company Information",
+        "policy_privacy": "Privacy Policy",
+        "terms_conditions": "Terms & Conditions"
+    }],
+    "logPage": [{
+        "slogan": "The Intelligence for Your Business",
+        "title_log": "Hello! Welcome Back",
+        "user_log": "Username",
+        "password_log": "Password",
+        "forgot_pass": "Forgot my password",
+        "entry_btn_log": "Login",
+        "invite_p1_log": "Don't have a Profile yet?",
+        "invite_p2_log": "Join IAnes!",
+        "criar_btn_go": "Create Your Profile",
+        "title_reg": "Hello! Welcome to IAnes",
+        "user_reg": "Username",
+        "email_reg": "Email",
+        "password_reg": "Password",
+        "conf_password_reg": "Confirm Password",
+        "create_btn_reg": "Create",
+        "invite_p1_reg": "Already have a Profile?",
+        "invite_p2_reg": "Access it now!",
+        "entrar_btn_go": "Log into Your Profile"
+    }]
+}

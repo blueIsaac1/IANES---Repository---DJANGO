@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" dir="ltr">
 <head>
+    {% load static %}
     <meta charset='utf-8'>
     <!-- Define a: Descrição do Site; Palavras-Chaves; Autor -->
     <meta name="description" content="Specialized Recommendation Artificial Intelligence">
@@ -18,33 +19,31 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- Import do CSS Principal com Aplicações Gerais -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/main.css' %}">
 
-    <!-- Import do CSS Cabeçalho -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/--header.css'>
-    <!-- Import do CSS Rodapé -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/--footer.css'>
+    <!-- Import do CSS Cabeçalho e Rodapé -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--footer.css' %}">
 
-    <!-- Import do CSS da Index -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/__index.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/--header.css' %}">
+    <!-- Import do CSS da pagina da IA -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/__auth.css' %}">  
+
     <!-- Import do CSS da Index = Inicio -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/_inicio.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/_inicio.css' %}">
     <!-- Import do CSS da Index = Sobre -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/_sobre.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/_sobre.css' %}">
 
     <!-- Import do CSS da Loading -->
-    <link rel='stylesheet' type='text/css' media='screen' href='_css/loading.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/loading.css' %}">
 
 </head>
 <body>
-
     <!-- Cabeçalho -->
-    <header id="header"></header>
+    <header id="header">
+        {% include 'head_foot_temp/_header.html' %}
+    </header>
 
     <main>
-
-        <p id="testesss"></p>
-
         <div class="inicio_container" id="tela_inicio">
             <!-- Banner de Tela -->
             <div class="banner_apresent" id="banner_apresent">
@@ -87,6 +86,7 @@
                     </div>
                 </div>
             </div>
+ 
             <div class="banner_maisSobre" id="banner_maisSobre">
                 <!-- Ondas -->
                 <svg id="wave_up_maisSobre_svg" width="100%" height="100%" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -408,7 +408,8 @@
     </div>
     
     <!-- Rodapé -->
-    <footer id="footer"></footer>
+    {% include 'head_foot_temp/_footer.html' %}
+
 
     <!-- Container de Carregamento -->
     <div id="loading_container" class="loading_container">
@@ -424,20 +425,20 @@
 
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
-    <script src="_js/+idioma.js"></script>
-    <script src="_js/+tema.js"></script>
+    <script src="{% static 'js/+idioma.js' %}"></script>
+    <script src="{% static 'js/+tema.js' %}"></script>
     <!-- Chamando apenas do Cabeçalho -->
-    <script src="_js/--header.js"></script>
+    <script src="{% static 'js/--header.js' %}"></script>
     <!-- Chamando apenas do Rodapé -->
-    <script src="_js/--footer.js"></script>
+    <script src="{% static 'js/--footer.js' %}"></script>
     <!-- Chamando o Principal DESSA pagina -->
-    <script src="_js/__index.js"></script>
+    <script src="{% static 'js/--index.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->
-    <script src="_js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <!-- Chmando o da tela de Inicio-->
-    <script src="_js/_inicio.js"></script>
+    <script src="{% static 'js/-inicio.js' %}"></script>
     <!-- Chmando o da tela de Sobre-->
-    <script src="_js/_sobre.js"></script>
+    <script src="{% static 'js/-sobre.js' %}"></script>
 
 </body>
 </html>

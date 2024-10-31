@@ -1,0 +1,602 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+:root {
+    --tamanho_icon_btn: 3vw;
+}
+
+/* Pré-feito uma Animação de Hover nos Links */
+
+.link_hover_maisSobre {
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.link_hover_maisSobre:after {
+    content: ""; /* Necessário para que o pseudo-elemento funcione */
+    position: absolute;
+    bottom: -0.1vw;
+    left: 50%; /* Mantém o centro */
+    width: 100%;
+    height: 0.1vw;
+    background-color: var(--color-fundo-claro);
+    transform: translateX(-150%) scale(0); /* Começa com escala 0 */
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.container_maisSobre_right_g button:hover .link_hover_maisSobre:after {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* ------------------------- Banner de Apresentação */
+
+.banner_apresent {
+    box-sizing: border-box;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    width: 100%;
+    min-height: 30vw;
+    padding: 2vw;
+    margin-bottom: 3vw;
+}
+
+#texto_banner_apresent_titulo {
+    font-size: 2.4vw;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 32%;
+
+    position: relative;
+
+    background: radial-gradient(circle farthest-corner at center center, #E30613 25%, #9A1915 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#texto_banner_apresent_titulo::selection {
+    background: radial-gradient(circle farthest-corner at center center, #8d0258 25%, #15179a 100%);
+    background: var(--color-azul-medio_selecionado);
+    color: var(--color-fundo-claro);
+}
+
+
+#banner_logo_img {
+    width: 12vw;
+    cursor: pointer;
+}
+
+#texto_banner_apresent_titulo_desc {
+    font-size: 1.2vw;
+    line-height: 1.5;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    width: 40%;
+}
+
+#botao_banner_exp {
+    background-color: var(--color-vermelho-medio);
+    color: #ffffff;
+    font-size: 1.4vw;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 0.8vw;
+    padding-right: 1.6vw;
+    padding-left: 1.6vw;
+    border: none;
+    border-radius: 0.2vw;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+#botao_banner_exp:hover {
+    background-color: var(--color-azul-medio);
+    color: #ffffff;
+}
+
+/* ------------------------- Banner de Vantagens da Conta */
+
+.banner_vantConta {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 3vw;
+}
+
+/* 
+#wave_up_svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#wave_up_svg path {
+    fill: var(--color-azul-medio);
+}
+
+#wave_down_svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#wave_down_svg path {
+    fill: var(--color-azul-medio);
+} 
+*/
+
+.container_vantConta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--color-azul-medio);
+    border: none;
+    border-radius: 1.2vw;
+    width: 90%;
+    height: 100%;
+    gap: 5vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.div_titulo_vantConta {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div_titulo_vantConta h1 {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.6vw;
+    line-height: 1.5;
+    width: 100%;
+    height: 100%;
+    word-wrap: normal;
+    background-color: transparent;
+}
+
+.div_buttons_vantConta {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2vw;
+}
+
+.btn_vantConta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.6vw;
+    gap: 0.5vw;
+    padding: 0.6vw;
+    padding-left: 1.6vw;
+    padding-right: 1.6vw;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn_vantConta:hover {
+    background-color: var(--color-vermelho-medio);
+}
+
+.btn_vantConta p {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.4vw;
+}
+
+#user_criar_svg {
+    width: var(--tamanho_icon_btn);
+    height: auto;
+    background-color: transparent;
+}
+
+#user_entrar_svg {
+    width: var(--tamanho_icon_btn);
+    height: auto;
+    background-color: transparent;
+}
+
+#user_criar_svg path, #user_entrar_svg path {
+    fill: #ffffff;
+}
+
+/* ------------------------- Banner de Mais Sobre */
+
+.banner_maisSobre {
+    box-sizing: border-box;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0vw;
+    width: 100%;
+    min-height: 30vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-bottom: 3vw;
+}
+
+.container_maisSobre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--color-vermelho-medio);
+    border: none;
+    border-radius: 0vw;
+    width: 100%;
+    height: 100%;
+    gap: 5vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    z-index: 30;
+}
+
+#wave_up_maisSobre_svg, #wave_down_maisSobre_svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-bottom: -2vw;
+    z-index: 29;
+}
+
+#wave_up_maisSobre_svg path, #wave_down_maisSobre_svg path {
+    fill: var(--color-vermelho-medio);
+}
+
+.container_maisSobre_g {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    width: 90%;
+    gap: 2vw;
+    padding: 1vw;
+}
+
+.container_maisSobre_left_g {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    width: 50%;
+}
+
+.container_maisSobre_left_g img {
+    width: 12vw;
+    height: auto;
+}
+
+.container_maisSobre_right_g {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: transparent;
+    width: 50%;
+    gap: 2vw;
+}
+
+.container_maisSobre_right_g h1 {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.6vw;
+    background-color: transparent;
+    width: 75%;
+}
+
+.div_btn_maisSobre {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    width: 100%;
+}
+
+.container_maisSobre_right_g button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    background-color: transparent;
+    border: none;
+    gap: 1vw;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.container_maisSobre_right_g button ion-icon {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.6vw;
+    background-color: transparent;
+    margin-left: -3vw;
+    transition: 0.3s ease-in-out;
+}
+
+.container_maisSobre_right_g button:hover ion-icon {
+    margin-left: 0vw;
+}
+
+.container_maisSobre_right_g button p {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1vw;
+    background-color: transparent;
+}
+
+/* ------------------------- Banner de Mais sobre a IA-RE */
+
+.banner_maisIARE {
+    box-sizing: border-box;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0vw;
+    width: 100%;
+    min-height: 30vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-bottom: 3vw;
+}
+
+.container_maisIARE {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: transparent;
+    border: none;
+    border-radius: 0vw;
+    width: 100%;
+    height: 100%;
+    gap: 0vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    z-index: 40;
+}
+
+.container_maisIARE #texto_maisIARE_titulo {
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.6vw;
+    margin-bottom: 1vw;
+}
+
+.container_maisIARE #texto_maisIARE_desc {
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2vw;
+    margin-bottom: 8vw;
+}
+
+.maisIARE_blocoNotas {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    padding: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.maisIARE_blocoNotas_inside {
+    background-color: transparent ;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position: static;
+    padding: 2vw;
+    position: relative;
+}
+
+.maisIARE_blocoNotas_categoria {
+    background-color: transparent ;
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: absolute;
+    /* Z-index : Muda entre 40 e 41 */
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.maisIARE_blocoNotas_titulo {
+    background-color: var(--color-vermelho-medio);
+    width: 15%;
+    height: 4vw;
+    min-width: 15%;
+    min-height: 4vw;
+    padding: 0.4vw;
+    border: none;
+    border-radius: 0.4vw;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    margin-top: -12vw;
+}
+
+.maisIARE_blocoNotas_titulo h1 {
+    background-color: transparent;
+    width: calc(100% - 10%);
+    height: auto;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2vw;
+    text-wrap: pretty;
+    transition: 0.3s ease-in-out;
+}
+
+.maisIARE_blocoNotas_box {
+    background-color: #ffffff;
+    width: 100%;
+    height: auto;
+    padding: 0.6vw;
+    border: solid var(--color-vermelho-medio) 0.3vw;
+    border-radius: 0.5vw;
+    margin-top: 0vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.maisIARE_blocoNotas_box p {
+    margin: 0;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    padding: 0;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.2vw;
+    line-height: 1.5;
+}
+
+/* Camada Padrao das Categorias */
+
+/* Sempre o "oque é" primeiro */
+#blocoNotas-categoria-oquee {
+    z-index: 41;
+}
+
+/* O resto abaixo primeiro */
+#blocoNotas-categoria-paraque, #blocoNotas-categoria-porque, #blocoNotas-categoria-comofun, #blocoNotas-categoria-vantagens {
+    z-index: 40;
+}
+
+/* Configurando o Marcador "titulo" de cada um */
+
+#blocoNotas-categoria-tit-oquee {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    /* Altera entre "flex-start" e "flex-end" */
+    align-items: flex-end;
+}
+
+#blocoNotas-categoria-tit-paraque, #blocoNotas-categoria-tit-porque, #blocoNotas-categoria-tit-comofun, #blocoNotas-categoria-tit-vantagens {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    /* Altera entre "flex-start" e "flex-end" */
+    align-items: flex-start;
+}
+
+/* Configurando a caixa de texto */
+#blocoNotas-categoria-box-oquee {
+    display: flex;
+}
+
+#blocoNotas-categoria-box-paraque, #blocoNotas-categoria-box-porque, #blocoNotas-categoria-box-comofun, #blocoNotas-categoria-box-vantagens {
+    display: none;
+}
+
+/* Individuai */
+
+#blocoNotas-categoria-tit-oquee {
+    transform: translateX(-250%);
+}
+#blocoNotas-categoria-tit-paraque {
+    transform: translateX(-125%);
+}
+#blocoNotas-categoria-tit-porque {
+    transform: translateX(0%);
+}
+#blocoNotas-categoria-tit-comofun {
+    transform: translateX(250%);
+}
+#blocoNotas-categoria-tit-vantagens {
+    transform: translateX(125%);
+}
+
+/* #region */
+
+#blocoNotas-categoria-tit-oquee:hover {
+    background-color: var(--color-azul-medio);
+}
+#blocoNotas-categoria-tit-paraque:hover {
+    background-color: var(--color-azul-medio);
+}
+#blocoNotas-categoria-tit-porque:hover {
+    background-color: var(--color-azul-medio);
+}
+#blocoNotas-categoria-tit-comofun:hover {
+    background-color: var(--color-azul-medio);
+}
+#blocoNotas-categoria-tit-vantagens:hover {
+    background-color: var(--color-azul-medio);
+}

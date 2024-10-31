@@ -30,33 +30,66 @@
 <body id="corpoPagina_chatIanes">
 
     <!-- Cabeçalho -->
-    <header id="header"></header>
+    <header id="header">
+        {% include 'head_foot_temp/_header.html' %}
+    </header>
 
     <main id="mainElement_chatIAnes">
 
         <div id="rooms_container" class="rooms_container trans_03s-margin-left rooms_container-close">
             <div class="sideBar_header">
-                <div onclick="expandSidebar()" aria-expanded="false" class="btn_expandirSalas btn_expandirSalas-open" id="btn_expandirSalas">
+                <button class="btn_sideBar_header btn_home" onclick="navigateTo('index_page', 'normal')" onmouseover="showTooltip_sideBar('irInicio')" onmouseout="hideTooltip_sideBar('irInicio')">
+                    <i id="icone_sideBar_home" class='bx bxs-home icone_sideBar'></i>
+                    <p class="tp_sideBar_header tp_btn_home" id="tp_irInicio">Ir para o Início</p>
+                </button>
+                <button class="btn_sideBar_header btn_novaSala" onclick="criarNovaSala()" onmouseover="showTooltip_sideBar('criarNovaSala')" onmouseout="hideTooltip_sideBar('criarNovaSala')">
+                    <i id="icone_sideBar_home" class='bx bxs-message-add icone_sideBar'></i>
+                    <p class="tp_sideBar_header tp_btn_criarSalas" id="tp_criarNovaSala">Criar nova Sala</p>
+                </button>
+                <button onclick="expandSidebar()" aria-expanded="true" class="btn_sideBar_header btn_expandirSalas btn_expandirSalas-open" id="btn_expandirSalas" onmouseover="showTooltip_sideBar('expand')" onmouseout="hideTooltip_sideBar('expand')">
                     <!-- <ion-icon id="icone_expandSidebar" class="icone_expandSidebar rotate90neg" name="push-outline"></ion-icon> -->
                     <i id="icone_expandSidebar" class='bx bx-menu-alt-left icone_expandSidebar rotate_flip'></i>
-                    <p class="texto_expandSidebar texto_expandSidebar-open" id="tp_texto_abrirSidebar">Abrir painel lateral</p>
-                    <p class="texto_expandSidebar texto_expandSidebar-close texto_expandSidebar-hide" id="tp_texto_fecharSidebar">Fechar painel lateral</p>
-                </div>
+                    <p class="tp_expandSidebar tp_expandSidebar-open" id="tp_texto_abrirSidebar">Abrir painel lateral</p>
+                    <p class="tp_expandSidebar tp_expandSidebar-close tp_expandSidebar-hide" id="tp_texto_fecharSidebar">Fechar painel lateral</p>
+                </button>
             </div>
             <div class="rooms_content">
                 <h1 id="texto_chatIA_salasConversas">Salas de Conversas</h1>
-                
                 <div class="rooms_section">
-                    <ul>
-                        {% for room in rooms %}
-                            <li>
-                                <a href="{% url 'list_messages' room.id %}">{{ room.title }}</a>
-                            </li>
-                        {% empty %}
-                            <li>Nenhuma sala disponível.</li>
-                        {% endfor %}
-                    </ul>
+                    {% for room in rooms %}
+                    <!-- Container dos Botões das Salas -->
+                    <div class="container_btn_trocarSalas">
+                        <div onclick="trocarSalas(this)" class="btn_trocarSalas" id="btn_trocarSalas_sala-1">
+                            <form method="get" id="form_rename" class="roomsNames">
+                                <a href="{% url 'list_messages' room.id %}" class="roomName" id="texto_chatIA_roomName">{{ room.title }}</a>
+                                <input class="rename_area" placeholder="Nova Sala" id="input_rename" maxlength="30" value="Nova Sala" type="text">
+                            </form>
+                        </div>
+                        <div class="btn_roomsEP" id="btn_roomsEP-1" onclick="activeExtraOptionsBox(this)" aria-expanded="false"  onmouseover="showTooltip_sideBar('opcoes')" onmouseout="hideTooltip_sideBar('opcoes')">
+                            <i class='bx bx-dots-horizontal-rounded'></i>
+                            <p class="tp_sideBar_header tp_opcoes" id="tp_opcoes">Opções</p>
+                        </div>
+                        <div class="roomsExtraOptions_box" id="roomsExtraOptions_box">
+                            <div class="roomsExtraOptions_item" id="sideBar_download">
+                                <i class='bx bxs-file-pdf download-icon'></i>
+                                <p id="texto_chatIA_renomar" class="download-text">Download</p>
+                            </div>
+                            <div class="roomsExtraOptions_item" id="sideBar_rename" onclick="renameRoom(this)">
+                                <i class='bx bxs-pencil pencil-icon'></i>
+                                <p id="texto_chatIA_renomar" class="pencil-text">Renomear</p>
+                            </div>
+                            <div class="roomsExtraOptions_item" id="sideBar_excluir">
+                                <i class='bx bxs-trash trash-icon'></i>
+                                <p id="texto_chatIA_renomar" class="trash-text">Excluir</p>
+                            </div>
+                        </div>
+                        	
+                    </div>
+                    {% empty %}
+                        <p>Nenhuma sala disponível.</p>
+                    {% endfor %}
                 </div>
+                
             </div>
         </div>
         
@@ -66,8 +99,6 @@
 
                 <!-- As salas serão adicionadas automaticamente de acordo com o usuario -->
                 <!-- Por padrão, a sala 1 é sempre está disponivel -->
-
-                <iframe src="{% static 'html/_header.html' %}" frameborder="0"></iframe>
 
                 <div class="chat_messages" id="chat_messages-chat-1">
                     <ul class="messages_list" id="messages_list">
@@ -168,13 +199,13 @@
     <script src="{% static 'js/+idioma.js' %}"></script>
     <script src="{% static 'js/+tema.js' %}"></script>
     <!-- Chamando apenas do Cabeçalho -->
-    <!-- <script src="{% static 'js/--header.js' %}"></script> -->
+    <script src="{% static 'js/--header.js' %}"></script>
     <!-- Chamando apenas do Rodapé -->
     <script src="{% static 'js/--footer.js' %}"></script>
     <!-- Chamando o Principal DESSA pagina -->
     <script src="{% static 'js/main.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->
-    <script src="{% static 'js/__chatIAnes.js' %}"></script>
+    <script src="{% static 'js/--chatIAnes.js' %}"></script>
 
 </body>
 </html>

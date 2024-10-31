@@ -1,14 +1,26 @@
 [
     {
-        "room_id": 29,
-        "timestamp": "2024-10-31T11:50:23.067427+00:00",
-        "user_message": "oi",
-        "bot_response": "Oi! How can I help you today? \n"
+        "room_id": 1,
+        "timestamp": "2024-10-31T16:09:01.440862+00:00",
+        "user_message": "voce tem whatsapp?",
+        "bot_response": "Eu sou um modelo de linguagem grande, não tenho um número de telefone ou aplicativo como WhatsApp. \n\nSe você tiver alguma outra pergunta, fique à vontade para perguntar! \n"
     },
     {
-        "room_id": 29,
-        "timestamp": "2024-10-31T11:50:33.897359+00:00",
-        "user_message": "em portugues",
-        "bot_response": "Em português significa \"in Portuguese\".\n\nVocê gostaria que eu traduzisse algo para o português? \n\nPor favor, me diga o que você deseja traduzir! \n"
+        "room_id": 1,
+        "timestamp": "2024-10-31T16:12:54.569585+00:00",
+        "user_message": "o rafael vicente é gay?",
+        "bot_response": "Erro: 429 Resource has been exhausted (e.g. check quota)."
+    },
+    {
+        "room_id": 1,
+        "timestamp": "2024-10-31T16:13:02.516282+00:00",
+        "user_message": "eita",
+        "bot_response": "Erro: 429 Resource has been exhausted (e.g. check quota)."
+    },
+    {
+        "room_id": 1,
+        "timestamp": "2024-10-31T16:57:56.027154+00:00",
+        "user_message": "oii",
+        "bot_response": "Erro: 429 Resource has been exhausted (e.g. check quota)."
     }
 ]

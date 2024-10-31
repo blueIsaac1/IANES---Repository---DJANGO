@@ -1,7 +1,9 @@
+// // Caminho/URL para as Paginas
+const url_page_index = "http://127.0.0.1:8000/"
+const url_page_auth = "http://127.0.0.1:8000/auth"
+const url_page_ianes = "http://127.0.0.1:8000/IAnes"
+
 // Caminho/URL para as Paginas
-const url_page_index = "http://127.0.0.1:5500/index.html"
-const url_page_auth = "http://127.0.0.1:8000/"
-const url_page_ianes = "http://127.0.0.1:5500/chatIAnes.html"
 
 // ----------------- Função para Navegar para as Paginas
 function navigateTo(page, tela) {
@@ -216,26 +218,26 @@ if (typeof loading_page === 'function') {
 }
 
 // Função para carregar os componentes
-async function carregarComponentes() {
-    const promises = [];
-    const janelaAtual_url = localStorage.getItem("ultimaJanela")
-    if (janelaAtual_url.includes(url_page_index) || janelaAtual_url.includes(url_page_auth)) {
-      promises.push(loadHTML('header', "{% static 'html/_header.html' %}"));
-      promises.push(loadHTML('footer', '{% static "html/_footer.html" %}'));
-    } else if (janelaAtual_url.includes(url_page_ianes)) {
-      promises.push(loadHTML('header', '{% static "html/_header.html" %}'));
-    }
+// async function carregarComponentes() {
+//     const promises = [];
+//     const janelaAtual_url = localStorage.getItem("ultimaJanela")
+//     if (janelaAtual_url.includes(url_page_index) || janelaAtual_url.includes(url_page_auth)) {
+//       promises.push(loadHTML('header', "{% static 'html/_header.html' %}"));
+//       promises.push(loadHTML('footer', '{% static "html/_footer.html" %}'));
+//     } else if (janelaAtual_url.includes(url_page_ianes)) {
+//       promises.push(loadHTML('header', '{% static "html/_header.html" %}'));
+//     }
   
-    await Promise.all(promises);
-    console.log("⚙ COMPONENTES carregados");
-  }
+//     await Promise.all(promises);
+//     console.log("⚙ COMPONENTES carregados");
+//   }
 
 document.addEventListener('DOMContentLoaded', async function() {
     // Pegar a URL da página atual e armazená-la no localStorage
     const janelaAtual_url = window.location.href;
     localStorage.setItem('ultimaJanela', janelaAtual_url);
 
-    await carregarComponentes();
+    // await carregarComponentes();
 
     // Verifique se os elementos estão no DOM
     const header = document.getElementById('header');

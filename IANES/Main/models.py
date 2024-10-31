@@ -14,6 +14,10 @@ class Room(models.Model):
     #     return f"Session for {self.user.username} at {self.created_at}" 
     def __str__(self):
         return self.title
+    
+    def update_title(self, title):
+        return title.self
+    
 
 
 class BotResponse(models.Model):
