@@ -465,10 +465,10 @@ document.addEventListener('DOMContentLoaded', function() {
     validarCheck_concordo()
 });
 
-document.getElementById('forms_signup').addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede a submissão padrão do formulário
-    // Lógica para processar o formulário aqui
-});
+// document.getElementById('forms_signup').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Impede a submissão padrão do formulário
+//     // Lógica para processar o formulário aqui
+// });
 
 // Mostrar Box de Validações
 document.querySelectorAll('#input_senha_signup').forEach(input => {

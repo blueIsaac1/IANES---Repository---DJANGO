@@ -36,6 +36,8 @@ class UserMessage(models.Model):
         return f"{self.user.first_name}: {self.text}"
     
 
+
+
 # class ChatMessage(models.Model):
 #     session = models.ForeignKey(Room, on_delete=models.CASCADE)
 #     user_message = models.TextField()

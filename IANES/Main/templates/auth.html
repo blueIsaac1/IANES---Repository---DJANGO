@@ -29,7 +29,9 @@
     <header id="header"></header>
 
     <main>
-
+        <!-- form -->
+        
+        {% csrf_token %}
         <div class="container_login" id="container_login">
             <div class="box_login box_auth">
                 <div class="box_login_top box_auth_top">
@@ -74,7 +76,8 @@
                     </div>
                 </div>
                 <div class="box_login_bot box_auth_bot">
-                    <form action="" method="post" id="forms_login">
+                    <form action="{% url 'auth' %}" method="post" id="forms_login">
+                        {% csrf_token %} <!-- form login -->
                         <!-- Input 1: Usuario ou Email -->
                         <div class="div_input_userEmail div_input_sec">
                             <div class="div_input_userORemail_label div_input_label">
@@ -101,7 +104,7 @@
                                     54 153 57 10 0 71 -28 135 -64z"/>
                                     </g>
                                 </svg>
-                                <input tabindex=1 class="input_login_userORemail input_area" type="text" name="Email or User" id="input_login_userORemail" placeholder="Digite o seu Usuário ou Email">
+                                <input tabindex=1 class="input_login_userORemail input_area" type="text" name="username" id="input_login_userORemail" placeholder="Digite o seu Usuário ou Email">
                                 <span class="input_extra"></span>
                             </div>
                         </div>
@@ -114,7 +117,7 @@
                             <div class="div_input_senhaLogin_area div_input_area" id="div_input_senhaLogin_area">
                                 <ion-icon class="icon_lockOpen_login lockOpen_icons" id="lockOpen_login_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'login' --> 
-                                <input tabindex=2 class="input_login_area input_area" type="password" name="Senha" id="input_senha_login" placeholder="Digite sua Senha">
+                                <input tabindex=2 class="input_login_area input_area" type="password" name="password" id="input_senha_login" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div tabindex=4 aria-state="pass_hide" class="input_extra_clickable" id="eye_password_login" 
                                         onmouseover="showTooltip('tooltip_senha_login')" 
@@ -146,6 +149,8 @@
                 </div>
             </div>
         </div>
+        
+        <!-- end form -->
         <div class="container_signup" id="container_signup">
             <div class="box_signup box_auth">
                 <div class="box_signup_top box_auth_top">
@@ -184,7 +189,7 @@
                     </div>
                 </div>
                 <div class="box_signup_bot box_auth_bot">
-                    <form action="#" method="post" id="forms_signup">
+                    <form action="{% url 'auth' %}" method="post" id="forms_signup"> <!-- form signup -->
                         <!-- Input 1: Usuario -->
                         <div class="div_input_user div_input_sec">
                             <div class="div_input_user_label div_input_label">
@@ -211,7 +216,7 @@
                                     54 153 57 10 0 71 -28 135 -64z"/>
                                     </g>
                                 </svg>
-                                <input maxlength="30" class="input_signup_user_area input_area" type="text" name="Usuario Signup" id="input_signup_user" placeholder="Digite o seu Usuário">
+                                <input maxlength="30" class="input_signup_user_area input_area" type="text" name="username_create" id="input_signup_user" placeholder="Digite o seu Usuário">
                                 <span class="input_extra">
                                     <span id="texto_user_maximoChar"></span>
                                 </span>
@@ -254,7 +259,7 @@
                             <div class="div_input_senhaSignup_area div_input_area" id="div_input_senhaSignup_area">
                                 <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_signup_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'signup' -->
-                                <input class="input_senha_signup_area input_area" type="password" name="Senha" id="input_senha_signup" placeholder="Digite sua Senha">
+                                <input class="input_senha_signup_area input_area" type="password" name="passowrd" id="input_senha_signup" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signup" 
                                         onmouseover="showTooltip('tooltip_senha_signup')" 
@@ -297,7 +302,7 @@
                             <div class="div_input_confSenhaSignup_area div_input_area" id="div_input_confSenhaSignup_area">
                                 <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_confSignup_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'signupConf' -->
-                                <input class="input_senha_signupConf_area input_area" type="password" name="Senha" id="input_senha_signupConf" placeholder="Digite sua Senha">
+                                <input class="input_senha_signupConf_area input_area" type="password" name="confirm_password" id="input_senha_signupConf" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signupConf" 
                                         onmouseover="showTooltip('tooltip_senha_signupConf')" 

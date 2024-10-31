@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as login_django
 from django.http import JsonResponse
 import google.generativeai as genai
 from Main.models import Room, UserMessage, BotResponse
@@ -17,6 +17,8 @@ from googletrans import Translator
 import re
 import requests
 from itertools import zip_longest
+from django.contrib import messages 
+
 
 pasta_dados = 'DADOS'
 
@@ -52,18 +54,38 @@ def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
 
 @csrf_exempt
 def auth(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
+    if request.method == 'GET':
+        return render(request, 'auth.html')
+    
+    # elif request.method == 'POST':
+    #     username_create = request.POST.get('username_create')
+    #     email_create = request.POST.get('email_confirm')
+    #     password_create = request.POST.get('password_create')
+    #     password_confirm = request.POST.get('password_confirm')
+    #     form = SignupForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('login')
+    # else:
+    #     form = SignupForm()
+    # return render(request, 'signup.html', {'form': form})
+
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
+
+        user = authenticate(username=user.username, password=password)
+        if user:
+            login_django(request, user)
+            return redirect(index)
         else:
-            return render(request, 'auth.html')
-    return render(request, 'auth.html')
+            return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
+
+
 
 # @csrf_exempt
 # def index(request):
@@ -72,8 +94,8 @@ def auth(request):
 # @csrf_exempt
 # def chat(request):
 #     return render(request, 'chatIAnes.html') api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
-
-@login_required(login_url='/')
+    
+@login_required(login_url='')
 def index(request):
     rooms = Room.objects.all().order_by('-created_at')
     return render(request, 'home.html', {
