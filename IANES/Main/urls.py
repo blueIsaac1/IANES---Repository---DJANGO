@@ -11,6 +11,7 @@ urlpatterns = [
     path('index/', views.index, name="index"),
     path('IAnes/<pk>/', views.list_messages, name="list_messages"),
     path('create-room/', views.create_room, name="create_room"),
+    path('delete-room/<int:id>/', views.delete_room, name="delete_room"),
     path('<pk>/', views.RoomDetailView.as_view(), name="room_detail"),
     path('<pk>/send/', views.send_message, name="send_message"),
 ]

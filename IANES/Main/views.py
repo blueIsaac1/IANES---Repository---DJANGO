@@ -263,13 +263,17 @@ def list_messages(request, pk):
             except Exception as e:
                 return JsonResponse({'success': False, 'error': str(e)})
 
-    elif request.method == 'DELETE':
-        room_delete = get
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
         'room': room,
         'rooms': rooms,
         'messages': messages,
-        'current_page': 'ianes'
+        'current_page': 'ianes',
+        
     })
+
+def delete_room(request, id):
+    room_delete = get_object_or_404(Room, id=id)
+    room_delete.delete()
+    return redirect('list_messages', pk=id)

@@ -13,7 +13,7 @@ class Room(models.Model):
     # def __str__(self):
     #     return f"Session for {self.user.username} at {self.created_at}" 
     def __str__(self):
-        return self.title
+        return f"Sala: {self.title}, {self.id}"
     
     def update_title(self, title):
         return title.self
