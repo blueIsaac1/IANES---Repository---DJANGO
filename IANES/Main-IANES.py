@@ -3,10 +3,13 @@ import google.generativeai as genai
 import os
 import time
 from google.api_core import exceptions as google_exceptions
-from googletrans import Translator
-import re
+from deep_translator import GoogleTranslator 
+import re 
 import requests
+import locale 
 
+
+# Função para obter a cotação do dólar
 def obter_cotacao_dolar():
     url = 'https://economia.awesomeapi.com.br/json/last/USD-BRL'
     response = requests.get(url)
@@ -14,10 +17,10 @@ def obter_cotacao_dolar():
     if response.status_code == 200:
         dados = response.json()
         cotacao = dados['USDBRL']['bid']
-        return float(cotacao)  # Retorna o valor da cotação como um número
+        return float(cotacao)
     else:
         print("Não foi possível obter a cotação do dólar.")
-        return None  # Retorna None se a cotação não puder ser obtida
+        return None
 
 # Configuração da chave da API
 api_key = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'  # Substitua pela sua chave de API
@@ -25,24 +28,38 @@ os.environ["API_KEY"] = api_key
 genai.configure(api_key=os.environ["API_KEY"])
 
 # Inicializando o tradutor
-translator = Translator()
+def translate_text(text, target_lang):
+    try:
+        translator = GoogleTranslator(source='auto', target=target_lang)
+        return translator.translate(text)
+    except Exception as e:
+        print(f"Erro na tradução: {e}")
+        return text
 
 # Função para escolher o idioma
 def escolher_idioma():
-    idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim'}
-    print("Escolha um idioma:")
-    for codigo, nome in idiomas.items():
-        print(f"{codigo}: {nome}")
+    idioma_atual, encoding = locale.getlocale() # Captura o idioma do sistema local
+    idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim', 'fr': 'Francês'}
 
-    while True:
-        idioma_escolhido = input("Digite o código do idioma: ").lower()
-        if idioma_escolhido in idiomas:
-            return idioma_escolhido
-        else:
-            idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim'}
-            print("Escolha um idioma valido:")
-            for codigo, nome in idiomas.items():
-                print(f"{codigo}: {nome}")
+    if idioma_atual.startswith('pt'):  # Detecta se o idioma do sistema local é português
+        print("Idioma detectado automaticamente: Português")
+        idioma_escolhido = 'pt'
+        return idioma_escolhido
+    else:
+        print("Escolha um idioma:")
+        for codigo, nome in idiomas.items():
+            print(f"{codigo}: {nome}")
+        while True:
+            idioma_escolhido = input("Digite o código do idioma: ").lower()
+            if idioma_escolhido in idiomas:
+                return idioma_escolhido
+            elif idioma_escolhido in idiomas and idioma_escolhido == 'pt':
+                idioma_escolhido = None
+                return idioma_escolhido
+            else:
+                print("Escolha um idioma válido.")
+                for codigo, nome in idiomas.items():
+                    return(f"{codigo}: {nome}")
 
 # Função para carregar o conteúdo das páginas a partir de um arquivo JSON
 def carregar_conteudo(pasta):
@@ -55,111 +72,278 @@ def carregar_conteudo(pasta):
                     conteudo = json.load(f)
                     todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
             except UnicodeDecodeError:
-                print(f"Erro de codificação ao ler o arquivo {arquivo}. Tentando com ISO-8859-1.")
+                erro = (f"Erro de codificação ao ler o arquivo {arquivo}. Tentando com ISO-8859-1.")
                 with open(caminho_completo, 'r', encoding='ISO-8859-1') as f:
                     conteudo = json.load(f)
                     todos_conteudos.append({"arquivo": arquivo, "conteudo": conteudo})
+                return erro
             except json.JSONDecodeError:
                 print(f"Erro ao decodificar JSON do arquivo {arquivo}. Pulando...")
     return todos_conteudos
 
 # Função para verificar se a língua é válida
 def lingua_valida(lingua):
-    valid_languages = ['en', 'pt', 'es', 'zh-cn']
+    valid_languages = ['en', 'pt', 'es', 'zh-cn', 'fr']
     return lingua in valid_languages
 
-# Função para obter inputs do usuário com tratamento de erro
+# Função para obter os parâmetros do usuário com seleção de tema e vertente (subtema)
 def obter_parametros_usuario(lingua):
     respostas = {}
 
     # Obtém a cotação do dólar
     cotacao_dolar = obter_cotacao_dolar()
     if cotacao_dolar is None:
-        print("Não foi possível obter a cotação do dólar. Usando valor padrão.")
-        cotacao_dolar = 5.00  # Valor padrão se a cotação não for obtida
+        cotacao_dolar = 5.00
+        return(translate_text("Não foi possível obter a cotação do dólar. Usando valor padrão.", lingua))
 
-    perguntas = {
+    # Perguntas relacionadas à empresa
+    perguntas_empresa = {
         "nome": "Por favor, insira o nome da pessoa responsável: ",
-        "projeto": "Por favor, informe o nome do projeto: ",
-        "tema": "Qual é o tema do projeto? ",
-        "area": "Em qual área de atuação o projeto se insere? ",
-        "esboco": "Descreva brevemente o esboço do projeto: ",
-        "orcamento": f"Cotação atual do dólar: R$ {cotacao_dolar:.2f} \n Qual é o orçamento previsto para o projeto em reais (R$)?",
-        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Mundial): ",
-        "tempo": "Qual é a duração prevista do projeto em meses? ",
-        "lucro": f"Cotação atual do dólar: R$ {cotacao_dolar:.2f} \n Qual é o lucro estimado do projeto em reais (R$)?",
+        "nome_empresa": "Por favor, insira o nome da empresa responsável: ",
+        "lucro": f"Qual é o lucro bruto da empresa em reais (R$) ?",
+        "numero_colaboradores": "Por favor, insira o número de colaboradores do projeto: ",
         "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): ",
-        "publicoalvo": "Quem é o público-alvo do projeto? ",
-        "lfreembolso": "A linha de fomento requer reembolso? (Sim ou Não): ",
-        "itensfianciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
+        "Email": "Por favor, insira o e-mail do responsável pelo projeto: "
     }
 
-    # Verificação inicial da tradução
-    if not hasattr(translator, 'translate'):
-        print("O objeto translator não possui o método translate. Verifique a inicialização.")
-        return {}
-
-    for chave, pergunta_original in perguntas.items():
+    # Perguntar os dados da empresa
+    for chave, pergunta in perguntas_empresa.items():
+        # Verificando tradução
         pergunta_traduzida = ""
 
-        # Tentamos traduzir uma única vez
         try:
-            pergunta_traduzida = translator.translate(pergunta_original, dest=lingua).text
+            pergunta_traduzida = translate_text(pergunta, lingua)
         except AttributeError:
-            print(f"Erro ao traduzir a pergunta original: {pergunta_original}")
+            return(f"Erro ao traduzir a pergunta original: {pergunta}")
 
         # Se não conseguirmos traduzir, usamos a versão em português
         if not pergunta_traduzida:
-            print(f"Usando versão em português para '{pergunta_original}'")
-            pergunta_traduzida = pergunta_original
-
+            pergunta_traduzida = pergunta
+            return(f"Usando versão em português para '{pergunta}'")
+        
+        # Início do campo das perguntas
         while True:
-            resposta = input(f"{pergunta_traduzida} ")
+            
+            resposta = input(pergunta_traduzida)
             try:
-                if chave in ["nome", "projeto", "tema", "area"]:
+                if chave in ["nome", "nome_empresa"]:
                     if resposta.strip():
                         respostas[chave] = resposta
                         break
                     else:
-                        print("Por favor, insira um valor válido. Este campo não pode ficar em branco.")
-                        continue
-                elif chave == "orcamento":
-                    respostas[chave] = float(resposta)
-                elif chave == "extensao":
-                    if resposta in ("Regional", "Nacional", "Mundial", "regional", "nacional", "mundial"):
-                        respostas[chave] = resposta
-                        break
-                    else:
-                        print("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Mundial.")
-                        continue
-                elif chave == "tempo":
-                    respostas[chave] = int(resposta)
+                        print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
                 elif chave == "lucro":
-                    respostas[chave] = float(resposta)
+                    try:
+                        respostas[chave] = float(resposta)
+                        break
+                    except ValueError:
+                        print(translate_text("Erro! Por favor, insira apenas número e '.' para separar os decimais (se necassário)", lingua))
+                elif chave == "numero_colaboradores":
+                    try:
+                        respostas[chave] = int(resposta)
+                        break
+                    except ValueError:
+                        print(translate_text("Erro! Por favor, insira apenas números sem decimais", lingua))
                 elif chave == "CNPJ":
-                    if resposta.lower() == 'não' or resposta.lower() == 'no':
+                    if resposta.lower() == translate_text('não', lingua):
                         respostas[chave] = resposta
                         break
                     elif re.match(r'\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}', resposta):
                         respostas[chave] = resposta
-                    else:
-                        print("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não/No'.")
-                        continue
-                elif chave in ["lfreembolso", "itensfianciaveis"]:
-                    resposta = resposta.strip().lower()
-                    if resposta in ["sim", "não", "yes", "no"]:
-                        respostas[chave] = resposta in ["sim", "yes"]
                         break
                     else:
-                        print("Por favor, responda com 'Sim/Yes' ou 'Não/No'.")
-                        continue
+                        print(translate_text("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não/No'.", lingua))
+                elif chave == "Email":
+                    if "@" in resposta and "." in resposta:
+                        if resposta.strip():
+                            respostas[chave] = resposta
+                            break
+                    else:
+                        print(translate_text("E-mail inválido. Por favor, insira um e-mail válido e que contenha '@' e '.'.", lingua))
+                else:
+                    respostas[chave] = resposta  
+                    break     
+            except ValueError as e:
+                print(translate_text(f"Erro no sistema: {e}", lingua))
+
+    # Perguntar a área de atuação da empresa
+    temas = {
+        1: "Tecnologia da Informação (TI)",
+        2: "Indústria",
+        3: "Engenharia Civil e Infraestrutura",
+        4: "Meio Ambiente",
+        5: "Educação",
+        6: "Saúde",
+        7: "Finanças e Investimentos",
+        8: "Agropecuária e Agroindústria",
+        9: "Marketing e Comunicação",
+        10: "Desenvolvimento Social e Humano",
+        11: "Setor Público e Governança",
+        12: "Entretenimento e Cultura"
+    }
+
+    print(translate_text("Escolha a área de atuação da empresa:", lingua))
+    for codigo, nome in temas.items():
+
+        # Verificando tradução
+        nome_traduzido = ""
+
+        try:
+            nome_traduzido = translate_text(nome, lingua)
+        except AttributeError:
+            print(f"Erro ao traduzir a nome original: {nome}")
+
+        # Se não conseguirmos traduzir, usamos a versão em português
+        if not nome_traduzido:
+            nome_traduzido = nome
+            print(f"Usando versão em português para '{nome}'")
+        
+        print(f"{codigo}: {nome_traduzido}")
+
+    while True:
+        try:
+            escolha_area = int(input(translate_text("Digite o número da área escolhida: ", lingua)))
+            if escolha_area in temas:
+                respostas["area_atuacao"] = temas[escolha_area]
+                break
+            else:
+                print(translate_text("Escolha um número válido para a área de atuação.", lingua))
+        except ValueError as e:
+            return(translate_text(f"Por favor, insira um número válido. Se este não for o problema, verifique o erro: {e}", lingua))
+
+    # Perguntas relacionadas ao projeto
+    perguntas_projeto = {
+        "projeto": "Por favor, informe o nome do projeto: ",
+        "orcamento": f"Cotação atual do dólar: R$ {cotacao_dolar:.2f} \nQual é o orçamento previsto para o projeto em reais (R$)?",
+        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Mundial): ",
+        "tempo": "Qual é a duração prevista do projeto em meses? ",
+        "publicoalvo": "Quem é o público-alvo do projeto? ",
+        "itensfinanciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
+    }
+
+    # Perguntar o nome do projeto
+    for chave, pergunta in perguntas_projeto.items():
+                # Verificando tradução
+        pergunta_traduzida = ""
+
+        try:
+            pergunta_traduzida = translate_text(pergunta, lingua)
+        except AttributeError:
+            print(f"Erro ao traduzir a pergunta original: {pergunta}")
+
+        # Se não conseguirmos traduzir, usamos a versão em português
+        if not pergunta_traduzida:
+            pergunta_traduzida = pergunta
+            print(f"Usando versão em português para '{pergunta}'")
+        
+        while True:
+            try:
+                resposta = input(pergunta_traduzida)
+                if chave in ["projeto", "publicoalvo"]:
+                    if resposta.strip():
+                        respostas[chave] = resposta
+                        break
+                    else:
+                        print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
+                elif chave == "orcamento":
+                    respostas[chave] = float(resposta)
+                    break
+                elif chave == "extensao":
+                    if translate_text(resposta, lingua) in (translate_text("Regional", lingua), translate_text("Nacional", lingua), translate_text("Global", lingua), translate_text("regional", lingua), translate_text("nacional", lingua), translate_text("global", lingua)):
+                        if resposta.strip():
+                            respostas[chave] = resposta
+                            break
+                    else:
+                        print(translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Mundial.", lingua))
+                elif chave == "tempo":
+                    respostas[chave] = int(resposta)
+                    break
+                elif chave == "itensfinanciaveis":
+                    if resposta in (translate_text("Sim", lingua), translate_text("Não", lingua), translate_text("sim", lingua), translate_text("não", lingua)):
+                        respostas[chave] = resposta
+                        break
+                    else:
+                        print(translate_text("Por favor, responda com 'sim' ou 'não'", lingua))
                 else:
                     respostas[chave] = resposta
-                break
             except ValueError as e:
-                print(f"Erro: {e}")
+                return(translate_text(f"Por favor, insira uma resposta válida. Caso esse não seja o problema, verifique o erro: {e}", lingua))
+
+    # Perguntar o tema do projeto
+    print(translate_text("\nEscolha o tema do projeto:", lingua))
+    for codigo, nome in temas.items():
+        # Verificando tradução
+        nome_traduzido = ""
+
+        try:
+            nome_traduzido = translate_text(nome, lingua)
+        except AttributeError:
+            return(f"Erro ao traduzir a nome original: {nome}")
+
+        # Se não conseguirmos traduzir, usamos a versão em português
+        if not nome_traduzido:
+            nome_traduzido = nome
+            return(f"Usando versão em português para '{nome}'")
+        
+        print(f"{codigo}: {nome_traduzido}")
+
+    while True:
+        try:
+            escolha_tema = int(input(translate_text("Digite o número do tema escolhido: ", lingua)))
+            if escolha_tema in temas:
+                respostas["tema"] = temas[escolha_tema]
+                break
+            else:
+                print(translate_text("Escolha um número válido para o tema.", lingua))
+        except ValueError as e:
+            return(f"Por favor, insira um número válido. Se este não for o erro, verifique-o aqui: {e}")
+
+    # Perguntar a vertente (subtema) do tema escolhido
+    vertentes = {
+        1: ["Desenvolvimento de Software", "Infraestrutura de TI", "Segurança da Informação", "Transformação Digital", "Computação em Nuvem"],
+        2: ["Manufatura", "Logística e Cadeia de Suprimentos", "Energia", "Engenharia de Produto"],
+        3: ["Construção Civil", "Urbanismo", "Saneamento Básico", "Infraestrutura de Transportes"],
+        4: ["Gestão de Resíduos", "Conservação de Recursos Naturais", "Energias Renováveis", "Sustentabilidade"],
+        5: ["Educação a Distância (EAD)", "Capacitação e Treinamento", "Desenvolvimento de Currículo", "Inovação Educacional"],
+        6: ["Infraestrutura de Saúde", "Tecnologia em Saúde (HealthTech)", "Pesquisa Biomédica", "Gestão de Saúde Pública"],
+        7: ["Finanças Corporativas", "Gestão de Ativos", "Finanças Sustentáveis", "Criptomoedas e Blockchain"],
+        8: ["Agricultura de Precisão", "Pecuária", "Agroindústria", "Desenvolvimento Rural Sustentável"],
+        9: ["Marketing Digital", "Branding e Posicionamento de Marca", "Comunicação Corporativa", "Análise de Dados de Mercado"],
+        10: ["Programas de Inclusão Social", "Empreendedorismo Social", "Direitos Humanos e Igualdade de Gênero", "Segurança Alimentar"],
+        11: ["Políticas Públicas", "Modernização Administrativa", "Transparência e Compliance", "Planejamento Urbano e Regional"],
+        12: ["Produção Audiovisual", "Artes Cênicas e Performáticas", "Indústria de Jogos", "Preservação do Patrimônio Cultural"]
+    }
+
+    print(translate_text(f"\nVocê escolheu o tema '{temas[escolha_tema]}'. Agora escolha uma vertente (subtema):", lingua))
+    for i, vertente in enumerate(vertentes[escolha_tema], 1):
+        # Verificando tradução
+        vertente_traduzida = ""
+
+        try:
+            vertente_traduzida = translate_text(vertente, lingua)
+        except AttributeError:
+            print(f"Erro ao traduzir a vertente original: {vertente}")
+
+        # Se não conseguirmos traduzir, usamos a versão em português
+        if not vertente_traduzida:
+            vertente_traduzida = vertente
+            print(f"Usando versão em português para '{vertente}'")
+        
+        print(f"{i}: {vertente_traduzida}")
+
+    while True:
+        try:
+            escolha_vertente = int(input(translate_text("Digite o número da vertente escolhida: ", lingua)))
+            if 1 <= escolha_vertente <= len(vertentes[escolha_tema]):
+                respostas["vertente"] = vertentes[escolha_tema][escolha_vertente - 1]
+                break
+            else:
+                print(translate_text(f"Escolha um número entre 1 e {len(vertentes[escolha_tema])}.", lingua))
+        except ValueError as e:
+            return(f"Por favor, insira um número válido. Caso este não seja o problema, verifique o erro aqui: {e}")
 
     return respostas
+
 
 
 # Função para obter análise da API Gemini
@@ -167,7 +351,24 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
     for attempt in range(max_retries):
         try:
             model = genai.GenerativeModel("gemini-1.5-flash")
-            prompt = f"Analise o seguinte conteúdo com base nas seguintes entradas do usuário:\n\nConteúdo: {content}\n\nEntradas do usuário: {user_inputs}\n\nForneça uma pontuação de relevância entre 0 e 10 e uma breve descrição da relevância."
+            prompt = (
+                f"Analise o seguinte conteúdo com base nas entradas do usuário fornecidas:"
+                f"\n\nConteúdo: {content}\n\n"
+                f"Entradas do usuário:\n"
+                f"- Nome do Projeto: {user_inputs.get('projeto', 'N/A')}\n"
+                f"- Orçamento em reais (R$): {user_inputs.get('orcamento', 'N/A')}\n"
+                f"- Número de Colaboradores: {user_inputs.get('numero_colaboradores', 'N/A')}\n"
+                f"- Extensão Geográfica: {user_inputs.get('extensao', 'N/A')}\n"
+                f"- Duração do Projeto: {user_inputs.get('tempo', 'N/A')} meses\n"
+                f"- Setor: {user_inputs.get('tema', 'N/A')}\n"
+                f"- Vertente ou Subtema: {user_inputs.get('vertente', 'N/A')}\n"
+                f"- Itens Financiáveis: {user_inputs.get('itensfianciaveis', 'N/A')}\n"
+                f"- Público-Alvo do Projeto: {user_inputs.get('publicoalvo', 'N/A')}\n"
+                f"- Cotação Atual do Dólar: R$ {user_inputs.get('cotacao_dolar', 'N/A')}\n\n"
+                f"Com base nesses dados, forneça:\n"
+                f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância.\n"
+                f"- Uma breve justificativa explicando a adequação e como o conteúdo pode contribuir para o projeto."
+            )
             response = model.generate_content(prompt)
             return response.text
         except google_exceptions.ResourceExhausted:
@@ -182,7 +383,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
             return "0\nErro na análise."
 
 def analise_page(content, inputs):
-    analysis = get_gemini_analysis_with_retry(content, inputs) # relatório
+    analysis = get_gemini_analysis_with_retry(content, inputs)
 
     try:
         analysis_lines = analysis.split('\n')
@@ -195,10 +396,32 @@ def analise_page(content, inputs):
 
     return score, description
 
+def analise_melhor_json(melhor_conteudo, inputs):
+    best_index = None
+    best_score = 0
+    best_url = None
+
+    num_indices = len(melhor_conteudo)
+    print(f"Número de índices presentes no JSON: {num_indices}")
+
+    for index, item in enumerate(melhor_conteudo):
+        content_str = json.dumps(item) if isinstance(item, dict) else str(item)
+        score, _ = analise_page(content_str, inputs)
+        print(f"Analisando index {index} de {num_indices}")
+
+        if score > best_score:
+            best_score = score
+            best_index = index
+            best_url = item.get('url', 'URL não encontrada') if isinstance(item, dict) else 'URL não encontrada'
+
+        time.sleep(1)
+
+    return best_index, best_score, best_url
+
 def recomenda_investimento(conteudos, inputs):
     best_option = None
     best_score = 0
-    best_url = None
+    best_content = None
 
     for pagina in conteudos:
         arquivo = pagina['arquivo']
@@ -217,23 +440,22 @@ def recomenda_investimento(conteudos, inputs):
         if score > best_score:
             best_score = score
             best_option = arquivo
-            best_url = item.get('url', 'URL não encontrada') if isinstance(item, dict) else 'URL não encontrada'
+            best_content = content
 
-        time.sleep(1)  # Pequeno delay entre as chamadas para evitar sobrecarga
+        time.sleep(1.6)
 
-    return best_option, best_url
+    return best_option, best_score, best_content
 
 def main():
-    pasta_dados = 'DADOS'  # Nome da pasta contendo os arquivos JSON
+    pasta_dados = 'C:/Users/CTDEV23/Desktop/IANES---Repository---DJANGO/DADOS'
 
-    # Verifica se a pasta existe
     if not os.path.exists(pasta_dados):
         print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
         return
 
     dados_paginas = carregar_conteudo(pasta_dados)
 
-    lingua = escolher_idioma()  # Usa a função que já retorna o código do idioma
+    lingua = escolher_idioma()
 
     if not lingua_valida(lingua):
         print("Língua inválida. Por favor, use uma das seguintes: 'en', 'pt', 'es', 'zh-cn'.")
@@ -245,11 +467,16 @@ def main():
         print("Nenhuma entrada do usuário foi fornecida. Encerrando o programa.")
         return
 
-    melhor_opcao, melhor_url = recomenda_investimento(dados_paginas, inputs_usuario)
+    melhor_opcao, melhor_score, melhor_conteudo = recomenda_investimento(dados_paginas, inputs_usuario)
 
     if melhor_opcao:
-        print(f"\nA melhor opção para investimento é '{melhor_opcao}'. Confira mais detalhes na URL: {melhor_url}.")
+        print(f"\nA melhor opção para investimento é '{melhor_opcao}' com score {melhor_score:.2f}.")
+        print("\nAnalisando os índices do melhor JSON...")
+        melhor_index, melhor_index_score, melhor_url = analise_melhor_json(melhor_conteudo, inputs_usuario)
+        print(f"\nO melhor índice é {melhor_index} com score {melhor_index_score:.2f}.")
+        print(f"URL do melhor índice: {melhor_url}")
     else:
         print("Nenhuma opção relevante foi encontrada.")
 
-main()
+if __name__ == "__main__":
+    main()
