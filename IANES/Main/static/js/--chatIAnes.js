@@ -900,39 +900,15 @@ function renameRoom(element) {
     const renameInput = roomContainer.querySelector('.rename_area');
     const btnOptions = roomContainer.querySelector('.btn_roomsEP');
     const form_rename = roomContainer.querySelector('#form_rename');
+    const roomid = roomContainer.getAttribute('data-room-id');
+    const currentUrl = ("http://127.0.0.1:8000/auth/IAnes/" + roomid + "/");
+    console.log('room id:', roomid);
+    console.log('current_url:', currentUrl)
 
     // form_rename.addEventListener('submit', function(event) {
     //     event.preventDefault(); // BLOQUEANDO O ENTER
     // });
-    if (renameInput.value) {
-        fetch("{% url 'list_messages' %}", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: `rename_input=${renameInput}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Status atualizado com sucesso!');
-            } else {
-                console.error('Erro ao atualizar a sala:', data.error);
-                // Se houver erro, você pode querer mover a tarefa de volta
-                // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
-                // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
-            }
-        })
-        .catch(error => {
-            console.error('Erro na requisição:', error);
-            // Se houver erro, você pode querer mover a tarefa de volta
-            // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
-            // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
-        });
-    } else {
-        console.error("Nome da sala não definido corretamente.");
-    }
+    
     // Mostra o input e esconde o <p> e as opções
     nameText.style.display = "none";
     renameInput.style.display = "flex";
@@ -958,7 +934,7 @@ function renameRoom(element) {
         renameInput.removeEventListener('keydown', handleKeyDown);
 
         // Envia o formulário (opcional, descomente para ativar)
-        // form.submit();
+        form.submit();
     }
 
     // Checa se a tecla pressionada é "Enter"
@@ -979,6 +955,35 @@ function renameRoom(element) {
     renameInput.addEventListener('keydown', handleKeyDown);
     document.addEventListener('click', handleClickOutside);
     renameInput.addEventListener('blur', confirmRename);
+
+    if (roomid && nameText) {
+        fetch(currentUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `room_id=${roomid}&name_text=${encodeURIComponent(nameText.textContent)}`
+            
+        })
+        console.log(roomid, nameText)
+        .then(response => response.json()) // Corrigir o encadeamento do then
+        .then(data => {
+            if (data.success) {
+                console.log('Sala atualizada com sucesso!');
+            } else {
+                console.error('Erro ao atualizar a sala:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+            // Se houver erro, você pode querer mover a tarefa de volta
+            // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
+            // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
+        });
+    } else {
+        console.error("Order ID ou Status Value não definido corretamente.");
+    }
 }
 
 // Escutador de no input para configura-lo

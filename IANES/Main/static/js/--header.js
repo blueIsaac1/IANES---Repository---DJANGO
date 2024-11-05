@@ -66,7 +66,7 @@ window.detectar_pagina = function() {
 // Função para criar o Cabeçalho Assistente
 window.header_assistente = function(tamanho_topo) { 
     const janelaAtual_url = localStorage.getItem("ultimaJanela");
-    console.log(janelaAtual_url)
+    // console.log(janelaAtual_url)
     // Verifica se a página é a 'url_page_ianes'
     if (janelaAtual_url.includes(url_page_ianes)) {
         document.getElementById("header").style.top = `0`;

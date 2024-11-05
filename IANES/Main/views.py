@@ -19,6 +19,7 @@ import requests
 from itertools import zip_longest
 from django.contrib import messages 
 from django.contrib.auth import logout
+import urllib
 
 # api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 pasta_dados = 'DADOS'
@@ -184,38 +185,37 @@ def send_message_obter_parametros(request, pk):
 @csrf_exempt
 @login_required(login_url='/auth/') 
 def send_message(request, pk):
-    if user.is_authenticated:
-        current_room = get_object_or_404(Room, id=pk)
-        if request.method == 'POST':
-            user_message_text = request.POST.get('user_message')
+    current_room = get_object_or_404(Room, id=pk)
+    if request.method == 'POST':
+        user_message_text = request.POST.get('user_message')
 
-            if user_message_text: 
-                genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
-                model = genai.GenerativeModel('gemini-1.5-flash')
+        if user_message_text: 
+            genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
+            model = genai.GenerativeModel('gemini-1.5-flash')
 
-                user_message = request.POST.get('user_message')
-                try:
-                    bot_response = model.generate_content(user_message_text)
-                    bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'    
-                except Exception as e:
-                    bot_response_text = f"Erro: {str(e)}"
-                
-                user_message = UserMessage.objects.create(
-                    user = current_room.user,
-                    text = user_message_text,
-                    created_at = None
-                )
-                
-                bot_response_instance = BotResponse.objects.create(
-                    text=bot_response_text
-                )
+            user_message = request.POST.get('user_message')
+            try:
+                bot_response = model.generate_content(user_message_text)
+                bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'    
+            except Exception as e:
+                bot_response_text = f"Erro: {str(e)}"
+            
+            user_message = UserMessage.objects.create(
+                user = current_room.user,
+                text = user_message_text,
+                created_at = None
+            )
+            
+            bot_response_instance = BotResponse.objects.create(
+                text=bot_response_text
+            )
 
-                current_room.user_message.add(user_message)
-                current_room.bot_response.add(bot_response_instance)
+            current_room.user_message.add(user_message)
+            current_room.bot_response.add(bot_response_instance)
 
-                salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
+            salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
 
-                return redirect('list_messages', pk=pk)
+            return redirect('list_messages', pk=pk)
     return redirect('home')
 
 @csrf_exempt
@@ -232,7 +232,7 @@ def create_room(request):
     # })
 
 @csrf_exempt
-@login_required(login_url='/auth/') 
+# @login_required(login_url='/auth/') 
 def list_messages(request, pk):
     room = get_object_or_404(Room, id=pk)
     user_messages = room.user_message.all().order_by('created_at')
@@ -240,17 +240,22 @@ def list_messages(request, pk):
     rooms = Room.objects.all().order_by('-created_at')
     messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
     current_room = get_object_or_404(Room, id=pk)
-    print(current_room.title)
 
     if request.method == 'PUT':
-        current_room = get_object_or_404(Room, id=pk)
-        print(current_room.title)
-        new_name_room = request.PUT.get('rename_input')
-        if new_name_room:
+        body = request.body.decode('utf-8')
+        parsed_data = urllib.parse.parse_qs(body)
+
+        room_id_from_request = parsed_data.get('room_id', [None])[0]
+        name_text = parsed_data.get('name_text', [None])[0]
+
+        # room_id = request.PUT.get('room_id')
+        # new_name_room = request.PUT.get('name_text')  
+        if room_id_from_request and name_text:
+            print(room_id_from_request, name_text)
             try:
-                print(current_room.title)
-                current_room.title = new_name_room
-                current_room.save()
+                room = Room.objects.get(id=room_id_from_request)
+                room.title = name_text
+                room.save()
                 return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
             except Orders.DoesNotExist:
                 return JsonResponse({'success': False, 'error': 'Room not found.'})

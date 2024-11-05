@@ -58,8 +58,8 @@
                 <div class="rooms_section">
                     {% for room in rooms %}
                     <!-- Container dos Botões das Salas -->
-                    <div class="container_btn_trocarSalas">
-                        <div onclick="trocarSalas(this)" class="btn_trocarSalas" id="btn_trocarSalas_sala-1">
+                    <div class="container_btn_trocarSalas" data-url="{% url 'list_messages' room.id %}" data-room-id="{{ room.id }}">
+                        <div onclick="trocarSalas(this)" class="btn_trocarSalas" id="btn_trocarSalas_sala-1" >
                             <form method="get" id="form_rename" class="roomsNames">
                                 <a href="{% url 'list_messages' room.id %}" class="roomName" id="texto_chatIA_roomName">{{ room.title }}</a>
                                 <input class="rename_area" placeholder="Nova Sala" id="input_rename" maxlength="30" value="Nova Sala" type="text">
@@ -110,7 +110,7 @@
                         {% for user_message, bot_response in messages %}
                             {% if user_message %}
                             <li class="message user">
-                                <strong>{{ user_message.user.username }}: </strong> <a> {{ user_message.text }}</a>
+                                <a> {{ user_message.text }}</a>
                             </li>
                             {% endif %}
                             {% if bot_response %}
@@ -196,12 +196,12 @@
 
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
-    <script src="{% static 'js/+idioma.js' %}"></script>
-    <script src="{% static 'js/+tema.js' %}"></script>
+    <!-- <script src="{% static 'js/+idioma.js' %}"></script> -->
+    <!-- <script src="{% static 'js/+tema.js' %}"></script> -->
     <!-- Chamando apenas do Cabeçalho -->
     <script src="{% static 'js/--header.js' %}"></script>
     <!-- Chamando apenas do Rodapé -->
-    <script src="{% static 'js/--footer.js' %}"></script>
+    <!-- <script src="{% static 'js/--footer.js' %}"></script> -->
     <!-- Chamando o Principal DESSA pagina -->
     <script src="{% static 'js/main.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->
