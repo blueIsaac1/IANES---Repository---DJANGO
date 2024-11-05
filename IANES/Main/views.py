@@ -59,7 +59,7 @@ def auth(request):
     if request.user.is_authenticated:
         return redirect('index')
     if request.method == 'GET':
-        return render(request, 'auth.html')
+        return render(request, 'auth.html', {'current_page': 'auth'})
     
     # elif request.method == 'POST':
     #     username_create = request.POST.get('username_create')
@@ -98,6 +98,7 @@ def index(request):
     rooms = Room.objects.all().order_by('-created_at')
     return render(request, 'index.html', {
         'rooms': rooms,
+        'current_page': 'index'
     })
  
 class RoomDetailView(DetailView):
@@ -262,13 +263,13 @@ def list_messages(request, pk):
             except Exception as e:
                 return JsonResponse({'success': False, 'error': str(e)})
 
+    elif request.method == 'DELETE':
+        room_delete = get
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
         'room': room,
         'rooms': rooms,
-        'messages': messages
+        'messages': messages,
+        'current_page': 'ianes'
     })
-
-
-

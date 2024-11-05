@@ -1,3 +1,5 @@
+{% load static %}
+
 <!-- Parte do Header -->
 <div id="header_top" class="header_top">
 
@@ -34,6 +36,7 @@
 </div>
 
 <!-- Parte da Navbar -->
+{% if current_page == 'index' %}
 <div id="header_bot" class="header_bot">
     <nav class="navbar">
         <ul class="nav_list">
@@ -46,3 +49,4 @@
         </ul>
     </nav>
 </div>
+{% endif %}
