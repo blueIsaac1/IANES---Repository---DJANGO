@@ -1,40 +1,39 @@
-// // Caminho/URL para as Paginas
-const url_page_index_auth = "http://127.0.0.1:8000/"
-const url_page_auth_auth = "http://127.0.0.1:8000/auth"
-const url_page_ianes_auth = "http://127.0.0.1:8000/IAnes"
-
-
 // Função que exibe a tela correspondente
 window.detectar_auth = function() {
-    
-    // Recuperando o valor do localStorage e convertendo para booleano
-    let usuario_logado = localStorage.getItem("usuario_auth") === "true";
+    let tela_padrao = 'login';
+    let telaAtual_auth_uso = localStorage.getItem('telaAtual_auth'); // Use 'let' aqui
 
-    console.log("⚙ Usuário está logado: ", usuario_logado)
-
-    if (!usuario_logado) { // Se não estiver logado
-    // Pega a Tela Atual no LocalStorage
-    const tela_auth = localStorage.getItem('tela_auth');
-
-    const login_container = document.getElementById("container_login")
-    const signup_container = document.getElementById("container_signup")
-
-    if (tela_auth === "auth_login" || tela_auth === null) {
-        login_container.style.display = "flex"
-        signup_container.style.display = "none"
-        // window.location.hash = "login"
-        // localStorage.removeItem("tela_auth")
-    } else if (tela_auth === "auth_signup") {
-        login_container.style.display = "none"
-        signup_container.style.display = "flex"
-        // window.location.hash = "signup"
-        // localStorage.removeItem("tela_auth")
+    if (!telaAtual_auth_uso) {
+        localStorage.setItem('telaAtual_auth', `ta_auth-${tela_padrao}`);
+        telaAtual_auth_uso = tela_padrao;  // Agora pode atribuir um novo valor
+        window.location.reload(true);
     }
-    } else { // Se estiver logado
-        window.location.href = url_page_index_auth;
-    }
-    console.log("⚙ Detectando configurando tela de Auth")
+
+    let ta_auth_id = telaAtual_auth_uso.split("-")[1];
+
+    const solo_container = document.getElementById(`container_${ta_auth_id}`)
+    const todos_containers = document.querySelectorAll(".container_content")
+
+    todos_containers.forEach(item => {
+        item.style.display = "none"
+    })
+    if (solo_container) {solo_container.style.display = "flex"}
+
+    console.log("⚙ Detectando configurando tela de Auth");
 };
+
+// Função para chamar e mostrar as telas relevantes
+window.callScreen_auth = function(page) {
+    const solo_container = document.getElementById(`container_${page}`)
+    const todos_containers = document.querySelectorAll(".container_content")
+    localStorage.setItem('telaAtual_auth', `ta_auth-${page}`);
+
+    todos_containers.forEach(item => {
+        item.style.display = "none"
+    })
+
+    if (solo_container) {solo_container.style.display = "flex"}
+}
 
 // Troca a cor da Barra de Baixo dos Input's
 

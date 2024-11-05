@@ -35,7 +35,7 @@
         <!-- form -->
         
         {% csrf_token %}
-        <div class="container_login" id="container_login">
+        <div class="container_login container_content" id="container_login">
             <div class="box_login box_auth">
                 <div class="box_login_top box_auth_top">
                     <div class="box_login_top_left box_auth_top_left">
@@ -72,7 +72,7 @@
                     </div>
                     <div class="box_login_top_right box_auth_top_right">
                         <p id="texto_login_novoIAnes">Novo no IAnes?</p>
-                        <button onclick="navigateTo('auth_page', 'auth_signup')" id="button_goLogin">
+                        <button tabindex=8 onclick="callScreen_auth('signup')" id="button_goLogin">
                             <p id="texto_login_entreperfil">Crie um Perfil</p>
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </button>
@@ -115,7 +115,7 @@
                         <div class="div_input_senhaLogin div_input_sec">
                             <div class="div_input_senhaLogin_label div_input_label">
                                 <p id="texto_login_senhaLogin">Senha</p>
-                                <a tabindex=1 id="texto_login_esqueceuSenha" onclick="navigateTo('auth_page', 'auth_resetPassword')" class="link_hover_animation" href="">Esqueceu sua senha?</a>
+                                <a tabindex=3 id="texto_login_esqueceuSenha" onclick="callScreen_auth('forgotpassword')" class="link_hover_animation" href="">Esqueceu sua senha?</a>
                             </div>
                             <div class="div_input_senhaLogin_area div_input_area" id="div_input_senhaLogin_area">
                                 <ion-icon class="icon_lockOpen_login lockOpen_icons" id="lockOpen_login_icon" name="lock-open-outline"></ion-icon>
@@ -140,11 +140,11 @@
                         <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
                     </div>
                     <div class=" outros_authslogins outros_auths">
-                        <button>
+                        <button tabindex=6>
                             <p>Continue com</p>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo">
                         </button>
-                        <button>
+                        <button tabindex=7>
                             <p>Continue com</p>
                             <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
                         </button>
@@ -154,7 +154,7 @@
         </div>
         
         <!-- end form -->
-        <div class="container_signup" id="container_signup">
+        <div class="container_signup container_content" id="container_signup">
             <div class="box_signup box_auth">
                 <div class="box_signup_top box_auth_top">
                     <div class="box_signup_top_left box_auth_top_left">
@@ -185,7 +185,7 @@
                     </div>
                     <div class="box_signup_top_right box_auth_top_right">
                         <p id="texto_signup_novoIAnes">Já tem um perfil?</p>
-                        <button onclick="navigateTo('auth_page', 'auth_login')" id="button_goLogin">
+                        <button tabindex=9 onclick="callScreen_auth('login')" id="button_goLogin">
                             <p id="texto_signup_entreperfil">Acesse seu Perfil</p>
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </button>
@@ -219,7 +219,7 @@
                                     54 153 57 10 0 71 -28 135 -64z"/>
                                     </g>
                                 </svg>
-                                <input maxlength="30" class="input_signup_user_area input_area" type="text" name="username_create" id="input_signup_user" placeholder="Digite o seu Usuário">
+                                <input tabindex=1 maxlength="30" class="input_signup_user_area input_area" type="text" name="username_create" id="input_signup_user" placeholder="Digite o seu Usuário">
                                 <span class="input_extra">
                                     <span id="texto_user_maximoChar"></span>
                                 </span>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="div_input_user_area div_input_area" id="div_input_user_area">
                                 <ion-icon class="icon_email_signup email_icons" id="email_signup_icon" name="mail-outline"></ion-icon>
-                                <input class="input_signup_email_area input_area" type="email" name="Email" id="input_signup_email" placeholder="Digite o seu Email">
+                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="Email" id="input_signup_email" placeholder="Digite o seu Email">
                                 <span class="input_extra"></span>
                             </div>
                             <!-- Erros Posiveis -->
@@ -262,7 +262,7 @@
                             <div class="div_input_senhaSignup_area div_input_area" id="div_input_senhaSignup_area">
                                 <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_signup_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'signup' -->
-                                <input class="input_senha_signup_area input_area" type="password" name="passowrd" id="input_senha_signup" placeholder="Digite sua Senha">
+                                <input tabindex=3 class="input_senha_signup_area input_area" type="password" name="passowrd" id="input_senha_signup" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signup" 
                                         onmouseover="showTooltip('tooltip_senha_signup')" 
@@ -305,7 +305,7 @@
                             <div class="div_input_confSenhaSignup_area div_input_area" id="div_input_confSenhaSignup_area">
                                 <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_confSignup_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'signupConf' -->
-                                <input class="input_senha_signupConf_area input_area" type="password" name="confirm_password" id="input_senha_signupConf" placeholder="Digite sua Senha">
+                                <input tabindex=4 class="input_senha_signupConf_area input_area" type="password" name="confirm_password" id="input_senha_signupConf" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signupConf" 
                                         onmouseover="showTooltip('tooltip_senha_signupConf')" 
@@ -324,27 +324,27 @@
                             </div>
                         </div>
                         <div class="div_concordoTermsPriv">
-                            <input type="checkbox" name="CheckConcordo" id="check_concordo_TermPriv">
+                            <input tabindex=5 type="checkbox" name="CheckConcordo" id="check_concordo_TermPriv">
                             <div class="div_texto_concordo">
                                 <p id="texto_auth_concordo_pt1">Concordo com os</p>    
-                                <span onclick="navigateTo('legal_page', 'legal_term')" class="link_hover_animation" id="texto_auth_concordo_term">Termos de Serviço</span>
+                                <span onclick="callScreen_auth('termos')" class="link_hover_animation" id="texto_auth_concordo_term">Termos de Serviço</span>
                                 <p id="texto_auth_concordo_pt2">e</p>
-                                <span onclick="navigateTo('legal_page', 'legal_priv')" class="link_hover_animation" id="texto_auth_concordo_priv">Política de Privacidade</span>
+                                <span onclick="callScreen_auth('politic')" class="link_hover_animation" id="texto_auth_concordo_priv">Política de Privacidade</span>
                                 <p id="texto_auth_concordo_pt3">.</p>
                             </div>
                         </div>
-                        <button onclick="criarConta_ianes()" type="submit" class="btn_executar_auth" id="btn_entrar_signup">Criar</button>
+                        <button tabindex=6 onclick="criarConta_ianes()" type="submit" class="btn_executar_auth" id="btn_entrar_signup">Criar</button>
                     </form>
                     <div class="linha_divisoria">
                         <hr>
                         <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
                     </div>
                     <div class="outros_signups outros_auths">
-                        <button>
+                        <button tabindex=7>
                             <p>Continue com</p>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo">
                         </button>
-                        <button>
+                        <button tabindex=8>
                             <p>Continue com</p>
                             <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
                         </button>
@@ -356,19 +356,12 @@
         <p id="testizinho"></p>
     </main>
     
-    <!-- Rodapé -->
-    <header id="footer">
-        {% include 'head_foot_temp/_footer.html' %}
-    </header>
-    
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
     <script src="{% static 'js/+idioma.js' %}"></script>
     <script src="{% static 'js/+tema.js' %}"></script>
     <!-- Chamando apenas do Cabeçalho -->
     <script src="{% static 'js/--header.js' %}"></script>
-    <!-- Chamando apenas do Rodapé -->
-    <script src="{% static 'js/--footer.js' %}"></script>
     <!-- Chamando o Principal DESSA pagina -->
     <script src="{% static 'js/main.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->

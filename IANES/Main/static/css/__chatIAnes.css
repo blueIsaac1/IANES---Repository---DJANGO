@@ -115,6 +115,7 @@ main {
     justify-content: flex-start;
     align-items: center;
     gap: 1vw;
+    overflow-y: auto;
 }
 
 .rooms_content h1 {
@@ -240,7 +241,6 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: auto;
     overflow: visible;
     padding: 0.4vw;
 }

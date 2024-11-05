@@ -1,38 +1,19 @@
 // // Caminho/URL para as Paginas
-const url_page_index = "http://127.0.0.1:8000/"
-const url_page_auth = "http://127.0.0.1:8000/auth"
-const url_page_ianes = "http://127.0.0.1:8000/IAnes"
+// const url_page_index = "http://127.0.0.1:8000/auth/"
+// const url_page_auth = "http://127.0.0.1:8000/auth"
+// const url_page_ianes = "http://127.0.0.1:8000/auth/IAnes/1"
 
 // Caminho/URL para as Paginas
 
 // ----------------- Função para Navegar para as Paginas
-function navigateTo(page, tela) {
-    switch(page) {
-        case 'auth_page':
-            if (tela === "auth_login") {
-                localStorage.setItem("tela_auth", "auth_login")
-            } else if (tela === "auth_signup") {
-                localStorage.setItem("tela_auth", "auth_signup")
-            }
-            // window.location.href = url_page_auth;
-            window.open(url_page_auth, "_self");
-            break
-        case 'ianes_page':
-            // window.location.href = url_page_ianes;
-            window.open(url_page_ianes, "_self");
-            break
-        case 'index_page':
-            // window.location.href = url_page_index;
-            window.open(url_page_index, "_self");
-            break
-    }
-    rolarPara("topo_screen");
-    // _blank: Nova aba/janela.
-    // _self: Mesma aba/janela (padrão).
-    // _parent: Janela pai (substitui a página pai em iframes).
-    // _top: Janela completa (remove todos os frames).
-    // Nome Personalizado: Abre em uma janela/aba específica, se já existir.
-}
+// function navigateTo(page, tela) {
+//     window.open(url_page_index, "_self");
+//     // _blank: Nova aba/janela.
+//     // _self: Mesma aba/janela (padrão).
+//     // _parent: Janela pai (substitui a página pai em iframes).
+//     // _top: Janela completa (remove todos os frames).
+//     // Nome Personalizado: Abre em uma janela/aba específica, se já existir.
+// }
 
 // ----------------- Função para Chamar as Telas
 // Função que exibe a tela correspondente
@@ -82,15 +63,6 @@ window.callScreen = function(tela) {
     rolarPara("topo_screen");
 };
 
-// Função para carregar HTML em um elemento
-// async function loadHTML(elementId, url) {
-//     const response = await fetch(url);
-//     const html = await response.text();
-//     document.getElementById(elementId).innerHTML = html; 
-//     console.log(`⚙ Carregando ${url} em ${elementId}`);
-// }
-
-// Função para adicionar um elemento ao head
 function addToHead(tagName, attributes) {
   const existingTags = document.head.getElementsByTagName(tagName);
   for (let i = 0; i < existingTags.length; i++) {
@@ -106,35 +78,6 @@ function addToHead(tagName, attributes) {
   }
   document.head.appendChild(tag);
   console.log(`⚙ Elemento ${tagName} adicionado ao head:`, attributes);
-}
-
-// Função para Detectar se o usuário está Autenticado
-window.detectar_usuario_autenticado = function() {
-    const banner_login = document.getElementById("banner_vantConta");
-    const user_nome_index = document.getElementById("user_name_t");
-
-    // Temporaria
-    let usuario_logado = false;
-    localStorage.setItem("usuario_auth", usuario_logado);
-
-    // Recuperando o valor do localStorage e convertendo para booleano
-    usuario_logado = localStorage.getItem("usuario_auth") === "true";
-
-    if (!usuario_logado) { // Se não estiver logado
-        if (banner_login) {
-            banner_login.style.display = "flex";
-        }
-        user_nome_index.textContent = "";
-        user_nome_index.style.display = "none";
-    } else { // Se estiver logado
-        if (banner_login) {
-            banner_login.style.display = "none";
-        }
-        user_nome_index.textContent = "Roberto e Jorge";
-        user_nome_index.style.display = "block";
-    }
-
-    console.log("⚙ Detectando se o usuário está Autenticado");
 }
 
 // Função principal que chama outras funções
@@ -216,21 +159,6 @@ if (typeof loading_page === 'function') {
     console.log("⚙ Carregando Página");
     loading_page();
 }
-
-// Função para carregar os componentes
-// async function carregarComponentes() {
-//     const promises = [];
-//     const janelaAtual_url = localStorage.getItem("ultimaJanela")
-//     if (janelaAtual_url.includes(url_page_index) || janelaAtual_url.includes(url_page_auth)) {
-//       promises.push(loadHTML('header', "{% static 'html/_header.html' %}"));
-//       promises.push(loadHTML('footer', '{% static "html/_footer.html" %}'));
-//     } else if (janelaAtual_url.includes(url_page_ianes)) {
-//       promises.push(loadHTML('header', '{% static "html/_header.html" %}'));
-//     }
-  
-//     await Promise.all(promises);
-//     console.log("⚙ COMPONENTES carregados");
-//   }
 
 document.addEventListener('DOMContentLoaded', async function() {
     // Pegar a URL da página atual e armazená-la no localStorage

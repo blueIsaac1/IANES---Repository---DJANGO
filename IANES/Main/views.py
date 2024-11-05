@@ -19,8 +19,9 @@ import requests
 from itertools import zip_longest
 from django.contrib import messages 
 from django.contrib.auth import logout
+import urllib
 
-
+# api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 pasta_dados = 'DADOS'
 
 def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
@@ -58,7 +59,7 @@ def auth(request):
     if request.user.is_authenticated:
         return redirect('index')
     if request.method == 'GET':
-        return render(request, 'auth.html')
+        return render(request, 'auth.html', {'current_page': 'auth'})
     
     # elif request.method == 'POST':
     #     username_create = request.POST.get('username_create')
@@ -88,15 +89,6 @@ def auth(request):
         else:
             return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
 
-
-
-# @csrf_exempt
-# def index(request):
-#     return render(request, 'index.html')
-
-# @csrf_exempt
-# def chat(request):
-#     return render(request, 'chatIAnes.html') api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 @csrf_exempt
 @login_required(login_url='/auth/') 
 def index(request):
@@ -106,6 +98,7 @@ def index(request):
     rooms = Room.objects.all().order_by('-created_at')
     return render(request, 'index.html', {
         'rooms': rooms,
+        'current_page': 'index'
     })
  
 class RoomDetailView(DetailView):
@@ -240,18 +233,43 @@ def create_room(request):
     # })
 
 @csrf_exempt
-@login_required(login_url='/auth/') 
+# @login_required(login_url='/auth/') 
 def list_messages(request, pk):
     room = get_object_or_404(Room, id=pk)
     user_messages = room.user_message.all().order_by('created_at')
     bot_responses = room.bot_response.all().order_by('created_at')
     rooms = Room.objects.all().order_by('-created_at')
     messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+    current_room = get_object_or_404(Room, id=pk)
 
+    if request.method == 'PUT':
+        body = request.body.decode('utf-8')
+        parsed_data = urllib.parse.parse_qs(body)
+
+        room_id_from_request = parsed_data.get('room_id', [None])[0]
+        name_text = parsed_data.get('name_text', [None])[0]
+
+        # room_id = request.PUT.get('room_id')
+        # new_name_room = request.PUT.get('name_text')  
+        if room_id_from_request and name_text:
+            print(room_id_from_request, name_text)
+            try:
+                room = Room.objects.get(id=room_id_from_request)
+                room.title = name_text
+                room.save()
+                return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
+            except Orders.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Room not found.'})
+            except Exception as e:
+                return JsonResponse({'success': False, 'error': str(e)})
+
+    elif request.method == 'DELETE':
+        room_delete = get
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
         'room': room,
         'rooms': rooms,
-        'messages': messages
+        'messages': messages,
+        'current_page': 'ianes'
     })

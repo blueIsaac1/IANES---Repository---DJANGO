@@ -747,8 +747,8 @@ main {
     padding: 0.3vw;
     border-radius: 0.2vw;
     z-index: 1000;
-    top: 80%;
-    left: -25%;
+    top: 120%;
+    left: -50%;
     transform: translateX(-50%);
     white-space: nowrap;
     transition: opacity 0.3s ease, transform 0.3s ease;
