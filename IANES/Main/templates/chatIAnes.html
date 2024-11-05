@@ -38,11 +38,11 @@
 
         <div id="rooms_container" class="rooms_container trans_03s-margin-left rooms_container-close">
             <div class="sideBar_header">
-                <button class="btn_sideBar_header btn_home" onclick="navigateTo('index_page', 'normal')" onmouseover="showTooltip_sideBar('irInicio')" onmouseout="hideTooltip_sideBar('irInicio')">
+                <button onclick="location.href='{% url 'index' %}'" class="btn_sideBar_header btn_home" > 
                     <i id="icone_sideBar_home" class='bx bxs-home icone_sideBar'></i>
                     <p class="tp_sideBar_header tp_btn_home" id="tp_irInicio">Ir para o Início</p>
                 </button>
-                <button class="btn_sideBar_header btn_novaSala" onclick="criarNovaSala()" onmouseover="showTooltip_sideBar('criarNovaSala')" onmouseout="hideTooltip_sideBar('criarNovaSala')">
+                <button class="btn_sideBar_header btn_novaSala" onclick="location.href='{% url 'create_room' %}'">
                     <i id="icone_sideBar_home" class='bx bxs-message-add icone_sideBar'></i>
                     <p class="tp_sideBar_header tp_btn_criarSalas" id="tp_criarNovaSala">Criar nova Sala</p>
                 </button>

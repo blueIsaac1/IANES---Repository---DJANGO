@@ -1,7 +1,7 @@
 // // Caminho/URL para as Paginas
-const url_page_index = "http://127.0.0.1:8000/"
+const url_page_index = "http://127.0.0.1:8000/auth/"
 const url_page_auth = "http://127.0.0.1:8000/auth"
-const url_page_ianes = "http://127.0.0.1:8000/IAnes"
+const url_page_ianes = "http://127.0.0.1:8000/auth/IAnes/1"
 
 // Caminho/URL para as Paginas
 

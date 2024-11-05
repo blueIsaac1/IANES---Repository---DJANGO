@@ -901,10 +901,38 @@ function renameRoom(element) {
     const btnOptions = roomContainer.querySelector('.btn_roomsEP');
     const form_rename = roomContainer.querySelector('#form_rename');
 
-    form_rename.addEventListener('submit', function(event) {
-        event.preventDefault(); // BLOQUEANDO O ENTER
-    });
-
+    // form_rename.addEventListener('submit', function(event) {
+    //     event.preventDefault(); // BLOQUEANDO O ENTER
+    // });
+    if (renameInput.value) {
+        fetch("{% url 'list_messages' %}", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `rename_input=${renameInput}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Status atualizado com sucesso!');
+            } else {
+                console.error('Erro ao atualizar a sala:', data.error);
+                // Se houver erro, você pode querer mover a tarefa de volta
+                // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
+                // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
+            }
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+            // Se houver erro, você pode querer mover a tarefa de volta
+            // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
+            // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
+        });
+    } else {
+        console.error("Nome da sala não definido corretamente.");
+    }
     // Mostra o input e esconde o <p> e as opções
     nameText.style.display = "none";
     renameInput.style.display = "flex";
