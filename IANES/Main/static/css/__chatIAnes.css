@@ -460,6 +460,7 @@ main {
     list-style: none;
 }
 
+
 #ianes_pic {
     width: 2.5vw;
     height: auto;
@@ -879,3 +880,4 @@ Retorna ao ponto inicial
 #chat_messages-chat-1 {
     display: flex;
 }
+

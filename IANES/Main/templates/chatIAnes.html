@@ -31,9 +31,12 @@
 
     <!-- Cabeçalho -->
     <header id="header">
-        {% include 'head_foot_temp/_header.html' %}
+        {% if 'head_foot_temp/_header.html' in template %}
+            {% include 'head_foot_temp/_header.html' %}
+        {% else %}
+            <p>Erro: Cabeçalho não encontrado.</p>
+        {% endif %}
     </header>
-
     <main id="mainElement_chatIAnes">
 
         <div id="rooms_container" class="rooms_container trans_03s-margin-left rooms_container-close">
@@ -110,7 +113,7 @@
                         {% for user_message, bot_response in messages %}
                             {% if user_message %}
                             <li class="message user">
-                            <a> {{ user_message.text }}</a>
+                            <p> {{ user_message.text }}</p>
                             </li>
                             {% endif %}
                             {% if bot_response %}

@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as login_django
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 import google.generativeai as genai
 from Main.models import Room, UserMessage, BotResponse
 from django.views.generic.detail import DetailView
@@ -20,6 +20,8 @@ from itertools import zip_longest
 from django.contrib import messages 
 from django.contrib.auth import logout
 import urllib
+import logging
+logger = logging.getLogger(__name__)    
 
 # api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 pasta_dados = 'DADOS'
@@ -90,7 +92,6 @@ def auth(request):
             return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
 
 @csrf_exempt
-@login_required(login_url='/auth/') 
 def index(request):
     if request.method == 'GET' and 'logout_function' in request.GET:
         logout(request)
@@ -171,7 +172,7 @@ def send_message_obter_parametros(request, pk):
             current_room.user_message.add(user_message)
             current_room.bot_response.add(bot_response_instance)
 
-            salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
+            # salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
 
             return redirect('list_messages', pk=pk)
 
@@ -184,7 +185,6 @@ def send_message_obter_parametros(request, pk):
     return render(request, 'template.html', {'bot_response_text': bot_response_text})
 
 @csrf_exempt
-@login_required(login_url='/auth/') 
 def send_message(request, pk):
     current_room = get_object_or_404(Room, id=pk)
     if request.method == 'POST':
@@ -206,7 +206,11 @@ def send_message(request, pk):
                 text = user_message_text,
                 created_at = None
             )
-            
+
+            if user_message.text == "IANES":
+                bot_response_text = send_message_obter_parametros(request, pk=current_room.get_id())
+
+
             bot_response_instance = BotResponse.objects.create(
                 text=bot_response_text
             )
@@ -214,18 +218,23 @@ def send_message(request, pk):
             current_room.user_message.add(user_message)
             current_room.bot_response.add(bot_response_instance)
 
-            salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
+            # salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
 
             return redirect('list_messages', pk=pk)
     return redirect('home')
 
 @csrf_exempt
-@login_required(login_url='/auth/') 
 def create_room(request):
     if request.method == 'POST':
         room_title = request.POST.get('title')
-        room = Room.objects.create(user=request.user, title=room_title)
-        return JsonResponse({'room_id': room.id, 'room_title': room_title})
+        if not room_title:
+            room_title = 'Valor Padrão'
+        try:
+            room = Room.objects.create(user=request.user, title=room_title)
+            return redirect('list_messages', room.id )
+        except Exception as e:
+            logger.error(f"Erro inesperado {e}")
+            return render(request, '404.html', {'error_message': "Erro "})
     else:
         return render(request, 'create_room.html')
     # return render(request, 'room.html', {
@@ -233,14 +242,24 @@ def create_room(request):
     # })
 
 @csrf_exempt
-# @login_required(login_url='/auth/') 
 def list_messages(request, pk):
-    room = get_object_or_404(Room, id=pk)
-    user_messages = room.user_message.all().order_by('created_at')
-    bot_responses = room.bot_response.all().order_by('created_at')
-    rooms = Room.objects.all().order_by('-created_at')
-    messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
-    current_room = get_object_or_404(Room, id=pk)
+    try:
+        room = get_object_or_404(Room, pk=pk)
+        user_messages = room.user_message.all().order_by('created_at')
+        bot_responses = room.bot_response.all().order_by('created_at')
+        rooms = Room.objects.all().order_by('-created_at')
+        messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+
+    except Http404:
+        logger.error(f"Room {pk} não encontrada")
+        room = Room.objects.create()
+        return render(request, '404.html', {'error_message': "Sala não encontrada"})
+    except AttributeError as e:
+        logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
+        return render(request, '404.html', {'error_message': "Mensagens não encotradas"})
+    except Exception as e:
+        logger.error(f"Erro inesperado: {e}")
+        return render(request, '404.html', {'error_message': 'Erro inesperado'})
 
     if request.method == 'PUT':
         body = request.body.decode('utf-8')
@@ -258,11 +277,11 @@ def list_messages(request, pk):
                 room.title = name_text
                 room.save()
                 return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
-            except Orders.DoesNotExist:
+            except Room.DoesNotExist:
                 return JsonResponse({'success': False, 'error': 'Room not found.'})
             except Exception as e:
                 return JsonResponse({'success': False, 'error': str(e)})
-
+    
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
@@ -274,6 +293,13 @@ def list_messages(request, pk):
     })
 
 def delete_room(request, id):
-    room_delete = get_object_or_404(Room, id=id)
-    room_delete.delete()
-    return redirect('list_messages', pk=id)
+    room_delete = get_object_or_404(Room, pk=id)
+    try:
+        room_delete.delete()
+        return redirect('list_messages', pk=1)
+    except Exception as e:
+        logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
+        return render(request, '404.html', {'error_message': 'Erro ao tentar deletar a sala.'})
+
+
+

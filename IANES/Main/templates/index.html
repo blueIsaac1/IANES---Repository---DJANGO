@@ -48,9 +48,9 @@
             <!-- Banner de Tela -->
             <div class="banner_apresent" id="banner_apresent">
                 <h1 textwrap="pretty" id="texto_banner_apresent_titulo">Uma nova Inteligência para o seu Negócio.</h1>
-                <img onclick="navigateTo('ianes_page', 'normal')" id="banner_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+                <img onclick="location.href='{% url 'list_messages' 1 %}'" id="banner_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo" >
                 <p textwrap="pretty" id="texto_banner_apresent_titulo_desc">Recomendações precisas para otimizar projetos, conectar você a fornecedores e encontrar as melhores soluções.</p>
-                <button onclick="navigateTo('ianes_page', 'normal') "id="botao_banner_exp">Experimente Agora</button>
+                <button onclick="location.href='{% url 'list_messages' 1 %}'" id="botao_banner_exp">Experimente Agora</button>
                 <!--  onclick="navigateTo('ianes_page', 'normal') -->
             </div>
             <!-- Banner Vantagens da Conta -->
@@ -61,7 +61,7 @@
                         <h1 id="texto_vantConta_titulo">Crie um perfil para salvar suas conversas com o IAnes.</h1>
                     </div>
                     <div class="div_buttons_vantConta">
-                        <button class="btn_vantConta" onclick="navigateTo('auth_page', 'auth_signup')">
+                        <button class="btn_vantConta" onclick="location.href='{% url 'auth' %}'" >
                             <svg id="user_criar_svg" version="1.0" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
                                 <g transform="translate(0,256) scale(0.100000,-0.100000)"
                                 fill="#000000" stroke="none">
@@ -72,7 +72,7 @@
                             </svg>
                             <p id="texto_vantConta_criar">Criar</p>
                         </button>
-                        <button class="btn_vantConta" onclick="navigateTo('auth_page', 'auth_login')">
+                        <button class="btn_vantConta" onclick="location.href='{% url 'auth' %}'">
                             <svg id="user_entrar_svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
                             width="256" height="256" viewBox="0 0 256 256">
                                 <g transform="translate(0, 256) scale(0.100000,-0.100000)"

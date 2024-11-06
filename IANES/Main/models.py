@@ -16,7 +16,10 @@ class Room(models.Model):
         return f"Sala: {self.title}, {self.id}"
     
     def update_title(self, title):
-        return title.self
+        return self.title
+    
+    def get_id(self):
+        return self.id
     
 
 
