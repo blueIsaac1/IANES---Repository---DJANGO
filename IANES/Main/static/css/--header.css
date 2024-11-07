@@ -27,7 +27,7 @@ header {
     transition: top 0.3s;
     top: 0;
     left: 0;
-    z-index: 101;
+    z-index: 800;
 }
 
 /* Parte de Cima do Header */
