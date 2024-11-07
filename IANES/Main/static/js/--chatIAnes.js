@@ -136,20 +136,27 @@ function atualizarIconeRolar() {
     btn_rolarConvesa.style.display = isScrolledToBottom ? "none" : "block";
 }
 
-// Função para conversa para baixo
+// Função para rolar a conversa para baixo
 function rolarConversa(tipo) {
     if (tipo === 'onload') {
-        chats_section.scrollTo({
-            top: chats_section.scrollHeight, // Rola para a parte inferior
-            behavior: 'auto'
-        });
-        return
+        setTimeout(() => {
+            chats_section.scrollTo({
+                top: chats_section.scrollHeight, // Rola para a parte inferior
+                behavior: 'auto'
+            });
+        }, 0); // Delay de 0 segundo
+        return;
     }
     chats_section.scrollTo({
         top: chats_section.scrollHeight, // Rola para a parte inferior
         behavior: 'smooth' // Rola suavemente
     });
 }
+
+// Chame a função onload após carregar a página
+window.onload = function() {
+    rolarConversa('onload');
+};
 
 // Quando a textarea estiver seleciona "focus" ele muda a cor da borda
 textarea.addEventListener('focus', () => {
@@ -288,49 +295,6 @@ function ajustarAlturaTextarea() {
 let botMessageCount = 0; // Contador de mensagens do bot
 
 function enviarMensagem(tipo) {
-    // const userMessage = textarea.value.trim();
-    // const botMessage = "Essa é uma resposta automática do IAnes! Essa é uma resposta automática do IAnes!";
-    // if (userMessage === "") return; // Não envia se estiver vazio
-
-    // // Adiciona a mensagem do usuário
-    // const userMessageLi = document.createElement("li");
-    // userMessageLi.classList.add("message", "user");
-    // const userMessageP = document.createElement("p");
-    // userMessageP.textContent = userMessage;
-    // userMessageLi.appendChild(userMessageP);
-    // messagesList.appendChild(userMessageLi);
-
-    // // Limpa a área de texto
-    // textarea.value = "";
-    // ajustarAlturaTextarea(); // Redefine a altura para o padrão
-    // contarCaracteres()
-
-    // // Incrementa o contador de mensagens do bot
-    // botMessageCount++;
-
-    // // Adiciona a resposta do bot com a estrutura específica
-    // const botMessageLi = document.createElement("li");
-    // botMessageLi.classList.add("message", "bot");
-
-    // // Cria o HTML interno da mensagem do bot
-    // botMessageLi.innerHTML = `
-    //     <img id="ianes_pic" src="" alt="IAnes Pic">
-    //     <p id="ianes_sala-1_msg-${botMessageCount}">${botMessage}</p>
-    //     <div class="extraOptions_IAnes">
-    //         <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('${botMessageCount}')" onmouseover="showTooltip_chat('copy', '${botMessageCount}')" onmouseout="hideTooltip_chat('copy', '${botMessageCount}')">
-    //             <ion-icon name="copy-outline"></ion-icon>
-    //             <p class="tp_extraO_IA" id="tp_ia-${botMessageCount}-copy">Copiar</p>
-    //         </div>
-    //     </div>
-    // `;
-
-    // // Adiciona a estrutura criada à lista de mensagens
-    // messagesList.appendChild(botMessageLi);
-
-    // // Desce automaticamente para a última mensagem
-    // const chatMessages = document.getElementById("chats_section");
-    // chatMessages.scrollTop = chatMessages.scrollHeight;
-
     // Atualiza a visibilidade do ícone de rolagem
     atualizarIconeRolar();
 
@@ -483,7 +447,7 @@ function renameRoom(element) {
     const btnOptions = roomContainer.querySelector('.btn_roomsEP');
     const form_rename = roomContainer.querySelector('#form_rename');
     const roomid = roomContainer.getAttribute('data-room-id');
-    const currentUrl = ("http://127.0.0.1:8000/auth/IAnes/" + roomid + "/");
+    const currentUrl = ("http://127.0.0.1:8000/IAnes/" + roomid + "/");
     console.log('room id:', roomid);
     console.log('current_url:', currentUrl)
 

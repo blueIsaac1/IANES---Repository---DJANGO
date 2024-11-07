@@ -16,10 +16,11 @@ main {
     aspect-ratio: 1 / 1;
     width: 100%;
     height: auto;
-    margin-top: 0vw;
     background-color: #ffffff;
     position: relative;
     overflow: hidden;
+    margin-top: 4vw;
+    margin-bottom: 0vw;
 }
 
 /* Classes para configurações gerais (Pegar o costume de usar) */
@@ -115,7 +116,7 @@ main {
     justify-content: flex-start;
     align-items: center;
     gap: 1vw;
-    overflow-y: auto;
+    position: relative;
 }
 
 .rooms_content h1 {
@@ -224,6 +225,8 @@ main {
     padding: 0.6vw;
     position: absolute;
     transition: opacity 0.3s ease-in-out;    
+
+    overflow: visible;
 }
 
 .tp_opcoes {
@@ -241,6 +244,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
     overflow: visible;
     padding: 0.4vw;
 }
@@ -383,6 +387,7 @@ main {
     padding: 0.4vw;
     border: none;
     border-radius: 0.2vw;
+    text-decoration: none;
     cursor: pointer;
     transition: .3s background-color ease-in-out;
 }
@@ -443,7 +448,9 @@ main {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    height: 100%;
+    height: auto;
+    margin-bottom: 4vw;
+    background-color: transparent;
 }
 
 .messages_list {
@@ -459,7 +466,6 @@ main {
     box-sizing: border-box;
     list-style: none;
 }
-
 
 #ianes_pic {
     width: 2.5vw;
@@ -477,9 +483,10 @@ main {
     background-color: transparent;
     bottom: 0;
     left: 0;
-    width: auto;
+    padding-top: 0.5vw;
+    width: 100%;
     height: auto;
-    transform: translateY(125%);
+    transform: translateY(100%);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -489,6 +496,7 @@ main {
 
 .extraOptions_IAnes_Itens {
     background-color: transparent;
+    position: relative;
 }
 
 .extraOptions_IAnes_Itens ion-icon {
@@ -498,7 +506,11 @@ main {
     border: none;
     border-radius: 0.4vw;
     cursor: pointer;
-    transition: .3s ease-in-out background-color;
+    transition: background-color .3s ease-in-out, opacity 0s ease-in-out;
+    opacity: 0;
+}
+.message:hover ion-icon {
+    opacity: 1;
 }
 
 .extraOptions_IAnes_Itens ion-icon:hover {

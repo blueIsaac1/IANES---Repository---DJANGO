@@ -13,7 +13,7 @@ import os
 from django.utils import timezone
 import time
 from google.api_core import exceptions as google_exceptions
-from googletrans import Translator
+from deep_translator import GoogleTranslator 
 import re
 import requests
 from itertools import zip_longest

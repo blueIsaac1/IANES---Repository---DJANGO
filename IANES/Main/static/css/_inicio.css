@@ -31,6 +31,17 @@
     opacity: 1;
 }
 
+/* ------------------------- Tela de Inicio */
+
+.inicio_container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
 /* ------------------------- Banner de Apresentação */
 
 .banner_apresent {
@@ -354,7 +365,7 @@
     text-align: left;
     font-size: 1.6vw;
     background-color: transparent;
-    margin-left: -3vw;
+    margin-left: -2vw;
     transition: 0.3s ease-in-out;
 }
 
