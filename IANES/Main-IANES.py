@@ -8,7 +8,7 @@ import re
 import requests
 import locale 
 
-
+vazio = ' ' # Teste
 # Função para obter a cotação do dólar
 def obter_cotacao_dolar():
     url = 'https://economia.awesomeapi.com.br/json/last/USD-BRL'
@@ -41,7 +41,7 @@ def escolher_idioma():
     idioma_atual, encoding = locale.getlocale() # Captura o idioma do sistema local
     idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim', 'fr': 'Francês'}
 
-    if idioma_atual.startswith('pt'):  # Detecta se o idioma do sistema local é português
+    if idioma_atual.startswith('en'):  # Detecta se o idioma do sistema local é português
         print("Idioma detectado automaticamente: Português")
         idioma_escolhido = 'pt'
         return idioma_escolhido
@@ -66,6 +66,11 @@ def carregar_conteudo(pasta):
     todos_conteudos = []
     for arquivo in os.listdir(pasta):
         caminho_completo = os.path.join(pasta, arquivo)
+
+        # Verifica se o arquivo é 'membros.json' e pula ele
+        if arquivo == 'membros.json':
+            continue
+
         if os.path.isfile(caminho_completo):
             try:
                 with open(caminho_completo, 'r', encoding='utf-8') as f:
@@ -98,12 +103,12 @@ def obter_parametros_usuario(lingua):
 
     # Perguntas relacionadas à empresa
     perguntas_empresa = {
-        "nome": "Por favor, insira o nome da pessoa responsável: ",
-        "nome_empresa": "Por favor, insira o nome da empresa responsável: ",
-        "lucro": f"Qual é o lucro bruto da empresa em reais (R$) ?",
-        "numero_colaboradores": "Por favor, insira o número de colaboradores do projeto: ",
-        "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): ",
-        "Email": "Por favor, insira o e-mail do responsável pelo projeto: "
+        "nome": "Por favor, insira o nome da pessoa responsável:",
+        "nome_empresa": "Por favor, insira o nome da empresa responsável:",
+        "lucro": "Qual é o lucro bruto da empresa em reais (R$)?",
+        "numero_colaboradores": "Por favor, insira o número de colaboradores do projeto:  ",
+        "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'):  ",
+        "Email": "Por favor, insira o e-mail do responsável pelo projeto:  "
     }
 
     # Perguntar os dados da empresa
@@ -123,8 +128,7 @@ def obter_parametros_usuario(lingua):
         
         # Início do campo das perguntas
         while True:
-            
-            resposta = input(pergunta_traduzida)
+            resposta = input(pergunta_traduzida + ' ')
             try:
                 if chave in ["nome", "nome_empresa"]:
                     if resposta.strip():
@@ -134,13 +138,17 @@ def obter_parametros_usuario(lingua):
                         print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
                 elif chave == "lucro":
                     try:
-                        respostas[chave] = float(resposta)
+                        # Remove tudo, exceto números, ponto e vírgula
+                        resposta_limpa = re.sub(r'[^0-9,\.]', '', resposta)
+
+                        respostas[chave] = float(resposta_limpa.replace(",", "."))
                         break
                     except ValueError:
-                        print(translate_text("Erro! Por favor, insira apenas número e '.' para separar os decimais (se necassário)", lingua))
+                        print(translate_text("Erro! Por favor, insira apenas número e '.' para separar os decimais (se necessário)", lingua))
                 elif chave == "numero_colaboradores":
                     try:
-                        respostas[chave] = int(resposta)
+                        resposta_limpa = re.sub(r'[^0-9]', '', resposta)
+                        respostas[chave] = int(resposta_limpa)
                         break
                     except ValueError:
                         print(translate_text("Erro! Por favor, insira apenas números sem decimais", lingua))
@@ -152,7 +160,7 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print(translate_text("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não/No'.", lingua))
+                        print(translate_text("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'.", lingua))
                 elif chave == "Email":
                     if "@" in resposta and "." in resposta:
                         if resposta.strip():
@@ -202,7 +210,8 @@ def obter_parametros_usuario(lingua):
 
     while True:
         try:
-            escolha_area = int(input(translate_text("Digite o número da área escolhida: ", lingua)))
+            escolha_area = int(input(translate_text("Digite o número da área escolhida: ", lingua) + ' '))
+    
             if escolha_area in temas:
                 respostas["area_atuacao"] = temas[escolha_area]
                 break
@@ -214,11 +223,11 @@ def obter_parametros_usuario(lingua):
     # Perguntas relacionadas ao projeto
     perguntas_projeto = {
         "projeto": "Por favor, informe o nome do projeto: ",
-        "orcamento": f"Cotação atual do dólar: R$ {cotacao_dolar:.2f} \nQual é o orçamento previsto para o projeto em reais (R$)?",
-        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Mundial): ",
-        "tempo": "Qual é a duração prevista do projeto em meses? ",
-        "publicoalvo": "Quem é o público-alvo do projeto? ",
-        "itensfinanciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
+        "orcamento": f"Cotação atual do dólar: R$ {cotacao_dolar:.2f} \nQual é o orçamento previsto para o projeto em reais (R$)?  ",
+        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Global):  ",
+        "tempo": "Qual é a duração prevista do projeto em meses?  ",
+        "publicoalvo": "Quem é o público-alvo do projeto?  ",
+        "itensfinanciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não):  "
     }
 
     # Perguntar o nome do projeto
@@ -238,7 +247,7 @@ def obter_parametros_usuario(lingua):
         
         while True:
             try:
-                resposta = input(pergunta_traduzida)
+                resposta = input(pergunta_traduzida + ' ')
                 if chave in ["projeto", "publicoalvo"]:
                     if resposta.strip():
                         respostas[chave] = resposta
@@ -246,20 +255,22 @@ def obter_parametros_usuario(lingua):
                     else:
                         print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
                 elif chave == "orcamento":
-                    respostas[chave] = float(resposta)
+                    resposta_limpa = re.sub(r'[^0-9,\.]', '', resposta)
+
+                    respostas[chave] = float(resposta_limpa.replace(",", "."))
                     break
                 elif chave == "extensao":
-                    if translate_text(resposta, lingua) in (translate_text("Regional", lingua), translate_text("Nacional", lingua), translate_text("Global", lingua), translate_text("regional", lingua), translate_text("nacional", lingua), translate_text("global", lingua)):
+                    if resposta.lower() in (translate_text("regional, nacional, global", lingua)):
                         if resposta.strip():
                             respostas[chave] = resposta
                             break
                     else:
-                        print(translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Mundial.", lingua))
+                        print(translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global.", lingua))
                 elif chave == "tempo":
                     respostas[chave] = int(resposta)
                     break
                 elif chave == "itensfinanciaveis":
-                    if resposta in (translate_text("Sim", lingua), translate_text("Não", lingua), translate_text("sim", lingua), translate_text("não", lingua)):
+                    if resposta.lower() in (translate_text("sim, não", lingua)):
                         respostas[chave] = resposta
                         break
                     else:
@@ -289,7 +300,7 @@ def obter_parametros_usuario(lingua):
 
     while True:
         try:
-            escolha_tema = int(input(translate_text("Digite o número do tema escolhido: ", lingua)))
+            escolha_tema = int(input(translate_text("Digite o número do tema escolhido: ", lingua) + ' '))
             if escolha_tema in temas:
                 respostas["tema"] = temas[escolha_tema]
                 break
@@ -333,7 +344,7 @@ def obter_parametros_usuario(lingua):
 
     while True:
         try:
-            escolha_vertente = int(input(translate_text("Digite o número da vertente escolhida: ", lingua)))
+            escolha_vertente = int(input(translate_text("Digite o número da vertente escolhida: ", lingua) + ' '))
             if 1 <= escolha_vertente <= len(vertentes[escolha_tema]):
                 respostas["vertente"] = vertentes[escolha_tema][escolha_vertente - 1]
                 break
@@ -387,7 +398,17 @@ def analise_page(content, inputs):
 
     try:
         analysis_lines = analysis.split('\n')
-        score = float(analysis_lines[0].split(':')[1].strip()) if ':' in analysis_lines[0] else float(analysis_lines[0])
+        # Verifique se a linha contém um valor numérico válido antes de tentar convertê-lo
+        if ':' in analysis_lines[0]:
+            score_str = analysis_lines[0].split(':')[1].strip()
+        else:
+            score_str = analysis_lines[0].strip()
+
+        # Verifica se o score_str não está vazio ou não contém apenas espaços antes de converter
+        if score_str and score_str.replace('.', '', 1).isdigit():  # Verifica se é um número
+            score = float(score_str)
+        else:
+            score = 0  # Caso o valor não seja um número válido
         description = analysis_lines[1].strip()
     except Exception as e:
         print(f"Erro ao processar a análise: {e}")
