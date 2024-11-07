@@ -18,13 +18,16 @@ import re
 import requests
 from itertools import zip_longest
 from django.contrib import messages 
-from django.contrib.auth import logout
 import urllib
 import logging
+from django.contrib.auth import logout as auth_logout 
 logger = logging.getLogger(__name__)    
 
 # api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 pasta_dados = 'DADOS'
+
+def catch_error_404(request, exception):
+    return render(request, '404.html', {'error_message': 'URL não encontrada.'}, status=404)
 
 def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
     # Define o caminho para o arquivo JSON
@@ -91,11 +94,9 @@ def auth(request):
         else:
             return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
 
+@login_required(login_url='auth')
 @csrf_exempt
 def index(request):
-    if request.method == 'GET' and 'logout_function' in request.GET:
-        logout(request)
-        return redirect('auth')
     rooms = Room.objects.all().order_by('-created_at')
     return render(request, 'index.html', {
         'rooms': rooms,
@@ -184,6 +185,7 @@ def send_message_obter_parametros(request, pk):
 
     return render(request, 'template.html', {'bot_response_text': bot_response_text})
 
+@login_required(login_url='auth')
 @csrf_exempt
 def send_message(request, pk):
     current_room = get_object_or_404(Room, id=pk)
@@ -223,24 +225,25 @@ def send_message(request, pk):
             return redirect('list_messages', pk=pk)
     return redirect('home')
 
+@login_required(login_url='auth')
 @csrf_exempt
 def create_room(request):
-    if request.method == 'POST':
-        room_title = request.POST.get('title')
-        if not room_title:
-            room_title = 'Valor Padrão'
-        try:
-            room = Room.objects.create(user=request.user, title=room_title)
-            return redirect('list_messages', room.id )
-        except Exception as e:
-            logger.error(f"Erro inesperado {e}")
-            return render(request, '404.html', {'error_message': "Erro "})
-    else:
-        return render(request, 'create_room.html')
+    room_title = request.POST.get('title')
+    if not room_title:
+        room_title = 'Valor Padrão'
+    try:
+        room = Room.objects.create(user=request.user, title=room_title)
+        return redirect('list_messages', room.id )
+    except Exception as e:
+        logger.error(f"Erro inesperado {e}")
+        return render(request, '404.html', {'error_message': "Erro "})
+
+    return render(request, 'create_room.html')
     # return render(request, 'room.html', {
     #     'r': room
     # })
 
+@login_required(login_url='auth')
 @csrf_exempt
 def list_messages(request, pk):
     try:
@@ -250,10 +253,9 @@ def list_messages(request, pk):
         rooms = Room.objects.all().order_by('-created_at')
         messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
 
-    except Http404:
+    except Http404 as e:
         logger.error(f"Room {pk} não encontrada")
-        room = Room.objects.create()
-        return render(request, '404.html', {'error_message': "Sala não encontrada"})
+        return render(request, '404.html', {'error_message': "Sala não encontrada", "error_description": e})
     except AttributeError as e:
         logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
         return render(request, '404.html', {'error_message': "Mensagens não encotradas"})
@@ -292,14 +294,26 @@ def list_messages(request, pk):
         
     })
 
+@csrf_exempt
+@login_required(login_url='auth')
 def delete_room(request, id):
+    last_room = Room.objects.order_by('-id').first()
+    last_room_id = last_room.id
+    print('last', last_room)
+    print('last', last_room_id)
     room_delete = get_object_or_404(Room, pk=id)
     try:
         room_delete.delete()
-        return redirect('list_messages', pk=1)
+        return redirect('list_messages', pk=last_room_id)
     except Exception as e:
         logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
         return render(request, '404.html', {'error_message': 'Erro ao tentar deletar a sala.'})
 
+def some_view(request):
+    raise Exception("Erro intencional para teste de página 500")
 
-
+@csrf_exempt
+@login_required(login_url='auth')
+def logout(request):
+    auth_logout(request)
+    return redirect('auth')

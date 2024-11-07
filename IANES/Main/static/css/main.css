@@ -5,12 +5,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--font-montserrat);
 }
 
 body {
     overflow-x: hidden;
     background-color: var(--color-fundo-claro);
-    font-family: var(--font-montserrat);
 }
 
 main {

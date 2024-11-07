@@ -44,7 +44,7 @@
             <li onclick="callScreen('sobre')" aria-selected="false" class="nav_item" id="nav_item-sobre">Sobre</li>
             {% if user.is_authenticated %}
             <li onclick="navigateTo('ianes_page', 'normal')" aria-selected="false" class="nav_item" id="nav_item-ianes">IAnes</li>
-            <li><a href="{% url 'index' %}?logout_function=true" aria-selected="false" class="nav_item" id="nav_item-ianes">Logout</a></li>
+            <li><a href="{% url 'logout' %}" aria-selected="false" class="nav_item" id="nav_item-ianes">Logout</a></li>
             {% endif %}
         </ul>
     </nav>
