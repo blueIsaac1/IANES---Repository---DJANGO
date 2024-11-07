@@ -38,7 +38,7 @@ window.callScreen = function(tela) {
     switch(tela) {
         case 'inicio':
             // Troca a Visibilidade das Telas do Index
-            tela_inicio.style.display = "block";
+            tela_inicio.style.display = "flex";
             tela_sobre.style.display = "none";
             // Muda o "#" na URL
             window.location.hash = "inicio"
@@ -46,14 +46,14 @@ window.callScreen = function(tela) {
         case 'sobre':
             // Troca a Visibilidade das Telas do Index
             tela_inicio.style.display = "none";
-            tela_sobre.style.display = "block";
+            tela_sobre.style.display = "flex";
             // Muda o "#" na URL
             window.location.hash = "sobre"
             break;
         default:
             // Se a tela não for reconhecida, você pode definir um comportamento padrão
             if (tela_inicio) {
-                tela_inicio.style.display = "block";
+                tela_inicio.style.display = "flex";
             }
             if (tela_sobre) {
                 tela_sobre.style.display = "none";
