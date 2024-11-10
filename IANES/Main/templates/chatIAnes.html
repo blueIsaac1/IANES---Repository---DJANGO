@@ -107,6 +107,7 @@
                         {% for user_message, bot_response in messages %}
                             {% if user_message %}
                             <li class="message user">
+                            <img id="user_pic" src="{{ user.first_name }}" alt="Imagem" src=""/>
                             <p> {{ user_message.text }}</p>
                             </li>
                             {% endif %}

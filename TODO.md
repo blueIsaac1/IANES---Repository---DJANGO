@@ -6,5 +6,8 @@
 # not close kk
 - Fix botao excluir sala
 # check
+- Adicionar Avatar Web
+# check / ajustar : gambiarra
+- Adicionar Api VLibras
 - Adicionar lógica do front + back
 - Gerar Pdf

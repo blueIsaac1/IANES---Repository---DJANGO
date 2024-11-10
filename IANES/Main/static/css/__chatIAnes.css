@@ -477,6 +477,17 @@ main {
     transform: translateX(-150%) translateY(0%);
 }
 
+
+#user_pic {
+    width: 2.5vw;
+    height: auto;
+    position: absolute;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    transform: translateX(-150%) translateY(0%);
+}
+
 /* Area das Opções extras */
 .extraOptions_IAnes {
     position: absolute;

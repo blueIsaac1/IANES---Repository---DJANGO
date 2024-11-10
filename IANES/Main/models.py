@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+# from django.contrib.auth.models import AbstractUser
 # Create your models here.
+
+# class CustomUser(AbstractUser):
+#     image_url = models.ImageField(blank=True, null=True, default="https://avatar.iran.liara.run/public")
 
 class Room(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -21,7 +25,6 @@ class Room(models.Model):
     def get_id(self):
         return self.id
     
-
 
 class BotResponse(models.Model):
     text = models.TextField()
