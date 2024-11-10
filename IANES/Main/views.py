@@ -16,6 +16,7 @@ from google.api_core import exceptions as google_exceptions
 from deep_translator import GoogleTranslator 
 import re
 import requests
+from django.urls import reverse
 from itertools import zip_longest
 from django.contrib import messages 
 import urllib
@@ -97,10 +98,16 @@ def auth(request):
 @login_required(login_url='auth')
 @csrf_exempt
 def index(request):
+    last_room_id = listar_ultima_sala()
     rooms = Room.objects.all().order_by('-created_at')
+    if last_room_id:
+        print(last_room_id)
+        last_room_url = reverse('list_messages', args=[last_room_id])
+        print(last_room_url)
     return render(request, 'index.html', {
         'rooms': rooms,
-        'current_page': 'index'
+        'current_page': 'index',
+        'last_room_url': last_room_url
     })
  
 class RoomDetailView(DetailView):
@@ -230,7 +237,7 @@ def send_message(request, pk):
 def create_room(request):
     room_title = request.POST.get('title')
     if not room_title:
-        room_title = 'Valor Padrão'
+        room_title = 'Sala Nova'
     try:
         room = Room.objects.create(user=request.user, title=room_title)
         return redirect('list_messages', room.id )
@@ -245,44 +252,50 @@ def create_room(request):
 
 @login_required(login_url='auth')
 @csrf_exempt
-def list_messages(request, pk):
-    try:
-        room = get_object_or_404(Room, pk=pk)
-        user_messages = room.user_message.all().order_by('created_at')
-        bot_responses = room.bot_response.all().order_by('created_at')
-        rooms = Room.objects.all().order_by('-created_at')
-        messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+def list_messages(request, pk=None):
+    if pk:
+        try:
+            room = get_object_or_404(Room, pk=pk)
+            user_messages = room.user_message.all().order_by('created_at')
+            bot_responses = room.bot_response.all().order_by('created_at')
+            rooms = Room.objects.all().order_by('-created_at')
+            messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
 
-    except Http404 as e:
-        logger.error(f"Room {pk} não encontrada")
-        return render(request, '404.html', {'error_message': "Sala não encontrada", "error_description": e})
-    except AttributeError as e:
-        logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
-        return render(request, '404.html', {'error_message': "Mensagens não encotradas"})
-    except Exception as e:
-        logger.error(f"Erro inesperado: {e}")
-        return render(request, '404.html', {'error_message': 'Erro inesperado'})
+        except Http404 as e:
+            logger.error(f"Room {pk} não encontrada")
+            return render(request, '404.html', {'error_message': "Sala não encontrada", "error_description": e})
+        except AttributeError as e:
+            logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
+            return render(request, '404.html', {'error_message': "Mensagens não encotradas"})
+        except Exception as e:
+            logger.error(f"Erro inesperado: {e}")
+            return render(request, '404.html', {'error_message': 'Erro inesperado'})
+    
+        if request.method == 'PUT':
+            body = request.body.decode('utf-8')
+            parsed_data = urllib.parse.parse_qs(body)
 
-    if request.method == 'PUT':
-        body = request.body.decode('utf-8')
-        parsed_data = urllib.parse.parse_qs(body)
+            room_id_from_request = parsed_data.get('room_id', [None])[0]
+            name_text = parsed_data.get('name_text', [None])[0]
 
-        room_id_from_request = parsed_data.get('room_id', [None])[0]
-        name_text = parsed_data.get('name_text', [None])[0]
-
-        # room_id = request.PUT.get('room_id')
-        # new_name_room = request.PUT.get('name_text')  
-        if room_id_from_request and name_text:
-            print(room_id_from_request, name_text)
-            try:
-                room = Room.objects.get(id=room_id_from_request)
-                room.title = name_text
-                room.save()
-                return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
-            except Room.DoesNotExist:
-                return JsonResponse({'success': False, 'error': 'Room not found.'})
-            except Exception as e:
-                return JsonResponse({'success': False, 'error': str(e)})
+            # room_id = request.PUT.get('room_id')
+            # new_name_room = request.PUT.get('name_text')  
+            if room_id_from_request and name_text:
+                print(room_id_from_request, name_text)
+                try:
+                    room = Room.objects.get(id=room_id_from_request)
+                    room.title = name_text
+                    room.save()
+                    return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
+                except Room.DoesNotExist:
+                    return JsonResponse({'success': False, 'error': 'Room not found.'})
+                except Exception as e:
+                    return JsonResponse({'success': False, 'error': str(e)})
+    else:
+        room = Room.objects.create(title="Sala Nova")
+        return redirect('list_messages', pk=room.id)
+    
+    
     
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
@@ -292,18 +305,17 @@ def list_messages(request, pk):
         'messages': messages,
         'current_page': 'ianes',
         
+        
     })
 
 @csrf_exempt
 @login_required(login_url='auth')
 def delete_room(request, id):
-    last_room = Room.objects.order_by('-id').first()
-    last_room_id = last_room.id
-    print('last', last_room)
-    print('last', last_room_id)
-    room_delete = get_object_or_404(Room, pk=id)
+    room_to_delete = get_object_or_404(Room, id=id)
     try:
-        room_delete.delete()
+        room_to_delete.delete()
+        last_room = Room.objects.order_by('-created_at').first()
+        last_room_id = last_room.id
         return redirect('list_messages', pk=last_room_id)
     except Exception as e:
         logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
@@ -317,3 +329,7 @@ def some_view(request):
 def logout(request):
     auth_logout(request)
     return redirect('auth')
+
+def listar_ultima_sala():
+    last_room = Room.objects.order_by('-id').first()
+    return last_room.id if last_room else None

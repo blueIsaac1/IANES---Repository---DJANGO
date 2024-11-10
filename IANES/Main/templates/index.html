@@ -40,7 +40,7 @@
 <body>
     <!-- Cabeçalho -->
     <header id="header">
-        {% include 'head_foot_temp/_header.html' %}
+        {% include 'head_foot_temp/_header.html' with last_room_url=last_room_url %}
     </header>
 
     <main>
@@ -48,9 +48,9 @@
             <!-- Banner de Tela -->
             <div class="banner_apresent" id="banner_apresent">
                 <h1 textwrap="pretty" id="texto_banner_apresent_titulo">Uma nova Inteligência para o seu Negócio.</h1>
-                <img onclick="location.href='{% url 'list_messages' 1 %}'" id="banner_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo" >
+                <img onclick="location.href='{% url 'list_messages' %}'" id="banner_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo" >
                 <p textwrap="pretty" id="texto_banner_apresent_titulo_desc">Recomendações precisas para otimizar projetos, conectar você a fornecedores e encontrar as melhores soluções.</p>
-                <button onclick="location.href='{% url 'list_messages' 1 %}'" id="botao_banner_exp">Experimente Agora</button>
+                <button onclick="location.href='{% url 'list_messages' %}'" id="botao_banner_exp">Experimente Agora</button>
                 <!--  onclick="navigateTo('ianes_page', 'normal') -->
             </div>
             <!-- Banner Vantagens da Conta -->
