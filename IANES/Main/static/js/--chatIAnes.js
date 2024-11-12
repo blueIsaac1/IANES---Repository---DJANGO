@@ -147,10 +147,12 @@ function rolarConversa(tipo) {
         }, 0); // Delay de 0 segundo
         return;
     }
-    chats_section.scrollTo({
-        top: chats_section.scrollHeight, // Rola para a parte inferior
-        behavior: 'smooth' // Rola suavemente
-    });
+    setTimeout(() => {
+        chats_section.scrollTo({
+            top: chats_section.scrollHeight, // Rola para a parte inferior
+            behavior: 'smooth' // Rola suavemente
+        });
+    }, 0)
 }
 
 // Chame a função onload após carregar a página
@@ -448,12 +450,7 @@ function renameRoom(element) {
     const form_rename = roomContainer.querySelector('#form_rename');
     const roomid = roomContainer.getAttribute('data-room-id');
     const currentUrl = ("http://127.0.0.1:8000/IAnes/" + roomid + "/");
-    console.log('room id:', roomid);
-    console.log('current_url:', currentUrl)
 
-    // form_rename.addEventListener('submit', function(event) {
-    //     event.preventDefault(); // BLOQUEANDO O ENTER
-    // });
     
     // Mostra o input e esconde o <p> e as opções
     nameText.style.display = "none";
@@ -480,7 +477,7 @@ function renameRoom(element) {
         renameInput.removeEventListener('keydown', handleKeyDown);
 
         // Envia o formulário (opcional, descomente para ativar)
-        form.submit();
+        form_rename.submit();
     }
 
     // Checa se a tecla pressionada é "Enter"
@@ -512,8 +509,9 @@ function renameRoom(element) {
             body: `room_id=${roomid}&name_text=${encodeURIComponent(nameText.textContent)}`
             
         })
-        console.log(roomid, nameText )
-        .then(response => response.json()) // Corrigir o encadeamento do then
+        console.log('1:', roomid)
+        console.log('2:', nameText.textContent)
+        .then(response => response.json())  // Corrigir o encadeamento do then
         .then(data => {
             if (data.success) {
                 console.log('Sala atualizada com sucesso!');

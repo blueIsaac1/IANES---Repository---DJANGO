@@ -1,23 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página não encontrada</title>
+    <title>Erro - {{ error_message }}</title>
+    <!-- Import do CSS Principal com Aplicações Gerais -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/main.css' %}">
+    <!-- Import do CSS dessa páginas -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/errors.css' %}">
 </head>
 <body>
-    
-    <h1>Ops! {{ error_message }}</h1>
-    
-    {% if error_message == "Sala não encontrada" %}
-        <p>Deseja criar uma nova sala?</p> 
-        <a href="{% url 'create_room' %}">Sim</a>
-    {% else %}
-        <p>Um erro ocorreu!</p>
-    {% endif %}
-    
-    <br>
-    <a href="{% url 'index' %}">Voltar para a página inicial</a>
-
+    <div class="error_container">
+        <div class="error_container_box">
+            <div class="error_container_box_top">
+                <div class="error_container_box_top_left">
+                    <div class="error_container_box_top_left_sec error_message_title">
+                        <img id="error_logo_img_mini" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+                        <h1 id="error_ianes_texto">IANES</h1>
+                    </div>
+                    <div class="error_container_box_top_left_sec error_message_type">
+                        {% comment %} <strong>{{ error_message }}</strong> {% endcomment %}
+                        <strong>error</strong>
+                        <span>-</span>
+                        <p>{{ error_message }}</p>
+                    </div>
+                    <div class="error_container_box_top_left_sec error_message_desc">
+                        {% comment %} <p>{{ error_description }}</p> {% endcomment %}
+                        <p>Erro que ninguem gosta, Odeio erros, me deixam tristes. {% lorem 10 w random %}</p>
+                    </div>
+                    {% if error_message == "Sala não encontrada" %}
+                        <div class="error_container_box_top_left_sec error_message_desc">
+                            <p id="create_room_qst" >Deseja criar uma nova sala?</p>
+                            <a href="{% url 'create_room' %}" id="create_room_btn" class="link_hover_animation_errors has_arrow">Sim</a>
+                        </div>
+                    {% else %}
+                    {% endif %}
+                </div>
+                <div class="error_container_box_top_right">
+                    <div class="pictures">
+                        <h1 id="error_mark" class="inmark">!</h1>
+                        <img id="error_logo_img_big" class="img_3d" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
+                        <p id="error_typing" class="ianes_findError">Encontrei um <span>ERRO</span>...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="error_container_box_bot">
+                <a class="link_hover_animation_errors has_arrow" href="{% url 'index' %}">Voltar para a página inicial</a>
+            </div>
+        </div>
+    </div>
+    <!-- Chamando o Principal DESSA pagina -->
+    <script src="{% static 'js/errors.js' %}"></script>
 </body>
 </html>

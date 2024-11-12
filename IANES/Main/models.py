@@ -1,12 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+# from django.contrib.auth.models import AbstractUser
 # Create your models here.
+
+# class CustomUser(AbstractUser):
+#     image_url = models.ImageField(blank=True, null=True, default="https://avatar.iran.liara.run/public")
 
 class Room(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=30, default='Sala Nova')
     user_message = models.ManyToManyField('UserMessage', blank=True)
     bot_response = models.ManyToManyField('BotResponse', blank=True)
 
@@ -15,13 +19,12 @@ class Room(models.Model):
     def __str__(self):
         return f"Sala: {self.title}, {self.id}"
     
-    def update_title(self, title):
-        return self.title
+    # def update_title(self, title):
+    #     return self.title
     
     def get_id(self):
         return self.id
     
-
 
 class BotResponse(models.Model):
     text = models.TextField()
