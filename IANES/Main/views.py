@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 pasta_dados = 'DADOS'
 
 def catch_error_404(request, exception):
-    return render(request, '404.html', {'error_message': 'URL não encontrada.'}, status=404)
+    return render(request, 'errors_template.html', {'error_message': 'URL não encontrada.'}, status=404)
 
 def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
     # Define o caminho para o arquivo JSON
@@ -107,7 +107,7 @@ def index(request):
     return render(request, 'index.html', {
         'rooms': rooms,
         'current_page': 'index',
-        'last_room_url': last_room_url
+        # 'last_room_url': last_room_url
     })
  
 class RoomDetailView(DetailView):
@@ -243,7 +243,7 @@ def create_room(request):
         return redirect('list_messages', room.id )
     except Exception as e:
         logger.error(f"Erro inesperado {e}")
-        return render(request, '404.html', {'error_message': "Erro "})
+        return render(request, 'errors_template.html', {'error_message': "Erro "})
 
     return render(request, 'create_room.html')
     # return render(request, 'room.html', {
@@ -253,50 +253,53 @@ def create_room(request):
 @login_required(login_url='auth')
 @csrf_exempt
 def list_messages(request, pk=None):
-    if pk:
-        try:
-            room = get_object_or_404(Room, pk=pk)
-            user_messages = room.user_message.all().order_by('created_at')
-            bot_responses = room.bot_response.all().order_by('created_at')
-            rooms = Room.objects.all().order_by('-created_at')
-            messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
-
-        except Http404 as e:
-            logger.error(f"Room {pk} não encontrada")
-            return render(request, '404.html', {'error_message': "Sala não encontrada", "error_description": e})
-        except AttributeError as e:
-            logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
-            return render(request, '404.html', {'error_message': "Mensagens não encotradas"})
-        except Exception as e:
-            logger.error(f"Erro inesperado: {e}")
-            return render(request, '404.html', {'error_message': 'Erro inesperado'})
     
-        if request.method == 'PUT':
-            body = request.body.decode('utf-8')
-            parsed_data = urllib.parse.parse_qs(body)
+    last_room = Room.objects.order_by('-created_at').first()
 
-            room_id_from_request = parsed_data.get('room_id', [None])[0]
-            name_text = parsed_data.get('name_text', [None])[0]
-
-            # room_id = request.PUT.get('room_id')
-            # new_name_room = request.PUT.get('name_text')  
-            if room_id_from_request and name_text:
-                print(room_id_from_request, name_text)
-                try:
-                    room = Room.objects.get(id=room_id_from_request)
-                    room.title = name_text
-                    room.save()
-                    return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
-                except Room.DoesNotExist:
-                    return JsonResponse({'success': False, 'error': 'Room not found.'})
-                except Exception as e:
-                    return JsonResponse({'success': False, 'error': str(e)})
-    else:
-        room = Room.objects.create(title="Sala Nova")
+    if not last_room:
+        room = Room.objects.create(user=request.user, title='Sala Nova')
         return redirect('list_messages', pk=room.id)
-    
-    
-    
+
+    try:
+        room = get_object_or_404(Room, pk=pk if pk else last_room.id)
+        user_messages = room.user_message.all().order_by('created_at')
+        bot_responses = room.bot_response.all().order_by('created_at')
+        rooms = Room.objects.all().order_by('-created_at')
+        messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+        
+    except Http404 as e:
+        logger.error(f"Sala com PK {pk} não encontrada.")
+        return render(request, 'errors_template.html', {'error_message': "Sala não encontrada", 'error_description': 'Objeto Sala não encontrado.'})
+    except AttributeError as e:
+        logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
+        return render(request, 'errors_template.html', {'error_message': "Mensagens não encotradas", "error_description": str(e)})
+    except Exception as e:
+        logger.error(f"Erro ao acessar atributos de Sala com PK {pk}. Detalhes: {str(e)}")
+        return render(request, 'errors_template.html', {'error_message': "Erro ao acessar mensagens da sala", 'error_description': str(e)})
+
+    if request.method == 'PUT':
+        body = request.body.decode('utf-8')
+        parsed_data = urllib.parse.parse_qs(body)
+
+        room_id_from_request = parsed_data.get('room_id', [None])[0]
+        name_text = parsed_data.get('name_text', [None])[0]
+
+        # room_id = request.PUT.get('room_id')
+        # new_name_room = request.PUT.get('name_text')  
+        if room_id_from_request and name_text:
+            print(room_id_from_request, name_text)
+            try:
+                room = Room.objects.get(id=room_id_from_request)
+                room.title = name_text
+                room.save()
+                return JsonResponse({'success': True})  # Retorna uma resposta JSON de sucesso
+            except Room.DoesNotExist as e:
+                logger.error(f"Erro ao acessar atributos de Sala com PK {pk}. Detalhes: {str(e)}")
+                return render(request, 'errors_template.html', {'error_message': "Erro ao acessar a sala", 'error_description': str(e)})
+            except Exception as e:
+                logger.error(f"Erro inesperado. Detalhes: {str(e)}")
+                return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
+
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
@@ -312,14 +315,20 @@ def list_messages(request, pk=None):
 @login_required(login_url='auth')
 def delete_room(request, id):
     room_to_delete = get_object_or_404(Room, id=id)
-    try:
-        room_to_delete.delete()
+    room_to_delete.delete()
+    last_room = Room.objects.order_by('-created_at').first()
+    if not last_room:
+        return redirect('index')
+    else:
         last_room = Room.objects.order_by('-created_at').first()
-        last_room_id = last_room.id
-        return redirect('list_messages', pk=last_room_id)
-    except Exception as e:
-        logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
-        return render(request, '404.html', {'error_message': 'Erro ao tentar deletar a sala.'})
+        return redirect('list_messages', pk=last_room.id)
+    
+    # else:   
+    #     logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
+    #     return render(request, 'errors_template.html', {'error_message': 'Erro ao tentar deletar a sala.', "error_description": {e}})
+    # except Exception as e:
+    #     logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
+    #     return render(request, 'errors_template.html', {'error_message': 'Erro ao tentar deletar a sala. (Erro Inesperado)', "error_description": {e}})
 
 def some_view(request):
     raise Exception("Erro intencional para teste de página 500")
@@ -327,8 +336,11 @@ def some_view(request):
 @csrf_exempt
 @login_required(login_url='auth')
 def logout(request):
-    auth_logout(request)
-    return redirect('auth')
+    if User.is_authenticated:
+        auth_logout(request)
+        return redirect('auth')
+    else:
+        pass
 
 def listar_ultima_sala():
     last_room = Room.objects.order_by('-id').first()

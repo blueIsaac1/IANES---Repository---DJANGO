@@ -107,7 +107,6 @@
                         {% for user_message, bot_response in messages %}
                             {% if user_message %}
                             <li class="message user">
-                            <img id="user_pic" src="{{ user.first_name }}" alt="Imagem" src=""/>
                             <p> {{ user_message.text }}</p>
                             </li>
                             {% endif %}
@@ -163,7 +162,13 @@
             <div id="loading_bar"></div>
         </div>
     </div>
-
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+      
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
     <!-- <script src="{% static 'js/+idioma.js' %}"></script> -->
@@ -176,6 +181,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <!-- Chamando o Principal GERAL pagina -->
     <script src="{% static 'js/--chatIAnes.js' %}"></script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
 </body>
 </html>

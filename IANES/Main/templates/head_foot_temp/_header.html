@@ -43,13 +43,8 @@
             <li onclick="callScreen('inicio')" aria-selected="false" class="nav_item" id="nav_item-inicio">Início</li>
             <li onclick="callScreen('sobre')" aria-selected="false" class="nav_item" id="nav_item-sobre">Sobre</li>
             {% if user.is_authenticated %}
-            <li onclick="location.href='{% url 'list_messages' 1 %}'" aria-selected="false" class="nav_item" id="nav_item-ianes">IAnes</li>
-            {% if last_room_url %}
-            <li aria-selected="false" class="nav_item" id="nav_item-ianes"><p href="{{ last_room_url }}" >Ultima Sala</p></li>
-            {% else %}
-            <a> &lt ? &gt</a>
-            {% endif %}
-            <li><p href="{% url 'logout' %}" aria-selected="false" class="nav_item" id="nav_item-ianes">Logout</p></li>
+            <li onclick="location.href='{% url 'list_messages' %}'" aria-selected="false" class="nav_item" id="nav_item-ianes">IAnes</li>
+            <li onclick="location.href='{% url 'logout' %}'" aria-selected="false" class="nav_item" id="nav_item-ianes">Logout</li>
             {% endif %}
         </ul>
     </nav>
