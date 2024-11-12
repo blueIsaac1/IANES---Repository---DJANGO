@@ -32,9 +32,43 @@ main {
 
 /* Altera o estilo da ScrollBar */
 
-/* Tamanho */
+/* Isso força a exibição das setas, caso sejam removidas pela customização */
 ::-webkit-scrollbar {
     width: 0.7vw;
+    height: 0.7vw;
+    transition: .3s ease-in-out;
+}
+
+/* Barra de rolagem com setas visíveis */
+::-webkit-scrollbar-button {
+    display: block;
+    width: 0.4vw; /* Ajuste o tamanho das setas */
+    height: 0.5vw; /* Ajuste o tamanho das setas */
+}
+
+/* Seta para rolar para cima (incremento) */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-left: 0.4vw solid transparent;
+    border-right: 0.4vw solid transparent;
+    border-bottom: 0.7vw solid var(--color-cinza);
+    margin: 0;
+}
+
+/* Seta para rolar para baixo (decremento) */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-left: 0.4vw solid transparent;
+    border-right: 0.4vw solid transparent;
+    border-top: 0.7vw solid var(--color-cinza);
+    margin: 0;
+}
+
+/* Seta para rolar para cima (incremento) */
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+    border-bottom: 0.7vw solid var(--color-azul-medio);
+}
+/* Seta para rolar para cima (incremento) */
+::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+    border-top: 0.7vw solid var(--color-azul-medio);
 }
   
 /* Fundo */

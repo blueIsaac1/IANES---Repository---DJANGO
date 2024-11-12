@@ -4,8 +4,6 @@
 ### - JS's
 ### - DATA's
 
-
-
 ## ⭐ CSS's
 
 ### - Camadas "z-index":
@@ -39,8 +37,11 @@
 - Container de Mais Sobre - Ondas : 29 
 
 - Saiba mais sobre a IA-RE - Bloco de Notas - id: container_maisIARE :
-    - Titulo da Categoria e a Box: 40
-    - Quando for sobrepor a outra: 41
+    - Todo o bloco de notas: 40
+    - Titulo da Categoria Geral: 43
+    - Titulo da Categoria Selecionado: 44
+    - Box da Categoria Geral: 41
+    - Box da Categoria Selecionado: 42
 
 - Z-index das Tooltip's do Auth - Alteram entre : 50 e 51
 

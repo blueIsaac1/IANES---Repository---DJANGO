@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
+from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
 APPEND_SLASH = False
@@ -137,3 +138,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Caminho do arquivo que você quer verificar
+required_file_path = os.path.join('excalidraw', 'ik1osdbthtroypjs.jpg')
+
+# Verificar se o arquivo está presente
+if not os.path.isfile(required_file_path):
+    raise ImproperlyConfigured("Unknown error. The Django Project cannot be initialized.")

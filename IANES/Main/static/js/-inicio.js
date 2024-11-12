@@ -1,39 +1,73 @@
-// Função para atualizar os blocos de notas (alterar o z-index)
-function updateBlocoNotas(categoria) {
+// Obtendo os elementos necessários
+const btns_trocar = document.querySelectorAll(".maisIARE_blocoNotas_cat_title");
+const boxs_trocar = document.querySelectorAll(".maisIARE_blocoNotas_box");
+const btn_trocar_classAtivo = "categ_select_tit";
+const box_trocar_classAtivo = "categ_select_box";
+let formatoBtn = "blocoNotas-categoria-cat-";
+let formatoBox = "blocoNotas-categoria-box-";
+let categoriaSelec;
 
-    // Seleciona todos os elementos com a classe 'maisIARE_blocoNotas_categoria'
-    const containers_notas = document.querySelectorAll('.maisIARE_blocoNotas_categoria');
-    const containers_titulos = document.querySelectorAll('.maisIARE_blocoNotas_titulo');
-    const containers_boxs = document.querySelectorAll('.maisIARE_blocoNotas_box');
+// Função para alternar o bloco de notas
+function alternarBlocoNotas(type, element) {
+    let categoriaSelec;
 
-    // Selecionando os containers usando o id
-    const container_notas = document.querySelector(`#blocoNotas-categoria-${categoria}`);
-    const container_titulo = document.querySelector(`#blocoNotas-categoria-tit-${categoria}`);
-    const container_box = document.querySelector(`#blocoNotas-categoria-box-${categoria}`);
-
-    // Itera sobre cada container
-    containers_notas.forEach(container => {
-        container.style.zIndex = 40;
-    });
-
-    // Itera sobre cada container
-    containers_titulos.forEach(titulo => {
-        titulo.style.alignItems = "flex-start";
-    });
-
-    // Itera sobre cada container
-    containers_boxs.forEach(box => {
-        box.style.display = "none";
-    });
-
-    // Altera os estilos do container correspondente
-    if (container_notas) {
-        container_notas.style.zIndex = "41";
+    // Verifica se é um 'click' ou 'load'
+    if (type == 'click') {
+        categoriaSelec = element.id.split("-").slice(3).join("-");
+    } else if (type == 'load') {
+        // Para o carregamento da página, seleciona a primeira categoria por padrão
+        categoriaSelec = "nenhuma"; // A categoria inicial é "nenhuma"
+    } else {
+        return; // Se o tipo não for reconhecido, retorna sem fazer nada
     }
-    if (container_titulo) {
-        container_titulo.style.alignItems = "flex-end";
+
+    // Formatos para o ID
+    let formatoBtn = "blocoNotas-categoria-cat-";
+    let formatoBox = "blocoNotas-categoria-box-";
+
+    // Selecionando o botão e a box que devem ser ativados
+    let categoriaBtn_solo = null; // Inicializa como null
+    if (categoriaSelec !== "nenhuma") {
+        categoriaBtn_solo = document.getElementById(`${formatoBtn}${categoriaSelec}`);
     }
-    if (container_box) {
-        container_box.style.display = "flex";
+    let categoriaBox_solo = document.getElementById(`${formatoBox}${categoriaSelec}`);
+
+    // Removendo as classes ativas de todos os botões e caixas
+    btns_trocar.forEach(item => {
+        item.classList.remove(btn_trocar_classAtivo);
+    });
+    boxs_trocar.forEach(item => {
+        item.classList.remove(box_trocar_classAtivo);
+    });
+
+    // Adicionando as classes ativas ao botão e box selecionados
+    if (categoriaBtn_solo) { // Só adiciona a classe se o botão realmente existir
+        categoriaBtn_solo.classList.add(btn_trocar_classAtivo);
+    }
+    if (categoriaBox_solo) { // Sempre adiciona a classe à box
+        categoriaBox_solo.classList.add(box_trocar_classAtivo);
     }
 }
+
+// Mostrando e Escondendo as tooltips
+const tp = document.getElementById("tp_blocoNotas_clickExpand")
+function showTp_inicio() {
+    if (!tp) return
+    tp.classList.add("tp_blocoNotas_clickExpand_active")
+}
+function hideTp_inicio() {
+    if (!tp) return
+    tp.classList.remove("tp_blocoNotas_clickExpand_active")
+}
+
+// Adicionando o evento de clique aos botões
+document.addEventListener("DOMContentLoaded", function() {
+    // Eventos que acionam e configuram o Bloco de Notas
+    btns_trocar.forEach(element => {
+        element.addEventListener("click", () => alternarBlocoNotas('click', element));
+        element.addEventListener("mouseover", showTp_inicio);
+        element.addEventListener("mouseout", hideTp_inicio);
+    });
+    // Chama a função de alternância para 'load' com a categoria inicial
+    alternarBlocoNotas('load', null);
+});

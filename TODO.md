@@ -7,8 +7,12 @@
 - Fix botao excluir sala
 # check
 - Adicionar Avatar Web
-# check
+# check / ajustar : gambiarra
 - Adicionar Api VLibras
-# check
 - Adicionar lógica do front + back
 - Gerar Pdf
+
+# ERROS:
+- Quando entra na sala de chat, cria uma nova sala, ao inves de apenas entrar na 1°
+- Renomear nao funcionando
+- Copiar a msg do ianes. nao funciona
