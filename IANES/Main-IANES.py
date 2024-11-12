@@ -41,7 +41,7 @@ def escolher_idioma():
     idioma_atual, encoding = locale.getlocale() # Captura o idioma do sistema local
     idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim', 'fr': 'Francês'}
 
-    if idioma_atual.startswith('en'):  # Detecta se o idioma do sistema local é português
+    if idioma_atual.startswith('pt'):  # Detecta se o idioma do sistema local é português
         print("Idioma detectado automaticamente: Português")
         idioma_escolhido = 'pt'
         return idioma_escolhido
@@ -468,7 +468,7 @@ def recomenda_investimento(conteudos, inputs):
     return best_option, best_score, best_content
 
 def main():
-    pasta_dados = 'C:/Users/CTDEV23/Desktop/IANES---Repository---DJANGO/DADOS'
+    pasta_dados = './DADOS'
 
     if not os.path.exists(pasta_dados):
         print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")

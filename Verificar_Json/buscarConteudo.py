@@ -80,35 +80,38 @@ def conteudo_relevante(texto):
             return True
     return False
 
-def buscar_conteudo(url):
-    print(f"Vasculhando: {url}")
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code != 200:
-            print(f"Erro ao acessar a URL: {response.status_code}")
-            return None
-    except Exception as e:
-        print(f"Erro ao tentar acessar a URL: {e}")
-        return None
+def buscar_conteudo(url):  #Define a função 'buscar_conteudo' que recebe uma URL como parâmetro
+    print(f"Vasculhando: {url}")  #Imprime uma mensagem informando que está vasculhando a URL fornecida
+    
+    try:  #Inicia o bloco try para capturar exceções ao fazer a requisição HTTP
+        response = requests.get(url, timeout=10)  #Realiza uma requisição GET para a URL com um timeout de 10 segundos
+        if response.status_code != 200:  #Verifica se o código de status da resposta não é 200 (OK)
+            print(f"Erro ao acessar a URL: {response.status_code}")  #Imprime o código de erro se não for 200
+            return None  #Retorna 'None' em caso de erro na requisição
+    except Exception as e:  #Captura qualquer exceção durante a requisição HTTP
+        print(f"Erro ao tentar acessar a URL: {e}")  # Imprime a exceção gerada
+        return None  #Retorna 'None' em caso de erro na requisição
 
-    soup = BeautifulSoup(response.content, 'html.parser')
-    texto_relevante = []
-    for tag in soup.find_all('div'):
-        texto = tag.get_text(strip=True)
-        if len(texto) < 100:
-            continue
-        if conteudo_relevante(texto):
-            texto_relevante.append(texto)
+    soup = BeautifulSoup(response.content, 'html.parser')  #Usa BeautifulSoup para parsear o conteúdo HTML da resposta
+    texto_relevante = []  #Cria uma lista vazia para armazenar os textos relevantes encontrados
 
-    if texto_relevante:
-        return ' '.join(texto_relevante)
-    return None
+    for tag in soup.find_all('div'):  # tera por todas as tags <div> encontradas no HTML
+        texto = tag.get_text(strip=True)  #Extrai o texto da tag <div>, removendo espaços extras
+        if len(texto) < 100:  #Se o texto tiver menos de 100 caracteres, ignora
+            continue  #Vai para a próxima iteração do loop
+        if conteudo_relevante(texto):  #Se o texto for considerado relevante pela função 'conteudo_relevante'
+            texto_relevante.append(texto)  #Adiciona o texto à lista de textos relevantes
+
+    if texto_relevante:  #Se houver textos relevantes encontrados
+        return ' '.join(texto_relevante)  #Retorna os textos relevantes unidos por um espaço
+    return None  #Se não houver textos relevantes, retorna 'None'
+
 
 def buscar_e_atualizar_json():
     urls_com_conteudo_relevante = []
 
     try:
-        with open('C:/Users/CTDEV23/Desktop/IANES---Repository---DJANGO/Verificar_Json/links_FCO.json', 'r', encoding='utf-8') as f:
+        with open('./DADOS/links_FCO.json', 'r', encoding='utf-8') as f:
             urls = json.load(f)
     except FileNotFoundError:
         print("Arquivo 'links.json' não encontrado.")
