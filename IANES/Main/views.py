@@ -177,6 +177,9 @@ def send_message_obter_parametros(request, pk):
                 text=bot_response_text
             )
 
+            # AVISO PARA FRANCISCO
+            # FAZER A IA GERAR O AUDIO DELA DE ACORDO COM O 'bot_response_text'
+
             current_room.user_message.add(user_message)
             current_room.bot_response.add(bot_response_instance)
 
