@@ -68,29 +68,32 @@ def buscar_e_atualizar_json(url, tempo_maximo=900):
     urls_relevantes = set()
     links_para_visitar = {url}
 
+    #Inicia um pool de threads
     with ThreadPoolExecutor(max_workers=10) as executor:
-        while links_para_visitar:
-            futuros = {executor.submit(buscar_conteudo, link): link for link in links_para_visitar}
-            links_para_visitar = set()
+        while links_para_visitar: # Enquanto houver links para visitar, o loop continuará executando.
+            futuros = {executor.submit(buscar_conteudo, link): link for link in links_para_visitar} #Submete as tarefas para o pool de threads. Para cada link em 'links_para_visitar',
+                                                                                                    #é enviado uma tarefa para a função 'buscar_conteudo', associando o link ao futuro da execução.
+            links_para_visitar = set() #Limpa a lista de links para visitar, pois agora estamos processando os links.
 
-            for futuro in as_completed(futuros):
-                link = futuros[futuro]
-                conteudo_relevante_encontrado, links_internos = futuro.result()
+            for futuro in as_completed(futuros): #Itera sobre os futuros que já foram completados.
+                link = futuros[futuro] #Obtém o link associado ao futuro atual.
+                conteudo_relevante_encontrado, links_internos = futuro.result()  #Obtém o resultado da execução da função 'buscar_conteudo' para o link atual,
+                                                                                #que retorna um tuplo (conteúdo relevante, links internos encontrados).
 
-                if conteudo_relevante_encontrado:
+                if conteudo_relevante_encontrado: #Se o conteúdo relevante foi encontrado, adiciona o link à lista de URLs relevantes.
                     urls_relevantes.add(link)
 
-                novos_links = links_internos - visitados
-                visitados.update(novos_links)
-                links_para_visitar.update(novos_links)
+                novos_links = links_internos - visitados  #Calcula os novos links a serem visitados (aqueles que são internos e ainda não foram visitados).
+                visitados.update(novos_links) #Atualiza o conjunto de links visitados com os novos links encontrados.
+                links_para_visitar.update(novos_links) #Atualiza a lista de links a visitar com os novos links encontrados.
 
-            elapsed_time = time.time() - start_time
-            if elapsed_time > tempo_maximo:
+            elapsed_time = time.time() - start_time #Calcula o tempo decorrido desde o início da execução.
+            if elapsed_time > tempo_maximo: #Verifica se o tempo máximo de execução foi atingido.
                 print("Tempo máximo de execução atingido.")
                 break
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(script_dir, 'links_FCO.json')
+    script_dir = os.path.dirname(os.path.abspath(__file__)) #Obtém o diretório onde o script está localizado (usado para determinar o caminho do arquivo de saída).
+    json_path = os.path.join(script_dir, 'links_FCO.json') #Cria o caminho completo para salvar um arquivo JSON contendo os links encontrados.
 
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(list(urls_relevantes), f, ensure_ascii=False, indent=4)
