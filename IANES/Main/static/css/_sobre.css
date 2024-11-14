@@ -1,0 +1,216 @@
+/* Importando o Root. O Root é uma Arquivo de Cores que foram Pré-Configuradas */
+@import url(root.css);
+
+:root {
+    --tamanho_textoSobre_h1: 1.6vw;
+    --tamanho_textoSobre_p: 1vw;
+}
+
+/* ------------------------- Tela de Sobre */
+
+.sobre_container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-top: 1vw;
+}
+
+/* ------------------------- Sobres */
+
+.div_text_sobre {
+    background-color: transparent;
+    padding: 2vw 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.div_text_sobre h1 {
+    font-size: var(--tamanho_textoSobre_h1);
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+    line-height: 1;
+    width: 30%;
+    background-color: var(--color-vermelho-medio);
+    padding: 1vw;
+    border: none;
+    border-radius: 0.4vw;
+}
+
+.div_text_sobre p {
+    font-size: var(--tamanho_textoSobre_p);
+    color: #000000;
+    text-align: left;
+    font-weight: 600;
+    line-height: 1.5;
+    width: 100%;
+}
+
+/* ------------------------- Sobres */
+
+.div_membros_container {
+    background-color: transparent;
+    padding: 1vw;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.div_membros_container #texto_sobre_nossaEquipeProjeto {
+    font-size: var(--tamanho_textoSobre_h1);
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+}
+
+.membros_superior {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.4vw;
+    position: relative;
+    overflow: visible;
+}
+
+.membros_sec {
+    background-color: transparent;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1vw;
+    padding: 1vw;
+    border: none;
+    border-radius: 0.4vw;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+.membros_sec:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.membroSec_imgDiv {
+    border: var(--color-vermelho-medio) 0.3vw solid;
+    border-radius: 0.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.membroSec_imgDiv img {
+    width: 12vw;
+    height: 12vw;
+    object-fit: cover;
+}
+
+.membroSec_textoDiv #memberName_subfName {
+    font-size: var(--tamanho_textoSobre_p);
+    color: #000000;
+    text-align: center;
+    font-weight: 500;
+}
+
+.membroSec_textoDiv #memberName_prefName {
+    font-size: var(--tamanho_textoSobre_p);
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+}
+
+.membros_inferior {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.4vw;
+    position: relative;
+    overflow: visible;
+}
+
+.membroTodos_imgDiv {
+    border: var(--color-vermelho-medio) 0.3vw solid;
+    border-radius: 0.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.membroTodos_imgDiv img {
+    width: 60vw;
+    height: 30vw;
+    object-fit: fill;
+}
+
+/* ------------------------- Overlay do Membor */
+
+.membro_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-fundo-overlay);
+    z-index: 800;
+    overflow: hidden;
+}
+
+
+/* Tooltip que avisa do click */
+
+.tp_members_clickExpand {
+    opacity: 0;
+    position: absolute;
+    background-color: var(--color-azul-medio);
+    color: #ffffff;
+    font-size: 1.2vw;
+    font-weight: 600;
+    text-align: right;
+    padding: 0.4vw;
+    border-radius: 0.2vw;
+    z-index: -1;
+    top: 0%;
+    right: 0%;
+    transform: translateX(0%);
+    white-space: nowrap;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.tp_members_clickExpand::after {
+    content: '';
+    position: absolute;
+    bottom: -15%;
+    right: 10%;
+    transform: translateX(0%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--color-azul-medio);
+}
+
+/* Tooltip aparece quando o mouse está sobre qualquer título de categoria */
+.tp_members_clickExpand_active {
+    opacity: 1;
+    z-index: 900;
+    top: -20%;
+    transform: translateX(0%);
+}

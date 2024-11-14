@@ -68,7 +68,7 @@ async function callMember(membro) {
     document.getElementById("email_memb").innerText = info.email.text;
 
     // Abrir o overlay
-    toggleOverlay();
+    config_toggleOverlay();
 }
 
 // Limpa os dados no overlay
@@ -100,29 +100,26 @@ function clearOverlay() {
 
 
 // Função para abrir e fechar o Overlay
-function toggleOverlay() {
+function config_toggleOverlay() {
     const overlay = document.getElementById('membro_overlay');
-    
-    if (overlay.style.display === "none" || overlay.style.display === "") {
-        overlay.style.display = "flex"; // Abre o overlay
-        console.log("Overlay de Membro Aberta");
-    } else {
-        overlay.style.display = "none"; // Fecha o overlay
-        clearOverlay()
-        console.log("Overlay de Membro Fechada");
-    }
-}
+    let overlayState = overlay.getAttribute("aria-active");
 
-// Fecha o overlay ao clicar na parte preta
-document.getElementById('membro_overlay').onclick = function() {
-    this.style.display = "none"; // Fecha o overlay
-    clearOverlay()
-    console.log("Overlay de Membro Fechada");
-};
+    if (overlayState === "true") {
+        overlay.style.display = "none";
+        overlay.setAttribute("aria-active", "false");
+        document.body.style.overflowY = "auto";
+    } else if (overlayState === "false") {
+        overlay.style.display = "flex";
+        overlay.setAttribute("aria-active", "true");
+        document.body.style.overflowY = "hidden";
+    } else { return }
+
+    rolarPara("topo_screen")
+
+}
 
 //Funcao para Copiar o Email
 let popupActive = false; // Variável para rastrear o estado do popup
-
 function copyEmail(event) {
     event.preventDefault(); // Evita o comportamento padrão do link
     
@@ -158,3 +155,27 @@ function showPopup_emailCopy() {
         }, 2000); // Tempo para o efeito de desaparecimento, mesmo tempo do ".loading"
     }, 50); // Pequeno atraso antes de começar a esvaziar
 }
+
+// Mostrando e Escondendo as tooltips
+const tp_sobre = document.getElementById("tp_members_clickExpand")
+function showTp_sobre() {
+    if (!tp_sobre) return
+    tp_sobre.classList.add("tp_members_clickExpand_active")
+}
+function hideTp_sobre() {
+    if (!tp_sobre) return
+    tp_sobre.classList.remove("tp_members_clickExpand_active")
+}
+
+// Adicionando o evento de clique aos botões
+document.addEventListener("DOMContentLoaded", function() {
+    // Eventos que acionam e configuram o Bloco de Notas
+    document.querySelectorAll(".membros_sec").forEach(element => {
+        // element.addEventListener("click", () => alternarBlocoNotas('click', element));
+        element.addEventListener("click", config_toggleOverlay)
+        element.addEventListener("mouseover", showTp_sobre);
+        element.addEventListener("mouseout", hideTp_sobre);
+    });
+    document.getElementById("membro_overlay").addEventListener("click", config_toggleOverlay)
+    document.getElementById("fecharOverlay").addEventListener("click", config_toggleOverlay)
+});

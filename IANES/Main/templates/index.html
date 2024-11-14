@@ -189,19 +189,98 @@
             </div>
         </div>
 
-        <div class="inicio_container" id="tela_sobre">
-            
+        <div class="sobre_container" id="tela_sobre">
+
+            <div class="div_text_sobre">
+                <h1 id="texto_sobre_timeRailo">Time RAILO</h1>
+                <p id="texto_sobre_timeRaioDesc">A RAILO surgiu como uma equipe dedicada à realização de projetos simples durante as aulas do curso de Desenvolvimento do SENAI, com foco em atividades práticas. Com o passar do tempo, a equipe evoluiu, adotando um logotipo e um slogan, e se tornou cada vez mais reconhecida. Para o Trabalho de Conclusão de Curso, decidimos coletivamente utilizar o nome Time RAILO para representar nossa equipe.</p>
+                <h1 id="texto_sobre_oIanes">O IAnes</h1>
+                <p id="texto_sobre_oIanesDesc">Recentemente, fomos desafiados a desenvolver uma inteligência artificial (IA) especializada na análise de projetos empresariais. Essa IA, carinhosamente apelidada de "IA-RE", que significa "Inteligência Artificial de Recomendação Especializada", tem como objetivo identificar dificuldades enfrentadas pelas empresas e oferecer recomendações didáticas e práticas sobre diversos aspectos, incluindo preços, fornecedores, vantagens e desafios.</p>
+            </div>
+
+            <div class="div_membros_container">
+
+                <h1 id="texto_sobre_nossaEquipeProjeto">Nossa Equipe no Projeto</h1>
+
+                <div class="membros_superior">
+                    <p id="tp_members_clickExpand" class="tp_members_clickExpand">Clique para expandir</p>
+
+                    <div id="memberSection-call-isaac" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_prefName">Isaac</p>
+                            <p id="memberName_subfName">Cleiton</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memberSection-call-pedro" onclick="callMember('pedro')" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_pedrosiqueira.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_prefName">Pedro</p>
+                            <p id="memberName_subfName">Siqueira</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memberSection-call-renan" onclick="callMember('renan')" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_renanmattos.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_prefName">Renan</p>
+                            <p id="memberName_subfName">Mattos</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memberSection-call-miguel" onclick="callMember('miguel')" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_miguelvinicius.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_prefName">Miguel</p>
+                            <p id="memberName_subfName">Vinícius</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memberSection-call-breno" onclick="callMember('breno')" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_brenoferracini.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_prefName">Breno</p>
+                            <p id="memberName_subfName">Ferracini</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memberSection-call-luiz" onclick="callMember('luiz')" class="membros_sec">
+                        <div class="membroSec_imgDiv">
+                            <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg" alt="">
+                        </div>
+                        <div class="membroSec_textoDiv">
+                            <p id="memberName_subfName">Luiz</p>
+                            <p id="memberName_prefName">Francisco</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="membros_inferior" style="display: none;">
+                    <div class="membroTodos_imgDiv">
+                        <img id="todos_membros" src="https://tismoo.us/wp-content/uploads/2023/03/Depositphotos_118995148_S.jpg" alt="Template">
+                    </div>
+                </div>
+
+            </div>
         </div>
-
-        <p id="tela_sobre">TELA DE SOBRE</p>
-
     </main>
 
-    <div onclick="toggleOverlay()" id="membro_overlay" class="membro_overlay" style="display: none;">
+    <div aria-active="false" id="membro_overlay" class="membro_overlay">
 
         <div id="ovMembro-luiz" class="ovMembro_container" onclick="event.stopPropagation();">
             
-            <ion-icon onclick="toggleOverlay()" id="fecharOverlay" class="fecharOverlay" name="close"></ion-icon>
+            <ion-icon id="fecharOverlay" class="fecharOverlay" name="close"></ion-icon>
         
             <div class="ovMembroC_sup">
                 <div class="imgDiv_membroOverlay">
@@ -264,7 +343,7 @@
 
     </div>  
     
-    <div onclick="rolarPara('topo')" class="bubble_goTop" id="bubble_goTop" style="display: none;">
+    <div onclick="rolarPara('topo')" class="bubble_goTop" id="bubble_goTop">
         <ion-icon name="arrow-up"></ion-icon>
         <p id="tooltip_bubTop">Voltar ao Topo</p>
     </div>

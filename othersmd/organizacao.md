@@ -10,12 +10,13 @@
 
 #### Template: "Objeto" : "Camada"
 
-- Tela de Loading : 1000 
+- Tela de Loading : 1000
+- Tela com Overlay : 850
 
 - Tooltip's - Antes : -900 
 - Tooltip's - Depois : 900 
-
-- Pop-Ups de Confirmação : 500;
+ 
+- Pop-Ups de Confirmação : 500; !!!!
 
 - Tela de Chat do IAnes:
     - Qualquer Container do Chat: 400
@@ -45,4 +46,4 @@
 
 - Z-index das Tooltip's do Auth - Alteram entre : 50 e 51
 
-- Botões Flutuantes:  : 600 
+- Botões Flutuantes:  : 900

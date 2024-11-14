@@ -50,14 +50,14 @@ function alternarBlocoNotas(type, element) {
 }
 
 // Mostrando e Escondendo as tooltips
-const tp = document.getElementById("tp_blocoNotas_clickExpand")
+const tp_inicio = document.getElementById("tp_blocoNotas_clickExpand")
 function showTp_inicio() {
-    if (!tp) return
-    tp.classList.add("tp_blocoNotas_clickExpand_active")
+    if (!tp_inicio) return
+    tp_inicio.classList.add("tp_blocoNotas_clickExpand_active")
 }
 function hideTp_inicio() {
-    if (!tp) return
-    tp.classList.remove("tp_blocoNotas_clickExpand_active")
+    if (!tp_inicio) return
+    tp_inicio.classList.remove("tp_blocoNotas_clickExpand_active")
 }
 
 // Adicionando o evento de clique aos botões

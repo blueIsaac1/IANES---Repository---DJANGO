@@ -14,8 +14,8 @@
 /* Coisas no Cabeçalho */
 
 header {
-    background-color: transparent;
-    backdrop-filter: blur(0.2vw);
+    background-color: #ffffff;
+    /* backdrop-filter: blur(0.2vw); */
     width: 100%;
     /* height: Tamanho do Cabeçalho */
     height: var(--tamanho_header);
@@ -28,6 +28,8 @@ header {
     top: 0;
     left: 0;
     z-index: 800;
+    border: none;
+    border-bottom: var(--color-cinza_hover_bg_light) solid 0.2vw;
 }
 
 /* Parte de Cima do Header */
@@ -182,10 +184,10 @@ header {
 .nav_list li::before {
     content: "";
     position: absolute;
-    bottom: -0.1vw;
+    bottom: -0.5vw;
     left: 50%;
     width: 100%;
-    height: 0.1vw;
+    height: 0.2vw;
     background-color: var(--color-vermelho-medio);
     border-radius: 1vw;
     transform: translateX(-50%) scaleX(0);

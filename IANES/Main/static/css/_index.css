@@ -17,6 +17,57 @@ main {
     flex-direction: column;
 }
 
+/* Balão de ir ao Topo*/
+
+.bubble_goTop {
+    position: fixed;
+    bottom: 5vw;
+    right: 1vw;
+    padding: 0.5vw;
+    border-radius: 50%;
+    background-color: var(--color-vermelho-medio);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2vw;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(4vw);
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    z-index: 900;
+}
+
+.bubble_goTop:hover {
+    background-color: var(--color-azul-medio);
+}
+
+.bubble_goTop.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#tooltip_bubTop {
+    position: absolute;
+    opacity: 0;
+    background-color: var(--color-azul-medio);
+    font-size: 0.8vw;
+    white-space: nowrap;
+    top: 0;
+    left: 0;
+    transform: translateX(50%) translateY(-180%);
+    padding: 0.4vw;
+    border: none;
+    border-radius: 0.5vw;
+    transition: 0.3s ease-in-out;
+}
+
+.bubble_goTop:hover #tooltip_bubTop {
+    transform: translateX(-75%) translateY(-180%);
+    opacity: 1;
+}
+
 /* Barra de Carregamento */
 
 .loading_container {
