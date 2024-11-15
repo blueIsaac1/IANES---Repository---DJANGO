@@ -206,6 +206,7 @@
                     <p id="tp_members_clickExpand" class="tp_members_clickExpand">Clique para expandir</p>
 
                     <div id="memberSection-call-isaac" class="membros_sec">
+                        <p>Colocar Icones Legais</p>
                         <div class="membroSec_imgDiv">
                             <img src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg" alt="">
                         </div>
@@ -278,60 +279,61 @@
 
     <div aria-active="false" id="membro_overlay" class="membro_overlay">
 
-        <div id="ovMembro-luiz" class="ovMembro_container" onclick="event.stopPropagation();">
+        <div id="ovMembro_container" class="ovMembro_container" onclick="event.stopPropagation();">
             
             <ion-icon id="fecharOverlay" class="fecharOverlay" name="close"></ion-icon>
         
-            <div class="ovMembroC_sup">
-                <div class="imgDiv_membroOverlay">
-                    <img id="fotoM_overlay" src="" alt="">
+            <div class="ovMembroC_left ovMembroC_side">
+                <div class="membroOverlay_imgDiv">
+                    <img id="membroOverlay_fotoM" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg" alt="Membro: Luiz Francisco">
                 </div>
-                <p id="nomeM_overlay"></p> <!-- Esvaziado -->
-            </div>
-            <div class="ovMembroC_bot">
-                <h4>Função no Projeto</h4>
-                <ul class="external_ul">
-                    <li>
-                        <h5 id="devM_overlay"></h5> <!-- Esvaziado -->
-                        <ul id="lista_dev" class="internal_ul">
-                            <!-- Itens serão preenchidos dinamicamente -->
-                        </ul>
-                    </li>
-                    <li>
-                        <h5 id="plaM_overlay"></h5> <!-- Esvaziado -->
-                        <ul id="lista_pla" class="internal_ul">
-                            <!-- Itens serão preenchidos dinamicamente -->
-                        </ul>
-                    </li>
-                </ul>
-                <h4>Sociais</h4>
-                <div class="social_ul">
-                    <div>
+                <p class="membroOverlay_membName" id="nomeM_overlay">Luiz Francisco Neves Mendes</p>
+                <div class="membroOverlay_socailContainer">
+                    <h2 id="texto_sobre_membSocial">Social</h2>
+                    <div class="membroOverlay_socialSection">
                         <div class="social_icone">
                             <ion-icon name="logo-linkedin"></ion-icon>
                         </div>
-                        <p>Linkedin</p>
-                        <span>👉</span>
-                        <a id="linkedin_memb" target="_blank" href=""></a> <!-- Esvaziado -->
+                        <p class="membroOverlay_socialName" id="texto_sobre_linkedin">Linkedin</p>
+                        <ion-icon name="arrow-forward-outline" class="rightArrowChar"></ion-icon>
+                        <a class="membroOverlay_socialLink" id="link_linkedin" target="_blank" href="">Francisco Neves</a>
                     </div>
-                    <div>
+                    <div class="membroOverlay_socialSection">
                         <div class="social_icone">
                             <ion-icon name="logo-github"></ion-icon>
                         </div>
-                        <p>Github</p>
-                        <span>👉</span>
-                        <a id="github_memb" target="_blank" href=""></a> <!-- Esvaziado -->
+                        <p class="membroOverlay_socialName" id="texto_sobre_github">Github</p>
+                        <ion-icon name="arrow-forward-outline" class="rightArrowChar"></ion-icon>
+                        <a class="membroOverlay_socialLink" id="link_github" target="_blank" href="">Francisco-Neves-15</a>
                     </div>
-                    <div>
+                    <div class="membroOverlay_socialSection">
                         <div class="social_icone">
                             <ion-icon name="mail-outline"></ion-icon>
                         </div>
-                        <p>Email</p>
-                        <span>👉</span>
-                        <a href="#" id="email_memb" onclick="copyEmail(event)"></a> <!-- Esvaziado -->
-                    </div>                      
+                        <p class="membroOverlay_socialName" id="texto_sobre_email">Email</p>
+                        <ion-icon name="arrow-forward-outline" class="rightArrowChar"></ion-icon>
+                        <a class="membroOverlay_socialLink" id="link_email" href="#" target="_blank">francisconeves15contato@gmail.com</a>
+                    </div>
+                    <p id="tp_members_overlay" class="tp_members_overlay">Clique para Copiar</p>
                 </div>
             </div>
+        
+            <div class="ovMembroC_right ovMembroC_side">
+                <h2 id="texto_sobre_noAdding_funcProjet">Funções no Projeto:</h2>
+                <h3 id="texto_sobre_adding_mainDev">Desenvolvimento Front-End: </h3>
+                <ul id="list_developed">
+                    <li id="list_dev_item">Web</li>
+                    <li id="list_dev_item">Assistente da transição ao Framework</li>
+                </ul>
+                <h3 id="texto_sobre_noAdding_adicional">Adicionais:</h3>
+                <ul id="list_additional">
+                    <li id="list_add_item">Operacional Designer</li>
+                    <li id="list_add_item">Planejamento Visual (Design)</li>
+                    <li id="list_add_item">Acessibilidade Idiomas/Aparência/Fonte</li>
+                    <li id="list_add_item">Branding</li>
+                </ul>
+            </div>
+
         </div>
 
         <div id="popup_copyEmail" class="popup_copyEmail" style="display: none;">

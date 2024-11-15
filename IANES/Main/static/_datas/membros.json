@@ -1,14 +1,18 @@
 {
     "luiz": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg",
+        "alt_img_text": "Membro: Luiz Francisco",
         "nome": "Luiz Francisco Neves Mendes",
         "dev": "Desenvolvimento Front-End",
-        "lista_dev": ["Web", "Mobile"],
+        "lista_dev": [
+            "Web", 
+            "Assistente da transição ao Framework"
+        ],
         "pla": "Extras",
         "lista_pla": [
             "Operacional Designer",
             "Planejamento Visual (Design)",
-            "Acessibilidade Idiomas/Aparência",
+            "Acessibilidade Idiomas/Aparência/Fonte",
             "Branding"
         ],
         "linkedin": {
@@ -17,7 +21,7 @@
         },
         "github": {
             "href": "https://github.com/Francisco-Neves-15",
-            "text": "Francisco-Neves"
+            "text": "Francisco-Neves-15"
         },
         "email": {
             "href": "#",
@@ -26,6 +30,7 @@
     },
     "renan": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_renanmattos.jpg",
+        "alt_img_text": "Membro: Renan Mattos",
         "nome": "Renan Mattos Landim",
         "dev": "Desenvolvimento da I.A.",
         "lista_dev": ["Codificação I.A.", "Planejamento I.A."],
@@ -49,6 +54,7 @@
     },
     "pedro": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_pedrosiqueira.jpg",
+        "alt_img_text": "Membro: Pedro Siqueira",
         "nome": "Pedro Bernardes Siqueira",
         "dev": "Desenvolvimento Back-End",
         "lista_dev": ["Django"],
@@ -73,6 +79,7 @@
     },
     "miguel": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_miguelvinicius.jpg",
+        "alt_img_text": "Miguel Vinicius",
         "nome": "Miguel Vinicius Oliveira da Silva",
         "dev": "Desenvolvimento I.A. & Tester",
         "lista_dev": ["Codificação I.A."],
@@ -97,6 +104,7 @@
     },
     "isaac": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg",
+        "alt_img_text": "Isaac Cleiton",
         "nome": "Isaac Cleiton da Silva",
         "dev": "Desenvolvimento Back-end & Banco de Dados",
         "lista_dev": ["Codificação do Banco de Dados", "Django"],
@@ -120,6 +128,7 @@
     },
     "breno": {
         "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_brenoferracini.jpg",
+        "alt_img_text": "Membro: Breno Ferracini",
         "nome": "Breno Ferracini de Oliveira",
         "dev": "Desenvolvimento I.A. & Pesquisa",
         "lista_dev": ["Codificação da I.A."],

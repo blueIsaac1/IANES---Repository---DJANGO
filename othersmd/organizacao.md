@@ -13,10 +13,10 @@
 - Tela de Loading : 1000
 - Tela com Overlay : 850
 
-- Tooltip's - Antes : -900 
+- Tooltip's - Antes : -1 
 - Tooltip's - Depois : 900 
  
-- Pop-Ups de Confirmação : 500; !!!!
+- Pop-Ups de Confirmação : 900;
 
 - Tela de Chat do IAnes:
     - Qualquer Container do Chat: 400

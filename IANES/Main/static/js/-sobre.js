@@ -1,3 +1,8 @@
+// Variaveis Globais
+const overlay = document.getElementById('membro_overlay');
+const fecharOverlay = document.getElementById("fecharOverlay");
+const overlayContainer = document.getElementById("ovMembro_container")
+
 // Quebra linha dos nomes na aba sobre
 const textos = document.querySelectorAll('#membros_sec_p'); // Use a classe
 textos.forEach(texto => {
@@ -99,34 +104,34 @@ function clearOverlay() {
 }
 
 
-// Função para abrir e fechar o Overlay
+// Função para alternar a exibição do overlay
 function config_toggleOverlay() {
     const overlay = document.getElementById('membro_overlay');
-    let overlayState = overlay.getAttribute("aria-active");
+    const overlayContainer = document.getElementById('ovMembro_container');
+    const overlayState = overlay.getAttribute("aria-active");
 
     if (overlayState === "true") {
         overlay.style.display = "none";
         overlay.setAttribute("aria-active", "false");
         document.body.style.overflowY = "auto";
+        overlayContainer.classList.remove("ovMembro_container_active");
     } else if (overlayState === "false") {
         overlay.style.display = "flex";
         overlay.setAttribute("aria-active", "true");
         document.body.style.overflowY = "hidden";
-    } else { return }
-
-    rolarPara("topo_screen")
-
+        overlayContainer.classList.add("ovMembro_container_active");
+    } else {return}
 }
 
-//Funcao para Copiar o Email
-let popupActive = false; // Variável para rastrear o estado do popup
-function copyEmail(event) {
-    event.preventDefault(); // Evita o comportamento padrão do link
+// Função para Copiar o Email
+let popupActive = false;
+function copyEmail(event, element) {
+    event.preventDefault();
     
     // Verifica se o popup já está ativo
     if (popupActive) return; 
 
-    const email = document.getElementById('email_memb').innerText;
+    const email = element.textContent;
 
     // Copia o texto para a área de transferência
     navigator.clipboard.writeText(email).then(() => {
@@ -135,13 +140,12 @@ function copyEmail(event) {
         console.error('Erro ao copiar o email: ', err);
     });
 }
-
 function showPopup_emailCopy() {
     const popup = document.getElementById('popup_copyEmail');
     const loadingBar = document.getElementById('loading');
     
     popupActive = true; // Marca o popup como ativo
-    popup.style.display = 'block';
+    popup.style.display = 'flex';
     loadingBar.style.width = '100%'; // Preenche a barra de loading
 
     // Começa a esvaziar a barra após 50ms para garantir que ela apareça
@@ -167,15 +171,38 @@ function hideTp_sobre() {
     tp_sobre.classList.remove("tp_members_clickExpand_active")
 }
 
+// Mostrando e Escondendo as tooltips
+const tp_sobre_overlay = document.getElementById("tp_members_overlay")
+function showTp_sobre_overlay() {
+    if (!tp_sobre_overlay) return
+    tp_sobre_overlay.classList.add("tp_members_overlay_active")
+}
+function hideTp_sobre_overlay() {
+    if (!tp_sobre_overlay) return
+    tp_sobre_overlay.classList.remove("tp_members_overlay_active")
+}
+
 // Adicionando o evento de clique aos botões
 document.addEventListener("DOMContentLoaded", function() {
     // Eventos que acionam e configuram o Bloco de Notas
     document.querySelectorAll(".membros_sec").forEach(element => {
-        // element.addEventListener("click", () => alternarBlocoNotas('click', element));
-        element.addEventListener("click", config_toggleOverlay)
+        element.addEventListener("click", config_toggleOverlay);
         element.addEventListener("mouseover", showTp_sobre);
         element.addEventListener("mouseout", hideTp_sobre);
     });
-    document.getElementById("membro_overlay").addEventListener("click", config_toggleOverlay)
-    document.getElementById("fecharOverlay").addEventListener("click", config_toggleOverlay)
+    document.querySelectorAll("#link_email").forEach(element => {
+        // Adiciona a função 'copyEmail' como um callback sem executá-la imediatamente
+        element.addEventListener("click", (event) => copyEmail(event, element));
+        element.addEventListener("mouseover", showTp_sobre_overlay);
+        element.addEventListener("mouseout", hideTp_sobre_overlay);
+    });
+
+    // Eventos para fechar o overlay
+    overlay.addEventListener("click", config_toggleOverlay);
+    if (fecharOverlay) {
+        fecharOverlay.addEventListener("click", config_toggleOverlay);
+    }
+    overlayContainer.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
 });
