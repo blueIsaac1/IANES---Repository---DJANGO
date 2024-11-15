@@ -82,6 +82,10 @@
                     <form action="{% url 'auth' %}" method="post" id="forms_login">
                         {% csrf_token %} <!-- form login -->
                         <!-- Input 1: Usuario ou Email -->
+                        <input type="hidden" name="action" value="login">
+                        {% if error_message %}
+                            <p class="error">{{ error_message }}</p>
+                        {% endif %}
                         <div class="div_input_userEmail div_input_sec">
                             <div class="div_input_userORemail_label div_input_label">
                                 <p id="texto_login_userORemail">Email ou Usuário</p>
@@ -193,7 +197,12 @@
                 </div>
                 <div class="box_signup_bot box_auth_bot">
                     <form action="{% url 'auth' %}" method="post" id="forms_signup"> <!-- form signup -->
+                        {% csrf_token %}
                         <!-- Input 1: Usuario -->
+                        {% if error_message %}
+                            <p class="error">{{ error_message }}</p>
+                        {% endif %}
+                        <input type="hidden" name="action" value="signup">
                         <div class="div_input_user div_input_sec">
                             <div class="div_input_user_label div_input_label">
                                 <p id="texto_signup_user">Usuário</p>
@@ -241,7 +250,7 @@
                             </div>
                             <div class="div_input_user_area div_input_area" id="div_input_user_area">
                                 <ion-icon class="icon_email_signup email_icons" id="email_signup_icon" name="mail-outline"></ion-icon>
-                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="Email" id="input_signup_email" placeholder="Digite o seu Email">
+                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="email" id="input_signup_email" placeholder="Digite o seu Email">
                                 <span class="input_extra"></span>
                             </div>
                             <!-- Erros Posiveis -->
@@ -262,7 +271,7 @@
                             <div class="div_input_senhaSignup_area div_input_area" id="div_input_senhaSignup_area">
                                 <ion-icon class="icon_lockOpen_signup lockOpen_icons" id="lockOpen_signup_icon" name="lock-open-outline"></ion-icon>
                                 <!-- Id da Senha : 'signup' -->
-                                <input tabindex=3 class="input_senha_signup_area input_area" type="password" name="passowrd" id="input_senha_signup" placeholder="Digite sua Senha">
+                                <input tabindex=3 class="input_senha_signup_area input_area" type="password" name="password" id="input_senha_signup" placeholder="Digite sua Senha">
                                 <span class="input_extra">
                                     <div aria-state="pass_hide" class="input_extra_clickable" id="eye_password_signup" 
                                         onmouseover="showTooltip('tooltip_senha_signup')" 

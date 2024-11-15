@@ -24,6 +24,7 @@ window.detectar_auth = function() {
 
 // Função para chamar e mostrar as telas relevantes
 window.callScreen_auth = function(page) {
+    console.log("Switching screen to:", page);
     const solo_container = document.getElementById(`container_${page}`)
     const todos_containers = document.querySelectorAll(".container_content")
     localStorage.setItem('telaAtual_auth', `ta_auth-${page}`);
@@ -35,8 +36,46 @@ window.callScreen_auth = function(page) {
     if (solo_container) {solo_container.style.display = "flex"}
 }
 
-// Troca a cor da Barra de Baixo dos Input's
+function callScreen_auth(type) {
+    console.log("Tipo recebido:", type);  // Deve exibir "signup" no console
+    if (type === 'signup') {
+        document.getElementById('container_login').style.display = 'none';
+        document.getElementById('container_signup').style.display = 'block';
+    } else if (type === 'login') {
+        document.getElementById('container_login').style.display = 'block';
+        document.getElementById('container_signup').style.display = 'none';
+    }
+}
 
+// Troca a cor da Barra de Baixo dos Input's
+document.getElementById('forms_signup').addEventListener('submit', function(event) {
+    // Impede o envio do formulário para capturar os dados primeiro
+    event.preventDefault();
+
+    // Captura os valores dos campos
+    const username =  document.getElementById('input_signup_user').value = '';
+    const email = document.getElementById('input_signup_email').value = '';
+    const password = document.getElementById('input_senha_signup').value = '';
+    const confirmPassword = document.getElementById('input_senha_signupConf').value = '';
+    const termsAccepted = document.getElementById('check_concordo_TermPriv').checked = false;
+
+    // Exibe as informações no console
+    console.log("Informações do Sign Up:");
+    console.log("Usuário:", username);
+    console.log("Email:", email);
+    console.log("Senha:", password);
+    console.log("Confirmação de Senha:", confirmPassword);
+    console.log("Termos e condições aceitos:", termsAccepted);
+
+   
+    
+    
+    
+    
+
+    // Aqui você pode prosseguir com o envio, se necessário
+    // this.submit();
+});
 document.querySelectorAll('.input_area').forEach(input => {
     input.addEventListener('focus', function() {
         const divInputArea = this.parentElement;
@@ -442,7 +481,7 @@ function criarConta_ianes() {
     console.log(userInfos);
 
     // Navegar para outra página, se necessário
-    navigateTo('index_page', 'normal');
+    // navigateTo('index_page', 'normal');
 }
 
 // Adiciona o evento de entrada para os 4 Inputs os inputs

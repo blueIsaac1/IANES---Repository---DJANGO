@@ -3,7 +3,9 @@
 
 :root {
     --tamanho_textoSobre_h1: 1.6vw;
+    --tamanho_textoSobre_h2: 1.2vw;
     --tamanho_textoSobre_p: 1vw;
+    --tamanho_icone_social: 1.4vw;
 }
 
 /* ------------------------- Tela de Sobre */
@@ -36,6 +38,7 @@
     text-align: left;
     font-weight: bold;
     line-height: 1;
+    text-wrap: wrap;
     width: 30%;
     background-color: var(--color-vermelho-medio);
     padding: 1vw;
@@ -49,7 +52,9 @@
     text-align: left;
     font-weight: 600;
     line-height: 1.5;
+    text-wrap: wrap;
     width: 100%;
+    padding-left: 1vw;
 }
 
 /* ------------------------- Sobres */
@@ -63,7 +68,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2vw;
+    gap: 3vw;
 }
 
 .div_membros_container #texto_sobre_nossaEquipeProjeto {
@@ -72,6 +77,10 @@
     text-align: center;
     font-weight: bold;
     width: 100%;
+}
+
+.icones_devType {
+    
 }
 
 .membros_superior {
@@ -107,7 +116,7 @@
 
 .membroSec_imgDiv {
     border: var(--color-vermelho-medio) 0.3vw solid;
-    border-radius: 0.2vw;
+    border-radius: 0.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +124,8 @@
 
 .membroSec_imgDiv img {
     width: 12vw;
-    height: 12vw;
+    height: auto;
+    border-radius: 0.2vw;
     object-fit: cover;
 }
 
@@ -124,6 +134,7 @@
     color: #000000;
     text-align: center;
     font-weight: 500;
+    text-wrap: wrap;
 }
 
 .membroSec_textoDiv #memberName_prefName {
@@ -131,6 +142,7 @@
     color: #000000;
     text-align: center;
     font-weight: bold;
+    text-wrap: wrap;
 }
 
 .membros_inferior {
@@ -147,22 +159,25 @@
 
 .membroTodos_imgDiv {
     border: var(--color-vermelho-medio) 0.3vw solid;
-    border-radius: 0.2vw;
+    border-radius: 0.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .membroTodos_imgDiv img {
     width: 60vw;
     height: 30vw;
     object-fit: fill;
+    border: none;
+    border-radius: 0.2vw;
 }
 
 /* ------------------------- Overlay do Membor */
 
 .membro_overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: none;
@@ -171,10 +186,171 @@
     width: 100%;
     height: 100%;
     background-color: var(--color-fundo-overlay);
-    z-index: 800;
+    z-index: 850;
     overflow: hidden;
 }
 
+.fecharOverlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    color: #ffffff;
+    font-size: 1.2vw;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--color-vermelho-medio);
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    top: -2%;
+    right: -2%;
+}
+.fecharOverlay:hover {
+    background-color: var(--color-azul-medio);
+}
+
+.ovMembro_container {
+    background-color: var(--color-fundo-claro);
+    width: 70%;
+    height: 90%;
+    border: none;
+    border-radius: 0.6vw;
+    padding: 1vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: -100%;
+    transition: margin-bottom 0.3s ease-in-out;
+}
+.ovMembro_container_active {
+    animation: upOverlayContainer 0.5s forwards ease-in-out;
+    margin-bottom: 0%; 
+}
+@keyframes upOverlayContainer {
+    from { margin-bottom: -100%; }
+    to { margin-bottom: 0%; }
+}
+
+.ovMembroC_side {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.ovMembroC_left {
+    background-color: transparent;
+}
+.ovMembroC_right {
+    background-color: rgba(0, 0, 255, 0.313);
+}
+
+/* Parte Esquerda */
+
+.membroOverlay_imgDiv {
+    border: var(--color-vermelho-medio) 0.3vw solid;
+    border-radius: 0.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 1vw;
+}
+
+.membroOverlay_imgDiv img {
+    width: 16vw;
+    height: auto;
+    object-fit: fill;
+    border: none;
+    border-radius: 0.2vw;
+}
+
+.ovMembroC_left .membroOverlay_membName {
+    font-size: var(--tamanho_textoSobre_h1);
+    color: #000000;
+    text-align: center; 
+    font-weight: bold;
+    margin-bottom: 3vw;
+}
+
+.membroOverlay_socailContainer {
+    background-color: transparent;
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.membroOverlay_socailContainer h2 {
+    font-size: var(--tamanho_textoSobre_h1);
+    color: #000000;
+    text-align: center; 
+    font-weight: bold;
+    margin-bottom: 1.5vw;
+}
+
+.membroOverlay_socialSection {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5vw;
+}
+
+.social_icone {
+    font-size: var(--tamanho_icone_social);
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 6%;
+    height: 100%;
+}
+
+.membroOverlay_socialName {
+    font-size: var(--tamanho_textoSobre_p);
+    color: #000000;
+    text-align: left; 
+    font-weight: 700;
+    background-color: transparent;
+    padding-left: 0.4vw;
+    width: 20%;
+    height: 100%;
+}
+
+.rightArrowChar {
+    font-size: var(--tamanho_icone_social);
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 4%;
+    height: 100%;
+}
+
+.membroOverlay_socialLink {
+    text-decoration: underline;
+    font-size: var(--tamanho_textoSobre_p);
+    color: var(--color-vermelho-medio);
+    text-align: left; 
+    font-weight: 600;
+    background-color: transparent;
+    padding-left: 0.4vw;
+    width: 70%;
+    height: 100%;
+}
 
 /* Tooltip que avisa do click */
 
@@ -183,7 +359,7 @@
     position: absolute;
     background-color: var(--color-azul-medio);
     color: #ffffff;
-    font-size: 1.2vw;
+    font-size: 1vw;
     font-weight: 600;
     text-align: right;
     padding: 0.4vw;
@@ -213,4 +389,81 @@
     z-index: 900;
     top: -20%;
     transform: translateX(0%);
+}
+
+/* Tooltip do Overlay dos Membros */
+.tp_members_overlay {
+    opacity: 0;
+    position: absolute;
+    background-color: var(--color-azul-medio);
+    color: #ffffff;
+    font-size: var(--tamanho_textoSobre_p);
+    font-weight: 600;
+    text-align: center;
+    padding: 0.4vw;
+    border-radius: 0.2vw;
+    z-index: -1;
+    bottom: -40%;
+    left: 30%;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out
+}
+
+.tp_members_overlay::after {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: 10%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid var(--color-azul-medio);
+}
+
+/* Tooltip aparece quando o mouse está sobre qualquer título de categoria */
+.tp_members_overlay_active {
+    opacity: 1;
+    z-index: 900;
+    bottom: -30%;
+}
+
+/* Pop-Up aviso do copiar email */
+
+.popup_copyEmail {
+    position: fixed;
+    bottom: 10%; /* Ajuste a posição superior */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-verde-sucesso);
+    padding: 0.8vw 1vw;
+    border-radius: 0.4vw;
+    text-align: center;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4vw;
+}
+
+.popup_copyEmail p {
+    color: white;
+    font-size: var(--tamanho_textoSobre_p);
+    font-weight: 600;
+}
+
+.loading-bar {
+    background-color: transparent;
+    width: 0%;
+    height: 0.3vw;
+    width: 100%;
+    border-radius: 0.2vw;
+    overflow: hidden;
+}
+
+.loading {
+    height: 100%;
+    background-color: white;
+    /* Os Segundos devem ser equivalente ao tempo do efeito de desaparecimento */
+    transition: width 2s linear;
 }

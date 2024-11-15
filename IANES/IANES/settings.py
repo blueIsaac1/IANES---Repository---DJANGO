@@ -141,8 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Caminho do arquivo que você quer verificar
-required_file_path = os.path.join('excalidraw', 'ik1osdbthtroypjs.jpg')
+# required_file_path = os.path.join('excalidraw', 'ik1osdbthtroypjs.jpg')
 
-# Verificar se o arquivo está presente
-if not os.path.isfile(required_file_path):
-    raise ImproperlyConfigured("Unknown error. The Django Project cannot be initialized.")
+# # Verificar se o arquivo está presente
+# if not os.path.isfile(required_file_path):
+#     raise ImproperlyConfigured("Unknown error. The Django Project cannot be initialized.")

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as login_django
 from django.http import JsonResponse, Http404
 import google.generativeai as genai
+from django.contrib.auth import login
 from Main.models import Room, UserMessage, BotResponse
 from django.views.generic.detail import DetailView
 import json
@@ -22,6 +23,7 @@ from django.contrib import messages
 import urllib
 import logging
 from django.contrib.auth import logout as auth_logout 
+from .forms import SignUpForm
 logger = logging.getLogger(__name__)    
 
 # api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
@@ -62,38 +64,84 @@ def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
 
 @csrf_exempt
 def auth(request):
+    # Se o usuário já está autenticado, redireciona para o índice
     if request.user.is_authenticated:
         return redirect('index')
+
     if request.method == 'GET':
+        # Renderiza a página de autenticação/cadastro
         return render(request, 'auth.html', {'current_page': 'auth'})
-    
-    # elif request.method == 'POST':
-    #     username_create = request.POST.get('username_create')
-    #     email_create = request.POST.get('email_confirm')
-    #     password_create = request.POST.get('password_create')
-    #     password_confirm = request.POST.get('password_confirm')
-    #     form = SignupForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('login')
-    # else:
-    #     form = SignupForm()
-    # return render(request, 'signup.html', {'form': form})
 
     else:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
+        # Determina a ação: login ou cadastro
+        action = request.POST.get('action')
 
-        user = authenticate(username=user.username, password=password)
-        if user:
-            login_django(request, user)
-            return redirect(index)
-        else:
-            return render(request, 'auth.html', {'error_message': 'E-mail ou senha incorretos!'})
+        if action == 'login':
+            # Ação de Login
+            username_login = request.POST.get('username')
+            password_login = request.POST.get('password')
+            print(username_login, password_login)
+
+            # Verifica se o usuário existe e autentica
+            try:
+                user = User.objects.get(username=username_login)
+            except User.DoesNotExist:
+                return render(request, 'auth.html', {'error_message': 'Usuário ou senha incorretos!'})
+
+            user = authenticate(username=username_login, password=password_login)
+            if user:
+                login_django(request, user) 
+                return redirect('index')
+            else:
+                return render(request, 'auth.html', {'error_message': 'Usuário ou senha incorretos!'})
+
+        elif action == 'signup':
+            # Ação de Cadastro
+            username=None
+
+            username = request.POST.get('username_create')
+            email = request.POST.get('email')
+            password1 = request.POST.get('password')
+            password2 = request.POST.get('confirm_password')
+            print('content:', username, email, password1, password2)
+
+            # Valida o formulário de cadastro
+            if not username or not password1:
+                return render(request, 'auth.html', {'error_message': 'Nome de usuário e senha são obrigatórios!', 'current_page': 'auth'})
+            if password1 != password2:
+                return render(request, 'auth.html', {'error_message': 'As senhas não coincidem!'})
+
+            if User.objects.filter(username=username).exists():
+                return render(request, 'auth.html', {'error_message': 'Nome de usuário já existe!'})
+
+            if User.objects.filter(email=email).exists():
+                return render(request, 'auth.html', {'error_message': 'O e-mail já está em uso!'})
+
+            # Cria o novo usuário
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            user.save()
+
+            # Autentica e loga o novo usuário
+            user = authenticate(username=username, password=password1)
+            if user:
+                login_django(request, user)
+                return redirect('index')
+
+        # Se a ação não for reconhecida, renderiza a página com uma mensagem de erro
+        return render(request, 'auth.html', {'error_message': 'Ação inválida!'})
+        
+@csrf_exempt
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            sign_up = form.save()
+            login(request, sign_up)
+            return redirect('auth')
+    else:
+        form = SignUpForm()
+    return redirect('auth')
+
 
 @login_required(login_url='auth')
 @csrf_exempt
@@ -280,13 +328,17 @@ def list_messages(request, pk=None):
         logger.error(f"Erro ao acessar atributos de Sala com PK {pk}. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro ao acessar mensagens da sala", 'error_description': str(e)})
 
-    if request.method == 'PUT':
+    if request.method == 'POST':
         body = request.body.decode('utf-8')
-        parsed_data = urllib.parse.parse_qs(body)
+        print("Corpo da Requisição Recebido:", body)  # Exibe o corpo da requisição
 
+        parsed_data = urllib.parse.parse_qs(body)
         room_id_from_request = parsed_data.get('room_id', [None])[0]
         name_text = parsed_data.get('name_text', [None])[0]
 
+        print("room_id_from_request:", room_id_from_request)
+        print("name_text:", name_text)
+        
         # room_id = request.PUT.get('room_id')
         # new_name_room = request.PUT.get('name_text')  
         if room_id_from_request and name_text:

@@ -450,8 +450,9 @@ function renameRoom(element) {
     const form_rename = roomContainer.querySelector('#form_rename');
     const roomid = roomContainer.getAttribute('data-room-id');
     const currentUrl = ("http://127.0.0.1:8000/IAnes/" + roomid + "/");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    console.log('token: ', csrfToken)
 
-    
     // Mostra o input e esconde o <p> e as opções
     nameText.style.display = "none";
     renameInput.style.display = "flex";
@@ -460,7 +461,7 @@ function renameRoom(element) {
     // Seleciona automaticamente o texto do input ao abrir
     renameInput.focus();
     renameInput.select();
-
+    
     // Função para confirmar o renomear
     function confirmRename() {
         // Atualiza o <p> com o valor do input
@@ -477,7 +478,7 @@ function renameRoom(element) {
         renameInput.removeEventListener('keydown', handleKeyDown);
 
         // Envia o formulário (opcional, descomente para ativar)
-        form_rename.submit();
+        // form_rename.submit();
     }
 
     // Checa se a tecla pressionada é "Enter"
@@ -498,20 +499,25 @@ function renameRoom(element) {
     renameInput.addEventListener('keydown', handleKeyDown);
     document.addEventListener('click', handleClickOutside);
     renameInput.addEventListener('blur', confirmRename);
+    // Dados que serão enviados
+    const bodyData = `room_id=${roomid}&name_text=${encodeURIComponent(renameInput.value)}`;
 
+    // Exibir o bodyData no console
+    console.log("Corpo da Requisição:", bodyData);
     if (roomid && nameText) {
+        console.log('1:', roomid);
+        console.log('2:', renameInput.value);  // Use o valor atual do input
+
         fetch(currentUrl, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
+                'X-CSRFToken': csrfToken
             },
-            body: `room_id=${roomid}&name_text=${encodeURIComponent(nameText.textContent)}`
-            
+            body: `room_id=${roomid}&name_text=${encodeURIComponent(renameInput.value)}`,
+           
         })
-        console.log('1:', roomid)
-        console.log('2:', nameText.textContent)
-        .then(response => response.json())  // Corrigir o encadeamento do then
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
                 console.log('Sala atualizada com sucesso!');
@@ -521,9 +527,6 @@ function renameRoom(element) {
         })
         .catch(error => {
             console.error('Erro na requisição:', error);
-            // Se houver erro, você pode querer mover a tarefa de volta
-            // tasksContainer.removeChild(draggingTask); // Remove da nova coluna
-            // previousContainer.appendChild(draggingTask); // Adiciona de volta à coluna anterior
         });
     } else {
         console.error("Order ID ou Status Value não definido corretamente.");

@@ -46,7 +46,6 @@ class UserMessage(models.Model):
     
 
 
-
 # class ChatMessage(models.Model):
 #     session = models.ForeignKey(Room, on_delete=models.CASCADE)
 #     user_message = models.TextField()
