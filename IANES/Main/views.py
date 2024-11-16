@@ -241,7 +241,6 @@ def send_message_obter_parametros(request, pk):
     else:
         bot_response_text = "Obrigado por responder todas as perguntas!"
 
-    return render(request, 'template.html', {'bot_response_text': bot_response_text})
 
 @login_required(login_url='auth')
 @csrf_exempt
@@ -251,7 +250,7 @@ def send_message(request, pk):
         user_message_text = request.POST.get('user_message')
 
         if user_message_text: 
-            genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
+            genai.configure(api_key='AIzaSyB3diSByelzGqRz8i0lf_sR0yvhZE21TnI')
             model = genai.GenerativeModel('gemini-1.5-flash')
 
             user_message = request.POST.get('user_message')
@@ -267,10 +266,6 @@ def send_message(request, pk):
                 created_at = None
             )
 
-            if user_message.text == "IANES":
-                bot_response_text = send_message_obter_parametros(request, pk=current_room.get_id())
-
-
             bot_response_instance = BotResponse.objects.create(
                 text=bot_response_text
             )
@@ -281,14 +276,16 @@ def send_message(request, pk):
             # salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
 
             return redirect('list_messages', pk=pk)
-    return redirect('home')
+    return redirect('index')
 
 @login_required(login_url='auth')
 @csrf_exempt
 def create_room(request):
     room_title = request.POST.get('title')
+    room = listar_ultima_sala()
+    room += 1
     if not room_title:
-        room_title = 'Sala Nova'
+        room_title = f'Sala nova - {room}'
     try:
         room = Room.objects.create(user=request.user, title=room_title)
         return redirect('list_messages', room.id )
@@ -306,9 +303,11 @@ def create_room(request):
 def list_messages(request, pk=None):
     
     last_room = Room.objects.order_by('-created_at').first()
-
+    
     if not last_room:
-        room = Room.objects.create(user=request.user, title='Sala Nova')
+        room = Room.objects.create(user=request.user)
+        room.title = f"Sala Nova - {room.id}"
+        room.save()
         return redirect('list_messages', pk=room.id)
 
     try:

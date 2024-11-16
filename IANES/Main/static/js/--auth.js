@@ -36,28 +36,28 @@ window.callScreen_auth = function(page) {
     if (solo_container) {solo_container.style.display = "flex"}
 }
 
-function callScreen_auth(type) {
-    console.log("Tipo recebido:", type);  // Deve exibir "signup" no console
-    if (type === 'signup') {
-        document.getElementById('container_login').style.display = 'none';
-        document.getElementById('container_signup').style.display = 'block';
-    } else if (type === 'login') {
-        document.getElementById('container_login').style.display = 'block';
-        document.getElementById('container_signup').style.display = 'none';
-    }
-}
+// function callScreen_auth(type) {
+//     console.log("Tipo recebido:", type);  // Deve exibir "signup" no console
+//     if (type === 'signup') {
+//         document.getElementById('container_login').style.display = 'none';
+//         document.getElementById('container_signup').style.display = 'block';
+//     } else if (type === 'login') {
+//         document.getElementById('container_login').style.display = 'block';
+//         document.getElementById('container_signup').style.display = 'none';
+//     }
+// }
 
 // Troca a cor da Barra de Baixo dos Input's
 document.getElementById('forms_signup').addEventListener('submit', function(event) {
     // Impede o envio do formulário para capturar os dados primeiro
-    event.preventDefault();
+    // event.preventDefault();
 
     // Captura os valores dos campos
-    const username =  document.getElementById('input_signup_user').value = '';
-    const email = document.getElementById('input_signup_email').value = '';
-    const password = document.getElementById('input_senha_signup').value = '';
-    const confirmPassword = document.getElementById('input_senha_signupConf').value = '';
-    const termsAccepted = document.getElementById('check_concordo_TermPriv').checked = false;
+    const username =  document.getElementById('input_signup_user').value;
+    const email = document.getElementById('input_signup_email').value;
+    const password = document.getElementById('input_senha_signup').value;
+    const confirmPassword = document.getElementById('input_senha_signupConf').value;
+    const termsAccepted = document.getElementById('check_concordo_TermPriv').value;
 
     // Exibe as informações no console
     console.log("Informações do Sign Up:");
@@ -67,14 +67,8 @@ document.getElementById('forms_signup').addEventListener('submit', function(even
     console.log("Confirmação de Senha:", confirmPassword);
     console.log("Termos e condições aceitos:", termsAccepted);
 
-   
-    
-    
-    
-    
-
     // Aqui você pode prosseguir com o envio, se necessário
-    // this.submit();
+    this.submit();
 });
 document.querySelectorAll('.input_area').forEach(input => {
     input.addEventListener('focus', function() {
@@ -468,11 +462,11 @@ function criarConta_ianes() {
     };
 
     // Limpar Campos
-    user_input.value = '';
-    email_input.value = '';
-    password_input_signup.value = '';
-    confpassword_input_signup.value = '';
-    checkbox_concorda.checked = false// Limpa a checkbox
+    // user_input.value = '';
+    // email_input.value = '';
+    // password_input_signup.value = '';
+    // confpassword_input_signup.value = '';
+    // checkbox_concorda.checked = false// Limpa a checkbox
 
     // Remover item do localStorage
     localStorage.removeItem("tela_auth");
@@ -533,11 +527,11 @@ window.onhashchange = function() {
     rolarPara("topo_screen");
 };
 
-window.onbeforeunload = function() {
-    userORemail_input.value = '';
-    password_input_login.value = '';
-    user_input.value = '';
-    email_input.value = '';
-    password_input_signup.value = '';
-    confpassword_input_signup.value = '';
-};
+// window.onbeforeunload = function() {
+//     userORemail_input.value = '';
+//     password_input_login.value = '';
+//     user_input.value = '';
+//     email_input.value = '';
+//     password_input_signup.value = '';
+//     confpassword_input_signup.value = '';
+// };
