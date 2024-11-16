@@ -18,6 +18,10 @@
 // ----------------- Função para Chamar as Telas
 // Função que exibe a tela correspondente
 window.callScreen = function(tela) {
+    if (tela === null) {
+        tela = "inicio"
+    }
+
     // Guarda a Tela Atual no LocalStorage
     localStorage.setItem('ultimaTela', tela);
 
@@ -58,6 +62,7 @@ window.callScreen = function(tela) {
             if (tela_sobre) {
                 tela_sobre.style.display = "none";
             }
+            window.location.hash = "inicio"
             break;
     }
     rolarPara("topo_screen");

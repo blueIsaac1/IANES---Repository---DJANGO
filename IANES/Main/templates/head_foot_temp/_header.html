@@ -15,8 +15,9 @@
 
     <!-- Parte da Direita -->
     <div class="right_div">
-        <div class="user_div">
-            <div class="tooltip" id="tooltip_user">Clique para abrir</div>
+        <div aria-active="false" id="user_div" class="user_div">
+            <div class="tooltip tooltip_user" id="tooltip_user_clickOpen">Clique para abrir</div>
+            <div class="tooltip tooltip_user tooltip_user_hide" id="tooltip_user_clickClose">Clique para fechar</div>
             <p id="user_name_t">{{ user.username }}</p>
             <svg id="user_svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256">
                 <g transform="translate(0,256) scale(0.100000,-0.100000)"
@@ -33,6 +34,20 @@
             </svg>
         </div>
     </div>
+    <div id="user_container" class="user_container">
+        <ul class="userC_list">
+            <li id="config_ovConfig_btn" class="userC_list_item">
+                <p aria-selected="false" class="nav_item" id="texto_header_profile-config">Configurações</p>
+                <ion-icon class="header_icon_settings" name="settings-outline"></ion-icon>
+            </li>
+            {% if user.is_authenticated %}
+            <li onclick="location.href='{% url 'logout' %}'" class="userC_list_item" id="userC_list_item-ianes">
+                <p id="texto_header_profile-leave">Sair</p>
+                <ion-icon class="header_icon_settings" name="log-out-outline"></ion-icon>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
 </div>
 
 <!-- Parte da Navbar -->
@@ -44,9 +59,19 @@
             <li onclick="callScreen('sobre')" aria-selected="false" class="nav_item" id="nav_item-sobre">Sobre</li>
             {% if user.is_authenticated %}
             <li onclick="location.href='{% url 'list_messages' %}'" aria-selected="false" class="nav_item" id="nav_item-ianes">IAnes</li>
-            <li onclick="location.href='{% url 'logout' %}'" aria-selected="false" class="nav_item" id="nav_item-ianes">Logout</li>
             {% endif %}
         </ul>
     </nav>
 </div>
 {% endif %}
+
+<div aria-active="false" id="config_overlay" class="config_overlay">
+
+    <div id="ovConfig_container" class="ovConfig_container">
+        
+        <ion-icon id="fecharOverlay_config" class="fecharOverlay_config" name="close"></ion-icon>
+
+
+
+    </div>
+</div>

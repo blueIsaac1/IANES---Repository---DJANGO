@@ -1,7 +1,7 @@
 // Variaveis Globais
-const overlay = document.getElementById('membro_overlay');
-const fecharOverlay = document.getElementById("fecharOverlay");
-const overlayContainer = document.getElementById("ovMembro_container")
+const overlay_membro = document.getElementById('membro_overlay');
+const fecharOverlay_membro = document.getElementById("fecharOverlay_membro");
+const overlayContainer_membro = document.getElementById("ovMembro_container")
 
 // Quebra linha dos nomes na aba sobre
 const textos = document.querySelectorAll('#membros_sec_p'); // Use a classe
@@ -11,115 +11,116 @@ textos.forEach(texto => {
 
 // ----------------- Função para Abrir Membros
 
-// Abre os Membros
+// Função para preencher os dados do membro
 async function callMember(membro) {
+    // const memberId = element.id.split("-")[2]; // Pega o membro, depois do 2° "-" do ID
+    const memberId = membro
+
     let arq_membros;
 
-    // Carrega o arquivo JSON dos membros
+    // Carregar o arquivo JSON dos membros
     try {
-        const response = await fetch(`../_data/membros.json`);
+        const response = await fetch(`../static/_datas/membros.json`);
         if (!response.ok) throw new Error(`Falha ao carregar os membros`);
         
         arq_membros = await response.json();
     } catch (error) {
         console.error('Erro ao carregar o arquivo de membros:', error);
-        return; // Sai da função se houver erro
+        return;
     }
 
-    const info = arq_membros[membro];
-    
-    // Verifica se o membro existe
-    if (!info) {
-        console.error(`Membro ${membro} não encontrado.`);
-        return; // Sai da função se o membro não existir
+    // Usar o `memberId` para acessar as informações do membro
+    let memberData;
+    try {
+        memberData = arq_membros[memberId];
+        if (!memberData) throw new Error(`Membro com ID ${memberId} não encontrado`);
+    } catch (error) {
+        console.error('Erro ao acessar os dados do membro:', error.message);
+        return;
     }
 
-    // Preencher os dados no overlay
-    document.getElementById("fotoM_overlay").src = info.url_img;
-    document.getElementById("nomeM_overlay").innerText = info.nome;
-    document.getElementById("devM_overlay").innerText = info.dev;
-    document.getElementById("plaM_overlay").innerText = info.pla;
+    // Preencher os dados do overlay
+    document.getElementById('membroOverlay_fotoM').src = memberData.url_img_membro;
+    document.getElementById('membroOverlay_fotoM').alt = memberData.alt_img_text;
+    document.getElementById('nomeM_overlay').textContent = memberData.nome_membro;
+    document.getElementById('texto_sobre_adding_mainDev').textContent = memberData.main_dev;
 
-    // Quebra linha dos nomes do overlay
-    const paragrafo = document.getElementById('nomeM_overlay');
-    paragrafo.innerHTML = paragrafo.innerText.split(' ').join('<br>');
-
-    // Preencher lista de dev
-    const listaDev = document.getElementById("lista_dev");
-    listaDev.innerHTML = ""; // Limpa a lista antes de adicionar
-    info.lista_dev.forEach(item => {
-        const li = document.createElement("li");
-        li.innerText = item;
-        listaDev.appendChild(li);
+    // Preencher as listas de desenvolvimento e adicionais
+    const devList = document.getElementById('list_developed');
+    devList.innerHTML = '';
+    memberData.list_developed.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        devList.appendChild(li);
     });
 
-    // Preencher lista de planejamento
-    const listaPla = document.getElementById("lista_pla");
-    listaPla.innerHTML = ""; // Limpa a lista antes de adicionar
-    info.lista_pla.forEach(item => {
-        const li = document.createElement("li");
-        li.innerText = item;
-        listaPla.appendChild(li);
+    const addList = document.getElementById('list_additional');
+    addList.innerHTML = '';
+    memberData.list_additional.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        addList.appendChild(li);
     });
 
-    // Preencher links sociais
-    document.getElementById("linkedin_memb").href = info.linkedin.href;
-    document.getElementById("linkedin_memb").innerText = info.linkedin.text;
+    // Preencher os links de redes sociais
+    document.getElementById('link_linkedin').href = memberData.linkedin.href;
+    document.getElementById('link_linkedin').textContent = memberData.linkedin.text;
 
-    document.getElementById("github_memb").href = info.github.href;
-    document.getElementById("github_memb").innerText = info.github.text;
+    document.getElementById('link_github').href = memberData.github.href;
+    document.getElementById('link_github').textContent = memberData.github.text;
 
-    document.getElementById("email_memb").href = info.email.href;
-    document.getElementById("email_memb").innerText = info.email.text;
+    document.getElementById('link_email').href = memberData.email.href;
+    document.getElementById('link_email').textContent = memberData.email.text;
 
-    // Abrir o overlay
-    config_toggleOverlay();
+    // Exibir o overlay
+    config_toggleOverlay_membro();
 }
 
 // Limpa os dados no overlay
 function clearOverlay() {
-    // Limpa textos
-    document.getElementById("nomeM_overlay").innerText = "";
-    document.getElementById("devM_overlay").innerText = "";
-    document.getElementById("plaM_overlay").innerText = "";
-    document.getElementById("fotoM_overlay").src = ""; // Limpa a imagem
+    // Limpar a imagem do membro
+    document.getElementById('membroOverlay_fotoM').src = ''; // Define a imagem como vazia
+    document.getElementById('membroOverlay_fotoM').alt = ''; // Define o texto alternativo como vazio
 
-    // Limpa lista de dev
-    const listaDev = document.getElementById("lista_dev");
-    listaDev.innerHTML = ""; // Limpa a lista
+    // Limpar o nome do membro
+    document.getElementById('nomeM_overlay').textContent = ''; // Remove o nome do membro
 
-    // Limpa lista de planejamento
-    const listaPla = document.getElementById("lista_pla");
-    listaPla.innerHTML = ""; // Limpa a lista
+    // Limpar a função principal do membro
+    document.getElementById('texto_sobre_adding_mainDev').textContent = ''; // Remove a função principal
 
-    // Limpa links sociais
-    document.getElementById("linkedin_memb").href = "#";
-    document.getElementById("linkedin_memb").innerText = "";
+    // Limpar as listas de desenvolvimento e adicionais
+    const devList = document.getElementById('list_developed');
+    devList.innerHTML = ''; // Limpa todos os itens da lista de desenvolvimentos
 
-    document.getElementById("github_memb").href = "#";
-    document.getElementById("github_memb").innerText = "";
+    const addList = document.getElementById('list_additional');
+    addList.innerHTML = ''; // Limpa todos os itens da lista adicional
 
-    document.getElementById("email_memb").href = "#";
-    document.getElementById("email_memb").innerText = "";
+    // Limpar os links de redes sociais
+    document.getElementById('link_linkedin').href = '';
+    document.getElementById('link_linkedin').textContent = '';
+
+    document.getElementById('link_github').href = '';
+    document.getElementById('link_github').textContent = '';
+
+    document.getElementById('link_email').href = '';
+    document.getElementById('link_email').textContent = '';
 }
 
-
 // Função para alternar a exibição do overlay
-function config_toggleOverlay() {
-    const overlay = document.getElementById('membro_overlay');
-    const overlayContainer = document.getElementById('ovMembro_container');
-    const overlayState = overlay.getAttribute("aria-active");
+function config_toggleOverlay_membro() {
+    const overlayState = overlay_membro.getAttribute("aria-active");
 
     if (overlayState === "true") {
-        overlay.style.display = "none";
-        overlay.setAttribute("aria-active", "false");
+        overlay_membro.style.display = "none";
+        overlay_membro.setAttribute("aria-active", "false");
         document.body.style.overflowY = "auto";
-        overlayContainer.classList.remove("ovMembro_container_active");
+        clearOverlay();
+        overlayContainer_membro.classList.remove("ovMembro_container_active");
     } else if (overlayState === "false") {
-        overlay.style.display = "flex";
-        overlay.setAttribute("aria-active", "true");
+        overlay_membro.style.display = "flex";
+        overlay_membro.setAttribute("aria-active", "true");
         document.body.style.overflowY = "hidden";
-        overlayContainer.classList.add("ovMembro_container_active");
+        overlayContainer_membro.classList.add("ovMembro_container_active");
     } else {return}
 }
 
@@ -182,11 +183,46 @@ function hideTp_sobre_overlay() {
     tp_sobre_overlay.classList.remove("tp_members_overlay_active")
 }
 
+// Função para preencher as imgs com seus icones
+async function fillDevIcons() {
+
+    let arq_iconsPNG;
+    // Carregar o arquivo JSON dos Icones em PNG
+    try {
+        const response = await fetch(`../static/_datas/iconsPGN.json`);
+        if (!response.ok) throw new Error(`Falha ao carregar os Icones em PNG`);
+        
+        arq_iconsPNG = await response.json();
+    } catch (error) {
+        console.error('Erro ao carregar o arquivo de Icones em PNG:', error);
+        return;
+    }
+    const iconsData = arq_iconsPNG
+
+    // Seleciona todas as imagens com a classe 'devMemb_icons_item'
+    const imgElements = document.querySelectorAll(".devMemb_icons_item");
+
+    imgElements.forEach(imgElement => {
+        // Obtém o valor do atributo 'data-icon'
+        const iconType = imgElement.getAttribute("data-icon");
+
+        // Obtém os dados correspondentes ao tipo de ícone
+        const data = iconsData[iconType];
+
+        if (data) {
+            // Atualiza atributos `src`, `title`, e `alt`
+            imgElement.src = data.src;
+            imgElement.title = data.title;
+            imgElement.alt = data.alt;
+        }
+    });
+}
+
 // Adicionando o evento de clique aos botões
 document.addEventListener("DOMContentLoaded", function() {
     // Eventos que acionam e configuram o Bloco de Notas
     document.querySelectorAll(".membros_sec").forEach(element => {
-        element.addEventListener("click", config_toggleOverlay);
+        // element.addEventListener("click", () => callMember(element));
         element.addEventListener("mouseover", showTp_sobre);
         element.addEventListener("mouseout", hideTp_sobre);
     });
@@ -197,12 +233,16 @@ document.addEventListener("DOMContentLoaded", function() {
         element.addEventListener("mouseout", hideTp_sobre_overlay);
     });
 
-    // Eventos para fechar o overlay
-    overlay.addEventListener("click", config_toggleOverlay);
-    if (fecharOverlay) {
-        fecharOverlay.addEventListener("click", config_toggleOverlay);
+    // Eventos para fechar o overlay_membro
+    overlay_membro.addEventListener("click", config_toggleOverlay_membro);
+    if (fecharOverlay_membro) {
+        fecharOverlay_membro.addEventListener("click", config_toggleOverlay_membro);
     }
-    overlayContainer.addEventListener("click", (event) => {
+    // Quando clica em cima do Container, impede ações "de fora"
+    overlayContainer_membro.addEventListener("click", (event) => {
         event.stopPropagation();
     });
+
+    // Chama a função para preencher as imagens dos Icones
+    fillDevIcons()
 });

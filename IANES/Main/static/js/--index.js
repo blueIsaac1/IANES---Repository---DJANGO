@@ -54,23 +54,28 @@ window.loading_page = function() {
 }
 
 // Funções Auto-Executaveis
-
 window.onload = () => {
     setTimeout(() => {
-        let ultimaTela = localStorage.getItem('ultimaTela') || "inicio";
-        console.log("⚙ Primeira", ultimaTela);
-        callScreen(ultimaTela);
+        let tela
+        let ultimaTela = localStorage.getItem('ultimaTela');
+        if (ultimaTela === null) {
+            tela = "inicio"
+        } else {
+            tela = ultimaTela
+        }
+        console.log("⚙ Primeira", tela);
+        callScreen(tela);
     }, tempo_loading_page);
 };
 
-// Adiciona um ouvinte para o evento hashchange
+// Adiciona um ouvinte para o evento hashchange (Navegar com o Hash)
 window.onhashchange = function() {
     const hash = window.location.hash.replace('#', ''); // Remove o "#" do hash
     callScreen(hash);
 };
 
-// // Inicializa a tela correta ao carregar a página com base no hash atual
+// Inicializa a tela correta ao carregar a página com base no hash atual
 // if (window.location.hash) {
-//     const hash = window.location.hash.replace('#', '');
+//     let hash = window.location.hash.replace('#', '');
 //     callScreen(hash);
 // }

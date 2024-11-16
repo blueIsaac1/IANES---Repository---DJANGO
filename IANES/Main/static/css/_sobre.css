@@ -2,9 +2,10 @@
 @import url(root.css);
 
 :root {
-    --tamanho_textoSobre_h1: 1.6vw;
-    --tamanho_textoSobre_h2: 1.2vw;
-    --tamanho_textoSobre_p: 1vw;
+    --tamanho_textoSobre_s1: 1.6vw;
+    --tamanho_textoSobre_s2: 1.4vw;
+    --tamanho_textoSobre_s3: 1.2vw;
+    --tamanho_textoSobre_s4: 1vw;
     --tamanho_icone_social: 1.4vw;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .div_text_sobre h1 {
-    font-size: var(--tamanho_textoSobre_h1);
+    font-size: var(--tamanho_textoSobre_s1);
     color: #ffffff;
     text-align: left;
     font-weight: bold;
@@ -47,7 +48,7 @@
 }
 
 .div_text_sobre p {
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     color: #000000;
     text-align: left;
     font-weight: 600;
@@ -68,19 +69,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 3vw;
+    gap: 4vw;
 }
 
 .div_membros_container #texto_sobre_nossaEquipeProjeto {
-    font-size: var(--tamanho_textoSobre_h1);
+    font-size: var(--tamanho_textoSobre_s1);
     color: #000000;
     text-align: center;
     font-weight: bold;
     width: 100%;
-}
-
-.icones_devType {
-    
 }
 
 .membros_superior {
@@ -109,9 +106,35 @@
     border-radius: 0.4vw;
     transition: all .3s ease-in-out;
     cursor: pointer;
+    position: relative;
 }
 .membros_sec:hover {
     background-color: var(--color-cinza_hover_bg_light);
+}
+.devMemb_icons_div {
+    position: absolute;
+    top: -10%;
+    right: 0;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    padding: 0vw 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5vw;
+}
+.devMemb_icons_item {
+    background-color: var(--color-fundo-claro);
+    width: 2.6vw;
+    height: auto;
+    padding: 0.2vw;
+    border: none;
+    border-radius: 0.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .membroSec_imgDiv {
@@ -130,7 +153,7 @@
 }
 
 .membroSec_textoDiv #memberName_subfName {
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     color: #000000;
     text-align: center;
     font-weight: 500;
@@ -138,7 +161,7 @@
 }
 
 .membroSec_textoDiv #memberName_prefName {
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     color: #000000;
     text-align: center;
     font-weight: bold;
@@ -190,7 +213,7 @@
     overflow: hidden;
 }
 
-.fecharOverlay {
+.fecharOverlay_membro {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -203,17 +226,17 @@
     transition: all .3s ease-in-out;
     cursor: pointer;
     position: absolute;
-    top: -2%;
-    right: -2%;
+    top: -1vw;
+    right: -1vw;
 }
-.fecharOverlay:hover {
+.fecharOverlay_membro:hover {
     background-color: var(--color-azul-medio);
 }
 
 .ovMembro_container {
     background-color: var(--color-fundo-claro);
-    width: 70%;
-    height: 90%;
+    width: 80vw;
+    height: 40vw;
     border: none;
     border-radius: 0.6vw;
     padding: 1vw;
@@ -235,18 +258,22 @@
 }
 
 .ovMembroC_side {
-    width: 50%;
     height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
+    border: none;
 }
 .ovMembroC_left {
-    background-color: transparent;
+    width: 60%;
+    justify-content: center;
+    border: none;
+    border-right: 0.1vw solid var(--color-vermelho-medio);
 }
 .ovMembroC_right {
-    background-color: rgba(0, 0, 255, 0.313);
+    width: 40%;
+    justify-content: flex-start;
+    border-left: 0.1vw solid var(--color-vermelho-medio);
 }
 
 /* Parte Esquerda */
@@ -270,7 +297,7 @@
 }
 
 .ovMembroC_left .membroOverlay_membName {
-    font-size: var(--tamanho_textoSobre_h1);
+    font-size: var(--tamanho_textoSobre_s1);
     color: #000000;
     text-align: center; 
     font-weight: bold;
@@ -288,10 +315,10 @@
     position: relative;
 }
 
-.membroOverlay_socailContainer h2 {
-    font-size: var(--tamanho_textoSobre_h1);
+.ovMembroC_left h2 {
+    font-size: var(--tamanho_textoSobre_s1);
     color: #000000;
-    text-align: center; 
+    text-align: left; 
     font-weight: bold;
     margin-bottom: 1.5vw;
 }
@@ -319,7 +346,7 @@
 }
 
 .membroOverlay_socialName {
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     color: #000000;
     text-align: left; 
     font-weight: 700;
@@ -342,7 +369,7 @@
 
 .membroOverlay_socialLink {
     text-decoration: underline;
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     color: var(--color-vermelho-medio);
     text-align: left; 
     font-weight: 600;
@@ -350,6 +377,52 @@
     padding-left: 0.4vw;
     width: 70%;
     height: 100%;
+}
+
+/* Parte Direita */
+
+.ovMembroC_right h2 {
+    font-size: var(--tamanho_textoSobre_s1);
+    color: #000000;
+    text-align: center; 
+    font-weight: 700;
+    width: 100%;
+    height: auto;
+    margin-top: 2vw;
+    margin-bottom: 4vw;
+}
+
+.ovMembroC_right h3 {
+    font-size: var(--tamanho_textoSobre_s2);
+    color: #000000;
+    text-align: left; 
+    font-weight: 700;
+    text-wrap: pretty;
+    width: 90%;
+    height: auto;
+}
+
+.ovMembroC_right ul {
+    list-style: disc;
+    text-align: left;
+    font-weight: 700;
+    width: 80%;
+    height: auto;
+    margin-top: 1vw;
+    margin-bottom: 2vw;
+}
+
+.ovMembroC_right ul li {
+    font-size: var(--tamanho_textoSobre_s4);
+    color: #000000;
+    text-align: left; 
+    font-weight: 600;
+    line-height: 1.5;
+    text-wrap: pretty;
+    margin-bottom: 0.4vw;
+}
+.ovMembroC_right ul li:last-child {
+    margin-bottom: 0;
 }
 
 /* Tooltip que avisa do click */
@@ -365,30 +438,29 @@
     padding: 0.4vw;
     border-radius: 0.2vw;
     z-index: -1;
-    top: 0%;
-    right: 0%;
-    transform: translateX(0%);
+    bottom: -40%;
+    left: 50%;
+    transform: translateX(-50%);
     white-space: nowrap;
-    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
-
+/* 
 .tp_members_clickExpand::after {
     content: '';
     position: absolute;
-    bottom: -15%;
+    top: -15%;
     right: 10%;
     transform: translateX(0%);
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid var(--color-azul-medio);
-}
+    border-bottom: 8px solid var(--color-azul-medio);
+} */
 
 /* Tooltip aparece quando o mouse está sobre qualquer título de categoria */
 .tp_members_clickExpand_active {
     opacity: 1;
     z-index: 900;
-    top: -20%;
-    transform: translateX(0%);
+    bottom: -15%;
 }
 
 /* Tooltip do Overlay dos Membros */
@@ -397,7 +469,7 @@
     position: absolute;
     background-color: var(--color-azul-medio);
     color: #ffffff;
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     font-weight: 600;
     text-align: center;
     padding: 0.4vw;
@@ -448,7 +520,7 @@
 
 .popup_copyEmail p {
     color: white;
-    font-size: var(--tamanho_textoSobre_p);
+    font-size: var(--tamanho_textoSobre_s4);
     font-weight: 600;
 }
 

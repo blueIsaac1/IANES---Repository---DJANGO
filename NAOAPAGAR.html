@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio de Escrever o Nome</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            transform: scale(2);
+        }
+        #result {
+            color: red;
+            margin-top: 10px;
+        }
+        #inputArea, #inputNomeCorreto {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+        #btnCheck {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #locked {
+            color: green;
+            margin-top: 20px;
+            display: none;
+        }
+        #timer {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Desafio de Escrever o Nome</h2>
+<p>Escreva o nome correto para desbloquear a área.</p>
+
+<p>Nome correto:</p>
+<input type="text" id="inputNomeCorreto" placeholder="Digite o nome correto" />
+
+<p>Desafio de digitar rápido:</p>
+<input type="text" id="inputArea" placeholder="Escreva o nome" />
+
+<p id="result"></p>
+<p id="timer">Tempo: 0d 0h 0m 0s 0ms</p>
+
+<button id="resetGame">Reiniciar</button>
+
+<script>
+    let nomeCorreto = "teste"; // Nome inicial
+    const inputArea = document.getElementById("inputArea");
+    const inputNomeCorreto = document.getElementById("inputNomeCorreto");
+    const result = document.getElementById("result");
+    const timerElement = document.getElementById("timer");
+    const resetGame = document.getElementById("resetGame")
+
+    let startTime = null;
+    let timerInterval = null;
+
+    // Atualiza o nome correto a cada input
+    inputNomeCorreto.addEventListener("input", () => {
+        nomeCorreto = inputNomeCorreto.value.trim();
+    });
+
+    // Inicia o contador
+    function startTimer() {
+        if (!startTime) {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const elapsedTime = Date.now() - startTime;
+                const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+                const milliseconds = elapsedTime % 1000;
+
+                timerElement.textContent = `Tempo: ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+
+                if (inputArea.value.toLowerCase() === nomeCorreto) {
+                    result.style.color = "green";
+                    result.textContent = `GANHO! Você completou em ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+                    stopTimer();
+                }
+            }, 10);
+        }
+    }
+
+    // Para o contador
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
+    // Verifica se o nome está correto
+    function checkNome() {
+        startTimer(); // Inicia o contador ao começar a digitar
+
+        if (inputArea.value.toLowerCase() === nomeCorreto) {
+            inputArea.disabled = true;
+            result.style.color = "green";
+            result.textContent = "GANHO";
+            stopTimer(); // Para o contador quando o nome estiver correto
+        } else {
+            result.style.color = "red";
+            result.textContent = "ERRADO";
+        }
+    }
+
+    inputArea.addEventListener("input", () => {
+        checkNome();
+    });
+
+    resetGame.addEventListener("click", () => {
+        location.reload();
+    })
+
+</script>
+
+</body>
+</html>

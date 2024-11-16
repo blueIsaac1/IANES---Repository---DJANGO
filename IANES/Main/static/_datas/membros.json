@@ -1,18 +1,18 @@
 {
     "luiz": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_luizfrancisco.jpg",
         "alt_img_text": "Membro: Luiz Francisco",
-        "nome": "Luiz Francisco Neves Mendes",
-        "dev": "Desenvolvimento Front-End",
-        "lista_dev": [
+        "nome_membro": "Luiz Francisco Neves Mendes",
+        "main_dev": "Desenvolvimento Front-End",
+        "list_developed": [
             "Web", 
-            "Assistente da transição ao Framework"
+            "Assistente da transição para o Framework (Django)"
         ],
-        "pla": "Extras",
-        "lista_pla": [
+        "list_additional": [
             "Operacional Designer",
             "Planejamento Visual (Design)",
             "Acessibilidade Idiomas/Aparência/Fonte",
+            "Voz da I.A.",
             "Branding"
         ],
         "linkedin": {
@@ -24,18 +24,20 @@
             "text": "Francisco-Neves-15"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "francisconeves15contato@gmail.com"
         }
     },
     "renan": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_renanmattos.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_renanmattos.jpg",
         "alt_img_text": "Membro: Renan Mattos",
-        "nome": "Renan Mattos Landim",
-        "dev": "Desenvolvimento da I.A.",
-        "lista_dev": ["Codificação I.A.", "Planejamento I.A."],
-        "pla": "Extras",
-        "lista_pla": [
+        "nome_membro": "Renan Mattos Landim",
+        "main_dev": "Desenvolvimento da I.A.",
+        "list_developed": [
+            "Codificação I.A.", 
+            "Planejamento I.A."
+        ],
+        "list_additional": [
             "Operacional Desenvolvedor",
             "Estrutura da I.A"
         ],
@@ -48,20 +50,21 @@
             "text": "Renan Mattos"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "mattosrenan5@gmail.com"
         }
     },
     "pedro": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_pedrosiqueira.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_pedrosiqueira.jpg",
         "alt_img_text": "Membro: Pedro Siqueira",
-        "nome": "Pedro Bernardes Siqueira",
-        "dev": "Desenvolvimento Back-End",
-        "lista_dev": ["Django"],
-        "pla": "Extras",
-        "lista_pla": [
-            "Coordenador Operacional",
+        "nome_membro": "Pedro Bernardes Siqueira",
+        "main_dev": "Desenvolvimento Back-End",
+        "list_developed": [
             "Automação da Alimentação da I.A.",
+            "Documentação"
+        ],
+        "list_additional": [
+            "Coordenador Operacional",
             "Assistente Geral"
         ],
         "linkedin": {
@@ -73,20 +76,20 @@
             "text": "Pedro Siqueira"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "pedrosiqueirarp@gmail.com"
         }
     },
     "miguel": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_miguelvinicius.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_miguelvinicius.jpg",
         "alt_img_text": "Miguel Vinicius",
-        "nome": "Miguel Vinicius Oliveira da Silva",
-        "dev": "Desenvolvimento I.A. & Tester",
-        "lista_dev": ["Codificação I.A."],
-        "pla": "Extras",
-        "lista_pla": [
+        "nome_membro": "Miguel Vinicius Oliveira da Silva",
+        "main_dev": "Desenvolvimento I.A. & Tester",
+        "list_developed": [
+            "Codificação I.A."
+        ],
+        "list_additional": [
             "Operacional Desenvolvedor",
-            "Automação da Alimentação da I.A.",
             "Segurança Interna"
         ],
         "linkedin": {
@@ -98,19 +101,21 @@
             "text": "Miguel Vinícius"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "m1guels1lvv4@gmail.com"
         }
     },
     "isaac": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_isaaccleiton.jpg",
         "alt_img_text": "Isaac Cleiton",
-        "nome": "Isaac Cleiton da Silva",
-        "dev": "Desenvolvimento Back-end & Banco de Dados",
-        "lista_dev": ["Codificação do Banco de Dados", "Django"],
-        "pla": "Extras",
-        "lista_pla": [
-            "Líder do Projeto (Scrum Master)",
+        "nome_membro": "Isaac Cleiton da Silva",
+        "main_dev": "Desenvolvimento Back-end & Banco de Dados",
+        "list_developed": [
+            "Codificação do Banco de Dados", 
+            "Líder da Transição para o Framework (Django)"
+        ],
+        "list_additional": [
+            "Responsável pelo Time (Scrum Master)",
             "Coordenação da Equipe"
         ],
         "linkedin": {
@@ -122,20 +127,22 @@
             "text": "Isaac"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "Nenhum no momento"
         }
     },
     "breno": {
-        "url_img": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_brenoferracini.jpg",
+        "url_img_membro": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_members/memb_brenoferracini.jpg",
         "alt_img_text": "Membro: Breno Ferracini",
-        "nome": "Breno Ferracini de Oliveira",
-        "dev": "Desenvolvimento I.A. & Pesquisa",
-        "lista_dev": ["Codificação da I.A."],
-        "pla": "Extras",
-        "lista_pla": [
-            "Operacional Desenvolvedor",
+        "nome_membro": "Breno Ferracini de Oliveira",
+        "main_dev": "Desenvolvimento I.A. & Pesquisa",
+        "list_developed": [
             "Automação da Alimentação da I.A.",
+            "Codificação da I.A.",
+            "Documentação"
+        ],
+        "list_additional": [
+            "Operacional Desenvolvedor",
             "Pesquisador"
         ],
         "linkedin": {
@@ -144,10 +151,10 @@
         },
         "github": {
             "href": "#",
-            "text": "?"
+            "text": "Nenhum no momento"
         },
         "email": {
-            "href": "#",
+            "href": "",
             "text": "Nenhum no momento"
         }
     }

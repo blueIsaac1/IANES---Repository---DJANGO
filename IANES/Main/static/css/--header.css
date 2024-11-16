@@ -6,6 +6,7 @@
     --tamanho_font_user: 1vw;
     --tamanho_font_navbar: 1vw;
     --tamanho_icons_header: 2.5vw;
+    --tamanho_icons_header_userC: 1.5vw;
     --tamanho_header: 6vw;
     --tamanho_header_top: 4vw;
     --tamanho_header_bot: 2vw;
@@ -202,6 +203,10 @@ header {
 
 /* Tooltip's */
 
+.tooltip_user_hide {
+    display: none;
+}
+
 .tooltip {
     opacity: 0;
     background-color: var(--color-azul-medio);
@@ -228,8 +233,132 @@ header {
 }
 
 /* Tooltip do Usuario */
-.user_div:hover #tooltip_user {
+.user_div:hover .tooltip_user {
     z-index: 900;
     opacity: 1;
     transform: translateX(-110%) translateY(0%) scale(1);
+}
+
+/* ------------------- Container do Perfil */
+
+.user_container {
+    position: absolute;
+    bottom: -100%;
+    right: -20vw;
+    transform: translateY(0%);
+    background-color: var(--color-fundo-claro);
+    border: 0.2vw solid var(--color-vermelho-medio);
+    border-radius: 0.4vw;
+    padding: 0.4vw 0.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_container::after {
+    content: '';
+    position: absolute;
+    top: -0.5vw;
+    right: .8vw;
+    transform: translateX(0%);
+    border-left: 0.5vw solid transparent;
+    border-right: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid var(--color-vermelho-medio);
+}
+.user_container_active {
+    right: 2vw;
+}
+.userC_list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.4vw;
+}
+.userC_list li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: 0.5vw;
+    padding: 0.4vw 0.6vw;
+    border: none;
+    border-radius: 0.4vw;
+    transition: all .3s ease-in-out;
+    background-color: transparent;
+    cursor: pointer;
+}
+.userC_list li:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+.userC_list li ion-icon {
+    font-size: var(--tamanho_icons_header_userC);
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.userC_list li p {
+    font-size: var(--tamanho_font_navbar);
+    color: #000000;
+    font-weight: 600;
+    text-align: center;
+    height: auto;
+}
+
+/* ------------------- Configurações */
+
+.config_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-fundo-overlay);
+    z-index: 4000;
+    overflow: hidden;
+}
+
+.fecharOverlay_config {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    color: #ffffff;
+    font-size: 1.2vw;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--color-vermelho-medio);
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    top: -1vw;
+    right: -1vw;
+}
+.fecharOverlay_config:hover {
+    background-color: var(--color-azul-medio);
+}
+
+.ovConfig_container {
+    background-color: var(--color-fundo-claro);
+    width: 50vw;
+    height: 30vw;
+    border: none;
+    border-radius: 0.6vw;
+    padding: 1vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 0%;
+    transition: margin-top 0.3s ease-in-out;
+}
+.ovConfig_container_active {
+    margin-top: 0%; 
 }

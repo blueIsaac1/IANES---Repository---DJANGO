@@ -1,0 +1,57 @@
+{
+    "ai": {
+        "title": "Artificial Intelligence",
+        "alt": "AI Development Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_ai.png"
+    },
+    "backend": {
+        "title": "Backend Development",
+        "alt": "Backend Development Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_backend.png"
+    },
+    "database": {
+        "title": "Database Management",
+        "alt": "Database Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_database.png"
+    },
+    "design": {
+        "title": "Designer",
+        "alt": "Frontend Development Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/40e85ce7354ab4f99a6fa6878085f02257649706/_midia/png_icons/icon_design.png"
+    },
+    "frontend": {
+        "title": "Frontend Development",
+        "alt": "Frontend Development Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/b4700c5dba244fb7da062b7403b086c0e3e72bab/_midia/png_icons/icon_frontend.png"
+    },
+    "documents": {
+        "title": "Documentation",
+        "alt": "Documents Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_documents.png"
+    },
+    "scrummaster": {
+        "title": "Scrum Master",
+        "alt": "Scrum Master Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_scrummaster.png"
+    },
+    "tester": {
+        "title": "Testing",
+        "alt": "Testing Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_tester.png"
+    },
+    "web": {
+        "title": "Web Development",
+        "alt": "Web Development Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/d81a43dbb060a0caf6534a9d80a9d74414185e5c/_midia/png_icons/icon_web.png"
+    },
+    "coordinator": {
+        "title": "Coordinator",
+        "alt": "Coordinator Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/8612a39e16a04e662764c4522d02883e28d967a5/_midia/png_icons/icon_coordinator.png"
+    },
+    "helper": {
+        "title": "Helper",
+        "alt": "Helper Icon",
+        "src": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/8612a39e16a04e662764c4522d02883e28d967a5/_midia/png_icons/icon_helper.png"
+    }
+}
