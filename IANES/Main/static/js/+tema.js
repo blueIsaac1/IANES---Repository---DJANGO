@@ -123,3 +123,39 @@ function aplicarTema(tema) {
 
     closePopup_tema();
 }
+
+// async function appendInList_tema() {
+    
+// }
+
+// function toggleList_tema(element) {
+//     // Define a formação padrão dos Botões e das Sessão
+//     const formatDefault_btn = "confOptions_btn-"
+//     const formatDefault_sec = "lang_Options_list-"
+//     // Captura a Categoria, de acordo com o ID do 'element'
+//     const secCateg = element.id.split("-")[1]; // Pega o texto depois do 1° "-" do ID
+//     // Pega o ID apenas dos Botões e das Sessão, usando a formatação e o ID da Categoria
+//     const btnID = document.getElementById(`${formatDefault_btn}${secCateg}`)
+//     const secID = document.getElementById(`${formatDefault_sec}${secCateg}`)
+//     // Para cada Botão e Sessão, remove as Classes de "ativam" elas
+//     all_btn_confOptions.forEach(btn => {
+//         btn.classList.remove(class_btn_active)
+//     })
+//     all_sec_confOptions.forEach(sec => {
+//         sec.classList.remove(class_sec_active)
+//     })
+//     // Define as Classes, apenas para o Botão e Sessão que se encaixam
+//     btnID.classList.add(class_btn_active)
+//     secID.classList.add(class_sec_active)
+// }
+
+// const all_secOption_btn = document.querySelectorAll("confOptions_secOption_btn")
+// all_secOption_btn.forEach(btn => {
+//     btn.addEventListener("click", (event) => {
+//         toggleList_tema(event.currentTarget);
+//     });
+// });
+
+// Funções auto-executaveis
+
+// appendInList_tema()

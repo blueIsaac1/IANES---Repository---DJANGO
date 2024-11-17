@@ -11,7 +11,7 @@
 #### Template: "Objeto" : "Camada"
 
 - Tela de Loading : 1000
-- Tela com Overlay : 850
+- Tela com Overlay : 850 ou 851
 
 - Tooltip's - Antes : -1 
 - Tooltip's - Depois : 900 

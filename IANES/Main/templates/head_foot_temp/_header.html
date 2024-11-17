@@ -34,16 +34,18 @@
             </svg>
         </div>
     </div>
+    <!-- Container do User -->
     <div id="user_container" class="user_container">
         <ul class="userC_list">
             <li id="config_ovConfig_btn" class="userC_list_item">
-                <p aria-selected="false" class="nav_item" id="texto_header_profile-config">Configurações</p>
-                <ion-icon class="header_icon_settings" name="settings-outline"></ion-icon>
+                <p aria-selected="false" class="nav_item" id="texto_header_userContainer-config">Configurações</p>
+                <ion-icon class="header_icon_settings" id="header_icon_settings" name="settings-outline"></ion-icon>
             </li>
+            <!-- <hr> -->
             {% if user.is_authenticated %}
             <li onclick="location.href='{% url 'logout' %}'" class="userC_list_item" id="userC_list_item-ianes">
-                <p id="texto_header_profile-leave">Sair</p>
-                <ion-icon class="header_icon_settings" name="log-out-outline"></ion-icon>
+                <p id="texto_header_userContainer-leave">Sair</p>
+                <ion-icon class="header_icon_leave" id="header_icon_leave" name="log-out-outline"></ion-icon>
             </li>
             {% endif %}
         </ul>
@@ -68,10 +70,73 @@
 <div aria-active="false" id="config_overlay" class="config_overlay">
 
     <div id="ovConfig_container" class="ovConfig_container">
-        
-        <ion-icon id="fecharOverlay_config" class="fecharOverlay_config" name="close"></ion-icon>
 
-
+        <div class="ovConfigC_top">
+            <h1 id="texto_header_configContainer-configTitle">Configurações</h1>
+            <ion-icon id="fecharOverlay_config" class="fecharOverlay_config" name="close"></ion-icon>
+        </div>
+        <hr>
+        <div class="ovConfigC_bot">
+            <div class="ovConfigC_bot_left">
+                <div class="confOptions_list">
+                    <div id="confOptions_btn-geral" class="confOptions_btn confOptions_btn_select">
+                        <ion-icon class="confOptions_icon" name="settings-outline"></ion-icon>
+                        <p aria-selected="false" class="confOptions_list_item_t" id="texto_header_confOptions_btn-geral">Geral</p>
+                    </div>
+                    <div id="confOptions_btn-fala" class="confOptions_btn">
+                        <ion-icon class="confOptions_icon" name="volume-high-outline"></ion-icon>
+                        <p aria-selected="false" class="confOptions_list_item_t" id="texto_header_confOptions_btn-fala">Fala</p>
+                    </div>
+                    <div id="confOptions_btn-profile" class="confOptions_btn">
+                        <ion-icon class="confOptions_icon" name="person-outline"></ion-icon>
+                        <p aria-selected="false" class="confOptions_list_item_t" id="texto_header_confOptions_btn-profile">Perfil</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ovConfigC_bot_right">
+                <div class="confOptions_container">
+                    <div id="confOptions_sec-geral" class="confOptions_sec confOptions_sec_active">
+                        <!-- Idioma -->
+                        <div id="confOptions_secOption-lang" class="confOptions_sec_option">
+                            <p id="texto_header_confSec_btn-lang" class="confSec_categ">Idioma</p>
+                            <div aria-active="false" id="confOptions_secOption_btn-lang" class="confOptions_secOption_btn secOption_btn_aria">
+                                <p id="texto_header_confSec_btn-lang_atual" class="confSec_categ_atual">Português (Brasil)</p>
+                                <ion-icon class="confSec_icon confSec_icon_arrow" id="confSec_icon_arrow-lang" name="chevron-up-outline"></ion-icon>
+                            </div>
+                            <ul id="lang_Options_list" class="lang_Options_list options_list">
+                                <div class="langOptionsList_sum">
+                                    <img class="langBotTalkSum" id="langBotTalkSum" style="min-width: 1vw; min-height: auto;" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/png_icons/icon_ianesTalk.png" alt="LangFlag Brasil">
+                                    <p id="texto_header_confLang_sumario">O IAnes tem suporte para esse idioma</p>
+                                </div>
+                                <!-- Auto Adiciona os Idiomas -->
+                            </ul>
+                        </div>
+                        <!-- Tema -->
+                        <div id="confOptions_secOption-tema" class="confOptions_sec_option">
+                            <p id="texto_header_confSec_btn-tema" class="confSec_categ">Aparência</p>
+                            <div aria-active="false" id="confOptions_secOption_btn-tema" class="confOptions_secOption_btn secOption_btn_aria">
+                                <p id="texto_header_confSec_btn-tema_atual" class="confSec_categ_atual">Claro</p>
+                                <ion-icon class="confSec_icon confSec_icon_arrow" id="confSec_icon_arrow-tema" name="chevron-up-outline"></ion-icon>
+                            </div>
+                            <ul id="tema_Options_list" class="tema_Options_list options_list">
+                                <!-- Auto Adiciona os Temas -->
+                                <li id="tema_Options_list_i-pt-BR">
+                                    <ion-icon name="moon-outline"></ion-icon>
+                                    <p id="tema_pt-BR_p">Claro</p>
+                                    <ion-icon class="confSec_icon check_icon_active" name="checkmark-outline"></ion-icon>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="confOptions_sec-fala" class="confOptions_sec">
+                        Seção Fala
+                    </div>
+                    <div id="confOptions_sec-profile" class="confOptions_sec">
+                        Seção Profile
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

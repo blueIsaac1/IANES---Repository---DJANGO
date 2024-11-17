@@ -10,6 +10,15 @@
     --tamanho_header: 6vw;
     --tamanho_header_top: 4vw;
     --tamanho_header_bot: 2vw;
+
+    --tamanho_font_config_s1: 1.4vw;
+    --tamanho_font_config_s2: 1vw;
+    --tamanho_font_config_s3: 0.8vw;
+    --tamanho_icon_config_s1: 1.6vw;
+    --tamanho_icon_config_s2: 1.4vw;
+    --tamanho_icon_config_s3: 0.8vw;
+
+    --tamanho_icon_config_png: 1.2vw;
 }
 
 /* Coisas no Cabeçalho */
@@ -289,6 +298,22 @@ header {
     transition: all .3s ease-in-out;
     background-color: transparent;
     cursor: pointer;
+    position: relative;
+}
+.userC_list_item::after {
+    content: "";
+    position: absolute;
+    bottom: -7.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 0.05vw;
+    background-color: var(--color-cinza);
+    border: none;
+    border-radius: 0.5vw;
+}
+.userC_list_item:last-child::after {
+    display: none;
 }
 .userC_list li:hover {
     background-color: var(--color-cinza_hover_bg_light);
@@ -299,6 +324,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all .3s ease-in-out;
 }
 .userC_list li p {
     font-size: var(--tamanho_font_navbar);
@@ -306,6 +332,23 @@ header {
     font-weight: 600;
     text-align: center;
     height: auto;
+}
+.userC_list hr {
+    width: 100%;
+    height: 0.05vw;
+    background-color: var(--color-cinza);
+    border: none;
+    border-radius: 0.5vw;
+}
+
+.userC_list li:hover #header_icon_settings {
+    transform: rotate(90deg);
+}
+#header_icon_leave {
+    transform: rotate(180deg);
+}
+.userC_list li:hover #header_icon_leave {
+    transform: rotate(0deg);
 }
 
 /* ------------------- Configurações */
@@ -320,28 +363,8 @@ header {
     width: 100%;
     height: 100%;
     background-color: var(--color-fundo-overlay);
-    z-index: 4000;
+    z-index: 850;
     overflow: hidden;
-}
-
-.fecharOverlay_config {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5vw;
-    color: #ffffff;
-    font-size: 1.2vw;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--color-vermelho-medio);
-    transition: all .3s ease-in-out;
-    cursor: pointer;
-    position: absolute;
-    top: -1vw;
-    right: -1vw;
-}
-.fecharOverlay_config:hover {
-    background-color: var(--color-azul-medio);
 }
 
 .ovConfig_container {
@@ -355,10 +378,367 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 0%;
     transition: margin-top 0.3s ease-in-out;
+    gap: 0.4vw;
 }
 .ovConfig_container_active {
     margin-top: 0%; 
+}
+
+/* Parte Superior */
+
+.ovConfigC_top {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ovConfigC_top h1 {
+    font-size: var(--tamanho_font_config_s1);
+    color: #000000;
+    font-weight: 700;
+    text-align: left;
+}
+
+.fecharOverlay_config {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    color: #000000;
+    font-size: var(--tamanho_icon_config_s1);
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+.fecharOverlay_config:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+/* Linha */
+
+.ovConfig_container hr {
+    width: 100%;
+    height: 0.1vw;
+    background-color: var(--color-cinza);
+    /* background-color: #000000; */
+    opacity: 0.7;
+    border: none;
+    border-radius: 0.5vw;
+}
+
+/* Parte Inferior */
+
+.ovConfigC_bot {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Parte Inferior Esquerda*/
+
+.ovConfigC_bot_left {
+    padding: 0.5vw;
+    padding-right: 0vw;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+
+}
+
+.confOptions_list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.4vw;
+}
+
+.confOptions_btn {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.4vw 0.6vw;
+    gap: 0.5vw;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.2vw;
+}
+.confOptions_btn:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+.confOptions_btn_select {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.confOptions_btn ion-icon {
+    font-size: var(--tamanho_icon_config_s2);
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confOptions_btn p {
+    font-size: var(--tamanho_font_config_s2);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* Parte Inferior Direita*/
+
+.ovConfigC_bot_right {
+    padding: 0.5vw;
+    padding-left: 0vw;
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.confOptions_container {
+    padding: 0vw;
+    padding-left: 2vw;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.confOptions_sec {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.confOptions_sec_active {
+    display: flex;
+}
+
+.confOptions_sec_option {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 0.4vw 0.6vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vw;
+}
+.confOptions_sec_option:first-child {
+    margin-top: 1vw;
+}
+.confSec_categ {
+    font-size: var(--tamanho_font_config_s2);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+}
+.confSec_categ_atual {
+    font-size: var(--tamanho_font_config_s3);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+}
+
+.confOptions_secOption_btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.6vw 0.8vw;
+    border: none;
+    border-radius: 0.3vw;
+    gap: 0.5vw;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+.confOptions_secOption_btn:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+.confSec_icon_arrow {
+    transform: rotate(0deg);
+    transition: all .3s ease-in-out;
+    font-size: var(--tamanho_icon_config_s3);
+    color: #000000;
+}
+.confSec_icon_arrow_active {
+    transform: rotate(-180deg);
+    animation: rotateArrow_downs .3s normal backwards;
+}
+@keyframes rotateArrow_downs {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-180deg); }
+}
+
+.options_list {
+    background-color: var(--color-fundo-claro);
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    margin-left: -3vw;
+    border: 0.2vw solid var(--color-vermelho-medio);
+    border-radius: 0.3vw;
+    padding: 0.4vw 0.6vw;
+    white-space: nowrap;
+    z-index: 851;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.6vw;
+    width: auto;
+    height: auto;
+}
+/* Margem no primeiro item */
+.options_list li:first-of-type {
+    margin-top: 0.4vw;
+}
+/* Margem no último item */
+.options_list li:last-of-type {
+    margin-bottom: 0.4vw;
+}
+.options_list_active {
+    display: flex;
+}
+
+.langOptionsList_sum {
+    background-color: var(--color-fundo-claro);
+    position: absolute;
+    top: 0%;
+    right: -2.5vw;
+    transform: translateY(-100%);
+    border: 0.2vw solid var(--color-vermelho-medio);
+    border-radius: 0.3vw;
+    padding: 0.4vw 0.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+    width: 100%;
+}
+.langOptionsList_sum p {
+    font-size: var(--tamanho_font_config_s3);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+    text-wrap: pretty;
+}
+.langOptionsList_sum .langBotTalkSum {
+    width: 2.4vw;
+    height: auto;
+}
+.options_list li {
+    display: flex;
+    align-items: center;
+    padding: 0.4vw 0.4vw;
+    border-radius: 0.3vw;
+    border: none;
+    width: auto;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    gap: 0.5vw;
+    position: relative;
+}
+
+.options_list li:hover {
+    background-color: var(--color-cinza_hover_bg_light);
+}
+
+.icone_div {
+    width: 15%;
+    height: 100%;
+    justify-self: flex-start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.langFlag {
+    width: 1.6vw;
+    height: auto;
+}
+
+.langOptionsList_p_div {
+    flex-grow: 1;
+    height: 100%;
+    justify-self: flex-end;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.langOptionsList_p_div p {
+    font-size: var(--tamanho_font_config_s3);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+}
+
+.langBotTalk_div {
+    width: 10%;
+    height: 100%;
+    justify-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -30%;
+    left: 2.5%;
+    transform: translateX(-50%);
+}
+.botTalk {
+    visibility: hidden;
+    width: 1.2vw;
+    height: auto;
+}
+.botTalk_Yes {
+    visibility: visible;
+}
+
+.check_icon_div {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.check_icon {
+    visibility: hidden;
+    font-size: var(--tamanho_icon_config_s2);
+    color: #000000;
+}
+.check_icon_active_lang {
+    visibility: visible;
+}
+.check_icon_active_tema {
+    visibility: visible;
 }

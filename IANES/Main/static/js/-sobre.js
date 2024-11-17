@@ -3,6 +3,10 @@ const overlay_membro = document.getElementById('membro_overlay');
 const fecharOverlay_membro = document.getElementById("fecharOverlay_membro");
 const overlayContainer_membro = document.getElementById("ovMembro_container")
 
+// Classes Ativas
+let class_tp_clickExpand_active = "tp_members_clickExpand_active"
+let class_tp_overlay_active = "tp_members_overlay_active"
+
 // Quebra linha dos nomes na aba sobre
 const textos = document.querySelectorAll('#membros_sec_p'); // Use a classe
 textos.forEach(texto => {
@@ -165,22 +169,22 @@ function showPopup_emailCopy() {
 const tp_sobre = document.getElementById("tp_members_clickExpand")
 function showTp_sobre() {
     if (!tp_sobre) return
-    tp_sobre.classList.add("tp_members_clickExpand_active")
+    tp_sobre.classList.add(class_tp_clickExpand_active)
 }
 function hideTp_sobre() {
     if (!tp_sobre) return
-    tp_sobre.classList.remove("tp_members_clickExpand_active")
+    tp_sobre.classList.remove(class_tp_clickExpand_active)
 }
 
 // Mostrando e Escondendo as tooltips
 const tp_sobre_overlay = document.getElementById("tp_members_overlay")
 function showTp_sobre_overlay() {
     if (!tp_sobre_overlay) return
-    tp_sobre_overlay.classList.add("tp_members_overlay_active")
+    tp_sobre_overlay.classList.add(class_tp_overlay_active)
 }
 function hideTp_sobre_overlay() {
     if (!tp_sobre_overlay) return
-    tp_sobre_overlay.classList.remove("tp_members_overlay_active")
+    tp_sobre_overlay.classList.remove(class_tp_overlay_active)
 }
 
 // Função para preencher as imgs com seus icones
