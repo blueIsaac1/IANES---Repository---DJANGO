@@ -4,19 +4,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as login_django
 from django.http import JsonResponse, Http404
-import google.generativeai as genai
+import google.generativeai as genai # type: ignore
 from django.contrib.auth import login
 from Main.models import Room, UserMessage, BotResponse
 from django.views.generic.detail import DetailView
 import json
-import google.generativeai as genai
+import google.generativeai as genai # type: ignore
 import os
 from django.utils import timezone
 import time
-from google.api_core import exceptions as google_exceptions
-from deep_translator import GoogleTranslator 
-import re
-import requests
+from google.api_core import exceptions as google_exceptions # type: ignore
+from deep_translator import GoogleTranslator  # type: ignore
 from django.urls import reverse
 from itertools import zip_longest
 from django.contrib import messages 
@@ -249,34 +247,135 @@ def send_message(request, pk):
     if request.method == 'POST':
         user_message_text = request.POST.get('user_message')
 
-        if user_message_text: 
-            genai.configure(api_key='AIzaSyB3diSByelzGqRz8i0lf_sR0yvhZE21TnI')
-            model = genai.GenerativeModel('gemini-1.5-flash')
+        if user_message_text:
+            if request.session.get('collecting_parameters', False):
+                try:
+                    # Lógica de coleta de parâmetros
+                    parameter_index = request.session.get('parameter_index', 0)
+                    respostas = request.session.get('responses', {})
+                    perguntas = request.session.get('perguntas', {})
+                    perguntas_keys = list(perguntas.keys())
 
-            user_message = request.POST.get('user_message')
-            try:
-                bot_response = model.generate_content(user_message_text)
-                bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'    
-            except Exception as e:
-                bot_response_text = f"Erro: {str(e)}"
+                    # Verifique se o índice está dentro dos limites
+                    if 0 <= parameter_index - 1 < len(perguntas_keys):
+                        current_question_key = perguntas_keys[parameter_index - 1]
+                        # Armazena a resposta do usuário
+                        respostas[current_question_key] = user_message_text
+                        # Atualiza a sessão
+                        request.session['responses'] = respostas
+                    else:
+                        raise IndexError("Índice de pergunta inválido.")
+
+                    if parameter_index < len(perguntas_keys):
+                        # Faz a próxima pergunta
+                        next_question_key = perguntas_keys[parameter_index]
+                        bot_response_text = perguntas[next_question_key]
+                        # Incrementa o índice da pergunta
+                        parameter_index += 1
+                        request.session['parameter_index'] = parameter_index
+                    else:
+                        # Todas as perguntas foram respondidas
+                        bot_response_text = "Obrigado por fornecer todas as informações!"
+                        # Processar as respostas coletadas aqui
+                        # Limpa as variáveis de sessão
+                        print('perguntas: ', perguntas)
+                        print('respostas: ', respostas)
+                        request.session.pop('collecting_parameters')
+                        request.session.pop('parameter_index')
+                        request.session.pop('responses')
+                        request.session.pop('perguntas')
+
+                    # Salva a mensagem do usuário
+                    user_message = UserMessage.objects.create(
+                        user=current_room.user,
+                        text=user_message_text,
+                        created_at=None
+                    )
+                    bot_response_instance = BotResponse.objects.create(
+                        text=bot_response_text
+                    )
+                    current_room.user_message.add(user_message)
+                    current_room.bot_response.add(bot_response_instance)
+                    return redirect('list_messages', pk=pk)
+                except Exception as e:
+                    # Registre a exceção
+                    print(f"Ocorreu um erro na coleta de parâmetros: {e}")
+                    # Envie uma mensagem de erro ao usuário
+                    bot_response_text = "Desculpe, ocorreu um erro ao processar suas respostas."
+                    # Limpa as variáveis de sessão
             
-            user_message = UserMessage.objects.create(
-                user = current_room.user,
-                text = user_message_text,
-                created_at = None
-            )
+                    request.session.pop('collecting_parameters', None)
+                    request.session.pop('parameter_index', None)
+                    request.session.pop('responses', None)
+                    request.session.pop('perguntas', None)
+                    # Salva a resposta do bot e redireciona
+                    bot_response_instance = BotResponse.objects.create(
+                        text=bot_response_text
+                    )
+                    current_room.bot_response.add(bot_response_instance)
+                    return redirect('list_messages', pk=pk)
 
-            bot_response_instance = BotResponse.objects.create(
-                text=bot_response_text
-            )
-
-            current_room.user_message.add(user_message)
-            current_room.bot_response.add(bot_response_instance)
-
-            # salvar_conversa_em_json(current_room.id, user_message_text, bot_response_text)
-
-            return redirect('list_messages', pk=pk)
+            else:
+                # Não está no modo de coleta de parâmetros
+                if user_message_text.strip().upper() == "IANES":
+                    # Inicia a coleta de parâmetros
+                    request.session['collecting_parameters'] = True
+                    request.session['parameter_index'] = 1  # Inicia do índice 1
+                    request.session['responses'] = {}
+                    # Define as perguntas
+                    perguntas = {
+                        "nome": "Por favor, insira o nome da pessoa responsável: ",
+                        "nome_empresa": "Por favor, insira o nome da empresa responsável: ",
+                        "numero_colaboradores": "Por favor, insira o número de colaboradores: ",
+                        "projeto": "Por favor, informe o nome do projeto: ",
+                        "orcamento": f"Cotação atual do dólar: R$ teste \nQual é o orçamento previsto para o projeto em reais (R$)?",
+                        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Mundial): ",
+                        "tempo": "Qual é a duração prevista do projeto em meses? ",
+                        "lucro": f"Qual é o lucro bruto da empresa em reais (R$)?",
+                        "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): ",
+                        "publicoalvo": "Quem é o público-alvo do projeto? ",
+                        "itensfianciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
+                    }
+                    request.session['perguntas'] = perguntas
+                    # Pega a primeira pergunta
+                    first_question_key = list(perguntas.keys())[0]
+                    bot_response_text = perguntas[first_question_key]
+                    # Salva a mensagem do usuário
+                    user_message = UserMessage.objects.create(
+                        user=current_room.user,
+                        text=user_message_text,
+                        created_at=None
+                    )
+                    bot_response_instance = BotResponse.objects.create(
+                        text=bot_response_text
+                    )
+                    current_room.user_message.add(user_message)
+                    current_room.bot_response.add(bot_response_instance)
+                    return redirect('list_messages', pk=pk)
+                else:
+                    # Processamento normal da mensagem usando a IA
+                    try:
+                        genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
+                        model = genai.GenerativeModel('gemini-1.5-flash')
+                        bot_response = model.generate_content(user_message_text)
+                        bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
+                    except Exception as e:
+                        print(f"Ocorreu um erro no processamento da IA: {e}")
+                        bot_response_text = f"Erro: {str(e)}"
+                    # Salva a mensagem do usuário e a resposta do bot
+                    user_message = UserMessage.objects.create(
+                        user=current_room.user,
+                        text=user_message_text,
+                        created_at=None
+                    )
+                    bot_response_instance = BotResponse.objects.create(
+                        text=bot_response_text
+                    )
+                    current_room.user_message.add(user_message)
+                    current_room.bot_response.add(bot_response_instance)
+                    return redirect('list_messages', pk=pk)
     return redirect('index')
+
 
 @login_required(login_url='auth')
 @csrf_exempt
