@@ -3,7 +3,7 @@
 - Fix botao excluir sala // adicionado
 - Adicionar Api VLibras // adicionado
 - Cadastro/Login // adicionado
-- Adicionar lógica do front + back
+- Adicionar lógica do front + back // quase 100%
 - Gerar Pdf
 
 # ERROS:
