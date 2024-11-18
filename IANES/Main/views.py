@@ -167,18 +167,15 @@ class RoomDetailView(DetailView):
 def send_message_obter_parametros(request, pk):
     current_room = get_object_or_404(Room, id=pk)
     perguntas = {
-        "nome": "Por favor, insira o nome da pessoa responsável: ",
-        "nome_empresa": "Por favor, insira o nome da empresa responsável: ",
-        "numero_colaboradores": "Por favor, insira o número de colaboradores: ",
-        "projeto": "Por favor, informe o nome do projeto: ",
-        "orcamento": f"Cotação atual do dólar: R$ teste \n Qual é o orçamento previsto para o projeto em reais (R$)?",
-        "extensao": "Qual é a extensão geográfica do projeto? (Regional, Nacional, Mundial): ",
-        "tempo": "Qual é a duração prevista do projeto em meses? ",
-        "lucro": f"Qual é o lucro bruto da empresa em reais (R$)?",
-        "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): ",
-        "publicoalvo": "Quem é o público-alvo do projeto? ",
-        "itensfianciaveis": "Os itens do projeto podem ser financiados? (Sim ou Não): "
+        "nome": "Por favor, insira o nome da pessoa responsável.",
+        "nome_empresa": "Por favor, insira o nome da empresa responsável.",
+        "lucro": "Qual é o lucro bruto da empresa em reais (R$)?",
+        "numero_colaboradores": "Por favor, insira o número de colaboradores do projeto.",
+        "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não').",
+        "Email": "Por favor, insira o e-mail do responsável pelo projeto."
     }
+
+    # adicionar os outros prompts e tratamento de erro.
 
     # Inicializa a sessão para armazenar as respostas, se ainda não estiver
     if 'respostas' not in request.session:
@@ -407,6 +404,7 @@ def list_messages(request, pk=None):
         room = Room.objects.create(user=request.user)
         room.title = f"Sala Nova - {room.id}"
         room.save()
+        print(room)
         return redirect('list_messages', pk=room.id)
 
     try:
