@@ -434,13 +434,13 @@ function validarCriarConta() {
     // Verifica se todas as validações estão true, incluindo o checkbox
     let criarValido = user_valid && email_valid && senha_signp_valid && confSenha_signp_valid && checkConcordo_valid;
 
-    console.log("User Valido: ", user_valid)
-    console.log("Email Valido: ", email_valid)
-    console.log("Senha Signup Valido: ", senha_signp_valid)
-    console.log("Confirmar Senha Signup Valido: ", confSenha_signp_valid)
-    console.log("Concordo Valido: ", checkConcordo_valid)
-    console.log("Ta Valido?: ", criarValido)
-    console.log("---------------------------------------")
+    // console.log("User Valido: ", user_valid)
+    // console.log("Email Valido: ", email_valid)
+    // console.log("Senha Signup Valido: ", senha_signp_valid)
+    // console.log("Confirmar Senha Signup Valido: ", confSenha_signp_valid)
+    // console.log("Concordo Valido: ", checkConcordo_valid)
+    // console.log("Ta Valido?: ", criarValido)
+    // console.log("---------------------------------------")
 
     if (criarValido) {
         btn_entrar_signup.style.pointerEvents = "all";

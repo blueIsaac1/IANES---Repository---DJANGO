@@ -140,6 +140,15 @@ function executarFuncoes({ langsDisponiveis, temasDisponiveis }) {
         console.log("⚙ Detectando esquema de cores preferido");
         detectarPreferido_ColorScheme();  
     }
+    // Ouvintes para os Cliques nos Botões para Alterar o Idioma ou o Tema
+    if (typeof listenBtn_lang === 'function') {
+        console.log("⚙ Ativando ouvintes paracCliques nos botões para alterar o Idioma ");
+        listenBtn_lang();
+    }
+    if (typeof listenBtn_tema === 'function') {
+        console.log("⚙ Ativando ouvintes paracCliques nos botões para alterar o Tema ");
+        listenBtn_tema();  
+    }
 }
 
 // Usando o evento 'load' para garantir que o código só execute após a página estar totalmente carregada

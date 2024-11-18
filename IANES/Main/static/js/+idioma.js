@@ -29,7 +29,7 @@ function detectarPreferido_Idioma() {
 
 // Função que altera todos os textos
 function alterarTextos_geral(messages) {
-
+    
     // Seção que altera algumas coisas Gerais
     let secao_geral = 'geral';
     
@@ -119,13 +119,14 @@ function alterarTextos_paginaIA(messages) {
 }
 
 // Função para Aplicar o Check
-function uptadeCheck_lang(lang) {
-    // Atualiza o CHECK no Pop-up de Idioma
+async function uptadeCheck_lang(lang) {
+    // --- Atualiza o CHECK do Idioma
     let todosCheck_lang = document.querySelectorAll(".lang_check");
-
+    let class_check_lang = "lang_check_active"
+    
     // Faça todos os checks invisíveis
     todosCheck_lang.forEach(check => {
-        check.style.visibility = "hidden"; // Torna todos invisíveis
+        check.classList.remove(class_check_lang)
     });
 
     // Uma forma de fazer um Check bom
@@ -134,10 +135,52 @@ function uptadeCheck_lang(lang) {
     if (lang === "n_escolheu") {langSet_check = "device"}
     else {langSet_check = lang}
 
-    // Torne o check correspondente visível
-    let unicoCheck_lang = document.getElementById(`lang_check--${langSet_check}`);
-    if (unicoCheck_lang) {
-        unicoCheck_lang.style.visibility = "visible"; // Torna o específico visível
+   // Torne o check correspondente visível
+   let unicoCheck_lang = document.getElementById(`lang_check-${langSet_check}`)
+   if (unicoCheck_lang) {
+       unicoCheck_lang.classList.add(class_check_lang)
+   }
+
+       // --- Atualiza o Texto e Ícone do Idioma Atual
+    // Carregar arquivosLang necessários usando findRequiredFiles
+    const arquivosLang = await findRequiredFiles();
+    if (!arquivosLang || !arquivosLang.langsDisponiveis) {
+        console.error("Idiomas disponíveis não foram carregados.");
+        return;
+    }
+
+    let langsDisponiveis = arquivosLang.langsDisponiveis;
+    
+    // --- Atualiza o Texto e Ícone do Idioma Atual
+    let langInfo = langsDisponiveis[langSet_check];
+    if (langInfo) {
+        let { srcFlag, lang_p_text, has_botTalk } = langInfo;
+
+        // Atualizar ícone
+        let langFlagAtual = document.getElementById("langAtual_Flag");
+        if (langFlagAtual) {
+            langFlagAtual.setAttribute("src", srcFlag);
+            langFlagAtual.setAttribute("alt", `LangFlagAtual ${langSet_check}`);
+        }
+
+        // Atualizar texto
+        let langTextoAtual = document.getElementById("texto_header_confSec-lang_atual");
+        if (langTextoAtual) {
+            langTextoAtual.textContent = lang_p_text;
+            langTextoAtual.setAttribute("aria-tema-atual", lang_p_text);
+        }
+
+        // Exemplo: usar `has_botTalk` para lógica adicional
+        let botTalkAtual = document.getElementById("langBotTalk_Atual");
+        let class_botTalkAtual = "botTalk_Yes_Atual";
+        if (has_botTalk) {
+            botTalkAtual.classList.add(class_botTalkAtual)
+        } else {
+            botTalkAtual.classList.remove(class_botTalkAtual)
+        }
+
+    } else {
+        console.warn(`Informações para o idioma "${langSet_check}" não foram encontradas.`);
     }
 }
 
@@ -182,7 +225,7 @@ async function aplicarIdioma(lang) {
 
     // Carrega o arquivo JSON do idioma selecionado
     try {
-        const response = await fetch(`../languages/lang_${langSet_arq}.json`);
+        const response = await fetch(`../static/page_languages/lang_${langSet_arq}.json`);
         if (!response.ok) throw new Error(`Falha ao carregar traduções: ${langSet_arq}`);
         
         const arq_messages = await response.json();
@@ -198,8 +241,23 @@ async function aplicarIdioma(lang) {
 
     // Guarda no Armazenamento Local a Situação do Idioma
     localStorage.setItem('situacaoIdioma', lang);
-
-    // Fecha o popup após concluir a aplicação do idioma
-    closePopup_lang();
-
 }
+
+// Escutar TODOS os BTNs de trocar Idioma
+function listenBtn_lang() {
+    // Selecionar todos os itens da lista de idiomas
+    const all_btn_toggleLang = document.querySelectorAll("#lang_Options_list_i");
+
+    // Adicionar evento de clique para cada botão
+    all_btn_toggleLang.forEach(btn => {
+        btn.addEventListener("click", () => {
+            // Obter o lang do atributo 'aria-lang-selector'
+            let lang = btn.getAttribute("aria-lang-selector");
+
+            // Chamar a função para aplicar o lang
+            aplicarIdioma(lang);
+        });
+    });
+}
+
+// Funções auto-executaveis

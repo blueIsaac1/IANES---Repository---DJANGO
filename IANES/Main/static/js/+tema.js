@@ -39,12 +39,13 @@ function aplicarTemaLight() {
     // console.log("Icon Light:", iconLight);
     // console.log("Icon Dark:", iconDark);
 
-    if (iconLight && iconDark) {
-        iconLight.style.opacity = 1;
-        iconDark.style.opacity = 0;
-    } else {
-        console.error("Elementos do tema não encontrados");
-    }
+    // if (iconLight && iconDark) {
+    //     iconLight.style.opacity = 1;
+    //     iconDark.style.opacity = 0;
+    // } else {
+    //     console.error("Elementos do tema não encontrados");
+    // }
+    console.log("Ativando : Tema Claro 🌞")
 }
 
 function aplicarTemaDark() {
@@ -55,23 +56,25 @@ function aplicarTemaDark() {
     // console.log("Icon Light:", iconLight);
     // console.log("Icon Dark:", iconDark);
 
-    if (iconLight && iconDark) {
-        iconLight.style.opacity = 0;
-        iconDark.style.opacity = 1;
-    } else {
-        console.error("Elementos do tema não encontrados");
-    }
+    // if (iconLight && iconDark) {
+    //     iconLight.style.opacity = 0;
+    //     iconDark.style.opacity = 1;
+    // } else {
+    //     console.error("Elementos do tema não encontrados");
+    // }
+    console.log("Ativando : Tema Escuro 🌙")
 }
 
-function uptadeCheck_tema(tema) {
-    // Atualiza o CHECK no Pop-up de Tema
+async function uptadeCheck_tema(tema) {
+    // --- Atualiza o CHECK do Tema
     let todosCheck_tema = document.querySelectorAll(".tema_check");
-
+    let class_check_tema = "tema_check_active"
+    
     // Faça todos os checks invisíveis
     todosCheck_tema.forEach(check => {
-        check.style.visibility = "hidden"; // Torna todos invisíveis
+        check.classList.remove(class_check_tema)
     });
-
+    
     // Uma forma de fazer um Check bom
     // Se for "n_escolheu", o temaSet vai ser "device"
     // Não existe um check para "n_escolheu"
@@ -79,9 +82,40 @@ function uptadeCheck_tema(tema) {
     else {temaSet = tema}
     
     // Torne o check correspondente visível
-    const unicoCheck_tema = document.getElementById(`tema_check--${temaSet}`);
+    let unicoCheck_tema = document.getElementById(`tema_check-${temaSet}`)
     if (unicoCheck_tema) {
-        unicoCheck_tema.style.visibility = "visible"; // Torna o específico visível
+        unicoCheck_tema.classList.add(class_check_tema)
+    }
+
+    // --- Atualiza o Texto e Ícone do Tema Atual
+    // Carregar arquivosTema necessários usando findRequiredFiles
+    const arquivosTema = await findRequiredFiles();
+    if (!arquivosTema || !arquivosTema.temasDisponiveis) {
+        console.error("Temas disponíveis não foram carregados.");
+        return;
+    }
+
+    let temasDisponiveis = arquivosTema.temasDisponiveis;
+
+    // --- Atualiza o Texto e Ícone do Tema Atual
+    let temaInfo = temasDisponiveis[temaSet];
+    if (temaInfo) {
+        let { iconType, tema_p_text } = temaInfo;
+
+        // Atualizar ícone
+        let temaIconAtual = document.getElementById("temaAtual_Icon");
+        if (temaIconAtual) {
+            temaIconAtual.setAttribute("name", iconType);
+        }
+
+        // Atualizar texto
+        let temaTextoAtual = document.getElementById("texto_header_confSec-tema_atual");
+        if (temaTextoAtual) {
+            temaTextoAtual.textContent = tema_p_text;
+            temaTextoAtual.setAttribute('aria-tema-atual', tema_p_text)
+        }
+    } else {
+        console.warn(`Informações para o tema "${temaSet}" não foram encontradas.`);
     }
 }
 
@@ -120,42 +154,23 @@ function aplicarTema(tema) {
 
     // Guarda no Armazenamento Local a Situação do Tema
     localStorage.setItem('situacaoTema', tema);
-
-    closePopup_tema();
 }
 
-// async function appendInList_tema() {
+// Escutar TODOS os BTNs de trocar Tema
+function listenBtn_tema() {
+    // Selecionar todos os itens da lista de temas
+    const all_btn_toggleTema = document.querySelectorAll("#tema_Options_list_i");
     
-// }
+    // Adicionar evento de clique para cada botão
+    all_btn_toggleTema.forEach(btn => {
+        btn.addEventListener("click", () => {
+            // Obter o tema do atributo 'aria-tema-selector'
+            let tema = btn.getAttribute("aria-tema-selector");
 
-// function toggleList_tema(element) {
-//     // Define a formação padrão dos Botões e das Sessão
-//     const formatDefault_btn = "confOptions_btn-"
-//     const formatDefault_sec = "lang_Options_list-"
-//     // Captura a Categoria, de acordo com o ID do 'element'
-//     const secCateg = element.id.split("-")[1]; // Pega o texto depois do 1° "-" do ID
-//     // Pega o ID apenas dos Botões e das Sessão, usando a formatação e o ID da Categoria
-//     const btnID = document.getElementById(`${formatDefault_btn}${secCateg}`)
-//     const secID = document.getElementById(`${formatDefault_sec}${secCateg}`)
-//     // Para cada Botão e Sessão, remove as Classes de "ativam" elas
-//     all_btn_confOptions.forEach(btn => {
-//         btn.classList.remove(class_btn_active)
-//     })
-//     all_sec_confOptions.forEach(sec => {
-//         sec.classList.remove(class_sec_active)
-//     })
-//     // Define as Classes, apenas para o Botão e Sessão que se encaixam
-//     btnID.classList.add(class_btn_active)
-//     secID.classList.add(class_sec_active)
-// }
-
-// const all_secOption_btn = document.querySelectorAll("confOptions_secOption_btn")
-// all_secOption_btn.forEach(btn => {
-//     btn.addEventListener("click", (event) => {
-//         toggleList_tema(event.currentTarget);
-//     });
-// });
+            // Chamar a função para aplicar o tema
+            aplicarTema(tema);
+        });
+    });
+}
 
 // Funções auto-executaveis
-
-// appendInList_tema()

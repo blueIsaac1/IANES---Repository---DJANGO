@@ -5,10 +5,10 @@
     },
     "light": {
       "iconType": "sunny-outline",
-      "tema_p_text": "Escuro"
+      "tema_p_text": "Claro"
     },
     "dark": {
       "iconType": "moon-outline",
-      "tema_p_text": "Claro"
+      "tema_p_text": "Escuro"
     }
 }

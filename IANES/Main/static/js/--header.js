@@ -182,7 +182,7 @@ function appendInList_lang(arq_langDisp) {
         const checkDiv = document.createElement('div');
         checkDiv.classList.add('optionsList_check_div');
         const checkIcon = document.createElement('ion-icon');
-        checkIcon.classList.add('check_icon');
+        checkIcon.classList.add('check_icon', 'lang_check');
         checkIcon.name = 'checkmark-outline';
         checkIcon.id = `lang_check-${langCode}`
         checkDiv.appendChild(checkIcon);
@@ -237,7 +237,7 @@ function appendInList_tema(arq_temaDisp) {
         const checkDiv = document.createElement('div');
         checkDiv.classList.add('optionsList_check_div');
         const checkIcon = document.createElement('ion-icon');
-        checkIcon.classList.add('check_icon');
+        checkIcon.classList.add('check_icon', 'tema_check');
         checkIcon.name = 'checkmark-outline';
         checkIcon.id = `tema_check-${temaCode}`
         checkDiv.appendChild(checkIcon);

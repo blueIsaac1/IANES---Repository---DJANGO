@@ -583,6 +583,17 @@ header {
     padding: 0 0.1vw;
     color: #000000;
 }
+.botTalk_Atual {
+    width: 1.2vw;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 0.2vw;
+    right: 3.6vw;
+}
+.botTalk_Yes_Atual {
+    display: flex;
+}
 
 .confOptions_secOption_btn {
     display: flex;
@@ -626,11 +637,14 @@ header {
     z-index: 851;
     display: none;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 0.6vw;
     width: auto;
     height: auto;
+    max-height: 20vw;
+    overflow: visible;
+    overflow-y: auto;
 }
 /* Margem no primeiro item */
 .options_list li:first-of-type {
@@ -646,18 +660,20 @@ header {
 /* Sumario dos Idiomas */
 .langOptionsList_sum {
     background-color: var(--color-fundo-claro);
-    position: absolute;
-    top: 0%;
-    right: 0;
+    position: sticky;
+    top: 3.2vw;
+    left: 0%;
     transform: translateY(-100%);
-    border: 0.2vw solid var(--color-vermelho-medio);
-    border-radius: 0.3vw;
+    /* border: 0.2vw solid var(--color-vermelho-medio); */
+    border-bottom: 0.2vw solid var(--color-vermelho-medio);
+    /* border-radius: 0.3vw; */
     padding: 0.4vw 0.6vw;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5vw;
     width: 100%;
+    z-index: 1;
 }
 .langOptionsList_sum p {
     font-size: var(--tamanho_font_config_s3);
@@ -759,10 +775,10 @@ header {
     color: #000000;
 }
 
-.check_icon_active_lang {
+.lang_check_active {
     visibility: visible;
 }
-.check_icon_active_tema {
+.tema_check_active {
     visibility: visible;
 }
 
