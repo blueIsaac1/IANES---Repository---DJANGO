@@ -251,6 +251,7 @@ iframe {
     position: relative;
     overflow: visible;
     padding: 0.4vw;
+    gap: 0.5vw;
 }
 
 .container_btn_trocarSalas {
@@ -282,7 +283,7 @@ iframe {
     background-color: var(--color-cinza_hover_bg_light);
 }
 
-.btn_trocarSalas-select {
+.btn_trocarSalas_select {
     background-color: var(--color-cinza_hover_bg_light);
 }
 

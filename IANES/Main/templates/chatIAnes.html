@@ -59,7 +59,7 @@
                     {% for room in rooms %}
                     <!-- Container dos Botões das Salas -->
                     <div class="container_btn_trocarSalas" data-url="{% url 'list_messages' room.id %}">
-                        <a href="{% url 'list_messages' room.id %}" class="btn_trocarSalas" id="btn_trocarSalas_sala-1" >
+                        <a href="{% url 'list_messages' room.id %}" class="btn_trocarSalas" id="btn_trocarSalas_sala-{{ room.id }}" onclick="selectRoom('{{ room.id }}')">
                             <form method="POST" id="form_rename-{{ room.id }}" class="roomsNames renameForm_sendIgnore">
                                 {% csrf_token %}
                                 <p class="roomName" id="room_name_p-{{ room.id }}">{{ room.title }}</p>

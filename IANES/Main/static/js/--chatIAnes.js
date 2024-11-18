@@ -372,72 +372,38 @@ function habilitarBotao() {
 }
 
 // Função para alternar entre as salas
-function trocarSalas(salaID) {
+// CASO queira fazer a sala NAO abrir na ultima que foi aberta, precisa vefiricar o URL.
+function selectRoom(salaID) {
+    console.log("LALALALAL", salaID)
     // Apenas os Botões de Trocar a sala
     const btn_trocarSalas_all = document.querySelectorAll(".btn_trocarSalas");
     const btn_trocarSalas_this = document.getElementById(`btn_trocarSalas_sala-${salaID}`);
-    // Apenas as Salas
-    const chatMessages_sala_all = document.querySelectorAll(".chat_messages")
-    const chatMessages_sala_this = document.getElementById(`chat_messages-chat-${salaID}`)
-
-    // Altera todos os Botões
-    btn_trocarSalas_all.forEach(btn => {
-        btn.style.backgroundColor = "red";
-    });
-    // Altera apenas o Selecionado
-    if (btn_trocarSalas_this) {
-        btn_trocarSalas_this.style.backgroundColor = "blue";
-    } else {
-        console.error(`Botão com ID 'btn_trocarSalas_sala-${salaID}' não encontrado.`);
-    }
-
-    // Esconde todas as Telas
-    chatMessages_sala_all.forEach(screen => {
-        screen.style.display = "none"
-    })
-    // Mostra apeans a Selecionada
-    if (chatMessages_sala_this) {
-        chatMessages_sala_this.style.display = "flex";
-    } else {
-        console.error(`Sala de mensagens com o ID 'chat_messages-chat-${salaID}' não encontrado.`);
-    }
-}
-function trocarSalas(button) {
-    // Obtém todos os botões e as telas
-    const btn_trocarSalas_all = document.querySelectorAll(".btn_trocarSalas");
-    const chatMessages_sala_all = document.querySelectorAll(".chat_messages");
-
-    // Extrai o ID da sala dinamicamente
-    const salaID = button.id.match(/\d+$/)?.[0]; // Extrai apenas o número do final do ID
-
+    // Classe do BTN Selecionado
+    let classBtn_select = "btn_trocarSalas_select";
+    // Vefica se o ID é null (Nenhuma sala foi chamada)
     if (!salaID) {
-        console.error("Número da sala não encontrado no ID do botão.");
-        return;
+        btn_trocarSalas_all.forEach(btn => {
+            btn.classList.remove(classBtn_select);
+        });
+        localStorage.setItem('salaSelecionada', null);
+        return
     }
 
-    // Sala correspondente ao ID extraído
-    const chatMessages_sala_this = document.getElementById(`chat_messages-chat-${salaID}`);
-
-    // Remove a classe de todos os botões
+    // Salvar o ID da sala no localStorage
+    localStorage.setItem('salaSelecionada', salaID);
+    // Para cada Botão, remove a classe
     btn_trocarSalas_all.forEach(btn => {
-        btn.classList.remove("btn_trocarSalas-select");
+        btn.classList.remove(classBtn_select);
     });
-
-    // Adiciona a classe apenas para o botão selecionado
-    button.classList.add("btn_trocarSalas-select");
-
-    // Esconde todas as salas
-    // chatMessages_sala_all.forEach(screen => {
-    //     screen.style.display = "none";
-    // });
-
-    // Mostra a sala correspondente ao botão clicado
-    // if (chatMessages_sala_this) {
-    //     chatMessages_sala_this.style.display = "flex";
-    // } else {
-    //     console.error(`Sala de mensagens com ID 'chat_messages-chat-${salaID}' não encontrada.`);
-    // }
+    // Para o Botão selecionado, adiciona a classe
+    btn_trocarSalas_this.classList.add(classBtn_select);
 }
+function loadSelectRoom() {
+    // Obter o ID da sala salva
+    let salaSelecionada = localStorage.getItem('salaSelecionada');
+    selectRoom(salaSelecionada);
+}
+// loadSelectRoom()
 
 // -------------------- LOGICA DE IGNORAR O COMPORTAMENTO PADRAO DE ENVIO
 document.querySelectorAll(".renameForm_sendIgnore").forEach(form => {

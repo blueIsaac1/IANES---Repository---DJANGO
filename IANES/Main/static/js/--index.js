@@ -20,7 +20,7 @@ window.rolarPara = function (id) {
     } else if (id === "lDown") {
         // Rola para baixo o equivalente à altura da janela
         window.scrollBy({
-            top: 2000,
+            top: 500,
             behavior: 'smooth'
         });
     }
