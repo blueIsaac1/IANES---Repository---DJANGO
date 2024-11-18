@@ -24,8 +24,9 @@ function expandSidebar() {
     const btn_expandirSalas = document.getElementById("btn_expandirSalas");
     const icone_expandSidebar = document.getElementById("icone_expandSidebar");
 
-    const abrirTexto = document.getElementById("tp_texto_abrirSidebar");
-    const fecharTexto = document.getElementById("tp_texto_fecharSidebar");
+    const abrirTexto = document.getElementById("tp_ia-expandMenu-abrir");
+    const fecharTexto = document.getElementById("tp_ia-expandMenu-fechar");
+    let tp_class_exSidebar_hide = "tp_expandSidebar_hide"
 
     // Verifica o valor atual de aria-expanded
     const isExpanded = btn_expandirSalas.getAttribute("aria-expanded") === "true";
@@ -52,8 +53,8 @@ function expandSidebar() {
         icone_expandSidebar.classList.add("rotate_flip")
 
         // Exibe a tooltip "Abrir" e esconde a "Fechar"
-        abrirTexto.classList.add("texto_expandSidebar-hide");
-        fecharTexto.classList.remove("texto_expandSidebar-hide");
+        abrirTexto.classList.add(tp_class_exSidebar_hide);
+        fecharTexto.classList.remove(tp_class_exSidebar_hide);
     } else {
         // Expandido
         console.log("Expandindo");
@@ -75,8 +76,8 @@ function expandSidebar() {
         icone_expandSidebar.classList.remove("rotate_flip")
         
         // Exibe a tooltip "Fechar" e esconde a "Abrir"
-        fecharTexto.classList.add("texto_expandSidebar-hide");
-        abrirTexto.classList.remove("texto_expandSidebar-hide");
+        fecharTexto.classList.add(tp_class_exSidebar_hide);
+        abrirTexto.classList.remove(tp_class_exSidebar_hide);
     }
 }
 // Função para abrir a caixa específica
@@ -84,8 +85,8 @@ function activeExtraOptionsBox(button) {
     const box = button.nextElementSibling; // Acessa o próximo elemento (roomsExtraOptions_box)
     const isExpanded_exBox = button.getAttribute("aria-expanded");
 
-    console.log("Box:", box);
-    console.log("Is Expanded:", isExpanded_exBox);
+    // console.log("Box:", box);
+    // console.log("Is Expanded:", isExpanded_exBox);
     
     // Verifica se a caixa está aberta ou fechada
     if (isExpanded_exBox === "false") {
@@ -130,6 +131,7 @@ function closeBoxOnClickOutside(event) {
         document.removeEventListener("click", closeBoxOnClickOutside); // Remove o listener
     }
 }
+
 // Icone do Rolar as mensagens abaixo
 function atualizarIconeRolar() {
     const isScrolledToBottom = (chats_section.scrollHeight - chats_section.scrollTop) <= (chats_section.clientHeight + 100);
@@ -173,22 +175,17 @@ textarea.addEventListener('blur', () => {
 });
 
 // Função para mostrar e esconder uma tooltip especifica
-function showTooltip_chat(tooltipType, tooltipId) {
-    const tooltips = document.querySelectorAll(`#tp_ia-${tooltipId}-${tooltipType}`)
-    tooltips.forEach(tooltip => {
-        if (tooltip) {
-            tooltip.style.display = 'block';
-        }
-    })
+function showTooltip(tooltipType, tooltipId) {
+    const tooltip = document.getElementById(`tp_ia-${tooltipType}-${tooltipId}`)
+    if (tooltip) {
+        tooltip.style.display = 'block';
+    }
 }
-
-function hideTooltip_chat(tooltipType, tooltipId) {
-    const tooltips = document.querySelectorAll(`#tp_ia-${tooltipId}-${tooltipType}`)
-    tooltips.forEach(tooltip => {
-        if (tooltip) {
-            tooltip.style.display = 'none';
-        }
-    })
+function hideTooltip(tooltipType, tooltipId) {
+    const tooltip = document.getElementById(`tp_ia-${tooltipType}-${tooltipId}`)
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
 }
 
 // Variável para rastrear o estado do popup
@@ -200,7 +197,7 @@ function copyText_chatIA(textID) {
     if (popupActive) return; 
 
     // Gera o ID dinamicamente e busca o conteúdo
-    const elementID = `ianes_sala-1_msg-${textID}`;
+    let elementID = `ianes_msg-${textID}`;
     const contentElement = document.getElementById(elementID);
 
     // Verifica se o elemento existe
@@ -441,96 +438,161 @@ function trocarSalas(button) {
     //     console.error(`Sala de mensagens com ID 'chat_messages-chat-${salaID}' não encontrada.`);
     // }
 }
-function renameRoom(element) {
-    // Acessa o formulário e os elementos dentro do contêiner pai de "Renomear"
-    const roomContainer = element.closest('.container_btn_trocarSalas');
-    const nameText = roomContainer.querySelector('.roomName');
-    const renameInput = roomContainer.querySelector('.rename_area');
-    const btnOptions = roomContainer.querySelector('.btn_roomsEP');
-    const form_rename = roomContainer.querySelector('#form_rename');
-    const roomid = roomContainer.getAttribute('data-room-id');
-    const currentUrl = ("http://127.0.0.1:8000/IAnes/" + roomid + "/");
+
+// -------------------- LOGICA DE IGNORAR O COMPORTAMENTO PADRAO DE ENVIO
+document.querySelectorAll(".renameForm_sendIgnore").forEach(form => {
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("Comportamento padrão ignorado para:", form);
+    });
+});
+
+// -------------------- LOGICA DE RENOMEAR
+
+let activeRenameRoom = null; // Variável para rastrear qual sala está sendo renomeada
+
+function callRenameRoom(roomID) {
+    const formRename = document.getElementById(`form_rename-${roomID}`);
+    const inputRename = document.getElementById(`input_rename-${roomID}`);
+    const room_name_p = document.getElementById(`room_name_p-${roomID}`);
+    const dotsOptions = document.getElementById(`btn_roomsEP-${roomID}`);
+
+    if (activeRenameRoom === roomID) {
+        // Segundo clique ou confirmação
+        console.log('Confirmação de renome para a sala:', roomID);
+        activeRenameRoom = null; // Redefine para que seja possível ativar outra sala
+        confirmRenameRoom(roomID); // Chama a função de confirmação
+    } else {
+        // Primeiro clique
+        console.log('Ativando área de renome para a sala:', roomID);
+        activeRenameRoom = roomID; // Marca esta sala como ativa
+
+        // Ativa o campo de Rename e esconde o Nome atual
+        inputRename.style.display = "flex";
+        room_name_p.style.display = "none";
+        dotsOptions.style.display = "none";
+        // Seleciona automaticamente o texto do input ao abrir
+        inputRename.focus();
+        inputRename.select();
+    }
+}
+
+// Detectar cliques fora do elemento (cancela a renomeação)
+document.addEventListener('click', (event) => {
+    if (
+        activeRenameRoom && // Há uma sala ativa
+        !event.target.closest(`#form_rename-${activeRenameRoom}`) && // Clique fora do formulário
+        !event.target.closest(`#sideBar_rename`) // Clique fora do botão
+    ) {
+        // Um faz o envio, mesmo se o clique for fora, a outra Cancela, é possivel escolher
+        // Atual: Confirma
+        confirmRenameRoom(activeRenameRoom); // Chama a função de confirmação
+        // cancelRenameRoom(activeRenameRoom); // Chama a função de cancelar
+        console.log('Clique fora detectado. Confirmando ou Cancelando renome.');
+        activeRenameRoom = null; // Redefine o estado ativo
+    }
+});
+
+// Detectar a tecla Enter (Confirma a renomeação)
+document.addEventListener('keydown', (event) => {
+    if (activeRenameRoom && event.key === 'Enter') {
+        console.log('Tecla Enter pressionada. Confirmando renome para a sala:', activeRenameRoom);
+        confirmRenameRoom(activeRenameRoom); // Chama a função de confirmação
+        activeRenameRoom = null; // Redefine o estado ativo
+    }
+});
+
+// Detectar a tecla Esc (Cancela a renomeação)
+document.addEventListener('keydown', (event) => {
+    if (activeRenameRoom && event.key === 'Escape') {
+        console.log('Tecla Esc pressionada. Cancelando renome para a sala:', activeRenameRoom);
+        cancelRenameRoom(activeRenameRoom); // Chama a função de cancelamento
+        activeRenameRoom = null; // Redefine o estado ativo
+    }
+});
+
+// Função para cancelar a renomeação (reverte para o estado inicial)
+function cancelRenameRoom(roomID) {
+    const inputRename = document.getElementById(`input_rename-${roomID}`);
+    const room_name_p = document.getElementById(`room_name_p-${roomID}`);
+    const dotsOptions = document.getElementById(`btn_roomsEP-${roomID}`);
+
+    // Reverte a visibilidade dos elementos
+    inputRename.style.display = "none";
+    room_name_p.style.display = "flex";
+    dotsOptions.style.display = "flex";
+
+    // Limpa o campo de input ou volta ao valor original
+    inputRename.value = room_name_p.textContent; // Reverte o nome de volta para o original
+}
+
+// -------------------- CONFIRMAÇÃO DO RENOMEAR e ENVIO AO BD
+
+async function confirmRenameRoom(roomID) {
+    // Obtendo os elementos com base no roomID
+    const formRename = document.getElementById(`form_rename-${roomID}`);
+    const inputRename = document.getElementById(`input_rename-${roomID}`);
+    const room_name_p = document.getElementById(`room_name_p-${roomID}`);
+    const dotsOptions = document.getElementById(`btn_roomsEP-${roomID}`);
+
+    console.log("CONFIRMADO", roomID);
+
+    // Exibir o novo nome no console
+    let newName = inputRename.value.trim();
+    console.log("Novo Nome", newName);
+
+    // Verifica se o novo nome não está vazio
+    if (!newName) {
+        console.error("O nome não pode estar vazio!");
+        return;
+    }
+
+    // URL do endpoint para enviar os dados
+    const currentUrl = `http://127.0.0.1:8000/IAnes/${roomID}/`;
+
+    // Obtendo o token CSRF
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    console.log('token: ', csrfToken)
+    console.log('Token CSRF:', csrfToken);
 
-    // Mostra o input e esconde o <p> e as opções
-    nameText.style.display = "none";
-    renameInput.style.display = "flex";
-    btnOptions.style.display = "none";
+    // Preparando os dados para enviar
+    const bodyData = `room_id=${roomID}&name_text=${encodeURIComponent(newName)}`;
 
-    // Seleciona automaticamente o texto do input ao abrir
-    renameInput.focus();
-    renameInput.select();
-    
-    // Função para confirmar o renomear
-    function confirmRename() {
-        // Atualiza o <p> com o valor do input
-        nameText.textContent = renameInput.value;
-
-        // Mostra o <p> e as opções novamente, e esconde o input
-        nameText.style.display = "flex";
-        renameInput.style.display = "none";
-        btnOptions.style.display = "flex";
-
-        // Remove os event listeners após confirmação
-        document.removeEventListener('click', handleClickOutside);
-        renameInput.removeEventListener('blur', confirmRename);
-        renameInput.removeEventListener('keydown', handleKeyDown);
-
-        // Envia o formulário (opcional, descomente para ativar)
-        // form_rename.submit();
-    }
-
-    // Checa se a tecla pressionada é "Enter"
-    function handleKeyDown(event) {
-        if (event.key === 'Enter') {
-            confirmRename();
-        }
-    }
-
-    // Fecha o input se o clique for fora do campo de input
-    function handleClickOutside(event) {
-        if (!roomContainer.contains(event.target)) {
-            confirmRename();
-        }
-    }
-
-    // Adiciona os event listeners para confirmar ao clicar fora ou pressionar "Enter"
-    renameInput.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('click', handleClickOutside);
-    renameInput.addEventListener('blur', confirmRename);
-    // Dados que serão enviados
-    const bodyData = `room_id=${roomid}&name_text=${encodeURIComponent(renameInput.value)}`;
-
-    // Exibir o bodyData no console
-    console.log("Corpo da Requisição:", bodyData);
-    if (roomid && nameText) {
-        console.log('1:', roomid);
-        console.log('2:', renameInput.value);  // Use o valor atual do input
-
-        fetch(currentUrl, {
+    try {
+        // Fazendo a requisição POST ao servidor
+        const response = await fetch(currentUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRFToken': csrfToken
             },
-            body: `room_id=${roomid}&name_text=${encodeURIComponent(renameInput.value)}`,
-           
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Sala atualizada com sucesso!');
-            } else {
-                console.error('Erro ao atualizar a sala:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Erro na requisição:', error);
+            body: bodyData,
         });
-    } else {
-        console.error("Order ID ou Status Value não definido corretamente.");
+
+        // Tratando a resposta do servidor
+        const data = await response.json();
+        if (response.ok && data.success) {
+            console.log('Sala renomeada com sucesso!', data);
+            // Atualizar o nome no elemento
+            room_name_p.textContent = newName;
+            // Atualiza o título dá página
+            document.title = `Sala - ${newName}`
+            // Atualiza todos os Textos que só tem o "newName"/"{{ room.title }}" Titulos Atuais
+            document.querySelectorAll("#roomTitle_atual").forEach(text => {
+                text.textContent = newName
+            })
+        } else {
+            console.error('Erro ao renomear a sala:', data.error || response.statusText);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
     }
+
+    // Restaura a exibição dos elementos
+    inputRename.style.display = "none";
+    room_name_p.style.display = "flex";
+    dotsOptions.style.display = "flex";
+
+    activeRenameRoom = null; // Redefine o estado ativo
 }
 
 // Escutador de no input para configura-lo
@@ -549,10 +611,46 @@ function configInput_onLoad() {
     habilitarBotao();   
 }
 
-// form_ianes.addEventListener('submit', function(event) {
-//     event.preventDefault(); // Impede a submissão padrão do formulário
-//     // Lógica para processar o formulário aqui
-// });
+// ---------- Variaveis Bases do Overlay
+
+// Variaveis Globais
+const overlay_confSalaDel = document.getElementById('confSalaDel_overlay');
+const overlayCont_confSalaDel = document.getElementById("ov_confSalaDel_container")
+let class_ovConfSalaDel_active = "ov_confSalaDel_container_active"
+
+// Função para alternar a exibição do Confirmar Delete da Sala
+function toggleOverlay_confDelete() {
+    toggleList(null)
+    let overlayState = overlay_confSalaDel.getAttribute("aria-active");
+
+    if (overlayState === "true") {
+        overlay_confSalaDel.style.display = "none";
+        overlay_confSalaDel.setAttribute("aria-active", "false");
+        document.body.style.overflowY = "auto";
+        overlayCont_confSalaDel.classList.remove(class_ovConfSalaDel_active);
+    } else if (overlayState === "false") {
+        overlay_confSalaDel.style.display = "flex";
+        overlay_confSalaDel.setAttribute("aria-active", "true");
+        document.body.style.overflowY = "hidden";
+        overlayCont_confSalaDel.classList.add(class_ovConfSalaDel_active);
+    } else {return}
+}
+
+function askForDelete() {
+    const btn_delete = document.getElementById("texto_chatIA_deleteRoom_delete")
+    const btn_cancel = document.getElementById("texto_chatIA_deleteRoom_cancel")
+    toggleOverlay_confDelete()
+}
+
+// Clique no overlay ou no botão de fechar do Confirmar Delete da Sala
+overlay_confSalaDel.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleOverlay_confDelete();
+});
+// Clique dentro do Container não faz nada
+overlayCont_confSalaDel.addEventListener('click', (event) => {
+    event.stopPropagation();
+});
 
 // Adicione um listener de scroll para o chats_section
 chats_section.addEventListener('scroll', atualizarIconeRolar);

@@ -1,0 +1,14 @@
+{
+    "device": {
+        "iconType": "search-outline",
+        "tema_p_text": "Autodetectar"
+    },
+    "light": {
+      "iconType": "sunny-outline",
+      "tema_p_text": "Escuro"
+    },
+    "dark": {
+      "iconType": "moon-outline",
+      "tema_p_text": "Claro"
+    }
+}

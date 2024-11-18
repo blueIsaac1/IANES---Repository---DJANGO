@@ -16,7 +16,8 @@
     --tamanho_font_config_s3: 0.8vw;
     --tamanho_icon_config_s1: 1.6vw;
     --tamanho_icon_config_s2: 1.4vw;
-    --tamanho_icon_config_s3: 0.8vw;
+    --tamanho_icon_config_s3: 1.2vw;
+    --tamanho_icon_config_s4: 0.8vw;
 
     --tamanho_icon_config_png: 1.2vw;
 }
@@ -542,7 +543,9 @@ header {
     display: flex;
 }
 
-.confOptions_sec_option {
+/* Configurações | GERAL */
+
+.confSec_categGeral_option {
     position: relative;
     width: 100%;
     height: auto;
@@ -551,22 +554,34 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1vw;
+    margin-bottom: 0.5vw;
 }
-.confOptions_sec_option:first-child {
+.confSec_categGeral_option:first-child {
     margin-top: 1vw;
 }
-.confSec_categ {
+
+.confSec_categGeral_title {
     font-size: var(--tamanho_font_config_s2);
     color: #000000;
     font-weight: 600;
     text-align: left;
 }
-.confSec_categ_atual {
+.confSec_categGeral_atual {
     font-size: var(--tamanho_font_config_s3);
     color: #000000;
     font-weight: 600;
     text-align: left;
+}
+/* Flag */
+.langAtual_Flag {
+    width: 1.4vw;
+    height: auto;
+}
+/* Icon */
+.temaAtual_Icon {
+    font-size: var(--tamanho_icon_config_s3);
+    padding: 0 0.1vw;
+    color: #000000;
 }
 
 .confOptions_secOption_btn {
@@ -587,7 +602,7 @@ header {
 .confSec_icon_arrow {
     transform: rotate(0deg);
     transition: all .3s ease-in-out;
-    font-size: var(--tamanho_icon_config_s3);
+    font-size: var(--tamanho_icon_config_s4);
     color: #000000;
 }
 .confSec_icon_arrow_active {
@@ -602,12 +617,11 @@ header {
 .options_list {
     background-color: var(--color-fundo-claro);
     position: absolute;
-    top: 100%;
+    top: 0%;
     left: 100%;
-    margin-left: -3vw;
     border: 0.2vw solid var(--color-vermelho-medio);
     border-radius: 0.3vw;
-    padding: 0.4vw 0.6vw;
+    padding: 0vw 0.4vw;
     white-space: nowrap;
     z-index: 851;
     display: none;
@@ -629,12 +643,12 @@ header {
 .options_list_active {
     display: flex;
 }
-
+/* Sumario dos Idiomas */
 .langOptionsList_sum {
     background-color: var(--color-fundo-claro);
     position: absolute;
     top: 0%;
-    right: -2.5vw;
+    right: 0;
     transform: translateY(-100%);
     border: 0.2vw solid var(--color-vermelho-medio);
     border-radius: 0.3vw;
@@ -652,13 +666,18 @@ header {
     text-align: left;
     text-wrap: pretty;
 }
-.langOptionsList_sum .langBotTalkSum {
-    width: 2.4vw;
+.langBotTalkSum {
+    width: 1.6vw;
     height: auto;
 }
-.options_list li {
+
+/* Qualquer opção das Listas de: Idioma e Tema */
+.options_list_i {
     display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
     align-items: center;
+    gap: 0.5vw;
     padding: 0.4vw 0.4vw;
     border-radius: 0.3vw;
     border: none;
@@ -667,78 +686,144 @@ header {
     cursor: pointer;
     width: 100%;
     height: auto;
-    gap: 0.5vw;
     position: relative;
 }
-
-.options_list li:hover {
+.options_list_i:hover {
     background-color: var(--color-cinza_hover_bg_light);
 }
 
-.icone_div {
-    width: 15%;
+/* Apenas para os Idioma */
+.optionsList_botTalk_div {
+    position: absolute;
+    top: 0%;
+    left: -0.2vw;
+    flex-shrink: 0; /* Evita que os itens encolham */
+}
+.botTalk {
+    width: 1vw;
+    height: auto;
+    display: none;
+}
+.botTalk_Yes {
+    display: flex;
+}
+
+.optionsList_temaIcon_div {
     height: 100%;
     justify-self: flex-start;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-shrink: 0;
 }
 .langFlag {
     width: 1.6vw;
     height: auto;
 }
 
-.langOptionsList_p_div {
-    flex-grow: 1;
+/* Apenas para os Tema */
+
+.optionsList_temaIcon_div {
     height: 100%;
-    justify-self: flex-end;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-self: flex-start;
+    flex-shrink: 0;
 }
-.langOptionsList_p_div p {
+.temaIcon {
+    font-size: var(--tamanho_icon_config_s3);
+    color: #000000;
+}
+
+/* Tem em todos */
+
+.optionsList_p_div {
+    width: auto;
+    height: 100%;
+    justify-self: flex-start;
+    flex-shrink: 0;
+}
+.optionsList_p_div p {
     font-size: var(--tamanho_font_config_s3);
     color: #000000;
     font-weight: 600;
     text-align: left;
+    text-wrap: nowrap;
 }
 
-.langBotTalk_div {
-    width: 10%;
+/* Check para Todos */
+.optionsList_check_div {
     height: 100%;
-    justify-self: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: -30%;
-    left: 2.5%;
-    transform: translateX(-50%);
-}
-.botTalk {
-    visibility: hidden;
-    width: 1.2vw;
-    height: auto;
-}
-.botTalk_Yes {
-    visibility: visible;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
-.check_icon_div {
-    width: 10%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .check_icon {
     visibility: hidden;
     font-size: var(--tamanho_icon_config_s2);
     color: #000000;
 }
+
 .check_icon_active_lang {
     visibility: visible;
 }
 .check_icon_active_tema {
     visibility: visible;
+}
+
+/* Configurações | FALA */
+
+.inProductionAlert {
+    width: 100%;
+    height: auto;
+    padding: 2vw;
+    color: var(--color-vermelho-main);
+    font-size: 2vw;
+    text-align: center;
+}
+
+/* Configurações | PERFIL */
+
+.confSec_categProfile_option {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 0.4vw 0.6vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5vw;
+}
+.confSec_categProfile_option:first-child {
+    margin-top: 1vw;
+}
+
+.confSec_categProfile_title {
+    font-size: var(--tamanho_font_config_s2);
+    color: #000000;
+    font-weight: 600;
+    text-align: left;
+}
+
+.confSec_categProfile_option ion-icon {
+    font-size: var(--tamanho_icon_config_s2);
+    color: #000000;
+}
+
+/* Botao de Sair */
+.secOption_btn_danger {
+    background-color: var(--color-vermelho-main);
+    margin-left: auto;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+.secOption_btn_danger:hover {
+    background-color: var(--color-vermelho-medio);
+}
+.secOption_btn_danger p {
+    color: #ffffff;
+}
+#confOptions_sec-leave {
+    color: #ffffff;
+    transform: rotate(180deg);
+    transition: all .3s ease-in-out;
+}
+.secOption_btn_danger:hover #confOptions_sec-leave {
+    transform: rotate(0deg);
 }

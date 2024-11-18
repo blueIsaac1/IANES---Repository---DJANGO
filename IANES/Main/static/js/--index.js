@@ -1,28 +1,43 @@
-window.rolarPara = function(id) {
+// Função para rolar
+window.rolarPara = function (id) {
     if (id === "banner_maisIARE") {
         const elemento = document.getElementById(id);
         if (elemento) {
             elemento.scrollIntoView({ behavior: 'smooth' }); // Rolagem suave
         }
     } else if (id === "topo") {
+        // Rolagem suave para o topo
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Rolagem suave para o topo
+            behavior: 'smooth'
         });
     } else if (id === "topo_screen") {
+        // Rolagem direta para o topo
         window.scrollTo({
             top: 0,
-            behavior: 'auto' // Rolagem bruta para o topo
+            behavior: 'auto'
+        });
+    } else if (id === "lDown") {
+        // Rola para baixo o equivalente à altura da janela
+        window.scrollBy({
+            top: 2000,
+            behavior: 'smooth'
         });
     }
-}
+};
 
-document.addEventListener('scroll', function() {
+// Ouvintes ao Scroll
+document.addEventListener('scroll', function () {
     const bubble_goTop = document.getElementById('bubble_goTop');
-    if (window.scrollY > 100) { // Muda o valor para ajustar quando o balão aparece
+    const bubble_moreAbove = document.getElementById('bubble_moreAbove');
+
+    // Configurar o comportamento do "Voltar ao Topo"
+    if (window.scrollY > 100) { // Exibir "Voltar ao Topo" se passar de 100px
         bubble_goTop.classList.add('show');
-    } else {
+        bubble_moreAbove.classList.remove('show');
+    } else { // Exibir "Role para mais" quando estiver no topo
         bubble_goTop.classList.remove('show');
+        bubble_moreAbove.classList.add('show');
     }
 });
 

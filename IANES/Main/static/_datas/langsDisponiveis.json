@@ -1,12 +1,17 @@
 {
-    "pt-BR": {
-      "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_br.png",
-      "lang__p": "Português (Brasil)",
-      "has_botTalk": true
-    },
-    "en-US": {
-      "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_us.png",
-      "lang__p": "English (US)",
-      "has_botTalk": false
-    }
+  "device": {
+    "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/0ebfe2cd83706d2c55f6fc3b4d7e03e9be030d91/_midia/_flag/flag_device.png",
+    "lang_p_text": "Autodetectar",
+    "has_botTalk": false
+  },
+  "pt-BR": {
+    "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_br.png",
+    "lang_p_text": "Português (Brasil)",
+    "has_botTalk": true
+  },
+  "en-US": {
+    "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_us.png",
+    "lang_p_text": "English (US)",
+    "has_botTalk": false
   }
+}

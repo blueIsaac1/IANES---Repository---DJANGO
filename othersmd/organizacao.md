@@ -29,7 +29,7 @@
      - Botão de Trocar Sala (Caixa das Opções extras) : 453
 
 - Cabeçalho (Header) : 800
-- Rodapé (Footer) : 800
+- Rodapé (Footer) : 799
 
 - Conteudo (Footer) : 100 
 - Wave Up (Footer) : 99
@@ -46,4 +46,4 @@
 
 - Z-index das Tooltip's do Auth - Alteram entre : 50 e 51
 
-- Botões Flutuantes:  : 900
+- Botões Flutuantes:  : 750

@@ -65,7 +65,7 @@ window.callScreen = function(tela) {
             window.location.hash = "inicio"
             break;
     }
-    rolarPara("topo_screen");
+    setTimeout(() => rolarPara("topo_screen"), 100);
 };
 
 function addToHead(tagName, attributes) {
@@ -85,8 +85,32 @@ function addToHead(tagName, attributes) {
   console.log(`⚙ Elemento ${tagName} adicionado ao head:`, attributes);
 }
 
+// Função para carregar arquivos JSON
+async function fetchJSONFile(filePath) {
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Falha ao carregar o arquivo: ${filePath}`);
+        return await response.json();
+    } catch (error) {
+        console.error(`Erro ao carregar o arquivo ${filePath}:`, error);
+        return null; // Retorna null para indicar falha
+    }
+}
+
+// Função para buscar os arquivos necessários
+async function findRequiredFiles() {
+    const files = {};
+
+    // Carregar idiomas disponíveis
+    files.langsDisponiveis = await fetchJSONFile('../static/_datas/langsDisponiveis.json');
+    // Carregar temas disponíveis
+    files.temasDisponiveis = await fetchJSONFile('../static/_datas/temasDisponiveis.json');
+
+    return files;
+}
+
 // Função principal que chama outras funções
-function executarFuncoes() {
+function executarFuncoes({ langsDisponiveis, temasDisponiveis }) {
     // Carregando a Página de Index
     if (typeof detectar_pagina === 'function') {
         console.log("⚙ Detectando Página atual e Configurando");
@@ -98,14 +122,14 @@ function executarFuncoes() {
         detectar_usuario_autenticado();
     }
     // Adicionando Idiomas na Lista
-    if (typeof appendInList_lang === 'function') {
-        console.log("⚙ Inserindo Idiomas Disponiveis");
-        appendInList_lang();
+    if (langsDisponiveis && typeof appendInList_lang === 'function') {
+        console.log("⚙ Inserindo Idiomas Disponíveis");
+        appendInList_lang(langsDisponiveis);
     }
     // Adicionando Temas na Lista
-    if (typeof appendInList_tema === 'function') {
-        console.log("⚙ Inserindo Temas Disponiveis");
-        appendInList_tema();
+    if (temasDisponiveis && typeof appendInList_tema === 'function') {
+        console.log("⚙ Inserindo Temas Disponíveis");
+        appendInList_tema(temasDisponiveis);
     }
     // Essas DEVEM ser as EXECUTADAS DEPOIS de qualquer coisa que é aplicada ao Header
     if (typeof detectarPreferido_Idioma === 'function') {
@@ -165,18 +189,24 @@ if (typeof loading_page === 'function') {
     loading_page();
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     // Pegar a URL da página atual e armazená-la no localStorage
     const janelaAtual_url = window.location.href;
     localStorage.setItem('ultimaJanela', janelaAtual_url);
 
-    // await carregarComponentes();
+    // Esperar os arquivos necessários serem carregados
+    const arquivosCarregados = await findRequiredFiles();
 
-    // Verifique se os elementos estão no DOM
+    if (arquivosCarregados) {
+        // Passar os arquivos carregados para a função principal
+        executarFuncoes(arquivosCarregados);
+    } else {
+        console.error("Erro ao carregar os arquivos necessários. Funções não executadas.");
+    }
+
+    // Verifique se os elementos header e footer estão no DOM
     const header = document.getElementById('header');
     const footer = document.getElementById('footer');
     console.log("Header:", header);
     console.log("Footer:", footer);
-
-    executarFuncoes();
 });

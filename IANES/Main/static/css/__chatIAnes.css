@@ -23,6 +23,11 @@ main {
     margin-bottom: 0vw;
 }
 
+iframe {
+    width: 100%;
+    height: 100%;
+}
+
 /* Classes para configurações gerais (Pegar o costume de usar) */
 
 .trans_03s-width {
@@ -42,7 +47,7 @@ main {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     /* background-color: var(--color-fundo-claro_var3); */
     background-color: var(--color-azul-escuro);
@@ -74,7 +79,7 @@ main {
     display: none;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1vw;
     color: #ffffff;
     font-weight: 500;
     white-space: nowrap;
@@ -89,15 +94,14 @@ main {
     visibility: visible;
 }
 
-.tp_expandSidebar-hide {
+.tp_expandSidebar_hide {
     visibility: hidden;
 }
 
 /* Dentro da Barra Lateral */
 .sideBar_header {
     width: 100%;
-    height: 15%;
-    background-color: transparent;
+    height: 4vw;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -108,21 +112,21 @@ main {
 
 /* Conteudo da Barra Lateral */
 .rooms_content {
-    background-color: transparent;
     width: 100%;
-    height: 85%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 1vw;
+    margin-top: 3vw;
     position: relative;
 }
 
 .rooms_content h1 {
     padding: 0;
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     font-weight: bold;
     color: #ffffff;
 }
@@ -144,7 +148,7 @@ main {
     transition: .3s ease-in-out background-color, .3s ease-in-out transform, .3s ease-in-out border-radius;
     
     position: absolute;
-    top: 20%;
+    top: 1vw;
 }
 .btn_sideBar_header:hover {
     background-color: var(--color-azul-medio);
@@ -214,13 +218,13 @@ main {
     display: none;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1vw;
     color: #ffffff;
     font-weight: 500;
     white-space: nowrap;
 
     border: none;
-    border-radius: 0.6vw;
+    border-radius: 0.4vw;
     background-color: var(--color-azul-medio);
     padding: 0.6vw;
     position: absolute;
@@ -230,9 +234,9 @@ main {
 }
 
 .tp_opcoes {
-    top: 0;
-    left: 50%;
-    transform: translateY(-120%) translateX(-50%);
+    top: 1.1vw;
+    left: 4.5vw;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 /* Seção dos Botões */
@@ -271,6 +275,7 @@ main {
     border: none;
     border-radius: 0.4vw;
     z-index: 452;
+    transition: .3s ease-in-out background-color;
 }
 
 .btn_trocarSalas:hover {
@@ -300,7 +305,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 1vw;
     font-weight: 500;
     color: #ffffff;
     font-family: var(--font-montserrat);
@@ -309,7 +314,7 @@ main {
 
 .rename_area {
     display: none;
-    font-size: 0.8rem;
+    font-size: 1vw;
     font-family: var(--font-montserrat);
     margin-left: 0.4vw;
     font-weight: 400;
@@ -330,6 +335,7 @@ main {
 
 .rename_area:focus {
     border: solid 0.1vw var(--color-azul-bruto);
+    padding: 0.1vw;
 }
 
 .btn_roomsEP {
@@ -349,8 +355,9 @@ main {
     transition: .3s background-color ease-in-out;
     cursor: pointer;
     background-color: transparent;
-    font-size: 1.4rem;
+    font-size: 1.4vw;
     color: #ffffff;
+    padding: 0.4vw;
 }
 
 .btn_roomsEP:hover i {
@@ -397,20 +404,20 @@ main {
 }
 
 .roomsExtraOptions_item i {
-    font-size: 1.4rem;
+    font-size: 1.4vw;
     color: #ffffff;
 }
 
 .roomsExtraOptions_item p {
-    font-size: 1rem;
+    font-size: 1vw;
     font-weight: 500;
     color: #ffffff;
 }
 
-.roomsExtraOptions_item .trash-icon {
+.roomsExtraOptions_item .trash_icon {
     color: var(--color-vermelho-main);
 }
-.roomsExtraOptions_item .trash-text {
+.roomsExtraOptions_item .trash_text {
     color: var(--color-vermelho-main
     );
 }
@@ -783,13 +790,13 @@ Retorna ao ponto inicial
 }
 
 .btn_baixarPDF i {
-    font-size: 2rem;
+    font-size: 1.6vw;
     color: #ffffff;
 }
 
 .btn_baixarPDF p {
     opacity: 0;
-    font-size: 1rem;
+    font-size: 0.8vw;
     color: #ffffff;
     font-weight: 500;
     padding: 0vw 0vw 0vw 1vw;
@@ -904,3 +911,149 @@ Retorna ao ponto inicial
     display: flex;
 }
 
+/* Tela de Overlay para Confirmar de Delete */
+
+.confSalaDel_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-fundo-overlay);
+    z-index: 850;
+    overflow: hidden;
+}
+
+.ov_confSalaDel_container {
+    background-color: var(--color-fundo-claro);
+    width: 30vw;
+    height: auto;
+    border: none;
+    border-radius: 0.6vw;
+    padding: 1vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0%;
+    transition: margin-top 0.3s ease-in-out;
+    gap: 0.4vw;
+}
+.ov_confSalaDel_container_active {
+    margin-top: 0%; 
+}
+
+/* Parte Superior */
+.confSalaDelC_top {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.confSalaDelC_top h1 {
+    font-size: var(--tamanho_font_config_s1);
+    color: #000000;
+    font-weight: 700;
+    text-align: left;
+}
+
+/* Linha */
+.ov_confSalaDel_container hr {
+    width: 100%;
+    height: 0.1vw;
+    background-color: var(--color-cinza);
+    opacity: 0.7;
+    border: none;
+    border-radius: 0.5vw;
+}
+
+/* Parte Superior */
+
+.confSalaDelC_bot {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    padding-top: 0.5vw;
+}
+
+.confSalaDelC_bot_colum {
+    width: 100%;
+    display: flex;
+}
+
+.salaDelt_bcTop {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5vw;
+}
+.salaDelt_bcTop p {
+    font-size: var(--tamanho_font_config_s2);
+    color: #000000;
+    font-weight: 500;
+    text-align: left;
+    text-wrap: pretty;
+}
+.salaDelt_bcTop span {
+    font-size: var(--tamanho_font_config_s2);
+    color: #000000;
+    font-weight: bold;
+    text-align: left;
+    text-wrap: pretty;
+}
+
+.salaDelt_bcBot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+.confSalaDel_btn {
+    text-decoration: none;
+    font-size: var(--tamanho_font_config_s2);
+    font-weight: 600;
+    text-align: center;
+    text-wrap: pretty;
+    line-height: 1;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn_can {
+    color: #000000;
+    background-color: transparent;
+    border: 0.15vw #000000 solid;
+}
+.btn_can:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.btn_del {
+    color: #ffffff;
+    background-color: var(--color-vermelho-main);
+    border: 0.15vw transparent solid;
+}
+.btn_del:hover {
+    color: #ffffff;
+    background-color: var(--color-vermelho-medio);
+}

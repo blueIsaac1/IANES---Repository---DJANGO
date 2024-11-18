@@ -9,7 +9,7 @@
     <meta http-equiv="cache-control" content="private" />
     <!-- Define a: Linguagens do Conteudo -->
     <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
-    <title>Chat - {{ room.title }}</title>
+    <title>Sala - {{ room.title }}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <meta name="csrf-token" content="{{ csrf_token }}">
 
@@ -38,19 +38,19 @@
 
         <div id="rooms_container" class="rooms_container trans_03s-margin-left rooms_container-close">
             <div class="sideBar_header">
-                <button onclick="location.href='{% url 'index' %}'" class="btn_sideBar_header btn_home" > 
+                <button onclick="location.href='{% url 'index' %}'" class="btn_sideBar_header btn_home" onmouseover="showTooltip('normal', 'house')" onmouseout="hideTooltip('normal', 'house')">
                     <i id="icone_sideBar_home" class='bx bxs-home icone_sideBar'></i>
-                    <p class="tp_sideBar_header tp_btn_home" id="tp_irInicio">Ir para o Início</p>
+                    <p class="tp_sideBar_header tp_btn_home" id="tp_ia-normal-house">Ir para o Início</p>
                 </button>
-                <button class="btn_sideBar_header btn_novaSala" onclick="location.href='{% url 'create_room' %}'">
+                <button class="btn_sideBar_header btn_novaSala" onclick="location.href='{% url 'create_room' %}'" onmouseover="showTooltip('normal', 'newChat')" onmouseout="hideTooltip('normal', 'newChat')">
                     <i id="icone_sideBar_home" class='bx bxs-message-add icone_sideBar'></i>
-                    <p class="tp_sideBar_header tp_btn_criarSalas" id="tp_criarNovaSala">Criar nova Sala</p>
+                    <p class="tp_sideBar_header tp_btn_criarSalas" id="tp_ia-normal-newChat">Criar nova Sala</p>
                 </button>
-                <button onclick="expandSidebar()" aria-expanded="true" class="btn_sideBar_header btn_expandirSalas btn_expandirSalas-open" id="btn_expandirSalas" onmouseover="showTooltip_sideBar('expand')" onmouseout="hideTooltip_sideBar('expand')">
+                <button onclick="expandSidebar()" aria-expanded="true" class="btn_sideBar_header btn_expandirSalas btn_expandirSalas-open" id="btn_expandirSalas" onmouseover="showTooltip('expandMenu', 'abrir'); showTooltip('expandMenu', 'fechar')" onmouseout="hideTooltip('expandMenu', 'abrir'); hideTooltip('expandMenu', 'fechar')">
                     <!-- <ion-icon id="icone_expandSidebar" class="icone_expandSidebar rotate90neg" name="push-outline"></ion-icon> -->
                     <i id="icone_expandSidebar" class='bx bx-menu-alt-left icone_expandSidebar rotate_flip'></i>
-                    <p class="tp_expandSidebar tp_expandSidebar-open" id="tp_texto_abrirSidebar">Abrir painel lateral</p>
-                    <p class="tp_expandSidebar tp_expandSidebar-close tp_expandSidebar-hide" id="tp_texto_fecharSidebar">Fechar painel lateral</p>
+                    <p class="tp_expandSidebar tp_expandSidebar-open tp_expandSidebar_hide" id="tp_ia-expandMenu-abrir">Abrir painel lateral</p>
+                    <p class="tp_expandSidebar tp_expandSidebar-close" id="tp_ia-expandMenu-fechar">Fechar painel lateral</p>
                 </button>
             </div>
             <div class="rooms_content">
@@ -58,30 +58,31 @@
                 <div class="rooms_section">
                     {% for room in rooms %}
                     <!-- Container dos Botões das Salas -->
-                    <div class="container_btn_trocarSalas" data-url="{% url 'list_messages' room.id %}" data-room-id="{{ room.id }}">
-                        <a href="{% url 'list_messages' room.id %}" onclick="trocarSalas(this)" class="btn_trocarSalas" id="btn_trocarSalas_sala-1" >
-                            <form method="get" id="form_rename" class="roomsNames">
-                                <p class="roomName" id="texto_chatIA_roomName">{{ room.title }}</p>
-                                <input class="rename_area" placeholder="Nova Sala" id="input_rename" maxlength="30" value="Nova Sala" type="text">
+                    <div class="container_btn_trocarSalas" data-url="{% url 'list_messages' room.id %}">
+                        <a href="{% url 'list_messages' room.id %}" class="btn_trocarSalas" id="btn_trocarSalas_sala-1" >
+                            <form method="POST" id="form_rename-{{ room.id }}" class="roomsNames renameForm_sendIgnore">
+                                {% csrf_token %}
+                                <p class="roomName" id="room_name_p-{{ room.id }}">{{ room.title }}</p>
+                                <input class="rename_area" placeholder="Nova Sala" id="input_rename-{{ room.id }}" maxlength="30" value="{{ room.title }}" type="text">
                             </form>
                         </a>
-                        <div class="btn_roomsEP" id="btn_roomsEP-1" onclick="activeExtraOptionsBox(this)" aria-expanded="false"  onmouseover="showTooltip_sideBar('opcoes')" onmouseout="hideTooltip_sideBar('opcoes')">
+                        <div class="btn_roomsEP" id="btn_roomsEP-{{ room.id }}" onclick="activeExtraOptionsBox(this)" aria-expanded="false" onmouseover="showTooltip('options', '{{ forloop.counter }}')" onmouseout="hideTooltip('options', '{{ forloop.counter }}')">
                             <i class='bx bx-dots-horizontal-rounded'></i>
-                            <p class="tp_sideBar_header tp_opcoes" id="tp_opcoes">Opções</p>
+                            <p class="tp_sideBar_header tp_opcoes" id="tp_ia-options-{{ forloop.counter }}">Opções</p>
                         </div>
                         <div class="roomsExtraOptions_box" id="roomsExtraOptions_box">
                             <div class="roomsExtraOptions_item" id="sideBar_download">
-                                <i class='bx bxs-file-pdf download-icon'></i>
-                                <p id="texto_chatIA_renomar" class="download-text">Download</p>
+                                <i class='bx bxs-file-pdf download_icon'></i>
+                                <p id="texto_chatIA_download" class="download_text">Download</p>
                             </div>
-                            <div class="roomsExtraOptions_item" id="sideBar_rename" onclick="renameRoom(this)">
-                                <i class='bx bxs-pencil pencil-icon'></i>
-                                <p id="texto_chatIA_renomar" class="pencil-text">Renomear</p>
+                            <div class="roomsExtraOptions_item" id="sideBar_rename" onclick="callRenameRoom('{{ room.id }}')">
+                                <i class='bx bxs-pencil pencil_icon'></i>
+                                <p id="texto_chatIA_renomar" class="pencil_text">Renomear</p>
                             </div>
-                            <a href="{% url 'delete_room' room.id %}" class="roomsExtraOptions_item" id="sideBar_excluir">
-                                <i class='bx bxs-trash trash-icon'></i>
-                                <p id="texto_chatIA_renomar" class="trash-text">Excluir</p>
-                            </a>
+                            <div onclick="askForDelete()" class="roomsExtraOptions_item" id="sideBar_excluir">
+                                <i class='bx bxs-trash trash_icon'></i>
+                                <p id="texto_chatIA_delete" class="trash_text">Excluir</p>
+                            </div>
                         </div>
                     </div>
                     {% empty %}
@@ -102,7 +103,7 @@
                     <ul class="messages_list" id="messages_list">
                         <li class="message bot">
                             <img id="ianes_pic" src="" alt="IAnes Pic">
-                            <p id="texto_chatIA_botInicialMsg">1 - Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?</p>
+                            <p id="texto_chatIA_botInicialMsg">Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?</p>
                         </li>
                     
                         {% for user_message, bot_response in messages %}
@@ -114,11 +115,11 @@
                             {% if bot_response %}
                             <li class="message bot">
                                 <img id="ianes_pic" src="" alt="IAnes Pic">
-                                <p id="ianes_sala-1_msg">{{ bot_response.text }}</p>
+                                <p id="ianes_msg-{{ forloop.counter }}">{{ bot_response.text }}</p>
                                 <div class="extraOptions_IAnes">
-                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip_chat('copy', '{{ forloop.counter }}')" onmouseout="hideTooltip_chat('copy', '{{ forloop.counter }}')">
+                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip('copy', '{{ forloop.counter }}')" onmouseout="hideTooltip('copy', '{{ forloop.counter }}')">
                                         <ion-icon name="copy-outline"></ion-icon>
-                                        <p class="tp_extraO_IA" id="tp_ia-{{ forloop.counter }}-copy">Copiar</p>
+                                        <p class="tp_extraO_IA" id="tp_ia-copy-{{ forloop.counter }}">Copiar</p>
                                     </div>
                                 </div>
                             </li>
@@ -132,7 +133,7 @@
 
             <form method="POST"  action="{% url 'send_message' room.id %}" id="inputTo_ianes_form" class="chat_input_form">
                 {% csrf_token %}
-                <textarea name="user_message" maxlength="10000" rows="1" id="user_message" placeholder="Digite uma mensagem..."></textarea>
+                <textarea tabindex="1" name="user_message" maxlength="10000" rows="1" id="user_message" placeholder="Digite uma mensagem..."></textarea>
                 <button type="submit" id="inputTo_ianes_enviar" class="inputTo_ianes_enviar btn_ativado" onclick="enviarMensagem()">
                     <ion-icon id="icon_aviao" name="paper-plane-outline"></ion-icon>
                     <ion-icon id="icon_quadrado" name="square"></ion-icon>
@@ -146,15 +147,34 @@
             </form>
             </div>
             
-            <div onclick="baixarConversaComoPDF()" class="btn_baixarPDF">
+            <!-- <div onclick="baixarConversaComoPDF()" class="btn_baixarPDF">
                 <p id="texto_chatIA_baixarPDF">Baixar a conversa em PDF</p>
                 <i class='bx bxs-file-pdf '></i>
-            </div>
+            </div> -->
         </div>
         
     </main>
     
+    <div aria-active="false" id="confSalaDel_overlay" class="confSalaDel_overlay">
+        <div id="ov_confSalaDel_container" class="ov_confSalaDel_container">
 
+            <div class="confSalaDelC_top">
+                <h1 id="texto_chatIA_deleteRoom1">Excluir sala?</h1>
+            </div>
+            <hr>
+            <div class="confSalaDelC_bot">
+                <div class="confSalaDelC_bot_colum salaDelt_bcTop">
+                    <p id="texto_chatIA_deleteRoom2">Isso excluirá o Chat:</p>
+                    <span id="roomTitle_atual">{{ room.title }}</span>
+                </div>
+                <div class="confSalaDelC_bot_colum salaDelt_bcBot">
+                    <p onclick="toggleOverlay_confDelete()" id="texto_chatIA_deleteRoom_cancel" class="confSalaDel_btn btn_can">Cancelar</p>
+                    <a href="{% url 'delete_room' room.id %}" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Popup de confirmação de cópia -->
     <div class="confirms_popups" id="popup_copyText">
@@ -163,6 +183,8 @@
             <div id="loading_bar"></div>
         </div>
     </div>
+
+    <!-- V-Libras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>

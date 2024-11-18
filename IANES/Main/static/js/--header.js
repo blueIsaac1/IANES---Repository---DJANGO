@@ -62,7 +62,6 @@ function toggleOverlay_config() {
         overlay_config.style.display = "none";
         overlay_config.setAttribute("aria-active", "false");
         document.body.style.overflowY = "auto";
-        clearOverlay();
         overlayContainer_config.classList.remove("ovConfig_container_active");
     } else if (overlayState === "false") {
         overlay_config.style.display = "flex";
@@ -116,8 +115,8 @@ function switchConfigSection(element) {
 
 // Função para atualizar os botTalks que têm aria-has-bot="true"
 function updateBotTalks() {
-    // Seleciona todos os elementos com a classe 'langBotTalk'
-    const botTalkImgs = document.querySelectorAll('.langBotTalk');
+    // Seleciona todos os elementos com a classe 'botTalk'
+    const botTalkImgs = document.querySelectorAll('.botTalk');
     
     botTalkImgs.forEach(element => {
         // Acessa o atributo 'aria-has-bot' de cada elemento
@@ -132,22 +131,9 @@ function updateBotTalks() {
 }
 
 // Função que preenche a lista de idiomas com base no JSON
-async function appendInList_lang() {
-    // Carregar o arquivo JSON dos idiomas disponíveis
-    let arq_langDisp;
-    try {
-        const response = await fetch(`../static/_datas/langsDisponiveis.json`);
-        if (!response.ok) throw new Error(`Falha ao carregar as langsDisponiveis`);
-        
-        arq_langDisp = await response.json();
-    } catch (error) {
-        console.error('Erro ao carregar o arquivo de langsDisponiveis:', error);
-        return;
-    }
-
+function appendInList_lang(arq_langDisp) {
     // Referência ao container da lista (sem limpar o conteúdo atual)
     const langListContainer = document.getElementById('lang_Options_list');
-
 
     // Para cada idioma no JSON, cria o <li> correspondente
     Object.keys(arq_langDisp).forEach(langCode => {
@@ -155,43 +141,50 @@ async function appendInList_lang() {
 
         // Cria o elemento <li>
         const li = document.createElement('li');
-        li.id = `lang_Options_list_i-${langCode}`;
+        li.id = `lang_Options_list_i`;
+        li.classList.add(`options_list_i`)
+        li.setAttribute(`aria-lang-selector`, `${langCode}`)
 
         // Cria o div do BotTalk e adiciona o atributo aria-has-bot
         const botTalkDiv = document.createElement('div');
-        botTalkDiv.classList.add('langBotTalk_div');
+        botTalkDiv.classList.add('optionsList_botTalk_div');
         const botTalkImg = document.createElement('img');
-        botTalkImg.classList.add('langBotTalk', 'botTalk');
+        botTalkImg.classList.add('botTalk');
         botTalkImg.id = 'langBotTalk';
-        botTalkImg.alt = `LangFlag ${langCode}`;
+        botTalkImg.alt = `Icon IAnesTalk}`;
+        botTalkImg.style.maxWidth = '2vw'
+        botTalkImg.style.maxHeight = 'auto'
         // Define o valor de aria-has-bot conforme langData.has_botTalk
         botTalkImg.setAttribute('aria-has-bot', langData.has_botTalk ? 'true' : 'false');
         botTalkDiv.appendChild(botTalkImg);
         
         // Cria o div da Bandeira
         const flagDiv = document.createElement('div');
-        flagDiv.classList.add('langOptionsList_img', 'icone_div');
+        flagDiv.classList.add('optionsList_flag_div');
         const flagImg = document.createElement('img');
         flagImg.classList.add('langFlag');
         flagImg.src = langData.srcFlag;  // URL da bandeira do JSON
         flagImg.alt = `LangFlag ${langCode}`;  // Adicionando o alt correto
+        flagImg.style.maxWidth = '2vw'
+        flagImg.style.maxHeight = 'auto'
         flagDiv.appendChild(flagImg);
 
         // Cria o div do nome do idioma
         const nameDiv = document.createElement('div');
-        nameDiv.classList.add('langOptionsList_p_div');
+        nameDiv.classList.add('optionsList_p_div');
         const nameP = document.createElement('p');
         nameP.classList.add('langOptionsList_p');
         nameP.id = `lang_${langCode}_p`;
-        nameP.textContent = langData.lang__p;  // Texto do nome do idioma do JSON
+        nameP.textContent = langData.lang_p_text;  // Texto do nome do idioma do JSON
         nameDiv.appendChild(nameP);
 
         // Cria o div do ícone de verificação
         const checkDiv = document.createElement('div');
-        checkDiv.classList.add('check_icon_div');
+        checkDiv.classList.add('optionsList_check_div');
         const checkIcon = document.createElement('ion-icon');
-        checkIcon.classList.add('confSec_icon', 'check_icon');
+        checkIcon.classList.add('check_icon');
         checkIcon.name = 'checkmark-outline';
+        checkIcon.id = `lang_check-${langCode}`
         checkDiv.appendChild(checkIcon);
 
         // Adiciona os elementos ao <li>
@@ -209,8 +202,54 @@ async function appendInList_lang() {
 }
 
 // Adiciona os Itens de Tema
-async function appendInList_tema() {
-    
+function appendInList_tema(arq_temaDisp) {
+    // Referência ao container da lista (sem limpar o conteúdo atual)
+    const temaListContainer = document.getElementById('tema_Options_list');
+
+    // Para cada idioma no JSON, cria o <li> correspondente
+    Object.keys(arq_temaDisp).forEach(temaCode => {
+        const temaData = arq_temaDisp[temaCode];
+
+        // Cria o elemento <li>
+        const li = document.createElement('li');
+        li.id = `tema_Options_list_i`;
+        li.classList.add(`options_list_i`)
+        li.setAttribute(`aria-tema-selector`, `${temaCode}`)
+
+        // Cria o div do Icone
+        const temaIconDiv = document.createElement('div');
+        temaIconDiv.classList.add('optionsList_temaIcon_div');
+        const temaIcon = document.createElement('ion-icon');
+        temaIcon.classList.add('temaIcon');
+        temaIcon.name = temaData.iconType
+        temaIconDiv.appendChild(temaIcon);
+
+        // Cria o div do nome do tema
+        const nameDiv = document.createElement('div');
+        nameDiv.classList.add('optionsList_p_div');
+        const nameP = document.createElement('p');
+        nameP.classList.add('temaOptionsList_p');
+        nameP.id = `tema_${temaCode}_p`;
+        nameP.textContent = temaData.tema_p_text;  // Texto do nome do tema do JSON
+        nameDiv.appendChild(nameP);
+
+        // Cria o div do ícone de verificação
+        const checkDiv = document.createElement('div');
+        checkDiv.classList.add('optionsList_check_div');
+        const checkIcon = document.createElement('ion-icon');
+        checkIcon.classList.add('check_icon');
+        checkIcon.name = 'checkmark-outline';
+        checkIcon.id = `tema_check-${temaCode}`
+        checkDiv.appendChild(checkIcon);
+
+        // Adiciona os elementos ao <li>
+        li.appendChild(temaIconDiv);
+        li.appendChild(nameDiv);
+        li.appendChild(checkDiv);
+
+        // Adiciona o <li> ao container de idiomas
+        temaListContainer.appendChild(li);
+    });
 }
 
 // -- Mostra ou Esconde as lista suspensa, de acordo com o Clique
@@ -348,8 +387,6 @@ document.addEventListener('click', (event) => {
         console.log("3");
         toggleContainer_user();
     }
-
-    console.log("4");
 });
 
 // Eventos para Abrir as lista suspensa das Configurações
