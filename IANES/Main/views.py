@@ -352,7 +352,7 @@ def send_message(request, pk):
                 else:
                     # Processamento normal da mensagem usando a IA
                     try:
-                        genai.configure(api_key='AIzaSyCAGX1oGtPn2xCJpcp-GZQlZVTbGUhPhho')
+                        genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
                         model = genai.GenerativeModel('gemini-1.5-flash')
                         bot_response = model.generate_content(user_message_text)
                         bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
@@ -397,7 +397,7 @@ def create_room(request):
     #     'r': room
     # })
 
-@login_required(login_url='auth')
+# @login_required(login_url='auth')
 @csrf_exempt
 def list_messages(request, pk=None):
     last_room = Room.objects.order_by('-created_at').first()
