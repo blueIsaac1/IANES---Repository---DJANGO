@@ -21,6 +21,7 @@ from django.contrib import messages
 import urllib
 import logging
 from django.contrib.auth import logout as auth_logout 
+from itertools import zip_longest
 from .forms import SignUpForm
 logger = logging.getLogger(__name__)    
 
@@ -370,9 +371,12 @@ def send_message(request, pk):
                     )
                     current_room.user_message.add(user_message)
                     current_room.bot_response.add(bot_response_instance)
-                    return redirect('list_messages', pk=pk)
-    return redirect('index')
 
+                    # **Aqui, armazenamos o ID da nova resposta do bot na sessão**
+                    request.session['new_bot_response_id'] = bot_response_instance.id
+
+                    return redirect('list_messages', pk=pk)
+        return redirect('index')
 
 @login_required(login_url='auth')
 @csrf_exempt
@@ -397,9 +401,8 @@ def create_room(request):
 @login_required(login_url='auth')
 @csrf_exempt
 def list_messages(request, pk=None):
-    
     last_room = Room.objects.order_by('-created_at').first()
-    
+
     if not last_room:
         room = Room.objects.create(user=request.user)
         room.title = f"Sala Nova - {room.id}"
@@ -412,7 +415,26 @@ def list_messages(request, pk=None):
         user_messages = room.user_message.all().order_by('created_at')
         bot_responses = room.bot_response.all().order_by('created_at')
         rooms = Room.objects.all().order_by('-created_at')
-        messages = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+
+        # Preparar as mensagens com o indicador 'is_new_bot_response'
+        messages = []
+        message_pairs = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+
+        # Obter o ID da nova resposta do bot armazenado na sessão
+        new_bot_response_id = request.session.get('new_bot_response_id')
+
+        for i, (user_message, bot_response) in enumerate(message_pairs):
+            is_new_bot_response = False
+            if bot_response:
+                if bot_response.id == new_bot_response_id:
+                    is_new_bot_response = True
+                    # Remover o ID da sessão após identificar a mensagem como nova
+                    del request.session['new_bot_response_id']
+            messages.append({
+                'user_message': user_message,
+                'bot_response': bot_response,
+                'is_new_bot_response': is_new_bot_response,
+            })
         
     except Http404 as e:
         logger.error(f"Sala com PK {pk} não encontrada.")
