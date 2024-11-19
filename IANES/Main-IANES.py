@@ -377,7 +377,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
                 f"- Público-Alvo do Projeto: {user_inputs.get('publicoalvo', 'N/A')}\n"
                 f"- Cotação Atual do Dólar: R$ {user_inputs.get('cotacao_dolar', 'N/A')}\n\n"
                 f"Com base nesses dados, forneça:\n"
-                f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância.\n"
+                f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância, dê esse score apenas com números.\n"
                 f"- Uma breve justificativa explicando a adequação e como o conteúdo pode contribuir para o projeto."
             )
             response = model.generate_content(prompt)
@@ -468,7 +468,7 @@ def recomenda_investimento(conteudos, inputs):
     return best_option, best_score, best_content
 
 def main():
-    pasta_dados = './DADOS'
+    pasta_dados = '../DADOS'
 
     if not os.path.exists(pasta_dados):
         print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
