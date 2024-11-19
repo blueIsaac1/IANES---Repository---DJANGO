@@ -248,27 +248,21 @@ def send_message(request, pk):
         if user_message_text:
             if request.session.get('collecting_parameters', False):
                 try:
-                    # Lógica de coleta de parâmetros
                     parameter_index = request.session.get('parameter_index', 0)
                     respostas = request.session.get('responses', {})
                     perguntas = request.session.get('perguntas', {})
                     perguntas_keys = list(perguntas.keys())
 
-                    # Verifique se o índice está dentro dos limites
+                    # Armazena a resposta do usuário
                     if 0 <= parameter_index - 1 < len(perguntas_keys):
                         current_question_key = perguntas_keys[parameter_index - 1]
-                        # Armazena a resposta do usuário
                         respostas[current_question_key] = user_message_text
-                        # Atualiza a sessão
                         request.session['responses'] = respostas
-                    else:
-                        raise IndexError("Índice de pergunta inválido.")
 
                     if parameter_index < len(perguntas_keys):
                         # Faz a próxima pergunta
                         next_question_key = perguntas_keys[parameter_index]
                         bot_response_text = perguntas[next_question_key]
-                        # Incrementa o índice da pergunta
                         parameter_index += 1
                         request.session['parameter_index'] = parameter_index
                     else:
@@ -276,8 +270,6 @@ def send_message(request, pk):
                         bot_response_text = "Obrigado por fornecer todas as informações!"
                         # Processar as respostas coletadas aqui
                         # Limpa as variáveis de sessão
-                        print('perguntas: ', perguntas)
-                        print('respostas: ', respostas)
                         request.session.pop('collecting_parameters')
                         request.session.pop('parameter_index')
                         request.session.pop('responses')
@@ -289,11 +281,17 @@ def send_message(request, pk):
                         text=user_message_text,
                         created_at=None
                     )
+                    current_room.user_message.add(user_message)
+
+                    # Salva a resposta do bot
                     bot_response_instance = BotResponse.objects.create(
                         text=bot_response_text
                     )
-                    current_room.user_message.add(user_message)
                     current_room.bot_response.add(bot_response_instance)
+
+                    # Armazenar o ID da nova resposta do bot na sessão
+                    request.session['new_bot_response_id'] = bot_response_instance.id
+
                     return redirect('list_messages', pk=pk)
                 except Exception as e:
                     # Registre a exceção
@@ -349,6 +347,7 @@ def send_message(request, pk):
                     )
                     current_room.user_message.add(user_message)
                     current_room.bot_response.add(bot_response_instance)
+                    request.session['new_bot_response_id'] = bot_response_instance.id
                     return redirect('list_messages', pk=pk)
                 else:
                     # Processamento normal da mensagem usando a IA
