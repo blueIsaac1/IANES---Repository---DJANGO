@@ -118,21 +118,21 @@
                                 {% if message.is_new_bot_response %}
                                     <!-- Aplicar a animação de digitação -->
                                     <p id="ianes_msg-{{ forloop.counter }}"></p>
-                                    <script>
-                                        var botText{{ forloop.counter }} = `{{ message.bot_response.text|escapejs }}`;
-                                        var i{{ forloop.counter }} = 0;
-                                        var speed = 20;
-                    
-                                        function typeWriter{{ forloop.counter }}() {
-                                            if (i{{ forloop.counter }} < botText{{ forloop.counter }}.length) {
-                                                document.getElementById("ianes_msg-{{ forloop.counter }}").innerHTML += botText{{ forloop.counter }}.charAt(i{{ forloop.counter }});
-                                                i{{ forloop.counter }}++;
-                                                setTimeout(typeWriter{{ forloop.counter }}, speed);
-                                            }
-                                        }
-                    
-                                        typeWriter{{ forloop.counter }}();
-                                    </script>
+<script>
+var botText{{ forloop.counter }} = `{{ message.bot_response.text|escapejs }}`;
+var i{{ forloop.counter }} = 0;
+var speed = 25;
+
+function typeWriter{{ forloop.counter }}() {
+if (i{{ forloop.counter }} < botText{{ forloop.counter }}.length) {
+    document.getElementById("ianes_msg-{{ forloop.counter }}").innerHTML += botText{{ forloop.counter }}.charAt(i{{ forloop.counter }});
+    i{{ forloop.counter }}++;
+    setTimeout(typeWriter{{ forloop.counter }}, speed);
+}
+}
+
+typeWriter{{ forloop.counter }}();
+</script>
                                 {% else %}
                                     <!-- Exibir a mensagem completa sem animação -->
                                     <p id="ianes_msg-{{ forloop.counter }}">{{ message.bot_response.text }}</p>
