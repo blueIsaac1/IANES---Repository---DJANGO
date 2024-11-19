@@ -14,4 +14,5 @@
 
 - OS ARQUIVOS DE IDIOMAS E TEMAS, POR ALGUM MOTIVO NA CARREGA EM CERTAS PAGINAS, MOTIVO:
  - Quando url da pagina é: http://127.0.0.1:8000/IAnes/12/ ← Sendo qualquer numero, ele NAO encontra os arquivos. Provavelmente pq, as salas ficam em internas no DJANGO. Mas quando o url é http://127.0.0.1:8000/IAnes/, ele encontra normalmente.
-- VERIFICAR - Troca de Salas FUNCIONA, porem nao marca qual sala esta selecionado. DEIXA PRO FRANCISCO
+- VERIFICAR - Troca de Salas FUNCIONA, porem nao marca qual sala esta selecionado. DEIXA PRO FRANCISCO // Esta com problemas, devido ao URL.
+- Textos que sao adicionados automaticamente, como as listas de temas não sao traduzidos AINDA, pois esqueci de pegar os seus ID's

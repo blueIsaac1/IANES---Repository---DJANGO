@@ -1,0 +1,28 @@
+{
+    "geral": [{
+        "page_title_inicio": "IAnes - Добро пожаловать!",
+        "page_title_sobre": "IAnes - О нас",
+        "page_title_auth": "IAnes - Авторизация",
+        "page_title_pageIA": "IAnes"
+    }],
+    "navbar": [{
+        "tooltip_logo": "Здесь IAnes!",
+        "tooltip_user_clickOpen": "Нажмите, чтобы открыть",
+        "tooltip_user_clickClose": "Нажмите, чтобы закрыть",
+        "texto_header_userContainer-config": "Настройки",
+        "texto_header_userContainer-leave": "Выйти",
+        "nav_item-inicio": "Главная",
+        "nav_item-sobre": "О нас",
+        "nav_item-ianes": "IAnes"
+    }],
+    "config": [{
+        "texto_header_configContainer-configTitle": "Настройки",
+        "texto_header_confOptions_btn-geral": "Общие",
+        "texto_header_confOptions_btn-fala": "Голос",
+        "texto_header_confOptions_btn-profile": "Профиль",
+        "texto_header_confSec_btn-lang": "Язык",
+        "texto_header_confLang_sumario": "IAnes поддерживает этот язык",
+        "texto_header_confSec_btn-tema": "Внешний вид",
+        "texto_confOptions_sec-leave": "Выйти"
+    }]
+}

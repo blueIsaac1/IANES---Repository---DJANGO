@@ -69,7 +69,7 @@ function aplicarTemaLight() {
 function aplicarTemaDark() {
     console.log("Ativando : Tema Escuro 🌙")
     
-    // Atributos
+    // Atributos do Body
     document.body.setAttribute("data-theme", "dark");
     
     // Alterando :roots

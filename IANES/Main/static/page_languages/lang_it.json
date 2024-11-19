@@ -1,0 +1,28 @@
+{
+    "geral": [{
+        "page_title_inicio": "IAnes - Benvenuto!",
+        "page_title_sobre": "IAnes - Informazioni",
+        "page_title_auth": "IAnes - Autenticazione",
+        "page_title_pageIA": "IAnes"
+    }],
+    "navbar": [{
+        "tooltip_logo": "IAnes qui!",
+        "tooltip_user_clickOpen": "Clicca per aprire",
+        "tooltip_user_clickClose": "Clicca per chiudere",
+        "texto_header_userContainer-config": "Impostazioni",
+        "texto_header_userContainer-leave": "Esci",
+        "nav_item-inicio": "Home",
+        "nav_item-sobre": "Informazioni",
+        "nav_item-ianes": "IAnes"
+    }],
+    "config": [{
+        "texto_header_configContainer-configTitle": "Impostazioni",
+        "texto_header_confOptions_btn-geral": "Generale",
+        "texto_header_confOptions_btn-fala": "Voce",
+        "texto_header_confOptions_btn-profile": "Profilo",
+        "texto_header_confSec_btn-lang": "Lingua",
+        "texto_header_confLang_sumario": "IAnes supporta questa lingua",
+        "texto_header_confSec_btn-tema": "Aspetto",
+        "texto_confOptions_sec-leave": "Esci"
+    }]
+}

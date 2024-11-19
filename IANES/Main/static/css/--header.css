@@ -255,7 +255,7 @@ header {
     right: -20vw;
     transform: translateY(0%);
     background-color: var(--color_tema-fundo-tema);
-    border: 0.2vw solid var(--color_tema-btn-bg_1);
+    border: 0.2vw solid var(--color_tema-btn-bg_alt);
     border-radius: 0.4vw;
     padding: 0.4vw 0.6vw;
     display: flex;
@@ -270,7 +270,7 @@ header {
     transform: translateX(0%);
     border-left: 0.5vw solid transparent;
     border-right: 0.5vw solid transparent;
-    border-bottom: 0.5vw solid var(--color-vermelho-medio);
+    border-bottom: 0.5vw solid var(--color_tema-btn-bg_alt);
 }
 .user_container_active {
     right: 2vw;
@@ -630,7 +630,7 @@ header {
     position: absolute;
     top: 0%;
     left: 100%;
-    border: 0.2vw solid var(--color-vermelho-medio);
+    border: 0.2vw solid var(--color_tema-btn-bg_alt);
     border-radius: 0.3vw;
     padding: 0vw 0.4vw;
     white-space: nowrap;
@@ -665,7 +665,7 @@ header {
     left: 0%;
     transform: translateY(-100%);
     /* border: 0.2vw solid var(--color-vermelho-medio); */
-    border-bottom: 0.2vw solid var(--color-vermelho-medio);
+    border-bottom: 0.2vw solid var(--color_tema-btn-bg_alt);
     /* border-radius: 0.3vw; */
     padding: 0.4vw 0.6vw;
     display: flex;

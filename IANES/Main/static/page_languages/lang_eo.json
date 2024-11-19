@@ -1,0 +1,28 @@
+{
+    "geral": [{
+        "page_title_inicio": "IAnes - Bonvenon!",
+        "page_title_sobre": "IAnes - Pri ni",
+        "page_title_auth": "IAnes - Aŭtentikigo",
+        "page_title_pageIA": "IAnes"
+    }],
+    "navbar": [{
+        "tooltip_logo": "Ĉi tie estas IAnes!",
+        "tooltip_user_clickOpen": "Alklaku por malfermi",
+        "tooltip_user_clickClose": "Alklaku por fermi",
+        "texto_header_userContainer-config": "Agordoj",
+        "texto_header_userContainer-leave": "Elsaluti",
+        "nav_item-inicio": "Hejmo",
+        "nav_item-sobre": "Pri ni",
+        "nav_item-ianes": "IAnes"
+    }],
+    "config": [{
+        "texto_header_configContainer-configTitle": "Agordoj",
+        "texto_header_confOptions_btn-geral": "Ĝenerala",
+        "texto_header_confOptions_btn-fala": "Parolado",
+        "texto_header_confOptions_btn-profile": "Profilo",
+        "texto_header_confSec_btn-lang": "Lingvo",
+        "texto_header_confLang_sumario": "IAnes subtenas ĉi tiun lingvon",
+        "texto_header_confSec_btn-tema": "Aspekto",
+        "texto_confOptions_sec-leave": "Elsaluti"
+    }]
+}

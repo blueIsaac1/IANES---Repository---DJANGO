@@ -27,42 +27,75 @@ function detectarPreferido_Idioma() {
     aplicarIdioma(lang);
 }
 
-// Função que altera todos os textos
+// Função que altera textos gerais (seções "geral" e "navbar")
 function alterarTextos_geral(messages) {
-    
-    // Seção que altera algumas coisas Gerais
-    let secao_geral = 'geral';
-    
+    // Seções que serão processadas
+    const secoes = ['geral', 'navbar'];
+
     // Obtendo o nome da página atual
     const currentPage = window.location.pathname.split('/').pop();
-    
-    // Definindo o novo título com base na página
-    let novoTitulo;
-    switch (currentPage) {
-        case 'auth.html':
-            novoTitulo = messages[secao_geral][0]['page_title_auth'];
-            break;
-        case 'pagina_ia.html':
-            novoTitulo = messages[secao_geral][0]['page_title_pageIA'];
-            break;
-        case 'index.html':
-            novoTitulo = messages[secao_geral][0]['page_title_inicio'];
-            break;
-        case 'sobre.html':
-            novoTitulo = messages[secao_geral][0]['page_title_sobre'];
-            break;
-        default:
-            console.log('Página não reconhecida. Título não alterado.');
-            return; // Para não alterar o título se a página não for reconhecida
+
+    // Alterando o título da página baseado na seção "geral"
+    // if (messages.geral && messages.geral[0]) {
+    //     let novoTitulo;
+    //     switch (currentPage) {
+    //         case 'auth.html':
+    //             novoTitulo = messages.geral[0]['page_title_auth'];
+    //             break;
+    //         case 'pagina_ia.html':
+    //             novoTitulo = messages.geral[0]['page_title_pageIA'];
+    //             break;
+    //         case 'index.html':
+    //             novoTitulo = messages.geral[0]['page_title_inicio'];
+    //             break;
+    //         case 'sobre.html':
+    //             novoTitulo = messages.geral[0]['page_title_sobre'];
+    //             break;
+    //         default:
+    //             console.log('Página não reconhecida. Título não alterado.');
+    //             break;
+    //     }
+
+    //     // Se um título foi definido, altera o título da página
+    //     if (novoTitulo) {
+    //         document.title = novoTitulo;
+    //     }
+    // }
+
+    // Processar as demais seções para atualizar os textos na página
+    secoes.forEach(secao => {
+        if (messages[secao] && messages[secao][0]) {
+            const textos = messages[secao][0];
+
+            // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+            for (let chave in textos) {
+                const elemento = document.getElementById(chave);
+                if (elemento) {
+                    elemento.textContent = textos[chave];
+                } else {
+                    console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+                }
+            }
+        }
+    });
+}
+
+// Função que altera textos de configurações (seção "config")
+function alterarTextos_config(messages) {
+    // Seção a ser processada
+    const secao = 'config';
+
+    if (messages[secao] && messages[secao][0]) {
+        const textos = messages[secao][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            }
+        }
     }
-    
-    // Altera o título da página
-    document.title = novoTitulo;
-
-
-    // Seção que altera o Cabeçalho
-    let secao_navbar = 'navbar';
-
 }
 
 function alterarTextos_auth(messages) {
@@ -181,6 +214,9 @@ async function aplicarIdioma(lang) {
     // Ele pega a Language Preferida do Navegador
     if (lang === "device" || lang === "n_escolheu") {langSet_arq = prefersLanguage}
     else {langSet_arq = lang}
+    
+    // Atributos do Body
+    document.body.setAttribute("data-lang", `${lang}`);
 
     // Carrega o arquivo JSON do idioma selecionado
     try {
@@ -190,6 +226,7 @@ async function aplicarIdioma(lang) {
         const arq_messages = await response.json();
 
         alterarTextos_geral(arq_messages);
+        alterarTextos_config(arq_messages);
         alterarTextos_auth(arq_messages);
         alterarTextos_index(arq_messages);
         alterarTextos_paginaIA(arq_messages);

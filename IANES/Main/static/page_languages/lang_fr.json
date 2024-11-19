@@ -1,44 +1,28 @@
 {
     "geral": [{
-        "page_title": "Bienvenue chez IAnes !"
+        "page_title_inicio": "IAnes - Bienvenue !",
+        "page_title_sobre": "IAnes - À propos",
+        "page_title_auth": "IAnes - Authentification",
+        "page_title_pageIA": "IAnes"
     }],
     "navbar": [{
-        "tooltip_logo": "IAnes ici!",
-        "tooltip_mudaridioma": "Changer de langue",
-        "title_mudaridioma": "Sélectionnez votre langue",
-        "lang_ptBR_p": "Portugais",
-        "lang_en_p": "Anglais",
-        "lang_fr_p": "Français",
-        "tooltip_mudartema": "Changer d'apparence",
-        "title_mudartema": "Sélectionner l'apparence",
-        "tema_claro_p": "Thème clair",
-        "tema_escuro_p": "Thème sombre",
-        "tema_device_p": "Utiliser le thème du dispositif"
+        "tooltip_logo": "IAnes ici !",
+        "tooltip_user_clickOpen": "Cliquez pour ouvrir",
+        "tooltip_user_clickClose": "Cliquez pour fermer",
+        "texto_header_userContainer-config": "Paramètres",
+        "texto_header_userContainer-leave": "Déconnexion",
+        "nav_item-inicio": "Accueil",
+        "nav_item-sobre": "À propos",
+        "nav_item-ianes": "IAnes"
     }],
-    "footer": [{
-        "copyright": "IAnes © 2024-2024",
-        "company_info": "Informations sur l'entreprise",
-        "policy_privacy": "Politique de confidentialité",
-        "terms_conditions": "Termes & conditions"
-    }],
-    "logPage": [{
-        "slogan": "L'intelligence pour votre entreprise",
-        "title_log": "Bonjour ! Bon retour",
-        "user_log": "Nom d'utilisateur",
-        "password_log": "Mot de passe",
-        "forgot_pass": "Mot de passe oublié",
-        "entry_btn_log": "Se connecter",
-        "invite_p1_log": "Vous n'avez pas encore de profil ?",
-        "invite_p2_log": "Rejoignez IAnes !",
-        "criar_btn_go": "Créez votre profil",
-        "title_reg": "Bonjour ! Bienvenue chez IAnes",
-        "user_reg": "Nom d'utilisateur",
-        "email_reg": "E-mail",
-        "password_reg": "Mot de passe",
-        "conf_password_reg": "Confirmer le mot de passe",
-        "create_btn_reg": "Créer",
-        "invite_p1_reg": "Vous avez déjà un profil ?",
-        "invite_p2_reg": "Accédez-y maintenant !",
-        "entrar_btn_go": "Connectez-vous à votre profil"
+    "config": [{
+        "texto_header_configContainer-configTitle": "Paramètres",
+        "texto_header_confOptions_btn-geral": "Général",
+        "texto_header_confOptions_btn-fala": "Parole",
+        "texto_header_confOptions_btn-profile": "Profil",
+        "texto_header_confSec_btn-lang": "Langue",
+        "texto_header_confLang_sumario": "IAnes prend en charge cette langue",
+        "texto_header_confSec_btn-tema": "Apparence",
+        "texto_confOptions_sec-leave": "Déconnexion"
     }]
 }

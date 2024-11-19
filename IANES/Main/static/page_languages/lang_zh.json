@@ -1,0 +1,28 @@
+{
+    "geral": [{
+        "page_title_inicio": "IAnes - 欢迎！",
+        "page_title_sobre": "IAnes - 关于",
+        "page_title_auth": "IAnes - 身份验证",
+        "page_title_pageIA": "IAnes"
+    }],
+    "navbar": [{
+        "tooltip_logo": "这里是 IAnes！",
+        "tooltip_user_clickOpen": "点击打开",
+        "tooltip_user_clickClose": "点击关闭",
+        "texto_header_userContainer-config": "设置",
+        "texto_header_userContainer-leave": "退出",
+        "nav_item-inicio": "首页",
+        "nav_item-sobre": "关于",
+        "nav_item-ianes": "IAnes"
+    }],
+    "config": [{
+        "texto_header_configContainer-configTitle": "设置",
+        "texto_header_confOptions_btn-geral": "常规",
+        "texto_header_confOptions_btn-fala": "语音",
+        "texto_header_confOptions_btn-profile": "个人资料",
+        "texto_header_confSec_btn-lang": "语言",
+        "texto_header_confLang_sumario": "IAnes 支持此语言",
+        "texto_header_confSec_btn-tema": "外观",
+        "texto_confOptions_sec-leave": "退出"
+    }]
+}
