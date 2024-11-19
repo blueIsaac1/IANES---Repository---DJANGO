@@ -352,7 +352,7 @@ def send_message(request, pk):
                 else:
                     # Processamento normal da mensagem usando a IA
                     try:
-                        genai.configure(api_key='AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I')
+                        genai.configure(api_key='AIzaSyCAGX1oGtPn2xCJpcp-GZQlZVTbGUhPhho')
                         model = genai.GenerativeModel('gemini-1.5-flash')
                         bot_response = model.generate_content(user_message_text)
                         bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
