@@ -396,5 +396,5 @@ all_btn_confOptions.forEach(btn => {
     });
 });
 
-// toggleContainer_user();
-// toggleOverlay_config()
+toggleContainer_user();
+toggleOverlay_config()

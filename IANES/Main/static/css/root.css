@@ -4,17 +4,38 @@
 :root {
     --font-montserrat: 'Montserrat';
 
+    --color-full-black: #000000;
+    --color-full-white: #ffffff;
+
     --color-fundo-claro: #FFFFFF;
     --color-fundo-claro_var2: #dedede;
     --color-fundo-claro_var3: #dedede;
     
+    --color-fundo-escuro: #000E1D;
+
+    --color_tema-fundo-tema: var(--color-fundo-claro);
+    --color_tema-cinza-hover-bg: var(--color-cinza_hover_bg_light);
+
+    --color_tema-text_1: var(--color-full-black);
+
+    --color_tema-svg_1: var(--color-full-white);
+
     --color-fundo-overlay: #000000a3;
+
+    --color-cinza_hover_bg_light: #8787873d;
+    --color-cinza_hover_bg_dark: #98989835;
+
+    --color_tema-tooltip-bg: var(--color-azul-medio);
+    --color_tema-tp-text_1: var(--color-full-black);
+
+    --color_tema-btn-bg_1: var(--color-vermelho-medio);
+    --color_tema-btn-bg_2: var(--color-azul-medio);
+    --color_tema-btn-bg_alt: var(--color-azul-bruto);
 
     --color-cinza_chat_bg_light: #8787872f;
     --color-azul-escuro_bg: #000E1D;
     --color-vermelho-forte_bg: #681413;
 
-    --color-cinza_hover_bg_light: #8787873d;
 
     --color-azul-medio_selecionado: #1c3a6660;
 

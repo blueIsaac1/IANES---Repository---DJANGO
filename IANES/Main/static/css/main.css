@@ -92,3 +92,15 @@ main {
 
 /* Configurações dos Temas */
 
+.tema_fundo_1 {
+    background-color: var(--color_tema-fundo-tema);
+}
+
+.tema_borderBottomCinza {
+    border-bottom: var(--color_tema-cinza-hover-bg) solid 0.2vw;
+}
+
+.tema_tooltip {
+    background-color: var(--color_tema-tooltip-bg);
+    color: var(--color_tema-tp-text_1 );
+}

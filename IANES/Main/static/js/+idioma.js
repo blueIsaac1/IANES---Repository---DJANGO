@@ -62,48 +62,7 @@ function alterarTextos_geral(messages) {
 
     // Seção que altera o Cabeçalho
     let secao_navbar = 'navbar';
-    let texto1_navbar = 'tooltip_logo';
-    let texto2_navbar = 'tooltip_mudaridioma';
-    let texto3_navbar = 'tooltip_mudartema';
 
-    const novoTexto1_navbar = messages[secao_navbar][0][texto1_navbar];
-    const novotexto2_navbar = messages[secao_navbar][0][texto2_navbar];
-    const novotexto3_navbar = messages[secao_navbar][0][texto3_navbar];
-
-    if (document.getElementById("tooltip_logo")) {
-        document.getElementById("tooltip_logo").textContent = novoTexto1_navbar;
-    }
-    if (document.getElementById("tooltip_mudaridioma")) {
-        document.getElementById("tooltip_mudaridioma").textContent = novotexto2_navbar;
-    }
-    if (document.getElementById("tooltip_mudartema")) {
-        document.getElementById("tooltip_mudartema").textContent = novotexto3_navbar;
-    }
-
-    // Seção que altera o Rodapé
-    let secao_footer = 'footer';
-    let texto1_footer = 'copyright';
-    let texto2_footer = 'company_info';
-    let texto3_footer = 'policy_privacy';
-    let texto4_footer = 'terms_conditions';
-
-    const novoTexto1_footer = messages[secao_footer][0][texto1_footer];
-    const novoTexto2_footer = messages[secao_footer][0][texto2_footer];
-    const novoTexto3_footer = messages[secao_footer][0][texto3_footer];
-    const novoTexto4_footer = messages[secao_footer][0][texto4_footer];
-
-    if (document.getElementById("copyright")) {
-        document.getElementById("copyright").textContent = novoTexto1_footer;
-    }
-    if (document.getElementById("company_info")) {
-        document.getElementById("company_info").textContent = novoTexto2_footer;
-    }
-    if (document.getElementById("policy_privacy")) {
-        document.getElementById("policy_privacy").textContent = novoTexto3_footer;
-    }
-    if (document.getElementById("terms_conditions")) {
-        document.getElementById("terms_conditions").textContent = novoTexto4_footer;
-    }
 }
 
 function alterarTextos_auth(messages) {

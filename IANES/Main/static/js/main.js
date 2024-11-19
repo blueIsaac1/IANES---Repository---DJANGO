@@ -188,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
     type: 'module',
     src: 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'
   });
-  // Coloque aqui as funções que não dependem do header/footer.
 });
 
 // Funções que são carregadas diretamente

@@ -6,19 +6,21 @@
     <!-- Parte da Esquerda -->
     <div class="left_div">
         <div class="logo_div">
-            <div class="logoImg_imgDiv" id="div_header_logo_img">
+            <div onclick="location.href='{% url 'index' %}'" class="logoImg_imgDiv" id="div_header_logo_img">
                 <img id="header_logo_img" src="https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png" alt="Logo">
             </div>
-            <div class="tooltip" id="tooltip_logo">IAnes aqui!</div>
+            <div class="tooltip tema_tooltip" id="tooltip_logo">IAnes aqui!</div>
         </div>
     </div>
 
     <!-- Parte da Direita -->
     <div class="right_div">
         <div aria-active="false" id="user_div" class="user_div">
-            <div class="tooltip tooltip_user" id="tooltip_user_clickOpen">Clique para abrir</div>
-            <div class="tooltip tooltip_user tooltip_user_hide" id="tooltip_user_clickClose">Clique para fechar</div>
-            <p id="user_name_t">{{ user.username }}</p>
+            <div class="tooltip tooltip_user tema_tooltip" id="tooltip_user_clickOpen">Clique para abrir</div>
+            <div class="tooltip tooltip_user tema_tooltip tooltip_user_hide" id="tooltip_user_clickClose">Clique para fechar</div>
+            {% if user.is_authenticated %}
+                <p id="user_name_t">{{ user.username }}</p>
+            {% endif %}
             <svg id="user_svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256">
                 <g transform="translate(0,256) scale(0.100000,-0.100000)"
                 fill="#000000" stroke="none">

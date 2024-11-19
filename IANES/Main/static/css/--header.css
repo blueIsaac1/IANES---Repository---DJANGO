@@ -25,7 +25,6 @@
 /* Coisas no Cabeçalho */
 
 header {
-    background-color: #ffffff;
     /* backdrop-filter: blur(0.2vw); */
     width: 100%;
     /* height: Tamanho do Cabeçalho */
@@ -81,6 +80,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 #header_logo_img {
@@ -110,38 +110,38 @@ header {
     margin-right: 2vw;
     box-sizing: border-box;
     gap: 0.5vw;
-    padding: 0.2vw;
+    padding: 0.2vw 0.6vw;
     border-radius: 0.5vw;
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
 
 .user_div:hover {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 .user_div:hover #user_svg {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
 }
 
 #user_svg {
+    background-color: var(--color_tema-btn-bg_1);
     width: var(--tamanho_icons_header);
     height: auto;
     padding: 0.4vw;
-    background-color: var(--color-vermelho-medio);
     border: none;
     border-radius: 0.5vw;
     transition: 0.3s ease-in-out;
 }
 
-#user_svg path {
-    fill: #ffffff;
+#user_svg path { 
+    fill: var(--color_tema-svg_1);
 }
 
+
 #user_name_t {
-    background-color: transparent;
     font-size: var(--tamanho_font_user);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: right;
     white-space: nowrap;
@@ -185,7 +185,7 @@ header {
     padding-left: 0.4vw;
     padding-right: 0.4vw;
     font-size: var(--tamanho_font_navbar);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 500;
     text-align: center;
     position: relative;
@@ -199,7 +199,7 @@ header {
     left: 50%;
     width: 100%;
     height: 0.2vw;
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_alt);
     border-radius: 1vw;
     transform: translateX(-50%) scaleX(0);
     transition: transform 0.2s ease-in-out;
@@ -219,9 +219,7 @@ header {
 
 .tooltip {
     opacity: 0;
-    background-color: var(--color-azul-medio);
     font-size: 0.8vw;
-    color: #fff;
     text-align: center;
     border-radius: 0.2vw;
     padding: 0.2vw;
@@ -256,8 +254,8 @@ header {
     bottom: -100%;
     right: -20vw;
     transform: translateY(0%);
-    background-color: var(--color-fundo-claro);
-    border: 0.2vw solid var(--color-vermelho-medio);
+    background-color: var(--color_tema-fundo-tema);
+    border: 0.2vw solid var(--color_tema-btn-bg_1);
     border-radius: 0.4vw;
     padding: 0.4vw 0.6vw;
     display: flex;
@@ -317,11 +315,11 @@ header {
     display: none;
 }
 .userC_list li:hover {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 .userC_list li ion-icon {
     font-size: var(--tamanho_icons_header_userC);
-    color: #000000;
+    color: var(--color_tema-text_1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -329,7 +327,7 @@ header {
 }
 .userC_list li p {
     font-size: var(--tamanho_font_navbar);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: center;
     height: auto;
@@ -369,12 +367,12 @@ header {
 }
 
 .ovConfig_container {
-    background-color: var(--color-fundo-claro);
     width: 50vw;
     height: 30vw;
     border: none;
     border-radius: 0.6vw;
     padding: 1vw;
+    background-color: var(--color_tema-fundo-tema);
     position: relative;
     display: flex;
     justify-content: center;
@@ -401,7 +399,7 @@ header {
 
 .ovConfigC_top h1 {
     font-size: var(--tamanho_font_config_s1);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 700;
     text-align: left;
 }
@@ -411,7 +409,7 @@ header {
     justify-content: center;
     align-items: center;
     padding: 0.5vw;
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-size: var(--tamanho_icon_config_s1);
     border: none;
     border-radius: 50%;
@@ -428,8 +426,7 @@ header {
 .ovConfig_container hr {
     width: 100%;
     height: 0.1vw;
-    background-color: var(--color-cinza);
-    /* background-color: #000000; */
+    background-color: var(--color-cinza_hover_bg_light);
     opacity: 0.7;
     border: none;
     border-radius: 0.5vw;
@@ -494,7 +491,7 @@ header {
 
 .confOptions_btn ion-icon {
     font-size: var(--tamanho_icon_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -502,7 +499,7 @@ header {
 
 .confOptions_btn p {
     font-size: var(--tamanho_font_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
 }
@@ -562,13 +559,13 @@ header {
 
 .confSec_categGeral_title {
     font-size: var(--tamanho_font_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
 }
 .confSec_categGeral_atual {
     font-size: var(--tamanho_font_config_s3);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
 }
@@ -581,15 +578,18 @@ header {
 .temaAtual_Icon {
     font-size: var(--tamanho_icon_config_s3);
     padding: 0 0.1vw;
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 .botTalk_Atual {
-    width: 1.2vw;
+    width: 1vw;
     height: auto;
     display: none;
     position: absolute;
     top: 0.2vw;
-    right: 3.6vw;
+    right: 2vw;
+    background-color: #ffffff;
+    padding: 0.05vw;
+    border-radius: 0.2vw;
 }
 .botTalk_Yes_Atual {
     display: flex;
@@ -614,7 +614,7 @@ header {
     transform: rotate(0deg);
     transition: all .3s ease-in-out;
     font-size: var(--tamanho_icon_config_s4);
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 .confSec_icon_arrow_active {
     transform: rotate(-180deg);
@@ -626,7 +626,7 @@ header {
 }
 
 .options_list {
-    background-color: var(--color-fundo-claro);
+    background-color: var(--color_tema-fundo-tema);
     position: absolute;
     top: 0%;
     left: 100%;
@@ -659,7 +659,7 @@ header {
 }
 /* Sumario dos Idiomas */
 .langOptionsList_sum {
-    background-color: var(--color-fundo-claro);
+    background-color: var(--color_tema-fundo-tema);
     position: sticky;
     top: 3.2vw;
     left: 0%;
@@ -677,7 +677,7 @@ header {
 }
 .langOptionsList_sum p {
     font-size: var(--tamanho_font_config_s3);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
     text-wrap: pretty;
@@ -685,6 +685,9 @@ header {
 .langBotTalkSum {
     width: 1.6vw;
     height: auto;
+    background-color: #ffffff;
+    padding: 0.1vw;
+    border-radius: 0.2vw;
 }
 
 /* Qualquer opção das Listas de: Idioma e Tema */
@@ -719,6 +722,9 @@ header {
     width: 1vw;
     height: auto;
     display: none;
+    background-color: #ffffff;
+    padding: 0vw;
+    border-radius: 0.2vw;
 }
 .botTalk_Yes {
     display: flex;
@@ -743,7 +749,7 @@ header {
 }
 .temaIcon {
     font-size: var(--tamanho_icon_config_s3);
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 /* Tem em todos */
@@ -756,7 +762,7 @@ header {
 }
 .optionsList_p_div p {
     font-size: var(--tamanho_font_config_s3);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
     text-wrap: nowrap;
@@ -772,7 +778,7 @@ header {
 .check_icon {
     visibility: hidden;
     font-size: var(--tamanho_icon_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .lang_check_active {
@@ -812,14 +818,14 @@ header {
 
 .confSec_categProfile_title {
     font-size: var(--tamanho_font_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     text-align: left;
 }
 
 .confSec_categProfile_option ion-icon {
     font-size: var(--tamanho_icon_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 /* Botao de Sair */
