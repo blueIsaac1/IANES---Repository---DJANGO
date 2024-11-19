@@ -417,7 +417,7 @@ document.querySelectorAll(".renameForm_sendIgnore").forEach(form => {
 
 let activeRenameRoom = null; // Variável para rastrear qual sala está sendo renomeada
 
-function callRenameRoom(roomID) {
+async function callRenameRoom(roomID) {
     const formRename = document.getElementById(`form_rename-${roomID}`);
     const inputRename = document.getElementById(`input_rename-${roomID}`);
     const room_name_p = document.getElementById(`room_name_p-${roomID}`);
