@@ -41,7 +41,7 @@ def escolher_idioma():
     idioma_atual, encoding = locale.getlocale() # Captura o idioma do sistema local
     idiomas = {'pt': 'Português', 'en': 'Inglês', 'es': 'Espanhol', 'zh-cn': 'Mandarim', 'fr': 'Francês'}
 
-    if idioma_atual.startswith('pt'):  # Detecta se o idioma do sistema local é português
+    if idioma_atual.startswith('en'):  # Detecta se o idioma do sistema local é português
         print("Idioma detectado automaticamente: Português")
         idioma_escolhido = 'pt'
         return idioma_escolhido
@@ -105,10 +105,17 @@ def obter_parametros_usuario(lingua):
     perguntas_empresa = {
         "nome": "Por favor, insira o nome da pessoa responsável:",
         "nome_empresa": "Por favor, insira o nome da empresa responsável:",
-        "lucro": "Qual é o lucro bruto da empresa em reais (R$)?",
+        "lucro": "Qual é a faixa de lucro da empresa? (EP, EPP, D+)",
         "numero_colaboradores": "Por favor, insira o número de colaboradores do projeto:  ",
         "CNPJ": "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'):  ",
         "Email": "Por favor, insira o e-mail do responsável pelo projeto:  "
+    }
+
+    # Descrição das faixas de lucro
+    faixas_lucro = {
+        "EP": "EP (Empreendedor Individual): R$ 0 a R$ 81.000,00 anuais.",
+        "EPP": "EPP (Empresa de Pequeno Porte): R$ 81.000,01 a R$ 4.800.000,00 anuais.",
+        "D+": "D+ (Empresa de Médio Porte ou Maior): Acima de R$ 4.800.000,00 anuais."
     }
 
     # Perguntar os dados da empresa
@@ -119,15 +126,21 @@ def obter_parametros_usuario(lingua):
         try:
             pergunta_traduzida = translate_text(pergunta, lingua)
         except AttributeError:
-            return(f"Erro ao traduzir a pergunta original: {pergunta}")
+            return (f"Erro ao traduzir a pergunta original: {pergunta}")
 
         # Se não conseguirmos traduzir, usamos a versão em português
         if not pergunta_traduzida:
             pergunta_traduzida = pergunta
-            return(f"Usando versão em português para '{pergunta}'")
-        
+            return (f"Usando versão em português para '{pergunta}'")
+
         # Início do campo das perguntas
         while True:
+            if chave == "lucro":
+                # Exibe as faixas de lucro e suas respectivas descrições
+                print(translate_text("\nAs faixas de lucro são as seguintes:", lingua))
+                for faixa, descricao in faixas_lucro.items():
+                    print(translate_text(f"{faixa}: {descricao}", lingua))
+
             resposta = input(pergunta_traduzida + ' ')
             try:
                 if chave in ["nome", "nome_empresa"]:
@@ -135,16 +148,16 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
+                        print(translate_text(
+                            "Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
                 elif chave == "lucro":
-                    try:
-                        # Remove tudo, exceto números, ponto e vírgula
-                        resposta_limpa = re.sub(r'[^0-9,\.]', '', resposta)
-
-                        respostas[chave] = float(resposta_limpa.replace(",", "."))
+                    # Validando as faixas de lucro
+                    if resposta.strip().upper() in ['EP', 'EPP', 'D+']:
+                        respostas[chave] = resposta.strip().upper()
                         break
-                    except ValueError:
-                        print(translate_text("Erro! Por favor, insira apenas número e '.' para separar os decimais (se necessário)", lingua))
+                    else:
+                        print(
+                            translate_text("Por favor, insira uma faixa de lucro válida: 'EP', 'EPP' ou 'D+'.", lingua))
                 elif chave == "numero_colaboradores":
                     try:
                         resposta_limpa = re.sub(r'[^0-9]', '', resposta)
@@ -160,21 +173,23 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print(translate_text("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'.", lingua))
+                        print(translate_text(
+                            "CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'.", lingua))
                 elif chave == "Email":
                     if "@" in resposta and "." in resposta:
                         if resposta.strip():
                             respostas[chave] = resposta
                             break
                     else:
-                        print(translate_text("E-mail inválido. Por favor, insira um e-mail válido e que contenha '@' e '.'.", lingua))
+                        print(translate_text(
+                            "E-mail inválido. Por favor, insira um e-mail válido e que contenha '@' e '.'.", lingua))
                 else:
-                    respostas[chave] = resposta  
-                    break     
+                    respostas[chave] = resposta
+                    break
             except ValueError as e:
                 print(translate_text(f"Erro no sistema: {e}", lingua))
 
-    # Perguntar a área de atuação da empresa
+    # Perguntar a área de atuação da empresa (essa parte não foi alterada, permanece a mesma)
     temas = {
         1: "Tecnologia da Informação (TI)",
         2: "Indústria",
@@ -189,7 +204,6 @@ def obter_parametros_usuario(lingua):
         11: "Setor Público e Governança",
         12: "Entretenimento e Cultura"
     }
-
     print(translate_text("Escolha a área de atuação da empresa:", lingua))
     for codigo, nome in temas.items():
 
@@ -205,20 +219,22 @@ def obter_parametros_usuario(lingua):
         if not nome_traduzido:
             nome_traduzido = nome
             print(f"Usando versão em português para '{nome}'")
-        
+
         print(f"{codigo}: {nome_traduzido}")
 
     while True:
         try:
             escolha_area = int(input(translate_text("Digite o número da área escolhida: ", lingua) + ' '))
-    
+
             if escolha_area in temas:
                 respostas["area_atuacao"] = temas[escolha_area]
                 break
             else:
                 print(translate_text("Escolha um número válido para a área de atuação.", lingua))
         except ValueError as e:
-            return(translate_text(f"Por favor, insira um número válido. Se este não for o problema, verifique o erro: {e}", lingua))
+            return (
+                translate_text(f"Por favor, insira um número válido. Se este não for o problema, verifique o erro: {e}",
+                               lingua))
 
     # Perguntas relacionadas ao projeto
     perguntas_projeto = {
@@ -232,7 +248,7 @@ def obter_parametros_usuario(lingua):
 
     # Perguntar o nome do projeto
     for chave, pergunta in perguntas_projeto.items():
-                # Verificando tradução
+        # Verificando tradução
         pergunta_traduzida = ""
 
         try:
@@ -244,7 +260,7 @@ def obter_parametros_usuario(lingua):
         if not pergunta_traduzida:
             pergunta_traduzida = pergunta
             print(f"Usando versão em português para '{pergunta}'")
-        
+
         while True:
             try:
                 resposta = input(pergunta_traduzida + ' ')
@@ -253,7 +269,8 @@ def obter_parametros_usuario(lingua):
                         respostas[chave] = resposta
                         break
                     else:
-                        print(translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
+                        print(translate_text(
+                            "Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua))
                 elif chave == "orcamento":
                     resposta_limpa = re.sub(r'[^0-9,\.]', '', resposta)
 
@@ -265,7 +282,9 @@ def obter_parametros_usuario(lingua):
                             respostas[chave] = resposta
                             break
                     else:
-                        print(translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global.", lingua))
+                        print(
+                            translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global.",
+                                           lingua))
                 elif chave == "tempo":
                     respostas[chave] = int(resposta)
                     break
@@ -278,7 +297,9 @@ def obter_parametros_usuario(lingua):
                 else:
                     respostas[chave] = resposta
             except ValueError as e:
-                return(translate_text(f"Por favor, insira uma resposta válida. Caso esse não seja o problema, verifique o erro: {e}", lingua))
+                return (translate_text(
+                    f"Por favor, insira uma resposta válida. Caso esse não seja o problema, verifique o erro: {e}",
+                    lingua))
 
     # Perguntar o tema do projeto
     print(translate_text("\nEscolha o tema do projeto:", lingua))
@@ -289,13 +310,13 @@ def obter_parametros_usuario(lingua):
         try:
             nome_traduzido = translate_text(nome, lingua)
         except AttributeError:
-            return(f"Erro ao traduzir a nome original: {nome}")
+            return (f"Erro ao traduzir a nome original: {nome}")
 
         # Se não conseguirmos traduzir, usamos a versão em português
         if not nome_traduzido:
             nome_traduzido = nome
-            return(f"Usando versão em português para '{nome}'")
-        
+            return (f"Usando versão em português para '{nome}'")
+
         print(f"{codigo}: {nome_traduzido}")
 
     while True:
@@ -307,25 +328,33 @@ def obter_parametros_usuario(lingua):
             else:
                 print(translate_text("Escolha um número válido para o tema.", lingua))
         except ValueError as e:
-            return(f"Por favor, insira um número válido. Se este não for o erro, verifique-o aqui: {e}")
+            return (f"Por favor, insira um número válido. Se este não for o erro, verifique-o aqui: {e}")
 
     # Perguntar a vertente (subtema) do tema escolhido
     vertentes = {
-        1: ["Desenvolvimento de Software", "Infraestrutura de TI", "Segurança da Informação", "Transformação Digital", "Computação em Nuvem"],
+        1: ["Desenvolvimento de Software", "Infraestrutura de TI", "Segurança da Informação", "Transformação Digital",
+            "Computação em Nuvem"],
         2: ["Manufatura", "Logística e Cadeia de Suprimentos", "Energia", "Engenharia de Produto"],
         3: ["Construção Civil", "Urbanismo", "Saneamento Básico", "Infraestrutura de Transportes"],
         4: ["Gestão de Resíduos", "Conservação de Recursos Naturais", "Energias Renováveis", "Sustentabilidade"],
-        5: ["Educação a Distância (EAD)", "Capacitação e Treinamento", "Desenvolvimento de Currículo", "Inovação Educacional"],
-        6: ["Infraestrutura de Saúde", "Tecnologia em Saúde (HealthTech)", "Pesquisa Biomédica", "Gestão de Saúde Pública"],
+        5: ["Educação a Distância (EAD)", "Capacitação e Treinamento", "Desenvolvimento de Currículo",
+            "Inovação Educacional"],
+        6: ["Infraestrutura de Saúde", "Tecnologia em Saúde (HealthTech)", "Pesquisa Biomédica",
+            "Gestão de Saúde Pública"],
         7: ["Finanças Corporativas", "Gestão de Ativos", "Finanças Sustentáveis", "Criptomoedas e Blockchain"],
         8: ["Agricultura de Precisão", "Pecuária", "Agroindústria", "Desenvolvimento Rural Sustentável"],
-        9: ["Marketing Digital", "Branding e Posicionamento de Marca", "Comunicação Corporativa", "Análise de Dados de Mercado"],
-        10: ["Programas de Inclusão Social", "Empreendedorismo Social", "Direitos Humanos e Igualdade de Gênero", "Segurança Alimentar"],
-        11: ["Políticas Públicas", "Modernização Administrativa", "Transparência e Compliance", "Planejamento Urbano e Regional"],
-        12: ["Produção Audiovisual", "Artes Cênicas e Performáticas", "Indústria de Jogos", "Preservação do Patrimônio Cultural"]
+        9: ["Marketing Digital", "Branding e Posicionamento de Marca", "Comunicação Corporativa",
+            "Análise de Dados de Mercado"],
+        10: ["Programas de Inclusão Social", "Empreendedorismo Social", "Direitos Humanos e Igualdade de Gênero",
+             "Segurança Alimentar"],
+        11: ["Políticas Públicas", "Modernização Administrativa", "Transparência e Compliance",
+             "Planejamento Urbano e Regional"],
+        12: ["Produção Audiovisual", "Artes Cênicas e Performáticas", "Indústria de Jogos",
+             "Preservação do Patrimônio Cultural"]
     }
 
-    print(translate_text(f"\nVocê escolheu o tema '{temas[escolha_tema]}'. Agora escolha uma vertente (subtema):", lingua))
+    print(translate_text(f"\nVocê escolheu o tema '{temas[escolha_tema]}'. Agora escolha uma vertente (subtema):",
+                         lingua))
     for i, vertente in enumerate(vertentes[escolha_tema], 1):
         # Verificando tradução
         vertente_traduzida = ""
@@ -339,7 +368,7 @@ def obter_parametros_usuario(lingua):
         if not vertente_traduzida:
             vertente_traduzida = vertente
             print(f"Usando versão em português para '{vertente}'")
-        
+
         print(f"{i}: {vertente_traduzida}")
 
     while True:
@@ -351,10 +380,9 @@ def obter_parametros_usuario(lingua):
             else:
                 print(translate_text(f"Escolha um número entre 1 e {len(vertentes[escolha_tema])}.", lingua))
         except ValueError as e:
-            return(f"Por favor, insira um número válido. Caso este não seja o problema, verifique o erro aqui: {e}")
+            return (f"Por favor, insira um número válido. Caso este não seja o problema, verifique o erro aqui: {e}")
 
     return respostas
-
 
 
 # Função para obter análise da API Gemini
@@ -367,6 +395,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
                 f"\n\nConteúdo: {content}\n\n"
                 f"Entradas do usuário:\n"
                 f"- Nome do Projeto: {user_inputs.get('projeto', 'N/A')}\n"
+                f"- faixa de lucro da empresa: {user_inputs.get('lucro', 'N/A')}\n "
                 f"- Orçamento em reais (R$): {user_inputs.get('orcamento', 'N/A')}\n"
                 f"- Número de Colaboradores: {user_inputs.get('numero_colaboradores', 'N/A')}\n"
                 f"- Extensão Geográfica: {user_inputs.get('extensao', 'N/A')}\n"
@@ -377,7 +406,7 @@ def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_
                 f"- Público-Alvo do Projeto: {user_inputs.get('publicoalvo', 'N/A')}\n"
                 f"- Cotação Atual do Dólar: R$ {user_inputs.get('cotacao_dolar', 'N/A')}\n\n"
                 f"Com base nesses dados, forneça:\n"
-                f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância, dê esse score apenas com números.\n"
+                f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância.\n"
                 f"- Uma breve justificativa explicando a adequação e como o conteúdo pode contribuir para o projeto."
             )
             response = model.generate_content(prompt)
@@ -468,7 +497,7 @@ def recomenda_investimento(conteudos, inputs):
     return best_option, best_score, best_content
 
 def main():
-    pasta_dados = '../DADOS'
+    pasta_dados = './DADOS'
 
     if not os.path.exists(pasta_dados):
         print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
