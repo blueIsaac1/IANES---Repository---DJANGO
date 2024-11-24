@@ -1,0 +1,20 @@
+[
+    {
+        "room_id": 28,
+        "timestamp": "2024-11-24T11:50:49.527797+00:00",
+        "user_message": "hello",
+        "bot_response": "Hello there! How can I help you today?\n"
+    },
+    {
+        "room_id": 28,
+        "timestamp": "2024-11-24T11:51:11.939825+00:00",
+        "user_message": "hi",
+        "bot_response": "Hi there! How can I help you today?\n"
+    },
+    {
+        "room_id": 29,
+        "timestamp": "2024-11-24T11:56:43.790088+00:00",
+        "user_message": "hello",
+        "bot_response": "Hello there! How can I help you today?\n"
+    }
+]

@@ -4,14 +4,13 @@
 - Adicionar Api VLibras // adicionado
 - Cadastro/Login // adicionado
 - Fix botao renomear sala // adicionado
+- Quando entra na sala de chat, cria uma nova sala, ao inves de apenas entrar na 1° // adicionado
+- Copiar a msg do ianes. nao funciona // adicionado
+- Renomear nao funcionando // adicionado
 - Adicionar lógica do front + back // quase 100%
 - Gerar Pdf
 
 # ERROS:
-
-- Quando entra na sala de chat, cria uma nova sala, ao inves de apenas entrar na 1° // adicionado
-- Copiar a msg do ianes. nao funciona // adicionado
-- Renomear nao funcionando // adicionado
 
 - OS ARQUIVOS DE IDIOMAS E TEMAS, POR ALGUM MOTIVO NA CARREGA EM CERTAS PAGINAS, MOTIVO:
 - Quando url da pagina é: http://127.0.0.1:8000/IAnes/12/ ← Sendo qualquer numero, ele NAO encontra os arquivos. Provavelmente pq, as salas ficam em internas no DJANGO. Mas quando o url é http://127.0.0.1:8000/IAnes/, ele encontra normalmente.

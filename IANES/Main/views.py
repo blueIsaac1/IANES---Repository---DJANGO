@@ -12,6 +12,7 @@ import json
 import google.generativeai as genai # type: ignore
 import os
 import re
+import time
 from django.utils import timezone
 import time
 from django.conf import settings
@@ -26,6 +27,12 @@ import requests # type: ignore
 from django.contrib.auth import logout as auth_logout 
 from itertools import zip_longest
 from .forms import SignUpForm
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 logger = logging.getLogger(__name__)    
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
@@ -250,6 +257,7 @@ def get_gemini_analysis(content, user_inputs, max_retries=3):
                 f"2. Breve justificativa da pontuação"
             )
             response = model.generate_content(prompt)
+            print(response)
             return response.text
         except Exception as e:
             if attempt == max_retries - 1:
@@ -435,6 +443,10 @@ def send_message(request, pk):
             current_room.user_message.add(user_message)
             current_room.bot_response.add(bot_response_instance)
 
+            salvar_conversa_em_json(room_id=current_room.id,
+                                    user_message_text=user_message_text,
+                                    bot_response_text=bot_response_text)
+
             return redirect('list_messages', pk=pk)
     return redirect('index')
 
@@ -495,6 +507,7 @@ def list_messages(request, pk=None):
                 'user_message': user_message,
                 'bot_response': bot_response,
                 'is_new_bot_response': is_new_bot_response,
+                
             })
         
     except Http404 as e:
@@ -541,6 +554,7 @@ def list_messages(request, pk=None):
         'rooms': rooms,
         'messages': messages,
         'current_page': 'ianes',
+        'pk': pk or (room.id if room else None),
         
         
     })
@@ -579,3 +593,74 @@ def logout(request):
 def listar_ultima_sala():
     last_room = Room.objects.order_by('-id').first()
     return last_room.id if last_room else None
+
+
+def gerar_pdf(nome_arquivo="relatorio.pdf", pk=None): # atribuir o response da ia ao "relatorio"
+    relatorio = acessar_ultima_conversa_json(pk)
+    c = canvas.Canvas(nome_arquivo, pagesize=A4)
+    c.drawString(100, 800, "Descrição do Projeto:")
+
+    if isinstance(relatorio, str):
+        relatorio = [relatorio]  
+    elif not isinstance(relatorio, (list, tuple)):
+        relatorio = [str(relatorio)]
+
+    text = c.beginText(100, 780)
+    text.setFont("Helvetica", 12)
+    text.setLeading(14)
+    text.textLines(relatorio)
+    c.drawText(text)
+    c.save()
+    print("PDF gerado com sucesso.")
+    
+
+
+# Função para enviar e-mail com anexo PDF
+def enviar_email(com_remetente, para_destinatario, nome_arquivo):
+    msg = MIMEMultipart()
+    msg["From"] = com_remetente
+    msg["To"] = para_destinatario
+    msg["Subject"] = "Relatório do Projeto"
+
+    with open(nome_arquivo, "rb") as file:
+        part = MIMEApplication(file.read(), Name=nome_arquivo)
+        part["Content-Disposition"] = f"attachment; filename={nome_arquivo}"
+        msg.attach(part)
+
+    body = "Segue em anexo o relatório do projeto em PDF."
+    msg.attach(MIMEText(body, "plain"))
+
+    # Configura o servidor SMTP
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(com_remetente, "swxumxhmbhiorqvq")  # Substitua pela sua senha de aplicativo
+        server.sendmail(com_remetente, para_destinatario, msg.as_string())
+        server.quit()
+        print("E-mail enviado com sucesso.")
+    except Exception as e:
+        print(f"Erro ao enviar o e-mail: {e}")
+
+def acessar_ultima_conversa_json(pk):
+    with open('conversas.json', 'r') as file:
+        data = json.load(file)
+        result = []
+        for x in data:
+            if x['room_id'] == pk:
+                result.append(x['user_message'])
+                result.append(x['bot_response'])
+        return result
+
+# Função principal para gerar PDF e enviar e-mail
+def processar_e_enviar_pdf(request, pk):
+    nome_arquivo_pdf = "descricao_projeto.pdf"
+    email_remetente = "ianesbr8@gmail.com"
+    email_destinatario = "isaaccleitondasilva@gmail.com"
+    gerar_pdf(nome_arquivo_pdf, pk=pk)
+    try:
+        enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
+        return redirect('list_messages') 
+    except Exception as e:
+        logger.error(f"Erro inesperado. Detalhes: {str(e)}")
+        return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
+

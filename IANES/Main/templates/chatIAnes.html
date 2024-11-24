@@ -71,7 +71,7 @@
                             <p class="tp_sideBar_header tp_opcoes" id="tp_ia-options-{{ forloop.counter }}">Opções</p>
                         </div>
                         <div class="roomsExtraOptions_box" id="roomsExtraOptions_box">
-                            <div class="roomsExtraOptions_item" id="sideBar_download">
+                            <div class="roomsExtraOptions_item" id="sideBar_download" onclick="location.href='{% url 'enviar_email' pk=pk %}'">
                                 <i class='bx bxs-file-pdf download_icon'></i>
                                 <p id="texto_chatIA_download" class="download_text">Download</p>
                             </div>

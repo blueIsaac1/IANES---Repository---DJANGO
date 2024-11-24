@@ -20,4 +20,5 @@ urlpatterns = [
     path('<pk>/', views.RoomDetailView.as_view(), name="room_detail"),
     path('<pk>/send/', views.send_message, name="send_message"),
     path('some_view/', views.some_view, name='some_view'),
+    path('enviar-email/<int:pk>/', views.processar_e_enviar_pdf, name='enviar_email'),
 ]
