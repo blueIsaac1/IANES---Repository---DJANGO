@@ -17,10 +17,11 @@ class Room(models.Model):
     # def __str__(self):
     #     return f"Session for {self.user.username} at {self.created_at}" 
     def __str__(self):
-        return f"Sala: {self.title} {self.id}"
+        return f"{self.title} {self.user}"
     
     def get_id(self):
         return self.id
+    
     
 
 class BotResponse(models.Model):

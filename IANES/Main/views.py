@@ -33,6 +33,7 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
+from django.core import serializers
 logger = logging.getLogger(__name__)    
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
@@ -71,10 +72,9 @@ VERTENTES = {
 def catch_error_404(request, exception):
     return render(request, 'errors_template.html', {'error_message': 'URL não encontrada.'}, status=404)
 
-def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
+def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_response_text):
     # Define o caminho para o arquivo JSON
     caminho_arquivo = 'conversas.json'
-
     # Verifica se o arquivo já existe
     if os.path.exists(caminho_arquivo):
         # Se existir, abre para ler os dados existentes
@@ -85,21 +85,22 @@ def salvar_conversa_em_json(room_id, user_message_text, bot_response_text):
                 conversas = []  # Se o arquivo estiver vazio ou corrompido
     else:
         conversas = []  # Se o arquivo não existir, inicia uma lista vazia
-
+    print(current_user)
     # Cria um dicionário para a nova conversa
     nova_conversa = {
         'room_id': room_id,
         'timestamp': timezone.now().isoformat(),
+        'current_user': current_user,
         'user_message': user_message_text,
         'bot_response': bot_response_text
     }
-
+    
     # Adiciona a nova conversa à lista
     conversas.append(nova_conversa)
 
     # Salva a lista de conversas de volta no arquivo JSON
     with open(caminho_arquivo, 'w') as file:
-        json.dump(conversas, file, indent=4, ensure_ascii=False)
+        json.dump(conversas, file, indent=5, ensure_ascii=False)
 
 @csrf_exempt
 def auth(request):
@@ -312,6 +313,7 @@ def processar_respostas_finais(respostas):
 @csrf_exempt
 def send_message(request, pk):
     current_room = get_object_or_404(Room, id=pk)
+    
     if request.method == 'POST':
         user_message_text = request.POST.get('user_message')
 
@@ -441,9 +443,10 @@ def send_message(request, pk):
                 text=bot_response_text
             )
             current_room.user_message.add(user_message)
-            current_room.bot_response.add(bot_response_instance)
-
+            current_room.bot_response.add(bot_response_instance)            
+            current_user_text = str(current_room.user)
             salvar_conversa_em_json(room_id=current_room.id,
+                                    current_user = current_user_text,
                                     user_message_text=user_message_text,
                                     bot_response_text=bot_response_text)
 
@@ -600,6 +603,7 @@ def gerar_pdf(nome_arquivo="relatorio.pdf", pk=None): # atribuir o response da i
     c = canvas.Canvas(nome_arquivo, pagesize=A4)
     c.drawString(100, 800, "Descrição do Projeto:")
 
+
     if isinstance(relatorio, str):
         relatorio = [relatorio]  
     elif not isinstance(relatorio, (list, tuple)):
@@ -647,10 +651,12 @@ def acessar_ultima_conversa_json(pk):
         result = []
         for x in data:
             if x['room_id'] == pk:
-                result.append(x['user_message'])
-                result.append(x['bot_response'])
+                usuario = f"{x['current_user']}: {x['user_message']}"
+                bot = f"Ianes: {x['bot_response']}"
+                result.append(usuario)
+                result.append(bot)
         return result
-
+        
 # Função principal para gerar PDF e enviar e-mail
 def processar_e_enviar_pdf(request, pk):
     nome_arquivo_pdf = "descricao_projeto.pdf"
@@ -658,9 +664,12 @@ def processar_e_enviar_pdf(request, pk):
     email_destinatario = "isaaccleitondasilva@gmail.com"
     gerar_pdf(nome_arquivo_pdf, pk=pk)
     try:
-        enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
+        # enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
         return redirect('list_messages') 
     except Exception as e:
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
+    
+
+
 

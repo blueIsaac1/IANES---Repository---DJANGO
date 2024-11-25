@@ -8,11 +8,18 @@
 - Copiar a msg do ianes. nao funciona // adicionado
 - Renomear nao funcionando // adicionado
 - Adicionar lógica do front + back // quase 100%
-- Gerar Pdf
+- Gerar Pdf // adicionado
 
 # ERROS:
 
+- Arrumar response da ianes
+- Arrumar estrutura do banco de dados:
+    1. Atribuir um usuario a cada sala (usuario-*salas) (salas-usuario) - (1-*) (1-1)
 - OS ARQUIVOS DE IDIOMAS E TEMAS, POR ALGUM MOTIVO NA CARREGA EM CERTAS PAGINAS, MOTIVO:
 - Quando url da pagina é: http://127.0.0.1:8000/IAnes/12/ ← Sendo qualquer numero, ele NAO encontra os arquivos. Provavelmente pq, as salas ficam em internas no DJANGO. Mas quando o url é http://127.0.0.1:8000/IAnes/, ele encontra normalmente.
 - VERIFICAR - Troca de Salas FUNCIONA, porem nao marca qual sala esta selecionado. DEIXA PRO FRANCISCO // Esta com problemas, devido ao URL.
 - Textos que sao adicionados automaticamente, como as listas de temas não sao traduzidos AINDA, pois esqueci de pegar os seus ID's
+
+# ADICIONAR:
+- Baixar pdf/buffer direto do navegador
+- Lógica de preocessar e enviar pdf no momento que a analise estiver pronta
