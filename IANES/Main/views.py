@@ -258,7 +258,10 @@ def get_gemini_analysis(content, user_inputs, max_retries=3):
                 f"2. Breve justificativa da pontuação"
             )
             response = model.generate_content(prompt)
-            print(response)
+            print(response.text)
+            # with open('conversas.json', 'w') as file:
+            #     data = response.text
+            #     json.dump(data, file)
             return response.text
         except Exception as e:
             if attempt == max_retries - 1:
@@ -567,6 +570,15 @@ def list_messages(request, pk=None):
 def delete_room(request, id):
     room_to_delete = get_object_or_404(Room, id=id)
     room_to_delete.delete()
+    
+    with open('conversas.json', 'r') as file:
+        data = json.load(file)
+    
+    data = [x for x in data if x['room_id'] != id]
+
+    with open('conversas.json', 'w') as file:
+        json.dump(data, file, indent=5)
+
     last_room = Room.objects.order_by('-created_at').first()
     if not last_room:
         return redirect('index')
