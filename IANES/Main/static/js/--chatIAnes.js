@@ -627,6 +627,8 @@ window.addEventListener("resize", () => {
     rolarConversa();
 });
 
+
+
 ajustarAltura_main()
 expandSidebar()
 adicionar_PicImgs()

@@ -496,38 +496,44 @@ def recomenda_investimento(conteudos, inputs):
 
     return best_option, best_score, best_content
 
-class perguntasIanes:
-    def main():
-        pasta_dados = './DADOS'
 
-        if not os.path.exists(pasta_dados):
-            print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
-            return
+def main():
+    pasta_dados = './DADOS'
 
-        dados_paginas = carregar_conteudo(pasta_dados)
+    if not os.path.exists(pasta_dados):
+        print(f"A pasta '{pasta_dados}' não foi encontrada. Certifique-se de que ela existe e contém arquivos JSON.")
+        return
 
-        lingua = escolher_idioma()
+    dados_paginas = carregar_conteudo(pasta_dados)
 
-        if not lingua_valida(lingua):
-            print("Língua inválida. Por favor, use uma das seguintes: 'en', 'pt', 'es', 'zh-cn'.")
-            return
+    lingua = escolher_idioma()
 
-        inputs_usuario = obter_parametros_usuario(lingua)
+    if not lingua_valida(lingua):
+        print("Língua inválida. Por favor, use uma das seguintes: 'en', 'pt', 'es', 'zh-cn'.")
+        return
 
-        if not inputs_usuario:
-            print("Nenhuma entrada do usuário foi fornecida. Encerrando o programa.")
-            return
+    inputs_usuario = obter_parametros_usuario(lingua)
 
-        melhor_opcao, melhor_score, melhor_conteudo = recomenda_investimento(dados_paginas, inputs_usuario)
+    if not inputs_usuario:
+        print("Nenhuma entrada do usuário foi fornecida. Encerrando o programa.")
+        return
 
-        if melhor_opcao:
-            print(f"\nA melhor opção para investimento é '{melhor_opcao}' com score {melhor_score:.2f}.")
-            print("\nAnalisando os índices do melhor JSON...")
-            melhor_index, melhor_index_score, melhor_url = analise_melhor_json(melhor_conteudo, inputs_usuario)
-            print(f"\nO melhor índice é {melhor_index} com score {melhor_index_score:.2f}.")
-            print(f"URL do melhor índice: {melhor_url}")
-        else:
-            print("Nenhuma opção relevante foi encontrada.")
+    melhor_opcao, melhor_score, melhor_conteudo = recomenda_investimento(dados_paginas, inputs_usuario)
+
+    if melhor_opcao:
+        print(f"\nA melhor opção para investimento é '{melhor_opcao}' com score {melhor_score:.2f}.")
+        print("\nAnalisando os índices do melhor JSON...")
+        melhor_index, melhor_index_score, melhor_url = analise_melhor_json(melhor_conteudo, inputs_usuario)
+        print(f"\nO melhor índice é {melhor_index} com score {melhor_index_score:.2f}.")
+        print(f"URL do melhor índice: {melhor_url}")
+    else:
+        print("Nenhuma opção relevante foi encontrada.")
 
 if __name__ == "__main__":
-    perguntasIanes.main()
+    main()
+
+
+class perguntasIanes:
+    def passarPerguntas():
+        print('hello')
+

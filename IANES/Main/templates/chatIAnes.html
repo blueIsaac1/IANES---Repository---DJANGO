@@ -26,6 +26,7 @@
 
     <!-- Biblioteca jsPDF, para baixar em pdf -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
 
 </head>
 <body id="corpoPagina_chatIanes">
@@ -107,17 +108,16 @@
                         </li>
                     
                         {% for message in messages %}
-                            {% if message.user_message %}
+                        {% if message.user_message %}
                             <li class="message user">
                                 <p>{{ message.user_message.text }}</p>
                             </li>
-                            {% endif %}
-                            {% if message.bot_response %}
+                        {% endif %}
+                        {% if message.bot_response %}
                             <li class="message bot">
                                 <img id="ianes_pic" src="" alt="IAnes Pic">
                                 {% if message.is_new_bot_response %}
-                                    <!-- Aplicar a animação de digitação -->
-                                    <p id="ianes_msg-{{ forloop.counter }}"></p>
+                                <p id="ianes_msg-{{ forloop.counter }}">{{ message.bot_response.text|safe }}</p>
                                     <script>
                                         var botText{{ forloop.counter }} = `{{ message.bot_response.text|escapejs }}`;
                                         var i{{ forloop.counter }} = 0;
