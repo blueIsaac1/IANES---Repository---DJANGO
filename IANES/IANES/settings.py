@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
-import psycopg2
 
 APPEND_SLASH = False
 
