@@ -1,3 +1,5 @@
+#Isaac bosta mijo
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -934,6 +936,4 @@ def processar_e_enviar_pdf(request, pk):
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
     
-
-
 
