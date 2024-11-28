@@ -736,8 +736,9 @@ def list_messages(request, pk=None):
         room = get_object_or_404(Room, pk=pk if pk else last_room.id)
         user_messages = room.user_message.all().order_by('created_at')
         bot_responses = room.bot_response.all().order_by('created_at')
-        rooms = Room.objects.all().order_by('-created_at')
-
+        rooms = Room.objects.filter(user = request.user.id)
+        print(request.user)
+        
         # Preparar as mensagens com o indicador 'is_new_bot_response'
         messages = []
         message_pairs = list(zip_longest(user_messages, bot_responses, fillvalue=None))
