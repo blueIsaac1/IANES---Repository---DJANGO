@@ -45,21 +45,6 @@ if pasta_dados:
 def catch_error_404(request, exception):
     return render(request, 'errors_template.html', {'error_message': 'URL não encontrada.'}, status=404)
 
-def converter_markdown_para_html(texto):
-    # Converter negrito
-    texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
-    # Converter itálico
-    texto = re.sub(r'\*(.*?)\*', r'<em>\1</em>', texto)
-    # Adicionar outras conversões conforme necessário
-    return texto
-
-def formatar_texto(texto):
-    texto_com_quebras = texto.replace('\n', '<br>')
-    texto_formatado = converter_markdown_para_html(texto_com_quebras)
-    return texto_formatado
-
-
-
 def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_response_text):
     # Define o caminho para o arquivo JSON
     caminho_arquivo = 'conversas.json'
@@ -253,7 +238,7 @@ def get_gemini_analysis(content, user_inputs, max_retries=3):
                 f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância, dê essa nota apenas com números inteiros.\n"
                 f"- Uma breve justificativa explicando a adequação e como o conteúdo pode contribuir para o projeto, além de forncer pontos positivos e negativos."
             )
-            response = formatar_texto(model.generate_content(prompt))
+            response = model.generate_content(prompt)
             print(response.text)
 
             # Processar a resposta da IA para extrair a pontuação e a justificativa
@@ -294,8 +279,6 @@ def processar_respostas_finais(respostas):
                 'justificativa': descricao.strip()
             }
 
-            resultado = formatar_texto(resultado)
-
             resultados.append(resultado)
 
         # Ordena os resultados pela pontuação, do maior para o menor
@@ -318,8 +301,6 @@ def processar_respostas_finais(respostas):
 
             if num_resultados < 3:
                 mensagem += f"Observação: Apenas {num_resultados} opção(ões) foram relevantes para o seu projeto."
-
-            mensagem = formatar_texto(mensagem)
             return mensagem
         else:
             return "Não foi possível encontrar uma recomendação adequada para o seu projeto."
@@ -625,7 +606,7 @@ def send_message(request, pk):
                     model = genai.GenerativeModel('gemini-1.5-flash')
                     bot_response = model.generate_content(user_message_text)
                     bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
-                    bot_response_text = formatar_texto(bot_response_text)
+                    bot_response_text = bot_response_text
                 except Exception as e:
                     logger.error(f"Erro no processamento da IA: {e}")
                     bot_response_text = f"Erro: {str(e)}"
