@@ -394,10 +394,6 @@ def send_message(request, pk):
                     )
                     current_room.bot_response.add(bot_response_instance)
 
-                    # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                    request.session['new_bot_response_id'] = bot_response_instance.id
-
-                    return redirect('list_messages', pk=current_room.id)
                 try:
                     parameter_index = request.session.get('parameter_index', 0)
                     respostas = request.session.get('responses', {})
@@ -608,12 +604,6 @@ def send_message(request, pk):
                     text=bot_response_text
                 )
                 current_room.bot_response.add(bot_response_instance)
-
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
-                return redirect('list_messages', pk=current_room.id)
-
             elif user_message_text.strip().upper() == "IANES":
                 # Inicia o processo de coleta de dados
                 request.session['collecting_parameters'] = True
@@ -634,12 +624,7 @@ def send_message(request, pk):
                     text=bot_response_text
                 )
                 current_room.bot_response.add(bot_response_instance)
-
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
-                return redirect('list_messages', pk=current_room.id)
-            
+        
             elif user_message_text.strip().upper() != "IANES":
                 # Processamento normal da mensagem usando a IA
                 try:
@@ -652,31 +637,25 @@ def send_message(request, pk):
                     logger.error(f"Erro no processamento da IA: {e}")
                     bot_response_text = f"Erro: {str(e)}"
 
-                    # Salva a mensagem do usuário e a resposta do bot
-                    user_message = UserMessage.objects.create(
-                        user=current_room.user,
-                        text=user_message_text,
-                        created_at=None
-                    )
-                    processar_audio_ianes(bot_response_text)
-                    # Salva a resposta do bot como uma mensagem
-                    bot_response_instance = BotResponse.objects.create(
-                        text=bot_response_text
-                    )
-                    current_room.bot_response.add(bot_response_instance)
+                user_message = UserMessage.objects.create(
+                    user=current_room.user,
+                    text=user_message_text,
+                    created_at=None
+                )
+                processar_audio_ianes(bot_response_text, pk=pk)
+                # Salva a resposta do bot como uma mensagem
+                bot_response_instance = BotResponse.objects.create(
+                    text=bot_response_text
+                )
+                current_room.user_message.add(user_message)
+                current_room.bot_response.add(bot_response_instance)            
+                current_user_text = str(current_room.user)
+                salvar_conversa_em_json(room_id=current_room.id,
+                                        current_user = current_user_text,
+                                        user_message_text=user_message_text,
+                                        bot_response_text=bot_response_text)
 
-                    # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                    request.session['new_bot_response_id'] = bot_response_instance.id
-                    current_room.user_message.add(user_message)
-                    current_room.bot_response.add(bot_response_instance)            
-                    current_user_text = str(current_room.user)
-                    salvar_conversa_em_json(room_id=current_room.id,
-                                            current_user = current_user_text,
-                                            user_message_text=user_message_text,
-                                            bot_response_text=bot_response_text)
-
-                    return redirect('list_messages', pk=pk)
-
+                return redirect('list_messages', pk=pk)
 
             else:
                 # Resposta padrão para mensagens que não iniciam o processo
@@ -686,57 +665,8 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
-                current_room.bot_response.add(bot_response_instance)
+                current_room.bot_response.add(bot_response_instance)    
 
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
-                return redirect('list_messages', pk=current_room.id)
-            
-
-        else:
-            # Se user_message_text estiver vazio
-            return redirect('list_messages', pk=current_room.id)
-    elif request.method == 'GET':
-        # Para requisições GET
-        return redirect('list_messages', pk=current_room.id)
-    else:
-        try:
-            genai.configure(api_key=GOOGLE_API_KEY)
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            bot_response = model.generate_content(user_message_text)
-            bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
-            bot_response_text = translate_text(bot_response_text, 'pt')
-            print(bot_response_text)
-
-        except Exception as e:
-            logger.error(f"Erro no processamento da IA: {e}")
-            bot_response_text = f"Erro: {str(e)}"
-
-        # Salva a mensagem do usuário e a resposta do bot
-        user_message = UserMessage.objects.create(
-            user=current_room.user,
-            text=user_message_text,
-            created_at=None
-        )
-        # Salva a resposta do bot como uma mensagem
-        bot_response_instance = BotResponse.objects.create(
-            text=bot_response_text
-        )
-        current_room.bot_response.add(bot_response_instance)
-
-        # Adicione esta linha para armazenar o ID da nova resposta na sessão
-        request.session['new_bot_response_id'] = bot_response_instance.id
-        current_room.user_message.add(user_message)
-        current_room.bot_response.add(bot_response_instance)            
-        current_user_text = str(current_room.user)
-        salvar_conversa_em_json(room_id=current_room.id,
-                                current_user = current_user_text,
-                                user_message_text=user_message_text,
-                                bot_response_text=bot_response_text)
-
-        return redirect('list_messages', pk=pk)
-    return redirect('index')
 
 
 @login_required(login_url='auth')
