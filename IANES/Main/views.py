@@ -33,15 +33,16 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from collections import OrderedDict
 from django.core import serializers
+from deep_translator import GoogleTranslator
 
 logger = logging.getLogger(__name__)
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 
 global pasta_dados
-pasta_dados = 'C://Users//CTDEV23//Desktop//IANES---Repository---DJANGO//DADOS'
+pasta_dados = './DADOS'
 if pasta_dados:
-    print('penis')
+    print('capturei a pasta')
 def catch_error_404(request, exception):
     return render(request, 'errors_template.html', {'error_message': 'URL não encontrada.'}, status=404)
 
@@ -606,7 +607,7 @@ def send_message(request, pk):
                     model = genai.GenerativeModel('gemini-1.5-flash')
                     bot_response = model.generate_content(user_message_text)
                     bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
-                    bot_response_text = bot_response_text
+                    bot_response_text = translate_text(bot_response_text, 'pt')
                 except Exception as e:
                     logger.error(f"Erro no processamento da IA: {e}")
                     bot_response_text = f"Erro: {str(e)}"
@@ -651,6 +652,7 @@ def send_message(request, pk):
             model = genai.GenerativeModel('gemini-1.5-flash')
             bot_response = model.generate_content(user_message_text)
             bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
+            bot_response_text = translate_text(bot_response_text, 'pt')
         except Exception as e:
             logger.error(f"Erro no processamento da IA: {e}")
             bot_response_text = f"Erro: {str(e)}"
@@ -829,6 +831,31 @@ def logout(request):
         return redirect('auth')
     else:
         pass
+
+@csrf_exempt
+def list_messages_iframe(request, pk=None):
+    try:
+        room = get_object_or_404(Room, pk=pk)
+        user_messages = room.user_message.all().order_by('created_at')
+        bot_responses = room.bot_response.all().order_by('created_at')
+
+        # Preparar as mensagens
+        messages = []
+        message_pairs = zip(user_messages, bot_responses)
+
+        for user_message, bot_response in message_pairs:
+            messages.append({
+                'user_message': user_message.text,
+                'bot_response': bot_response.text if bot_response else None
+            })
+
+    except Exception as e:
+        messages = []
+        logger.error(f"Erro ao acessar mensagens da sala: {e}")
+
+    return render(request, 'chat/_messages_iframe.html', {
+        'messages': messages
+    })
 
 def listar_ultima_sala():
     last_room = Room.objects.order_by('-id').first()
