@@ -20,7 +20,7 @@
     left: 50%; /* Mantém o centro */
     width: 100%;
     height: 0.1vw;
-    background-color: var(--color-fundo-claro);
+    background-color: #ffffff;
     transform: translateX(-150%) scale(0); /* Começa com escala 0 */
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -68,18 +68,11 @@
 
     position: relative;
 
-    background: radial-gradient(circle farthest-corner at center center, #E30613 25%, #9A1915 100%);
+    background: radial-gradient(circle farthest-corner at center center, var(--color_tema-text_c2) 25%, var(--color_tema-text_c2) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-#texto_banner_apresent_titulo::selection {
-    background: radial-gradient(circle farthest-corner at center center, #8d0258 25%, #15179a 100%);
-    background: var(--color-azul-medio_selecionado);
-    color: var(--color-fundo-claro);
-}
-
 
 #banner_logo_img {
     width: 12vw;
@@ -91,14 +84,14 @@
     line-height: 1.5;
     font-weight: bold;
     text-align: center;
-    color: #000000;
+    color: var(--color_tema-text_1);
     margin: 0;
     padding: 0;
     width: 40%;
 }
 
 #botao_banner_exp {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
     color: #ffffff;
     font-size: 1.4vw;
     font-weight: bold;
@@ -114,7 +107,7 @@
 }
 
 #botao_banner_exp:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
     color: #ffffff;
 }
 
@@ -158,7 +151,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-fundo_2);
     border: none;
     border-radius: 1.2vw;
     width: 90%;
@@ -216,7 +209,7 @@
 }
 
 .btn_vantConta:hover {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-fundo_2);
 }
 
 .btn_vantConta p {
@@ -266,7 +259,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-fundo_1);
     border: none;
     border-radius: 0vw;
     width: 100%;
@@ -287,7 +280,7 @@
 }
 
 #wave_up_maisSobre_svg path, #wave_down_maisSobre_svg path {
-    fill: var(--color-vermelho-medio);
+    fill: var(--color_tema-fundo_1);
 }
 
 .container_maisSobre_g {
@@ -297,17 +290,17 @@
     flex-direction: row;
     background-color: transparent;
     width: 90%;
-    gap: 2vw;
     padding: 1vw;
 }
 
 .container_maisSobre_left_g {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: row;
     background-color: transparent;
     width: 50%;
+    margin-right: 4vw;
 }
 
 .container_maisSobre_left_g img {
@@ -317,11 +310,12 @@
 
 .container_maisSobre_right_g {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     background-color: transparent;
     width: 50%;
+    margin-left: 4vw;
     gap: 2vw;
 }
 
@@ -331,7 +325,7 @@
     color: #ffffff;
     font-weight: 600;
     text-align: left;
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     background-color: transparent;
     width: 75%;
 }
@@ -390,13 +384,11 @@
     background-color: transparent;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 0vw;
     width: 100%;
     min-height: 30vw;
-    padding-top: 2vw;
-    padding-bottom: 2vw;
     margin-bottom: 3vw;
 }
 
@@ -420,7 +412,7 @@
 .container_maisIARE #texto_maisIARE_titulo {
     margin: 0;
     padding: 0;
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: bold;
     text-align: center;
     font-size: 1.6vw;
@@ -430,7 +422,7 @@
 .container_maisIARE #texto_maisIARE_desc {
     margin: 0;
     padding: 0;
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: bold;
     text-align: center;
     font-size: 1.2vw;
@@ -477,7 +469,7 @@
 }
 
 .maisIARE_blocoNotas_cat_title {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-fundo_1);
     width: 15%;
     height: 3vw;
     display: flex;
@@ -491,7 +483,7 @@
     z-index: 43;
 }
 .maisIARE_blocoNotas_cat_title:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-fundo_2);
     height: 6vw;
     border-radius: 0.5vw;
     padding-top: 4vw;
@@ -524,8 +516,8 @@
     position: absolute;
     top: 150%;
     left: 0;
-    background-color: var(--color-fundo-claro);
-    border: 0.4vw var(--color-vermelho-medio) solid;
+    background-color: var(--color_tema-fundo-tem);
+    border: 0.4vw var(--color_tema-fundo_1) solid;
     border-radius: 0.5vw;
     box-sizing: border-box;
 }
@@ -547,7 +539,7 @@
 .maisIARE_blocoNotas_box p {
     margin: 0;
     padding: 0;
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 600;
     width: 100%;
     text-align: left;
@@ -569,9 +561,9 @@
 .tp_blocoNotas_clickExpand {
     opacity: 0;
     position: absolute;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-tooltip-bg);
     color: #ffffff;
-    font-size: 1.2vw;
+    font-size: 1vw;
     font-weight: 600;
     padding: 0.4vw;
     border-radius: 0.2vw;
@@ -591,7 +583,7 @@
     transform: translateX(0%);
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid var(--color-azul-medio);
+    border-top: 8px solid var(--color_tema-tooltip-bg);
 }
 
 /* Tooltip aparece quando o mouse está sobre qualquer título de categoria */

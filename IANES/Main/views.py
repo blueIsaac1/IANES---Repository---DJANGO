@@ -36,10 +36,14 @@ from reportlab.lib.pagesizes import A4
 from collections import OrderedDict
 from django.core import serializers
 from deep_translator import GoogleTranslator
+from gtts import gTTS
 
 logger = logging.getLogger(__name__)
+perguntas = OrderedDict([])
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
+
+lingua = 'pt'
 
 global pasta_dados
 pasta_dados = './DADOS'
@@ -97,20 +101,34 @@ def auth(request):
 
         if action == 'login':
             # Ação de Login
-            username_login = request.POST.get('username')
+            usernameOrEmail_login = request.POST.get('username')
             password_login = request.POST.get('password')
 
-            try:
-                user = User.objects.get(username=username_login)
-            except User.DoesNotExist:
-                error_message = 'errorAuth_userDontExists'
+            user = None
 
-            user = authenticate(username=username_login, password=password_login)
-            if user:
-                login_django(request, user) 
-                return redirect('index')
+            # Verifica se o login é por e-mail ou username
+            if '@' in usernameOrEmail_login:
+                try:
+                    # Tenta encontrar o usuário pelo e-mail
+                    user_instance = User.objects.get(email=usernameOrEmail_login)
+                    usernameOrEmail_login = user_instance.username  # Substitui pelo username correspondente
+                except User.DoesNotExist:
+                    error_message = 'errorAuth_emailNotFind'
             else:
-                error_message = 'errorAuth_invalidCredentials'
+                # Verifica pelo username
+                if not User.objects.filter(username=usernameOrEmail_login).exists():
+                    error_message = 'errorAuth_userDontExists'
+
+            # Só continua a autenticação se não houve erro na etapa anterior
+            if not error_message:
+                # Autentica o usuário
+                user = authenticate(username=usernameOrEmail_login, password=password_login)
+
+                if user:
+                    login_django(request, user) 
+                    return redirect('index')
+                else:
+                    error_message = 'errorAuth_invalidCredentials'
 
         elif action == 'signup':
             # Ação de Cadastro
@@ -191,7 +209,7 @@ def obter_cotacao_dolar():
     return 5.00
 
 
-def translate_text(text, target_lang='pt'):
+def translate_text(text, target_lang):
     try:
         translator = GoogleTranslator(source='auto', target=target_lang)
         return translator.translate(text)
@@ -389,9 +407,41 @@ def send_message(request, pk):
                     if parameter_index < len(perguntas_keys):
                         current_question_key = perguntas_keys[parameter_index]
 
-                    if current_question_key in ["nome", "nome_empresa", "projeto", "publicoalvo"]:
+
+                    if current_question_key == "lingua":
+                        global lingua
+                        if user_message_text.strip().upper() in ['PT-BR', 'PT', 'PTBR', 'EN', 'ES', 'FR', 'ZH-CN']:
+                            if user_message_text.strip().upper() in ['PT-BR', 'PTBR', 'PT']:
+                                lingua = None
+                                request.session['parameter_index'] = parameter_index
+                                request.session['responses'] = respostas
+                                perguntas["nome"] = translate_text("Por favor, insira o nome da pessoa responsável: ", lingua)
+                                perguntas["nome_empresa"] = translate_text("Por favor, insira o nome da empresa responsável: ", lingua)
+                            else:
+                                lingua = user_message_text.strip().lower()
+                                request.session['parameter_index'] = parameter_index
+                                request.session['responses'] = respostas
+                                perguntas["nome"] = translate_text("Por favor, insira o nome da pessoa responsável: ", lingua)
+                                perguntas["nome_empresa"] = translate_text("Por favor, insira o nome da empresa responsável: ", lingua)
+                        else:
+                            bot_response_text = "Por favor, insira um idioma dísponivel..."
+                        parameter_index += 1
+                        perguntas["lucro"] = translate_text("Qual é a faixa de lucro da empresa? (EP, EPP, D+): ", lingua)
+                        perguntas["numero_colaboradores"] = translate_text("Por favor, insira o número de colaboradores do projeto: ", lingua)
+                        perguntas["CNPJ"] = translate_text("Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): ", lingua)
+                        perguntas["Email"] = translate_text("Por favor, insira o e-mail do responsável pelo projeto: ", lingua)
+                        perguntas["projeto"] = translate_text("Por favor, informe o nome do projeto: ", lingua)
+                        perguntas["orcamento"] = translate_text("Qual é o orçamento previsto para o projeto em reais (R$)? ", lingua)
+                        perguntas["extensao"] = translate_text("Qual é a extensão geográfica do projeto? (Regional, Nacional ou Global): ", lingua)
+                        perguntas["tempo"] = translate_text("Qual é a duração prevista do projeto em meses? ", lingua)
+                        perguntas["publicoalvo"] = translate_text("Quem é o público-alvo do projeto? ", lingua)
+                        perguntas["itensfinanciaveis"] = translate_text("Os itens do projeto podem ser financiados? (Sim ou Não): ", lingua)
+                        perguntas["tema"] = translate_text(f"Escolha o tema do projeto (1-{len(temas)}):\n" + "\n".join([f"{k}: {v}" for k, v in temas.items()]), lingua)
+                        # A pergunta 'vertente' será adicionada dinamicamente após a escolha do tema)
+
+                    elif current_question_key in ["nome", "nome_empresa", "projeto", "publicoalvo"]:
                             if not user_message_text.strip():
-                                bot_response_text = "Por favor, preencha o campo corretamente. Este campo não pode ficar em branco."
+                                bot_response_text = translate_text("Por favor, preencha o campo corretamente. Este campo não pode ficar em branco.", lingua)
                             else:
                                 respostas[current_question_key] = user_message_text.strip()
                                 parameter_index += 1
@@ -404,7 +454,7 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         else:
-                            bot_response_text = "Por favor, insira uma faixa de lucro válida: 'EP', 'EPP' ou 'D+'."
+                            bot_response_text = translate_text("Por favor, insira uma faixa de lucro válida: 'EP', 'EPP' ou 'D+'.", lingua)
                     elif current_question_key == "numero_colaboradores":
                         resposta_limpa = re.sub(r'[^0-9]', '', user_message_text)
                         try:
@@ -413,7 +463,7 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         except ValueError:
-                            bot_response_text = "Erro! Por favor, insira apenas números sem decimais."
+                            bot_response_text = translate_text("Erro! Por favor, insira apenas números sem decimais.", lingua)
                     elif current_question_key == "CNPJ":
                         if user_message_text.strip().lower() == 'não':
                             respostas[current_question_key] = user_message_text.strip()
@@ -426,7 +476,7 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         else:
-                            bot_response_text = "CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'."
+                            bot_response_text = translate_text("CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'.", lingua)
                     elif current_question_key == "Email":
                         if "@" in user_message_text and "." in user_message_text:
                             respostas[current_question_key] = user_message_text.strip()
@@ -434,7 +484,7 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         else:
-                            bot_response_text = "E-mail inválido. Por favor, insira um e-mail válido que contenha '@' e '.'."
+                            bot_response_text = translate_text("E-mail inválido. Por favor, insira um e-mail válido que contenha '@' e '.'.", lingua)
                     elif current_question_key == "orcamento":
                         resposta_limpa = re.sub(r'[^0-9,\.]', '', user_message_text)
                         try:
@@ -443,15 +493,15 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         except ValueError:
-                            bot_response_text = "Por favor, insira um valor numérico válido para o orçamento."
+                            bot_response_text = translate_text("Por favor, insira um valor numérico válido para o orçamento.", lingua)
                     elif current_question_key == "extensao":
-                        if user_message_text.strip().lower() in ["regional", "nacional", "global"]:
+                        if user_message_text.strip().lower() in [translate_text("regional", lingua), translate_text("nacional", lingua), translate_text("global", lingua)]:
                             respostas[current_question_key] = user_message_text.strip()
                             parameter_index += 1
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         else:
-                            bot_response_text = "Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global."
+                            bot_response_text = translate_text("Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global.", lingua)
                     elif current_question_key == "tempo":
                         try:
                             respostas[current_question_key] = int(user_message_text)
@@ -459,15 +509,15 @@ def send_message(request, pk):
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         except ValueError:
-                            bot_response_text = "Por favor, insira um número inteiro para a duração do projeto."
+                            bot_response_text = translate_text("Por favor, insira um número inteiro para a duração do projeto.", lingua)
                     elif current_question_key == "itensfinanciaveis":
-                        if user_message_text.strip().lower() in ["sim", "não", "nao"]:
+                        if user_message_text.strip().lower() in [translate_text("sim", lingua), translate_text("não", lingua), "nao"]:
                             respostas[current_question_key] = user_message_text.strip()
                             parameter_index += 1
                             request.session['parameter_index'] = parameter_index
                             request.session['responses'] = respostas
                         else:
-                            bot_response_text = "Por favor, responda com 'sim' ou 'não'."
+                            bot_response_text = translate_text("Por favor, responda com 'sim' ou 'não'.", lingua)
                     elif current_question_key == "tema":
                         try:
                             tema_escolhido = int(user_message_text)
@@ -476,9 +526,9 @@ def send_message(request, pk):
                                 # Obtém a lista de vertentes para o tema escolhido
                                 vertentes_list = vertentes_dict.get(tema_escolhido, [])
                                 # Adiciona a pergunta de vertente ao dicionário de perguntas
-                                perguntas["vertente"] = "Escolha a vertente:\n" + "\n".join(
+                                perguntas["vertente"] = translate_text("Escolha a vertente:\n" + "\n".join(
                                     [f"{i+1}: {v}" for i, v in enumerate(vertentes_list)]
-                                )
+                                ), lingua)
                                 # Insere 'vertente' em 'perguntas_keys' após a posição atual
                                 perguntas_keys = request.session.get('perguntas_keys')
                                 perguntas_keys.insert(parameter_index + 1, "vertente")
@@ -490,10 +540,11 @@ def send_message(request, pk):
                                 request.session['parameter_index'] = parameter_index
                                 request.session['responses'] = respostas
                             else:
-                                bot_response_text = f"Por favor, escolha um número entre 1 e {len(temas)}."
+                                bot_response_text = translate_text(f"Por favor, escolha um número entre 1 e {len(temas)}.", lingua)
                         except ValueError:
-                            bot_response_text = "Por favor, insira um número válido para o tema."
+                            bot_response_text = translate_text("Por favor, insira um número válido para o tema.", lingua)
                     elif current_question_key == "vertente":
+                        temas = translate_text(temas, lingua)
                         tema_escolhido = list(temas.keys())[list(temas.values()).index(respostas['tema'])]
                         vertentes_list = vertentes_dict.get(tema_escolhido, [])
                         try:
@@ -571,25 +622,12 @@ def send_message(request, pk):
 
                 # Define as perguntas iniciais
                 perguntas = OrderedDict([
-                    ("nome", "Por favor, insira o nome da pessoa responsável: "),
-                    ("nome_empresa", "Por favor, insira o nome da empresa responsável: "),
-                    ("lucro", "Qual é a faixa de lucro da empresa? (EP, EPP, D+): "),
-                    ("numero_colaboradores", "Por favor, insira o número de colaboradores do projeto: "),
-                    ("CNPJ", "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): "),
-                    ("Email", "Por favor, insira o e-mail do responsável pelo projeto: "),
-                    ("projeto", "Por favor, informe o nome do projeto: "),
-                    ("orcamento", "Qual é o orçamento previsto para o projeto em reais (R$)? "),
-                    ("extensao", "Qual é a extensão geográfica do projeto? (Regional, Nacional ou Global): "),
-                    ("tempo", "Qual é a duração prevista do projeto em meses? "),
-                    ("publicoalvo", "Quem é o público-alvo do projeto? "),
-                    ("itensfinanciaveis", "Os itens do projeto podem ser financiados? (Sim ou Não): "),
-                    ("tema", f"Escolha o tema do projeto (1-{len(temas)}):\n" + "\n".join([f"{k}: {v}" for k, v in temas.items()])),
-                    # A pergunta 'vertente' será adicionada dinamicamente após a escolha do tema
+                    ("lingua", "Por favor, insira o idioma para a consulta (pt-br, pt, en, es, fr, zh-cn): "),
                 ])
                 perguntas_keys = list(perguntas.keys())
                 request.session['perguntas'] = perguntas
                 request.session['perguntas_keys'] = perguntas_keys
-                bot_response_text = perguntas["nome"]
+                bot_response_text = perguntas["lingua"]
 
                 # Salva a resposta do bot como uma mensagem
                 bot_response_instance = BotResponse.objects.create(
@@ -614,16 +652,30 @@ def send_message(request, pk):
                     logger.error(f"Erro no processamento da IA: {e}")
                     bot_response_text = f"Erro: {str(e)}"
 
-                # Salva a resposta do bot como uma mensagem
-                bot_response_instance = BotResponse.objects.create(
-                    text=bot_response_text
-                )
-                current_room.bot_response.add(bot_response_instance)
+                    # Salva a mensagem do usuário e a resposta do bot
+                    user_message = UserMessage.objects.create(
+                        user=current_room.user,
+                        text=user_message_text,
+                        created_at=None
+                    )
+                    processar_audio_ianes(bot_response_text)
+                    # Salva a resposta do bot como uma mensagem
+                    bot_response_instance = BotResponse.objects.create(
+                        text=bot_response_text
+                    )
+                    current_room.bot_response.add(bot_response_instance)
 
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
+                    # Adicione esta linha para armazenar o ID da nova resposta na sessão
+                    request.session['new_bot_response_id'] = bot_response_instance.id
+                    current_room.user_message.add(user_message)
+                    current_room.bot_response.add(bot_response_instance)            
+                    current_user_text = str(current_room.user)
+                    salvar_conversa_em_json(room_id=current_room.id,
+                                            current_user = current_user_text,
+                                            user_message_text=user_message_text,
+                                            bot_response_text=bot_response_text)
 
-                return redirect('list_messages', pk=current_room.id)
+                    return redirect('list_messages', pk=pk)
 
 
             else:
@@ -655,6 +707,8 @@ def send_message(request, pk):
             bot_response = model.generate_content(user_message_text)
             bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
             bot_response_text = translate_text(bot_response_text, 'pt')
+            print(bot_response_text)
+
         except Exception as e:
             logger.error(f"Erro no processamento da IA: {e}")
             bot_response_text = f"Erro: {str(e)}"
@@ -834,31 +888,18 @@ def logout(request):
     else:
         pass
 
-@csrf_exempt
-def list_messages_iframe(request, pk=None):
-    try:
-        room = get_object_or_404(Room, pk=pk)
-        user_messages = room.user_message.all().order_by('created_at')
-        bot_responses = room.bot_response.all().order_by('created_at')
-
-        # Preparar as mensagens
-        messages = []
-        message_pairs = zip(user_messages, bot_responses)
-
-        for user_message, bot_response in message_pairs:
-            messages.append({
-                'user_message': user_message.text,
-                'bot_response': bot_response.text if bot_response else None
-            })
-
-    except Exception as e:
-        messages = []
-        logger.error(f"Erro ao acessar mensagens da sala: {e}")
-
-    return render(request, 'chat/_messages_iframe.html', {
-        'messages': messages
-    })
-
+@csrf_exempt  # Exemplo simples sem verificação CSRF, mas é bom configurar corretamente
+def set_language(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            user_language = data.get('lang')  # Pega o idioma do corpo da requisição
+            if user_language:
+                global lingua
+                lingua = user_language
+        except ValueError as e:
+            print(f"{e}")
+            
 def listar_ultima_sala():
     last_room = Room.objects.order_by('-id').first()
     return last_room.id if last_room else None
@@ -936,4 +977,13 @@ def processar_e_enviar_pdf(request, pk):
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
     
+def processar_audio_ianes(bot_response, pk):
+    pk=pk
+    texto = f'{bot_response}'
+    tts = gTTS(text=texto, lang='pt', slow=False)
+    try:
+        titulo = f"audio_texto_sala:{pk}.mp3"
+        tts.save('teste.mp3')
+    except Exception as e:
+        print(e)
 

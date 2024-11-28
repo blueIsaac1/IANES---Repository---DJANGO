@@ -7,26 +7,26 @@
   box-sizing: border-box;
 }
 .lds-spinner {
-  color: var(--color-vermelho-medio);
+  color: var(--color-verde-sucesso);
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 4.4vw;
+  height: 4.4vw;
 }
 .lds-spinner div {
-  transform-origin: 40px 40px;
+  transform-origin: 2.2vw 2.2vw;
   animation: lds-spinner 1.2s linear infinite;
 }
 .lds-spinner div:after {
   content: " ";
   display: block;
   position: absolute;
-  top: 3.2px;
-  left: 36.8px;
-  width: 6.4px;
-  height: 17.6px;
+  top: 0.2vw;
+  left: 2vw;
+  width: 0.4vw;
+  height: 1vw;
   border-radius: 20%;
-  background: var(--color-vermelho-medio);
+  background: var(--color-verde-sucesso);
 }
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);

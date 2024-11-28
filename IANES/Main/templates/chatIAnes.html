@@ -143,7 +143,12 @@
                                         <ion-icon name="copy-outline"></ion-icon>
                                         <p class="tp_extraO_IA" id="tp_ia-copy-{{ forloop.counter }}">Copiar</p>
                                     </div>
+                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip('audio', '{{ forloop.counter }}')" onmouseout="hideTooltip('audio', '{{ forloop.counter }}')">
+                                        <ion-icon name="volume-medium-outline"></ion-icon>
+                                        <p class="tp_extraO_IA" id="tp_ia-audio-{{ forloop.counter }}">Narrar Mensagem</p>
+                                    </div>
                                 </div>
+                                
                             </li>
                             {% endif %}
                         {% endfor %}

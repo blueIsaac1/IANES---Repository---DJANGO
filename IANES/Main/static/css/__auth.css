@@ -13,9 +13,7 @@ main {
     justify-content: center;
     flex-direction: row;
     width: 100%;
-    height: auto;
     box-sizing: border-box;
-    background-color: transparent;
 }
 
 /* Pré-feito uma Animação de Hover nos Links */
@@ -33,7 +31,7 @@ main {
     left: 50%; /* Mantém o centro */
     width: 100%;
     height: 0.02vw;
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
     transform: translateX(-50%) scale(0); /* Começa com escala 0 */
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -167,7 +165,7 @@ main {
     font-size: 1.2vw;
     font-weight: bold;
     text-align: left;
-    color: #000000;
+    color: var(--color_tema-text_1);
     line-height: 1;
 }
 
@@ -189,7 +187,7 @@ main {
     font-size: 0.8vw;
     font-weight: 600;
     text-align: right;
-    color: #000000;
+    color: var(--color_tema-text_1);
     line-height: 1;
 }
 
@@ -197,12 +195,12 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: transparent;
     padding: 0.6vw;
-    border: #000000 0.15vw solid;
+    border: var(--color_tema-text_1) 0.15vw solid;
     border-radius: 0.4vw;
     gap: 0.5vw;
-    transition: 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
@@ -215,7 +213,7 @@ main {
     font-size: 1vw;
     font-weight: 600;
     text-align: left;
-    color: #000000;
+    color: var(--color_tema-text_1);
     line-height: 1;
 }
 
@@ -226,18 +224,19 @@ main {
     margin: 0;
     padding: 0;
     font-size: 1vw;
+    color: var(--color_tema-text_1);
 }
 
 .box_auth_top_right button:hover {
-    background-color: #000000;
+    background-color: var(--color_tema-text_1);
 }
 
 .box_auth_top_right button:hover p {
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 .box_auth_top_right button:hover ion-icon {
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 /* Parte do Container */
@@ -245,9 +244,9 @@ main {
 .box_auth_bot {
     width: 100%;
     height: auto;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     padding: 1vw;
-    border: var(--color-vermelho-medio) 0.2vw solid;
+    border: var(--color_tema-fundo_1) 0.2vw solid;
     border-radius: 0.5vw;
     display: flex;
     flex-direction: column;
@@ -300,7 +299,7 @@ main {
     font-size: 1vw;
     font-weight: 600;
     text-align: left;
-    color: #000000;
+    color: var(--color_tema-text_1);
     line-height: 1;
 }
 
@@ -310,7 +309,7 @@ main {
     font-size: 0.8vw;
     font-weight: 600;
     text-align: left;
-    color: var(--color-vermelho-medio);
+    color: var(--color_tema-btn-bg_1);
     line-height: 1;
     text-decoration: none;
 }
@@ -332,7 +331,7 @@ main {
 }
 
 .div_input_area.active {
-    border-bottom: var(--color-vermelho-medio) 0.15vw solid;
+    border-bottom: var(--color_tema-fundo_1) 0.15vw solid;
 }
 
 .div_input_area .icon_login {
@@ -359,7 +358,7 @@ main {
     font-size: 1vw;
     font-weight: 400;
     text-align: left;
-    color: #000000;
+    color: var(--color_tema-text_1);
     line-height: 1;
     letter-spacing: 0.1vw;
 }
@@ -416,7 +415,7 @@ main {
 }
 
 .btn_executar_auth {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
     border: none;
     border-radius: 0.2vw;
     width: 100%;
@@ -432,7 +431,7 @@ main {
 }
 
 .btn_executar_auth:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
 }
 
 /* Concordo com os Termos e Politica */
@@ -453,7 +452,7 @@ main {
     width: 1.5vw;
     height: 1.5vw;
     appearance: none;
-    border: 0.15vw solid var(--color-vermelho-medio);
+    border: 0.15vw solid var(--color_tema-btn-bg_1);
     border-radius: 0.2vw;
     outline: none;
     cursor: pointer;
@@ -465,8 +464,8 @@ main {
 }
 
 #check_concordo_TermPriv[type="checkbox"]:checked {
-    background-color: var(--color-vermelho-medio);
-    border-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
+    border-color: var(--color_tema-btn-bg_1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -479,7 +478,7 @@ main {
     top: 50%;
     width: 0.3vw;
     height: 0.7vw;
-    border: solid white;
+    border: solid #ffffff;
     border-width: 0vw 0.15vw 0.15vw 0vw;
     border-radius: 0%;
     transform: translate(-45%, -60%) rotate(45deg);
@@ -502,7 +501,7 @@ main {
     font-size: 1vw;
     font-weight: 500;
     text-align: center;
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .div_texto_concordo span {
@@ -515,7 +514,7 @@ main {
     font-size: 1vw;
     font-weight: 500;
     text-align: center;
-    color: var(--color-vermelho-medio);
+    color: var(--color_tema-btn-bg_1);
 }
 
 #texto_auth_concordo_term {
@@ -653,7 +652,7 @@ main {
 }
 
 #login_user_svg path {
-    fill: #000000;
+    fill: var(--color_tema-text_1);
 }
 
 #signup_user_svg {
@@ -665,7 +664,7 @@ main {
 }
 
 #signup_user_svg path {
-    fill: #000000;
+    fill: var(--color_tema-text_1);
 }
 
 /* Icone Container */
@@ -741,7 +740,7 @@ main {
 .tooltip_auth {
     display: none; /* Inicialmente escondido */
     position: absolute;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_1);
     color: #ffffff;
     font-size: 1.2vw;
     padding: 0.3vw;
@@ -780,7 +779,7 @@ main {
     font-weight: 700;
     text-align: center;
     color: var(--color-cinza);
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
 }
 
 /* Outros Logins */
@@ -799,11 +798,11 @@ main {
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     padding: 0.6vw;
     padding-left: 1vw;
     padding-right: 1vw;
-    border: #000000 solid 0.2vw;
+    border: var(--color_tema-text_1) solid 0.2vw;
     border-radius: 0.6vw;
     gap: 0.5vw;
     cursor: pointer;
@@ -816,7 +815,7 @@ main {
     font-size: 0.8vw;
     font-weight: 700;
     text-align: center;
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .outros_auths button img {
@@ -827,11 +826,35 @@ main {
 }
 
 .outros_auths button:hover {
-    background-color: #000000;
+    background-color: var(--color_tema-text_1);
     /* background-color: var(--color-cinza_hover_bg_light); */
     /* border: var(--color-cinza_hover_bg_light) solid 0.2vw; */
 }
 
 .outros_auths button:hover p {
-    color: #ffffff;
+    color: var(--color_tema-text_2);
+}
+
+/* Mensagens de Erro de Tentativas de Login */
+
+.error_message_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5vw;
+}
+
+.error_message_box ion-icon {
+    color: var(--color-vermelho-main);
+    font-size: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error_message {
+    color: var(--color-vermelho-main);
+    font-size: 1vw;
+    font-weight: 700;
 }

@@ -80,15 +80,28 @@
                 </div>
                 <div class="box_login_bot box_auth_bot">
                     <form action="{% url 'auth' %}" method="post" id="forms_login">
-                        {% csrf_token %} <!-- form login -->
-                        <!-- Input 1: Usuario ou Email -->
+                        {% csrf_token %} 
+                        <!-- form login -->
                         <input type="hidden" name="action" value="login">
-                        {% if error_message %}
-                            <p class="error">{{ error_message }}</p>
+
+                        {% if error_message == 'errorAuth_userDontExists' or error_message == 'errorAuth_emailNotFind' or error_message == 'errorAuth_invalidCredentials' %}
+                        <div class="error_message_box">
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            {% if error_message == 'errorAuth_userDontExists' %}
+                            <p id="texto_errorAuth_userDontExists" class="error_message">Esse usuário não Existe</p>
+                            {% elif error_message == 'errorAuth_emailNotFind' %}
+                            <p id="texto_errorAuth_emailNotFind" class="error_message">Email não encontrado</p>
+                            {% elif error_message == 'errorAuth_invalidCredentials' %}
+                            <p id="texto_errorAuth_invalidCredentials" class="error_message">Usuário/E-mail ou Senha incorretos</p>
+                            {% endif %}
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                        </div>
                         {% endif %}
+
+                        <!-- Input 1: Usuario ou Email -->
                         <div class="div_input_userEmail div_input_sec">
                             <div class="div_input_userORemail_label div_input_label">
-                                <p id="texto_login_userORemail">Email ou Usuário</p>
+                                <p id="texto_login_userORemail">Usuário ou E-mail</p>
                             </div>
                             <div class="div_input_userORemail_area div_input_area" id="div_input_userORemail_area">
                                 <svg class="icon_user_login" id="user_login_svg" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
@@ -111,7 +124,7 @@
                                     54 153 57 10 0 71 -28 135 -64z"/>
                                     </g>
                                 </svg>
-                                <input tabindex=1 class="input_login_userORemail input_area" type="text" name="username" id="input_login_userORemail" placeholder="Digite o seu Usuário ou Email">
+                                <input tabindex=1 class="input_login_userORemail input_area" type="text" name="username" id="input_login_userORemail" placeholder="Digite o seu Usuário ou E-mail">
                                 <span class="input_extra"></span>
                             </div>
                         </div>
@@ -139,6 +152,7 @@
                         </div>
                         <button tabindex=5 class="btn_executar_auth" id="btn_entrar_login">Entrar</button>
                     </form>
+                    {% comment %}
                     <div class="linha_divisoria">
                         <hr>
                         <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
@@ -153,6 +167,7 @@
                             <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
                         </button>
                     </div>
+                    {% endcomment %}
                 </div>
             </div>
         </div>
@@ -196,13 +211,28 @@
                     </div>
                 </div>
                 <div class="box_signup_bot box_auth_bot">
-                    <form action="{% url 'auth' %}" method="post" id="forms_signup"> <!-- form signup -->
+                    <form action="{% url 'auth' %}" method="post" id="forms_signup"> 
                         {% csrf_token %}
-                        <!-- Input 1: Usuario -->
-                        {% if error_message %}
-                            <p class="error">{{ error_message }}</p>
-                        {% endif %}
+                        <!-- form signup -->
                         <input type="hidden" name="action" value="signup">
+
+                        {% if error_message == 'errorAuth_mandatoryCredentials' or error_message == 'errorAuth_passwordDontMatch' or error_message == 'errorAuth_userAlreadyExists' or error_message == 'errorAuth_emailAlreadyUsed' %}
+                        <div class="error_message_box">
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            {% if error_message == 'errorAuth_mandatoryCredentials' %}
+                            <p id="texto_errorAuth_mandatoryCredentials" class="error_message">Preencha todos os Campos</p>
+                            {% elif error_message == 'errorAuth_passwordDontMatch' %}
+                            <p id="texto_errorAuth_passwordDontMatch" class="error_message">As senhas não combinam</p>
+                            {% elif error_message == 'errorAuth_userAlreadyExists' %}
+                            <p id="texto_errorAuth_userAlreadyExists" class="error_message">Esse Usuário já existe</p>
+                            {% elif error_message == 'errorAuth_emailAlreadyUsed' %}
+                            <p id="texto_errorAuth_emailAlreadyUsed" class="error_message">Esse E-mail já foi usado</p>
+                            {% endif %}
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Input 1: Usuario -->
                         <div class="div_input_user div_input_sec">
                             <div class="div_input_user_label div_input_label">
                                 <p id="texto_signup_user">Usuário</p>
@@ -236,31 +266,23 @@
                             <!-- Erros Posiveis -->
                             <div class="div_alerts" id="div_user_inv">
                                 <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_user_inv">Usuário Inválido!</p>
-                            </div>
-                            <div class="div_alerts" id="div_user_exis">
-                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_user_exis">Usuário já existe!</p>
+                                <p class="alert_text" id="texto_alert_user_inv">Usuário Inválido! Entre 6 e 30 caracteres. Apenas letras, números, '-' ou '_'</p>
                             </div>
                         </div>
                         <!-- Input 2: Email -->
                         <div class="div_input_user div_input_sec">
                             <div class="div_input_user_label div_input_label">
-                                <p id="texto_signup_user">Email</p>
+                                <p id="texto_signup_user">E-mail</p>
                             </div>
                             <div class="div_input_user_area div_input_area" id="div_input_user_area">
                                 <ion-icon class="icon_email_signup email_icons" id="email_signup_icon" name="mail-outline"></ion-icon>
-                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="email" id="input_signup_email" placeholder="Digite o seu Email">
+                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="email" id="input_signup_email" placeholder="Digite o seu E-mail">
                                 <span class="input_extra"></span>
                             </div>
                             <!-- Erros Posiveis -->
                             <div class="div_alerts" id="div_email_inv">
                                 <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_email_inv">Email Inválido!</p>
-                            </div>
-                            <div class="div_alerts" id="div_email_exis">
-                                <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_email_exis">Email já usado!</p>
+                                <p class="alert_text" id="texto_alert_email_inv">E-mail Inválido!</p>
                             </div>
                         </div>
                         <!-- Input 3: Signup -->
@@ -344,6 +366,7 @@
                         </div>
                         <button tabindex=6 onclick="criarConta_ianes()" type="submit" class="btn_executar_auth" id="btn_entrar_signup">Criar</button>
                     </form>
+                    {% comment %}
                     <div class="linha_divisoria">
                         <hr>
                         <p id="texto_auth_ou" class="texto_auth_ou">OU</p>
@@ -358,6 +381,7 @@
                             <img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/github_logo_icon_145252.png" alt="Google Logo">
                         </button>
                     </div>
+                    {% endcomment %}
                 </div>
             </div>
         </div>
