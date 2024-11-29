@@ -15,8 +15,13 @@
 
     --color_tema-fundo-tema: var(--color-fundo-claro);
     --color_tema-cinza-hover-bg: var(--color-cinza_hover_bg_light);
+    --color_tema-fundo_1: var(--color-vermelho-medio);
+    --color_tema-fundo_2: var(--color-azul-medio);
 
     --color_tema-text_1: var(--color-full-black);
+    --color_tema-text_2: var(--color-full-white);
+    --color_tema-text_c1: var(--color-azul-medio);
+    --color_tema-text_c2: var(--color-azul-bruto);
 
     --color_tema-svg_1: var(--color-full-white);
 
@@ -37,7 +42,9 @@
     --color-vermelho-forte_bg: #681413;
 
 
+    --color-verde-sucesso_selecionado: #4CAF5060;
     --color-azul-medio_selecionado: #1c3a6660;
+    --color-vermelho-medio_selecionado: #9A191560;
 
     --color-cinza: #878787;
     

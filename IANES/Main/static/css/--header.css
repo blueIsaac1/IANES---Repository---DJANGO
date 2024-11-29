@@ -251,9 +251,9 @@ header {
 
 .user_container {
     position: absolute;
-    bottom: -100%;
+    bottom: 0 ;
     right: -20vw;
-    transform: translateY(0%);
+    transform: translateY(102%);
     background-color: var(--color_tema-fundo-tema);
     border: 0.2vw solid var(--color_tema-btn-bg_alt);
     border-radius: 0.4vw;
@@ -273,7 +273,7 @@ header {
     border-bottom: 0.5vw solid var(--color_tema-btn-bg_alt);
 }
 .user_container_active {
-    right: 2vw;
+    right: 2.4vw;
 }
 .userC_list {
     list-style: none;

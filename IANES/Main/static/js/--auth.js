@@ -336,7 +336,6 @@ function validarUsuario() {
     const user = user_input.value;
     
     const container_user_invalido = document.getElementById("div_user_inv");
-    const container_user_existente = document.getElementById("div_user_exis");
     const contador = document.getElementById("texto_user_maximoChar");
 
     // Atualiza a contagem de caracteres
@@ -345,12 +344,10 @@ function validarUsuario() {
     // Verificar se o campo está vazio
     if (user.length === 0) {
         container_user_invalido.style.display = "none";
-        container_user_existente.style.display = "none";
         user_valid = false;
     } else if (user.length < 6 || user.length > 30) {
         // Verificar se o comprimento está dentro dos limites
         container_user_invalido.style.display = "flex"; // Exibir mensagem de usuário inválido
-        container_user_existente.style.display = "none";
         user_valid = false;
     } else {
         // Validar se o usuário atende aos requisitos
@@ -359,17 +356,15 @@ function validarUsuario() {
         if (!validacaoRegex.test(user)) {
             // Se não for válido, mostra o container de usuário inválido
             container_user_invalido.style.display = "flex";
-            container_user_existente.style.display = "none";
         } else {
             // Se for válido, verifica se já existe na lista
             if (listaUsuarios.includes(user)) {
                 // Se o usuário já existe, mostra o container de usuário existente
                 container_user_invalido.style.display = "none";
-                container_user_existente.style.display = "flex";
             } else {
                 // Se tudo estiver válido, define user_valid como true
                 container_user_invalido.style.display = "none";
-                container_user_existente.style.display = "none";
+
                 user_valid = true;
             }
         }
@@ -384,12 +379,10 @@ function validarEmail() {
     const email = email_input.value;
     
     const container_email_invalido = document.getElementById("div_email_inv");
-    const container_email_existente = document.getElementById("div_email_exis");
 
     // Verificar se o campo está vazio
     if (email.length === 0) {
         container_email_invalido.style.display = "none";
-        container_email_existente.style.display = "none";
         email_valid = false;
     } else {
         // Regex para validar o formato do email
@@ -399,17 +392,14 @@ function validarEmail() {
         if (!validacaoRegex.test(email)) {
             // Se não for válido, mostra o container de e-mail inválido
             container_email_invalido.style.display = "flex";
-            container_email_existente.style.display = "none";
         } else {
             // Se for válido, verifica se já existe na lista
             if (listaEmails.includes(email)) {
                 // Se o e-mail já existe, mostra o container de e-mail existente
                 container_email_invalido.style.display = "none";
-                container_email_existente.style.display = "flex";
             } else {
                 // Se tudo estiver válido, define email_valid como true
                 container_email_invalido.style.display = "none";
-                container_email_existente.style.display = "none";
                 email_valid = true;
             }
         }

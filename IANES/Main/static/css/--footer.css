@@ -11,26 +11,26 @@
 
 /* Pré-feito uma Animação de Hover nos Links */
 
-.link_hover_animation {
+.link_hover_animation_footer {
     cursor: pointer;
     position: relative;
     transition: opacity 0.3s ease-in-out;
 }
 
-.link_hover_animation:after {
+.link_hover_animation_footer:after {
     content: ""; /* Necessário para que o pseudo-elemento funcione */
     position: absolute;
     bottom: -0.1vw;
     left: 50%; /* Mantém o centro */
     width: 100%;
     height: 0.02vw;
-    background-color: var(--color-fundo-claro);
+    background-color: #ffffff;
     transform: translateX(-50%) scale(0); /* Começa com escala 0 */
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.link_hover_animation:hover:after {
+.link_hover_animation_footer:hover:after {
     transform: translateX(-50%) scale(1);
     opacity: 1;
 }
@@ -62,11 +62,11 @@ footer {
 }
 
 #wave_up_footer_svg path {
-    fill: var(--color-vermelho-medio);
+    fill: var(--color_tema-fundo_1);
 }
 
 .footer_content {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-fundo_1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -304,4 +304,31 @@ footer {
 .footer_infos_3 p:nth-child(2) {
     margin-right: var(--tamanho_margin_horizontal_footer);
     text-align: right;
+}
+
+/* Botão de Ir ao Topo */
+
+.footerBtn_goTop {
+    position: absolute;
+    top: 3.5vw;
+    left: 2vw;
+    z-index: 800;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5vw;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.footerBtn_goTop ion-icon {
+    color: #ffffff;
+    font-size: var(--tamanho_icons_footer);
+}
+
+.footerBtn_goTop p {
+    color: #ffffff;
+    font-size: var(--tamanho_fonts_p);
+    text-align: left;
+    font-weight: 500;
 }

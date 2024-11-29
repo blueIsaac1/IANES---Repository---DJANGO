@@ -53,13 +53,6 @@ def converter_markdown_para_html(texto):
     # Adicionar outras conversões conforme necessário
     return texto
 
-def formatar_texto(texto):
-    texto_com_quebras = texto.replace('\n', '<br>')
-    texto_formatado = converter_markdown_para_html(texto_com_quebras)
-    return texto_formatado
-
-
-
 def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_response_text):
     # Define o caminho para o arquivo JSON
     caminho_arquivo = 'conversas.json'
@@ -253,7 +246,7 @@ def get_gemini_analysis(content, user_inputs, max_retries=3):
                 f"- Uma pontuação de relevância de 0 a 10, onde 10 indica máxima adequação ao projeto e 0 irrelevância, dê essa nota apenas com números inteiros.\n"
                 f"- Uma breve justificativa explicando a adequação e como o conteúdo pode contribuir para o projeto, além de forncer pontos positivos e negativos."
             )
-            response = formatar_texto(model.generate_content(prompt))
+            response = model.generate_content(prompt)
             print(response.text)
 
             # Processar a resposta da IA para extrair a pontuação e a justificativa
@@ -294,8 +287,6 @@ def processar_respostas_finais(respostas):
                 'justificativa': descricao.strip()
             }
 
-            resultado = formatar_texto(resultado)
-
             resultados.append(resultado)
 
         # Ordena os resultados pela pontuação, do maior para o menor
@@ -319,7 +310,6 @@ def processar_respostas_finais(respostas):
             if num_resultados < 3:
                 mensagem += f"Observação: Apenas {num_resultados} opção(ões) foram relevantes para o seu projeto."
 
-            mensagem = formatar_texto(mensagem)
             return mensagem
         else:
             return "Não foi possível encontrar uma recomendação adequada para o seu projeto."
@@ -369,12 +359,6 @@ def send_message(request, pk):
         user_message_text = request.POST.get('user_message')
 
         if user_message_text:
-            # Salva a mensagem do usuário
-            user_message = UserMessage.objects.create(
-                user=request.user,
-                text=user_message_text
-            )
-            current_room.user_message.add(user_message)
 
             if request.session.get('collecting_parameters', False):
                 if user_message_text.strip().lower() == 'sair':
@@ -391,9 +375,6 @@ def send_message(request, pk):
                         text=bot_response_text
                     )
                     current_room.bot_response.add(bot_response_instance)
-
-                    # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                    request.session['new_bot_response_id'] = bot_response_instance.id
 
                     return redirect('list_messages', pk=current_room.id)
                 try:
@@ -574,9 +555,6 @@ def send_message(request, pk):
                 )
                 current_room.bot_response.add(bot_response_instance)
 
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
                 return redirect('list_messages', pk=current_room.id)
 
             elif user_message_text.strip().upper() == "IANES":
@@ -613,9 +591,6 @@ def send_message(request, pk):
                 )
                 current_room.bot_response.add(bot_response_instance)
 
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
                 return redirect('list_messages', pk=current_room.id)
             
             elif user_message_text.strip().upper() != "IANES":
@@ -625,23 +600,28 @@ def send_message(request, pk):
                     model = genai.GenerativeModel('gemini-1.5-flash')
                     bot_response = model.generate_content(user_message_text)
                     bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
-                    bot_response_text = formatar_texto(bot_response_text)
                 except Exception as e:
                     logger.error(f"Erro no processamento da IA: {e}")
                     bot_response_text = f"Erro: {str(e)}"
 
                 # Salva a resposta do bot como uma mensagem
+                user_message_instance = UserMessage.objects.create(
+                    user=current_room.user,
+                    text=user_message_text,
+                    created_at=None
+                )
+                # Salva a resposta do bot como uma mensagem
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
+                print('bloco de texto')
                 current_room.bot_response.add(bot_response_instance)
-
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
-                return redirect('list_messages', pk=current_room.id)
-
-
+                current_room.user_message.add(user_message_instance)        
+                current_user_text = str(current_room.user)
+                salvar_conversa_em_json(room_id=current_room.id,
+                                current_user = current_user_text,
+                                user_message_text=user_message_text,
+                                bot_response_text=bot_response_text)
             else:
                 # Resposta padrão para mensagens que não iniciam o processo
                 bot_response_text = "Desculpe, não entendi. Por favor, digite 'IANES' para iniciar o processo."
@@ -652,53 +632,11 @@ def send_message(request, pk):
                 )
                 current_room.bot_response.add(bot_response_instance)
 
-                # Adicione esta linha para armazenar o ID da nova resposta na sessão
-                request.session['new_bot_response_id'] = bot_response_instance.id
-
-                return redirect('list_messages', pk=current_room.id)
-            
-
+                return redirect('list_messages', pk=current_room.id)         
         else:
             # Se user_message_text estiver vazio
             return redirect('list_messages', pk=current_room.id)
-    elif request.method == 'GET':
-        # Para requisições GET
-        return redirect('list_messages', pk=current_room.id)
-    else:
-        try:
-            genai.configure(api_key=GOOGLE_API_KEY)
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            bot_response = model.generate_content(user_message_text)
-            bot_response_text = bot_response.text if hasattr(bot_response, 'text') else 'Erro ao gerar a resposta'
-        except Exception as e:
-            logger.error(f"Erro no processamento da IA: {e}")
-            bot_response_text = f"Erro: {str(e)}"
-
-        # Salva a mensagem do usuário e a resposta do bot
-        user_message = UserMessage.objects.create(
-            user=current_room.user,
-            text=user_message_text,
-            created_at=None
-        )
-        # Salva a resposta do bot como uma mensagem
-        bot_response_instance = BotResponse.objects.create(
-            text=bot_response_text
-        )
-        current_room.bot_response.add(bot_response_instance)
-
-        # Adicione esta linha para armazenar o ID da nova resposta na sessão
-        request.session['new_bot_response_id'] = bot_response_instance.id
-        current_room.user_message.add(user_message)
-        current_room.bot_response.add(bot_response_instance)            
-        current_user_text = str(current_room.user)
-        salvar_conversa_em_json(room_id=current_room.id,
-                                current_user = current_user_text,
-                                user_message_text=user_message_text,
-                                bot_response_text=bot_response_text)
-
-        return redirect('list_messages', pk=pk)
-    return redirect('index')
-
+    return redirect('list_messages', pk=pk)
 
 @login_required(login_url='auth')
 @csrf_exempt
@@ -818,7 +756,10 @@ def delete_room(request, id):
     with open('conversas.json', 'r') as file:
         data = json.load(file)
     
-    data = [x for x in data if x['room_id'] != id]
+    try:
+        data = [x for x in data if x['room_id'] != id]
+    except Exception as e:
+        pass
 
     with open('conversas.json', 'w') as file:
         json.dump(data, file, indent=5)

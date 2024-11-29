@@ -36,22 +36,6 @@
             </svg>
         </div>
     </div>
-    <!-- Container do User -->
-    <div id="user_container" class="user_container">
-        <ul class="userC_list">
-            <li id="config_ovConfig_btn" class="userC_list_item">
-                <p aria-selected="false" class="nav_item" id="texto_header_userContainer-config">Configurações</p>
-                <ion-icon class="header_icon_settings" id="header_icon_settings" name="settings-outline"></ion-icon>
-            </li>
-            <!-- <hr> -->
-            {% if user.is_authenticated %}
-            <li onclick="location.href='{% url 'logout' %}'" class="userC_list_item" id="">
-                <p id="texto_header_userContainer-leave">Sair</p>
-                <ion-icon class="header_icon_leave" id="header_icon_leave" name="log-out-outline"></ion-icon>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
 </div>
 
 <!-- Parte da Navbar -->
@@ -68,6 +52,37 @@
     </nav>
 </div>
 {% endif %}
+
+<!-- Container do User -->
+<div id="user_container" class="user_container">
+    <ul class="userC_list">
+        <li id="config_ovConfig_btn" class="userC_list_item">
+            <p aria-selected="false" class="nav_item" id="texto_header_userContainer-config">Configurações</p>
+            <ion-icon class="header_icon_settings" id="header_icon_settings" name="settings-outline"></ion-icon>
+        </li>
+        <!-- <hr> -->
+        {% comment %}
+        {% if user.is_authenticated %}
+        <li class="userC_list_item" id="">
+            <p id="texto_header_userContainer-faq">FAQ</p>
+            <ion-icon class="header_icon_faq" id="header_icon_faq" name="help-circle-outline"></ion-icon>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="userC_list_item" id="">
+            <p id="texto_header_userContainer-feedback">Feedback</p>
+            <ion-icon class="header_icon_feedback" id="header_icon_feedback" name="chatbox-ellipses-outline"></ion-icon>
+        </li>
+        {% endif %}
+        {% endcomment %}
+        {% if user.is_authenticated %}
+        <li onclick="location.href='{% url 'logout' %}'" class="userC_list_item" id="">
+            <p id="texto_header_userContainer-leave">Sair</p>
+            <ion-icon class="header_icon_leave" id="header_icon_leave" name="log-out-outline"></ion-icon>
+        </li>
+        {% endif %}
+    </ul>
+</div>
 
 <div aria-active="false" id="config_overlay" class="config_overlay">
 

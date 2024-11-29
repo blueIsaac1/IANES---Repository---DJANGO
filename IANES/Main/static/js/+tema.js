@@ -41,12 +41,17 @@ function aplicarTemaLight() {
     document.documentElement.style.setProperty('--color_tema-fundo-tema', 'var(--color-fundo-claro)');
     document.documentElement.style.setProperty('--color_tema-cinza-hover-bg', 'var(--color-cinza_hover_bg_light)');
     document.documentElement.style.setProperty('--color_tema-text_1', 'var(--color-full-black)');
+    document.documentElement.style.setProperty('--color_tema-text_2', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-tooltip-bg', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-tp-text_1', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_1', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_2', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_alt', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-svg_1', 'var(--color-full-white)');
+    document.documentElement.style.setProperty('--color_tema-fundo_1', 'var(--color-vermelho-medio)');
+    document.documentElement.style.setProperty('--color_tema-fundo_2', 'var(--color-azul-medio)');
+    document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-vermelho-medio)');
+    document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-vermelho-main)');
     
     // --- Header
     
@@ -57,13 +62,17 @@ function aplicarTemaLight() {
         header.classList.add('tema_fundo_1', 'tema_borderBottomCinza');
     });
     
-    // Altera a IMG do IAnes
-    let imgId_Header_ianes = document.getElementById("header_logo_img")
+    // URL da Logo Preta
     let imgSrc_Header_ianes_black = "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_PretaT.png"
-    imgId_Header_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+
+    // Altera a do Header
+    let imgId_header_ianes = document.getElementById("header_logo_img")
+    imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+    // Altera a do Início
+    let imgId_inicio_ianes = document.getElementById("banner_logo_img")
+    imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_black)
 
     // --- Configurações
-    
 }
 
 function aplicarTemaDark() {
@@ -76,12 +85,17 @@ function aplicarTemaDark() {
     document.documentElement.style.setProperty('--color_tema-fundo-tema', 'var(--color-fundo-escuro)');
     document.documentElement.style.setProperty('--color_tema-cinza-hover-bg', 'var(--color-cinza_hover_bg_dark)');
     document.documentElement.style.setProperty('--color_tema-text_1', 'var(--color-full-white)');
+    document.documentElement.style.setProperty('--color_tema-text_2', 'var(--color-full-black)');
     document.documentElement.style.setProperty('--color_tema-tooltip-bg', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-tp-text_1', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_1', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_2', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-btn-bg_alt', 'var(--color-azul-bruto)');
     document.documentElement.style.setProperty('--color_tema-svg_1', 'var(--color-full-white)');
+    document.documentElement.style.setProperty('--color_tema-fundo_1', 'var(--color-azul-medio)');
+    document.documentElement.style.setProperty('--color_tema-fundo_2', 'var(--color-vermelho-medio)');
+    document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-azul-medio)');
+    document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-azul-bruto)');
 
     // --- Header
     
@@ -92,10 +106,15 @@ function aplicarTemaDark() {
         header.classList.add('tema_fundo_1', 'tema_borderBottomCinza');
     });
     
-    // Altera a IMG do IAnes
-    let imgId_Header_ianes = document.getElementById("header_logo_img")
+    // URL da Logo Branca
     let imgSrc_Header_ianes_white = "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesLogo_BrancaT.png"
-    imgId_Header_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+
+    // Altera a do Header
+    let imgId_header_ianes = document.getElementById("header_logo_img")
+    imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+    // Altera a do Início
+    let imgId_inicio_ianes = document.getElementById("banner_logo_img")
+    imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_white)
 }
 
 async function uptadeCheck_tema(tema) {

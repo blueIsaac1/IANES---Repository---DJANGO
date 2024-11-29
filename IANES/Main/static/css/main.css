@@ -10,7 +10,7 @@
 
 body {
     overflow-x: hidden;
-    background-color: var(--color-fundo-claro);
+    background-color: var(--color_tema-fundo-tema);
 }
 
 main {
@@ -23,11 +23,13 @@ main {
 /* Altera a Cor ao Selecionar Texto/Coisas */
 
 ::-moz-selection { /* Codigo para Mozilla */
-    background: var(--color-azul-medio_selecionado);
+    background: var(--color-verde-sucesso_selecionado);
+    color: #ffffff;
 }
 
 ::selection {
-    background: var(--color-azul-medio_selecionado);
+    background: var(--color-verde-sucesso_selecionado);
+    color: #ffffff;
 }
 
 /* Altera o estilo da ScrollBar */
@@ -64,11 +66,11 @@ main {
 
 /* Seta para rolar para cima (incremento) */
 ::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
-    border-bottom: 0.7vw solid var(--color-azul-medio);
+    border-bottom: 0.7vw solid var(--color_tema-fundo_2);
 }
 /* Seta para rolar para cima (incremento) */
 ::-webkit-scrollbar-button:single-button:vertical:increment:hover {
-    border-top: 0.7vw solid var(--color-azul-medio);
+    border-top: 0.7vw solid var(--color_tema-fundo_2);
 }
   
 /* Fundo */
@@ -87,7 +89,7 @@ main {
 
 /* Barra com o mouse em cima */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-azul-medio);
+    background: var(--color_tema-fundo_2);
 }
 
 /* Configurações dos Temas */
