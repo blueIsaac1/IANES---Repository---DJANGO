@@ -68,5 +68,12 @@
           "current_user": "ctdev23",
           "user_message": "tudo bem filho da puta?",
           "bot_response": "Sinto muito, mas não entendi sua pergunta. Você poderia reformulá-la?"
+     },
+     {
+          "room_id": 45,
+          "timestamp": "2024-11-29T01:17:50.462563+00:00",
+          "current_user": "ctdev23",
+          "user_message": "desculpe",
+          "bot_response": "Não há problema!  Há algo que eu possa ajudar?\n"
      }
 ]

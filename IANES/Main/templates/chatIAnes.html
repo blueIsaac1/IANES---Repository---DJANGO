@@ -105,19 +105,19 @@
                         <li class="message bot">
                             <img id="ianes_pic" src="" alt="IAnes Pic">
                             <p id="texto_chatIA_botInicialMsg">Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?</p>
-                        </li>
-                    
+                        </li>  
                         {% for message in messages %}
-                        {% if message.user_message %}
+                            {% if message.user_message %}
                             <li class="message user">
                                 <p>{{ message.user_message.text }}</p>
                             </li>
-                        {% endif %}
-                        {% if message.bot_response %}
+                            {% endif %}
+                            {% if message.bot_response %}
                             <li class="message bot">
                                 <img id="ianes_pic" src="" alt="IAnes Pic">
                                 {% if message.is_new_bot_response %}
-                                <p id="ianes_msg-{{ forloop.counter }}">{{ message.bot_response.text|safe }}</p>
+                                    <!-- Aplicar a animação de digitação -->
+                                    <p id="ianes_msg-{{ forloop.counter }}"></p>
                                     <script>
                                         var botText{{ forloop.counter }} = `{{ message.bot_response.text|escapejs }}`;
                                         var i{{ forloop.counter }} = 0;
@@ -143,7 +143,12 @@
                                         <ion-icon name="copy-outline"></ion-icon>
                                         <p class="tp_extraO_IA" id="tp_ia-copy-{{ forloop.counter }}">Copiar</p>
                                     </div>
+                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip('audio', '{{ forloop.counter }}')" onmouseout="hideTooltip('audio', '{{ forloop.counter }}')">
+                                        <ion-icon name="volume-medium-outline"></ion-icon>
+                                        <p class="tp_extraO_IA" id="tp_ia-audio-{{ forloop.counter }}">Narrar Mensagem</p>
+                                    </div>
                                 </div>
+                                
                             </li>
                             {% endif %}
                         {% endfor %}
