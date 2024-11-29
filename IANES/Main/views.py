@@ -102,20 +102,34 @@ def auth(request):
 
         if action == 'login':
             # Ação de Login
-            username_login = request.POST.get('username')
+            usernameOrEmail_login = request.POST.get('username')
             password_login = request.POST.get('password')
 
-            try:
-                user = User.objects.get(username=username_login)
-            except User.DoesNotExist:
-                error_message = 'errorAuth_userDontExists'
+            user = None
 
-            user = authenticate(username=username_login, password=password_login)
-            if user:
-                login_django(request, user) 
-                return redirect('index')
+            # Verifica se o login é por e-mail ou username
+            if '@' in usernameOrEmail_login:
+                try:
+                    # Tenta encontrar o usuário pelo e-mail
+                    user_instance = User.objects.get(email=usernameOrEmail_login)
+                    usernameOrEmail_login = user_instance.username  # Substitui pelo username correspondente
+                except User.DoesNotExist:
+                    error_message = 'errorAuth_emailNotFind'
             else:
-                error_message = 'errorAuth_invalidCredentials'
+                # Verifica pelo username
+                if not User.objects.filter(username=usernameOrEmail_login).exists():
+                    error_message = 'errorAuth_userDontExists'
+
+            # Só continua a autenticação se não houve erro na etapa anterior
+            if not error_message:
+                # Autentica o usuário
+                user = authenticate(username=usernameOrEmail_login, password=password_login)
+
+                if user:
+                    login_django(request, user) 
+                    return redirect('index')
+                else:
+                    error_message = 'errorAuth_invalidCredentials'
 
         elif action == 'signup':
             # Ação de Cadastro
