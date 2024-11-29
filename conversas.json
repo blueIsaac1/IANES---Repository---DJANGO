@@ -1,16 +1,1 @@
-[
-     {
-          "room_id": 39,
-          "timestamp": "2024-11-28T23:17:31.596441+00:00",
-          "current_user": "ctdev23",
-          "user_message": "boa noite",
-          "bot_response": "Boa noite a você também!"
-     },
-     {
-          "room_id": 39,
-          "timestamp": "2024-11-28T23:21:12.012148+00:00",
-          "current_user": "ctdev23",
-          "user_message": "ola",
-          "bot_response": "Olá! Como posso ajudar você hoje?"
-     }
-]
+[]
