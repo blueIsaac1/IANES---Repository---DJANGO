@@ -33,6 +33,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from collections import OrderedDict
 from django.core import serializers
+from gtts import gTTS
 
 logger = logging.getLogger(__name__)
 
@@ -628,7 +629,7 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
-                print('bloco de texto')
+                processar_audio_ianes(processar_audio_ianes, pk=pk)
                 current_room.bot_response.add(bot_response_instance)
                 current_room.user_message.add(user_message_instance)        
                 current_user_text = str(current_room.user)
@@ -881,6 +882,18 @@ def processar_e_enviar_pdf(request, pk):
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
     
-
+def processar_audio_ianes(bot_response, pk):
+    save_dir = 'audio_files'
+    texto = f'{bot_response}'
+    tts = gTTS(text=texto, lang='pt', slow=False)
+    os.makedirs(save_dir, exist_ok=True)
+    file_path = os.path.join(save_dir, f"audio_texto_sala:{pk}"+'.mp3')
+    try:
+        tts.save(file_path)  
+        logging.info(f"erro_1: {file_path}")
+    except gTTS.tts.gTTSError as e:
+        logging.error(f"erro_2: {e}")
+    except Exception as e:
+        logging.error(f"erro_3: {e}")
 
 

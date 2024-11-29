@@ -1,1 +1,44 @@
-[]
+[
+     {
+          "room_id": 50,
+          "timestamp": "2024-11-29T01:35:32.497782+00:00",
+          "current_user": "ctdev23",
+          "user_message": "ola",
+          "bot_response": "Olá!  Como posso ajudar?\n"
+     },
+     {
+          "room_id": 50,
+          "timestamp": "2024-11-29T01:35:57.185671+00:00",
+          "current_user": "ctdev23",
+          "user_message": "boa noite",
+          "bot_response": "Boa noite!\n"
+     },
+     {
+          "room_id": 51,
+          "timestamp": "2024-11-29T01:38:49.092278+00:00",
+          "current_user": "shunppo",
+          "user_message": "ola",
+          "bot_response": "Olá!  Como posso te ajudar?\n"
+     },
+     {
+          "room_id": 51,
+          "timestamp": "2024-11-29T01:39:00.219575+00:00",
+          "current_user": "shunppo",
+          "user_message": "hi",
+          "bot_response": "Hi there! How can I help you today?\n"
+     },
+     {
+          "room_id": 51,
+          "timestamp": "2024-11-29T01:46:41.474188+00:00",
+          "current_user": "shunppo",
+          "user_message": "humm",
+          "bot_response": "Is there anything I can help you with?\n"
+     },
+     {
+          "room_id": 51,
+          "timestamp": "2024-11-29T01:47:18.165564+00:00",
+          "current_user": "shunppo",
+          "user_message": "humm",
+          "bot_response": "Is there anything I can help you with?\n"
+     }
+]
