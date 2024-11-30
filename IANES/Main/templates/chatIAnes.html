@@ -2,6 +2,7 @@
 <html lang="pt-BR" dir="ltr">
 <head>
     {% load static %}
+    {% csrf_token %}
     <meta charset='utf-8'>
     <!-- Forçar o navegador renderizar com o modo mais recente do navegador atual (instalado na máquina do usuário). -->
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -143,9 +144,9 @@
                                         <ion-icon name="copy-outline"></ion-icon>
                                         <p class="tp_extraO_IA" id="tp_ia-copy-{{ forloop.counter }}">Copiar</p>
                                     </div>
-                                    <div class="extraOptions_IAnes_Itens" onclick="copyText_chatIA('{{ forloop.counter }}')" onmouseover="showTooltip('audio', '{{ forloop.counter }}')" onmouseout="hideTooltip('audio', '{{ forloop.counter }}')">
+                                    <div class="extraOptions_IAnes_Itens" onclick="processarAudio('{{ message.bot_response.text|escapejs }}')">
                                         <ion-icon name="volume-medium-outline"></ion-icon>
-                                        <p class="tp_extraO_IA" id="tp_ia-audio-{{ forloop.counter }}">Narrar Mensagem</p>
+                                        <p class="tp_extraO_IA">Narrar Mensagem</p>
                                     </div>
                                 </div>
                                 
@@ -218,7 +219,7 @@
           <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-      
+    
     <!-- A Ordem de Chamar os <script> IMPORTA! -->
     <!-- Chamando o Idioma e o Tema -->
     <!-- <script src="{% static 'js/+idioma.js' %}"></script> -->

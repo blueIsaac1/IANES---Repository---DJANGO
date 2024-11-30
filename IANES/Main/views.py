@@ -1,9 +1,11 @@
+import io
+import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as login_django
-from django.http import JsonResponse, Http404
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, Http404
 import google.generativeai as genai  # type: ignore
 from django.contrib.auth import login
 from Main.models import Room, UserMessage, BotResponse
@@ -34,6 +36,7 @@ from reportlab.lib.pagesizes import A4
 from collections import OrderedDict
 from django.core import serializers
 from gtts import gTTS
+from django.http import FileResponse
 
 logger = logging.getLogger(__name__)
 
@@ -176,7 +179,7 @@ def sign_up(request):
     return redirect('auth')
 
 
-@login_required(login_url='auth')
+
 @csrf_exempt
 def index(request):
     last_room_id = listar_ultima_sala()
@@ -335,7 +338,7 @@ def processar_respostas_finais(respostas):
 
 
 
-@login_required(login_url='auth')
+
 @csrf_exempt
 def send_message(request, pk):
     temas = {
@@ -629,7 +632,6 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
-                processar_audio_ianes(processar_audio_ianes, pk=pk)
                 current_room.bot_response.add(bot_response_instance)
                 current_room.user_message.add(user_message_instance)        
                 current_user_text = str(current_room.user)
@@ -653,7 +655,7 @@ def send_message(request, pk):
             return redirect('list_messages', pk=current_room.id)
     return redirect('list_messages', pk=pk)
 
-@login_required(login_url='auth')
+
 @csrf_exempt
 def create_room(request):
     room_title = request.POST.get('title')
@@ -673,7 +675,7 @@ def create_room(request):
     #     'r': room
     # })
 
-# @login_required(login_url='auth')
+# 
 @csrf_exempt
 def list_messages(request, pk=None):
     last_room = Room.objects.order_by('-created_at').first()
@@ -720,7 +722,7 @@ def list_messages(request, pk=None):
         logger.error(f"Erro de atributo ao acessar mensages da Sala: {pk}")
         return render(request, 'errors_template.html', {'error_message': "Mensagens não encotradas", "error_description": str(e)})
     except Exception as e:
-        logger.error(f"Erro ao acessar atributos de Sala com PK {pk}. Detalhes: {str(e)}")
+        logger.error(f"1 Erro ao acessar atributos de Sala com PK {pk}. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro ao acessar mensagens da sala", 'error_description': str(e)})
 
     if request.method == 'POST':
@@ -763,7 +765,7 @@ def list_messages(request, pk=None):
     })
 
 @csrf_exempt
-@login_required(login_url='auth')
+
 def delete_room(request, id):
     room_to_delete = get_object_or_404(Room, id=id)
     room_to_delete.delete()
@@ -797,7 +799,7 @@ def some_view(request):
     raise Exception("Erro intencional para teste de página 500")
 
 @csrf_exempt
-@login_required(login_url='auth')
+
 def logout(request):
     if User.is_authenticated:
         auth_logout(request)
@@ -882,18 +884,46 @@ def processar_e_enviar_pdf(request, pk):
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
     
-def processar_audio_ianes(bot_response, pk):
-    save_dir = 'audio_files'
-    texto = f'{bot_response}'
-    tts = gTTS(text=texto, lang='pt', slow=False)
-    os.makedirs(save_dir, exist_ok=True)
-    file_path = os.path.join(save_dir, f"audio_texto_sala:{pk}"+'.mp3')
-    try:
-        tts.save(file_path)  
-        logging.info(f"erro_1: {file_path}")
-    except gTTS.tts.gTTSError as e:
-        logging.error(f"erro_2: {e}")
-    except Exception as e:
-        logging.error(f"erro_3: {e}")
+def processar_audio_ianes(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            texto = data.get('texto', '')
+            print('texto: ', texto)
+            if not texto:
+                return JsonResponse({'success': False, 'error': 'Texto não fornecido'})
+            mp3_fp = io.BytesIO()
+            tts = gTTS(text=texto, lang_check=True, lang='pt', slow=False)
+            tts.write_to_fp(mp3_fp)
+            mp3_fp.seek(0)
 
+            return HttpResponse(
+                mp3_fp.getvalue(), 
+                content_type='audio/mpeg'
+            )
+            # save_dir = os.path.join(settings.MEDIA_ROOT, 'audio_files')
+            # os.makedirs(save_dir, exist_ok=True)
+            # filename = f'audio_ianes_{uuid.uuid4()}.mp3'
+            # file_path = os.path.join(save_dir, filename)
+            # tts = gTTS(text=texto, lang='pt', slow=False, timeout=None)
+            # # tts.save(file_path)
+            # file_url = request.build_absolute_uri(f'{settings.MEDIA_URL}audio_files/{filename}')
+            # return JsonResponse({'success': True, })
+                
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+        
+    return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
+
+# def reproduzir_audio(request):
+#     try:
+#         audio_path = os.path.join(settings.MEDIA_ROOT, 'audio_files', 'audio_ianes.mp3')
+#         if os.path.exists(audio_path):
+#             return FileResponse(open(audio_path, 'rb'), content_type='audio/mpeg')
+#         return HttpResponseNotFound("Áudio não encontrado")
+#     except Exception as e:
+#         logging.error(f"Erro ao reproduzir áudio: {e}")
+#         return HttpResponseNotFound(f"Erro ao reproduzir áudio: {str(e)}")
+
+    
 

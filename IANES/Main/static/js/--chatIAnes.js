@@ -213,7 +213,57 @@ function copyText_chatIA(textID) {
         .then(() => showPopup_textCopy())
         .catch(err => console.error('Erro ao copiar o texto: ', err));
 }
-
+function processarAudio(texto) {
+    // Get CSRF token from cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    const csrftoken = getCookie('csrftoken');
+    
+    fetch('processar_audio/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+            'Accept': 'audio/mpeg'
+        },
+        body: JSON.stringify({
+            texto: texto
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        
+        // Limpar o URL do objeto após a reprodução
+        audio.onended = () => {
+            URL.revokeObjectURL(url);
+        };
+        
+        audio.play().catch(e => console.error('Error playing audio:', e));
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 // Função que exibe o popup e o efeito de loading
 function showPopup_textCopy() {
     const popup = document.getElementById('popup_copyText');
@@ -576,7 +626,6 @@ function configInput_onLoad() {
     contarCaracteres();
     habilitarBotao();   
 }
-
 // ---------- Variaveis Bases do Overlay
 
 // Variaveis Globais
