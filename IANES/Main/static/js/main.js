@@ -96,7 +96,9 @@ async function fetchJSONFile(filePath) {
         return null; // Retorna null para indicar falha
     }
 }
-
+// Arquivos necessários
+const LANGS_DISPONIVEIS_PATH = "{% static '_datas/langsDisponiveis.json' %}";
+const TEMAS_DISPONIVEIS_PATH = "{% static '_datas/temasDisponiveis.json' %}";
 // Função para buscar os arquivos necessários
 async function findRequiredFiles() {
     const files = {};

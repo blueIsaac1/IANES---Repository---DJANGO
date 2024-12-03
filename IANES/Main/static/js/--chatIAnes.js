@@ -264,6 +264,7 @@ function processarAudio(texto) {
         console.error('Error:', error);
     });
 }
+
 // Função que exibe o popup e o efeito de loading
 function showPopup_textCopy() {
     const popup = document.getElementById('popup_copyText');

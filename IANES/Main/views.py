@@ -45,9 +45,9 @@ GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 global pasta_dados
 pasta_dados = 'C://Users//CTDEV23//Desktop//IANES---Repository---DJANGO//DADOS'
 if pasta_dados:
-    print('penis')
+    print('Pasta de dados carregada.')
 def catch_error_404(request, exception):
-    return render(request, 'errors_template.html', {'error_message': 'URL não encontrada.'}, status=404)
+    return render(request, 'errors_template.html', {'error_message': 'URL não encontrada. | URL not found.'}, status=404)
 
 def converter_markdown_para_html(texto):
     # Converter negrito
@@ -662,13 +662,13 @@ def create_room(request):
     room = listar_ultima_sala()
     room += 1
     if not room_title:
-        room_title = f'Sala nova - {room}'
+        room_title = f'{room}'
     try:
         room = Room.objects.create(user=request.user, title=room_title)
         return redirect('list_messages', room.id )
     except Exception as e:
         logger.error(f"Erro inesperado {e}")
-        return render(request, 'errors_template.html', {'error_message': "Erro "})
+        return render(request, 'errors_template.html', {'error_message': "Erro ao criar sala | Error creating room."})
 
     return render(request, 'create_room.html')
     # return render(request, 'room.html', {

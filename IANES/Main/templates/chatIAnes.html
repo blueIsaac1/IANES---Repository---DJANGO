@@ -10,7 +10,7 @@
     <meta http-equiv="cache-control" content="private" />
     <!-- Define a: Linguagens do Conteudo -->
     <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
-    <title>Ianes - {{ room.title }}</title>
+    <title>Ianes | {{ room.title }}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <meta name="csrf-token" content="{{ csrf_token }}">
 
@@ -144,9 +144,9 @@
                                         <ion-icon name="copy-outline"></ion-icon>
                                         <p class="tp_extraO_IA" id="tp_ia-copy-{{ forloop.counter }}">Copiar</p>
                                     </div>
-                                    <div class="extraOptions_IAnes_Itens" onclick="processarAudio('{{ message.bot_response.text|escapejs }}')">
-                                        <ion-icon name="volume-medium-outline"></ion-icon>
-                                        <p class="tp_extraO_IA">Narrar Mensagem</p>
+                                    <div class="extraOptions_IAnes_Itens" onclick="processarAudio('{{ message.bot_response.text|escapejs }}')" onmouseover="showTooltip('speak', '{{ forloop.counter }}')" onmouseout="hideTooltip('speak', '{{ forloop.counter }}')">
+                                        <ion-icon name="volume-high-outline"></ion-icon>
+                                        <p class="tp_extraO_IA" id="tp_ia-speak-{{ forloop.counter }}">Narrar Mensagem</p>
                                     </div>
                                 </div>
                                 
