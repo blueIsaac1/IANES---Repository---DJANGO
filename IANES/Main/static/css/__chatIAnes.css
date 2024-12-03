@@ -16,7 +16,7 @@ main {
     aspect-ratio: 1 / 1;
     width: 100%;
     height: auto;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     position: relative;
     overflow: hidden;
     margin-top: 4vw;
@@ -1057,4 +1057,14 @@ Retorna ao ponto inicial
 .btn_del:hover {
     color: #ffffff;
     background-color: var(--color-vermelho-medio);
+}
+
+/* Outras não classificadas */
+
+#texto_chatIA_noRoomFound {
+    color: var(--color-vermelho-main);
+    font-size: 1vw;
+    font-weight: bold;
+    text-wrap: pretty;
+    text-align: center;
 }

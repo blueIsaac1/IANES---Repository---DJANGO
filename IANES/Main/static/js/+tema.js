@@ -67,10 +67,14 @@ function aplicarTemaLight() {
 
     // Altera a do Header
     let imgId_header_ianes = document.getElementById("header_logo_img")
-    imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+    if (imgId_header_ianes) {
+        imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+    }
     // Altera a do Início
     let imgId_inicio_ianes = document.getElementById("banner_logo_img")
-    imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+    if (imgId_inicio_ianes) {
+        imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_black)
+    }
 
     // --- Configurações
 }
@@ -111,10 +115,14 @@ function aplicarTemaDark() {
 
     // Altera a do Header
     let imgId_header_ianes = document.getElementById("header_logo_img")
-    imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+    if (imgId_header_ianes) {
+        imgId_header_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+    } 
     // Altera a do Início
     let imgId_inicio_ianes = document.getElementById("banner_logo_img")
-    imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+    if (imgId_inicio_ianes) {
+        imgId_inicio_ianes.setAttribute("src", imgSrc_Header_ianes_white)
+    }
 }
 
 async function uptadeCheck_tema(tema) {

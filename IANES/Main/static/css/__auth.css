@@ -596,8 +596,8 @@ main {
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    background-color: #ffffff;
-    border: solid var(--color-vermelho-medio) 0.2vw;
+    background-color: var(--color_tema-fundo-tema);
+    border: solid var(--color_tema-fundo_1) 0.2vw;
     border-radius: 0.5vw;
     padding: 1vw;
     gap: 0.6vw;
@@ -616,7 +616,7 @@ main {
     font-size: 1vw;
     font-weight: bold;
     text-align: left;
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .div_senhaInvalida ul {

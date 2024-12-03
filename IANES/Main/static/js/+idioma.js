@@ -239,25 +239,25 @@ async function aplicarIdioma(lang) {
     localStorage.setItem('situacaoIdioma', lang);
 
     // Envia o valor para o Django via POST
-    fetch('/set_language/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken()  // Certifique-se de incluir o token CSRF se estiver usando POST no Django
-        },
-        body: JSON.stringify({
-            language: lang
-        })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))  // Processa a resposta
-    .catch(error => console.error('Erro ao enviar dados:', error));
+    // fetch('/set_language/', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'X-CSRFToken': getCSRFToken()  // Certifique-se de incluir o token CSRF se estiver usando POST no Django
+    //     },
+    //     body: JSON.stringify({
+    //         language: lang
+    //     })
+    // })
+    // .then(response => response.json())
+    // .then(data => console.log(data))  // Processa a resposta
+    // .catch(error => console.error('Erro ao enviar dados:', error));
 
-    // Função para pegar o CSRF Token
-    function getCSRFToken() {
-        let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        return csrfToken;
-    }
+    // // Função para pegar o CSRF Token
+    // function getCSRFToken() {
+    //     let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    //     return csrfToken;
+    // }
     
 }
 
