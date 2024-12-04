@@ -584,7 +584,7 @@ def send_message(request, pk):
                         request.session.pop('perguntas', None)
                     else:
                         # Houve erro, então repetimos a mesma pergunta
-                        bot_response_text += "\n" + perguntas[current_question_key]
+                        bot_response_text = "\n" + perguntas[current_question_key]
                 except Exception as e:
                     bot_response_text = f"Erro: {str(e)}"
                     # Limpa as variáveis de sessão em caso de erro
@@ -607,6 +607,7 @@ def send_message(request, pk):
                 print('usr_txt: ', user_message_text)
                 print('bot_txt: ', bot_response_text)
                 print('crnt_usr: ', current_room.user)
+                print('prmt_indx: ', parameter_index)
                 salvar_conversa_em_json(
                     room_id=current_room.id, 
                     current_user=current_room.user, 
