@@ -1,30 +1,51 @@
 [
      {
-          "room_id": 69,
-          "timestamp": "2024-12-04T12:05:08.888832+00:00",
+          "room_id": 87,
+          "timestamp": "2024-12-04T20:13:07.022828+00:00",
           "current_user": "ctdev23",
-          "user_message": "ola",
-          "bot_response": "Ol\u00e1!  Como posso ajudar?\n"
+          "user_message": "yes",
+          "bot_response": "Okay.  Is there anything I can help you with?\n"
      },
      {
-          "room_id": 69,
-          "timestamp": "2024-12-04T12:05:14.432635+00:00",
-          "current_user": "ctdev23",
-          "user_message": "hummm",
-          "bot_response": "Is there anything I can help you with?  I'm ready when you are.\n"
-     },
-     {
-          "room_id": 69,
-          "timestamp": "2024-12-04T12:05:19.412443+00:00",
-          "current_user": "ctdev23",
-          "user_message": "sei",
-          "bot_response": "\"Sei\" is Italian for \"you are\" (singular, informal).  Is there anything else I can help you with?\n"
-     },
-     {
-          "room_id": 70,
-          "timestamp": "2024-12-04T12:41:23.728143+00:00",
+          "room_id": 88,
+          "timestamp": "2024-12-04T20:16:06.030862+00:00",
           "current_user": "ctdev23",
           "user_message": "bom dia",
           "bot_response": "Bom dia!\n"
+     },
+     {
+          "room_id": 88,
+          "timestamp": "2024-12-04T20:16:57.833538+00:00",
+          "current_user": "ctdev23",
+          "user_message": "ianes",
+          "bot_response": "iniciando a consulta..."
+     },
+     {
+          "room_id": 88,
+          "timestamp": "2024-12-04T20:17:08.482628+00:00",
+          "current_user": "ctdev23",
+          "user_message": "isaac",
+          "bot_response": "Erro: unsupported operand type(s) for +=: 'NoneType' and 'str'"
+     },
+     {
+          "room_id": 88,
+          "timestamp": "2024-12-04T20:17:21.245676+00:00",
+          "current_user": "ctdev23",
+          "user_message": "sair",
+          "bot_response": "\"Sair\" is a Portuguese verb meaning \"to leave\" or \"to go out.\"\n"
+     },
+     {
+          "room_id": 89,
+          "timestamp": "2024-12-04T20:17:26.615423+00:00",
+          "current_user": "ctdev23",
+          "user_message": "ianes",
+          "bot_response": "iniciando a consulta..."
+     },
+     {
+          "room_id": 89,
+          "timestamp": "2024-12-04T20:17:28.903192+00:00",
+          "current_user": "ctdev23",
+          "user_message": "isaac",
+          "bot_response": "Erro: unsupported operand type(s) for +=: 'NoneType' and 'str'"
      }
 ]

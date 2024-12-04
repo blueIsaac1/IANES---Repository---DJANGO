@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 
 global pasta_dados
-pasta_dados = 'IANES\Main\DADOS'
+pasta_dados = 'IANES/Main/DADOS'
 if pasta_dados:
     print('Pasta de dados carregada.')
 
@@ -68,6 +68,7 @@ def converter_markdown_para_html(texto):
     return texto
 
 def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_response_text):
+    current_user_str = str(current_user)
     # Define o caminho para o arquivo JSON
     caminho_arquivo = 'conversas.json'
     # Verifica se o arquivo já existe
@@ -82,10 +83,17 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
         conversas = []  # Se o arquivo não existir, inicia uma lista vazia
     print(current_user)
     # Cria um dicionário para a nova conversa
+
+    print('user_msg: ', user_message_text)
+    if user_message_text == 'ianes':
+        print('old_bot: ', bot_response_text)
+        bot_response_text = 'iniciando a consulta...'
+        print('new_bot: ', bot_response_text)
+
     nova_conversa = {
         'room_id': room_id,
         'timestamp': timezone.now().isoformat(),
-        'current_user': current_user,
+        'current_user': current_user_str,
         'user_message': user_message_text,
         'bot_response': bot_response_text
     }
@@ -387,6 +395,14 @@ def send_message(request, pk):
         user_message_text = request.POST.get('user_message')
 
         if user_message_text:
+            
+            user_message_instance = UserMessage.objects.create(
+                text=user_message_text,
+                user=current_room.user
+            )
+            current_room.user_message.add(user_message_instance)
+
+            bot_response_text = None  # Inicializar como None
 
             if request.session.get('collecting_parameters', False):
                 if user_message_text.strip().lower() == 'sair':
@@ -581,7 +597,21 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
+
                 current_room.bot_response.add(bot_response_instance)
+                user_message_instance = UserMessage.objects.create(
+                    user=current_room.user,
+                    text=user_message_text,
+                    created_at=None
+                )
+                print('usr_txt: ', user_message_text)
+                print('bot_txt: ', bot_response_text)
+                print('crnt_usr: ', current_room.user)
+                salvar_conversa_em_json(
+                    room_id=current_room.id, 
+                    current_user=current_room.user, 
+                    user_message_text=user_message_text, 
+                    bot_response_text=bot_response_text)
 
                 return redirect('list_messages', pk=current_room.id)
 
@@ -617,7 +647,18 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
+                user_message_instance = UserMessage.objects.create(
+                    user=current_room.user,
+                    text=user_message_text,
+                    created_at=None
+                )
                 current_room.bot_response.add(bot_response_instance)
+                current_user_text = str(current_room.user)
+                salvar_conversa_em_json(room_id=current_room.id,
+                                current_user = current_user_text,
+                                user_message_text=user_message_text,
+                                bot_response_text=bot_response_text)
+                print('penultimo bloco')
 
                 return redirect('list_messages', pk=current_room.id)
             
@@ -643,7 +684,7 @@ def send_message(request, pk):
                     text=bot_response_text
                 )
                 current_room.bot_response.add(bot_response_instance)
-                current_room.user_message.add(user_message_instance)        
+                      
                 current_user_text = str(current_room.user)
                 salvar_conversa_em_json(room_id=current_room.id,
                                 current_user = current_user_text,
