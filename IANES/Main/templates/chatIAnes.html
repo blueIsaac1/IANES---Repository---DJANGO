@@ -68,15 +68,21 @@
                                 <input class="rename_area" placeholder="Nova Sala" id="input_rename-{{ room.id }}" maxlength="30" value="{{ room.title }}" type="text">
                             </form>
                         </a>
+                        {% if room and room.id %}
                         <div class="btn_roomsEP" id="btn_roomsEP-{{ room.id }}" onclick="activeExtraOptionsBox(this)" aria-expanded="false" onmouseover="showTooltip('options', '{{ forloop.counter }}')" onmouseout="hideTooltip('options', '{{ forloop.counter }}')">
                             <i class='bx bx-dots-horizontal-rounded'></i>
                             <p class="tp_sideBar_header tp_opcoes" id="tp_ia-options-{{ forloop.counter }}">Opções</p>
                         </div>
+                        
                         <div class="roomsExtraOptions_box" id="roomsExtraOptions_box">
-                            <div class="roomsExtraOptions_item" id="sideBar_download" onclick="location.href='{% url 'enviar_email' pk=pk %}'">
+                            {% if room and room.id %}
+                            <div class="roomsExtraOptions_item" id="sideBar_download" onclick="location.href='{% url 'download_pdf' pk=room.id %}'">
                                 <i class='bx bxs-file-pdf download_icon'></i>
                                 <p id="texto_chatIA_download" class="download_text">Download</p>
                             </div>
+                            {% else %}
+                                <p>Sala não disponível.</p>
+                            {% endif %}
                             <div class="roomsExtraOptions_item" id="sideBar_rename" onclick="callRenameRoom('{{ room.id }}')">
                                 <i class='bx bxs-pencil pencil_icon'></i>
                                 <p id="texto_chatIA_renomar" class="pencil_text">Renomear</p>
@@ -86,7 +92,8 @@
                                 <p id="texto_chatIA_delete" class="trash_text">Excluir</p>
                             </div>
                         </div>
-                    </div>
+                        {% endif %}
+                    </div>  
                     {% empty %}
                         <p id="texto_chatIA_noRoomFound">Nenhuma sala disponível.</p>
                     {% endfor %}
@@ -97,10 +104,9 @@
         <div id="chat_container" class="chat_container trans_03s-width chat_container-full">
 
             <div class="chats_section" id="chats_section">
-
+                {% if room %}
                 <!-- As salas serão adicionadas automaticamente de acordo com o usuario -->
                 <!-- Por padrão, a sala 1 é sempre está disponivel -->
-
                 <div class="chat_messages" id="chat_messages-chat-1">
                     <ul class="messages_list" id="messages_list">
                         <li class="message bot">
@@ -155,10 +161,13 @@
                         {% endfor %}
                     </ul>
     
+                {% else %}
+                <div class="no-room-selected">
+                    <p>Selecione uma sala para ver as mensagens.</p>
                 </div>
-
+                {% endif %}
             </div>
-
+            {% if room %}
             <form method="POST"  action="{% url 'send_message' room.id %}" id="inputTo_ianes_form" class="chat_input_form">
                 {% csrf_token %}
                 <textarea tabindex="1" name="user_message" maxlength="10000" rows="1" id="user_message" placeholder="Digite uma mensagem..."></textarea>
@@ -173,6 +182,7 @@
                     <ion-icon name="arrow-down-outline"></ion-icon>
                 </div>
             </form>
+            {% endif %}
             </div>
             
             <!-- <div onclick="baixarConversaComoPDF()" class="btn_baixarPDF">
@@ -195,10 +205,12 @@
                     <p id="texto_chatIA_deleteRoom2">Isso excluirá o Chat:</p>
                     <span id="roomTitle_atual">{{ room.title }}</span>
                 </div>
+                {% if room and room.id %}
                 <div class="confSalaDelC_bot_colum salaDelt_bcBot">
                     <p onclick="toggleOverlay_confDelete()" id="texto_chatIA_deleteRoom_cancel" class="confSalaDel_btn btn_can">Cancelar</p>
-                    <a href="{% url 'delete_room' room.id %}" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
+                    <a href="{% url 'delete_room' pk=room.id %}" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
                 </div>
+                {% endif %}
             </div>
 
         </div>

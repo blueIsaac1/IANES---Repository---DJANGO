@@ -18,12 +18,13 @@ urlpatterns = [
     path('IAnes/', views.list_messages, name="list_messages"),
     path('IAnes/<pk>/', views.list_messages, name="list_messages"),
     path('create-room/', views.create_room, name="create_room"),
-    path('delete-room/<int:id>/', views.delete_room, name="delete_room"),
+    path('delete-room/<pk>/', views.delete_room, name="delete_room"),
     path('<pk>/', views.RoomDetailView.as_view(), name="room_detail"),
     path('<pk>/send/', views.send_message, name="send_message"),
     path('some_view/', views.some_view, name='some_view'),
-    path('enviar-email/<int:pk>/', views.processar_e_enviar_pdf, name='enviar_email'),
-    path('IAnes/<int:id>/processar_audio/', views.processar_audio_ianes, name='processar_audio'),
+    path('IAnes/<int:pk>/download_pdf/', views.download_pdf, name='download_pdf'),
+    path('enviar_email/<pk>/', views.processar_e_enviar_pdf, name='enviar_email'),
+    path('IAnes/<pk>/processar_audio/', views.processar_audio_ianes, name='processar_audio'),
     # path('reproduzir_audio/', views.reproduzir_audio, name='reproduzir_audio'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

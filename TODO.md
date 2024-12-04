@@ -11,6 +11,7 @@
 - Gerar Pdf // adicionado
 - Arrumar estrutura do banco de dados:
     1. Atribuir um usuario a cada sala (usuario-*salas) (salas-usuario) - (1-*) (1-1) // adicionado
+- Baixar pdf/buffer direto do navegador // adicionado
 
 # ERROS:
 
@@ -21,5 +22,5 @@
 - Textos que sao adicionados automaticamente, como as listas de temas não sao traduzidos AINDA, pois esqueci de pegar os seus ID's
 
 # ADICIONAR:
-- Baixar pdf/buffer direto do navegador
+
 - Lógica de preocessar e enviar pdf no momento que a analise estiver pronta

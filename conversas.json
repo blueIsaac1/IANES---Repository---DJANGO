@@ -1,1 +1,30 @@
-[]
+[
+     {
+          "room_id": 69,
+          "timestamp": "2024-12-04T12:05:08.888832+00:00",
+          "current_user": "ctdev23",
+          "user_message": "ola",
+          "bot_response": "Ol\u00e1!  Como posso ajudar?\n"
+     },
+     {
+          "room_id": 69,
+          "timestamp": "2024-12-04T12:05:14.432635+00:00",
+          "current_user": "ctdev23",
+          "user_message": "hummm",
+          "bot_response": "Is there anything I can help you with?  I'm ready when you are.\n"
+     },
+     {
+          "room_id": 69,
+          "timestamp": "2024-12-04T12:05:19.412443+00:00",
+          "current_user": "ctdev23",
+          "user_message": "sei",
+          "bot_response": "\"Sei\" is Italian for \"you are\" (singular, informal).  Is there anything else I can help you with?\n"
+     },
+     {
+          "room_id": 70,
+          "timestamp": "2024-12-04T12:41:23.728143+00:00",
+          "current_user": "ctdev23",
+          "user_message": "bom dia",
+          "bot_response": "Bom dia!\n"
+     }
+]

@@ -37,15 +37,25 @@ from collections import OrderedDict
 from django.core import serializers
 from gtts import gTTS
 from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+import io
+from datetime import datetime
+from django.http import FileResponse
 
 logger = logging.getLogger(__name__)
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 
 global pasta_dados
-pasta_dados = 'C://Users//CTDEV23//Desktop//IANES---Repository---DJANGO//DADOS'
+pasta_dados = 'IANES\Main\DADOS'
 if pasta_dados:
     print('Pasta de dados carregada.')
+
 def catch_error_404(request, exception):
     return render(request, 'errors_template.html', {'error_message': 'URL não encontrada. | URL not found.'}, status=404)
 
@@ -662,7 +672,7 @@ def create_room(request):
     room = listar_ultima_sala()
     room += 1
     if not room_title:
-        room_title = f'{room}'
+        room_title = f'Sala Nova - {room}'
     try:
         room = Room.objects.create(user=request.user, title=room_title)
         return redirect('list_messages', room.id )
@@ -679,7 +689,7 @@ def create_room(request):
 @csrf_exempt
 def list_messages(request, pk=None):
     last_room = Room.objects.order_by('-created_at').first()
-
+    
     if not last_room:
         room = Room.objects.create(user=request.user)
         room.title = f"Sala Nova - {room.id}"
@@ -688,33 +698,31 @@ def list_messages(request, pk=None):
         return redirect('list_messages', pk=room.id)
 
     try:
-        room = get_object_or_404(Room, pk=pk if pk else last_room.id)
-        user_messages = room.user_message.all().order_by('created_at')
-        bot_responses = room.bot_response.all().order_by('created_at')
-        rooms = Room.objects.filter(user = request.user.id)
-        print(request.user)
-        
-        # Preparar as mensagens com o indicador 'is_new_bot_response'
+        rooms = Room.objects.filter(user=request.user.id)
         messages = []
-        message_pairs = list(zip_longest(user_messages, bot_responses, fillvalue=None))
+        user_messages = []
+        bot_responses = []
+        room = None
 
-        # Obter o ID da nova resposta do bot armazenado na sessão
-        new_bot_response_id = request.session.get('new_bot_response_id')
+        if pk:
+            room = get_object_or_404(Room, pk=pk)
+            user_messages = room.user_message.all().order_by('created_at')
+            bot_responses = room.bot_response.all().order_by('created_at')
+            message_pairs = list(zip_longest(user_messages, bot_responses, fillvalue=None))
 
-        for i, (user_message, bot_response) in enumerate(message_pairs):
-            is_new_bot_response = False
-            if bot_response:
-                if bot_response.id == new_bot_response_id:
+            new_bot_response_id = request.session.get('new_bot_response_id')
+
+            for i, (user_message, bot_response) in enumerate(message_pairs):
+                is_new_bot_response = False
+                if bot_response and bot_response.id == new_bot_response_id:
                     is_new_bot_response = True
-                    # Remover o ID da sessão após identificar a mensagem como nova
                     del request.session['new_bot_response_id']
-            messages.append({
-                'user_message': user_message,
-                'bot_response': bot_response,
-                'is_new_bot_response': is_new_bot_response,
-                
-            })
-        
+                messages.append({
+                    'user_message': user_message,
+                    'bot_response': bot_response,
+                    'is_new_bot_response': is_new_bot_response,
+                })
+   
     except Http404 as e:
         logger.error(f"Sala com PK {pk} não encontrada.")
         return render(request, 'errors_template.html', {'error_message': "Sala não encontrada", 'error_description': 'Objeto Sala não encontrado.'})
@@ -751,30 +759,27 @@ def list_messages(request, pk=None):
             except Exception as e:
                 logger.error(f"Erro inesperado. Detalhes: {str(e)}")
                 return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
-
+    print('room:', room)
     return render(request, 'chatIAnes.html', {
         'user_messages': user_messages,
         'bot_responses': bot_responses,
         'room': room,
         'rooms': rooms,
         'messages': messages,
-        'current_page': 'ianes',
-        'pk': pk or (room.id if room else None),
-        
-        
+        'current_page': 'ianes'
     })
 
 @csrf_exempt
 
-def delete_room(request, id):
-    room_to_delete = get_object_or_404(Room, id=id)
+def delete_room(request, pk):
+    room_to_delete = get_object_or_404(Room, pk=pk)
     room_to_delete.delete()
     
     with open('conversas.json', 'r') as file:
         data = json.load(file)
     
     try:
-        data = [x for x in data if x['room_id'] != id]
+        data = [x for x in data if x['room_id'] != pk]
     except Exception as e:
         pass
 
@@ -814,15 +819,14 @@ def listar_ultima_sala():
 
 def gerar_pdf(nome_arquivo="relatorio.pdf", pk=None): # atribuir o response da ia ao "relatorio"
     relatorio = acessar_ultima_conversa_json(pk)
-    c = canvas.Canvas(nome_arquivo, pagesize=A4)
-    c.drawString(100, 800, "Descrição do Projeto:")
-
 
     if isinstance(relatorio, str):
         relatorio = [relatorio]  
     elif not isinstance(relatorio, (list, tuple)):
         relatorio = [str(relatorio)]
-
+        
+    c = canvas.Canvas(nome_arquivo, pagesize=A4)
+    c.drawString(100, 800, "Descrição do Projeto:")
     text = c.beginText(100, 780)
     text.setFont("Helvetica", 12)
     text.setLeading(14)
@@ -862,6 +866,7 @@ def enviar_email(com_remetente, para_destinatario, nome_arquivo):
 def acessar_ultima_conversa_json(pk):
     with open('conversas.json', 'r') as file:
         data = json.load(file)
+        print(data)
         result = []
         for x in data:
             if x['room_id'] == pk:
@@ -869,7 +874,8 @@ def acessar_ultima_conversa_json(pk):
                 bot = f"Ianes: {x['bot_response']}"
                 result.append(usuario)
                 result.append(bot)
-        return result
+        return result  
+        
         
 # Função principal para gerar PDF e enviar e-mail
 def processar_e_enviar_pdf(request, pk):
@@ -878,13 +884,12 @@ def processar_e_enviar_pdf(request, pk):
     email_destinatario = "isaaccleitondasilva@gmail.com"
     gerar_pdf(nome_arquivo_pdf, pk=pk)
     try:
-        # enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
-        return redirect('list_messages') 
+        enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
     except Exception as e:
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
     
-def processar_audio_ianes(request, id):
+def processar_audio_ianes(request, pk):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -914,16 +919,33 @@ def processar_audio_ianes(request, id):
             return JsonResponse({'success': False, 'error': str(e)})
         
     return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
-
-# def reproduzir_audio(request):
-#     try:
-#         audio_path = os.path.join(settings.MEDIA_ROOT, 'audio_files', 'audio_ianes.mp3')
-#         if os.path.exists(audio_path):
-#             return FileResponse(open(audio_path, 'rb'), content_type='audio/mpeg')
-#         return HttpResponseNotFound("Áudio não encontrado")
-#     except Exception as e:
-#         logging.error(f"Erro ao reproduzir áudio: {e}")
-#         return HttpResponseNotFound(f"Erro ao reproduzir áudio: {str(e)}")
-
     
+def download_pdf(request, pk):
+    print(pk)
+    relatorio = acessar_ultima_conversa_json(pk)
+    print(relatorio)
+    if not relatorio:
+        return HttpResponse("No conversation found.", status=404)
 
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    styles = getSampleStyleSheet()
+    story = []
+
+    # Title
+    title_style = styles['Title']
+    title_style.textColor = colors.darkblue
+    title = Paragraph("Conversation Report", title_style)
+    story.append(title)
+    story.append(Spacer(1, 12))
+
+    # Content
+    normal_style = styles['Normal']
+    for line in relatorio:
+        paragraph = Paragraph(line, normal_style)
+        story.append(paragraph)
+        story.append(Spacer(1, 12))
+
+    doc.build(story)
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='conversation_report.pdf')
