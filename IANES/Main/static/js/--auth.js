@@ -1,10 +1,10 @@
 // Função que exibe a tela correspondente
 window.detectar_auth = function() {
     let tela_padrao = 'login';
-    let telaAtual_auth_uso = localStorage.getItem('telaAtual_auth'); // Use 'let' aqui
+    let telaAtual_auth_uso = localStorage.getItem('ls_ultimaTela_auth');
 
     if (!telaAtual_auth_uso) {
-        localStorage.setItem('telaAtual_auth', `ta_auth-${tela_padrao}`);
+        localStorage.setItem('ls_ultimaTela_auth', `ta_auth-${tela_padrao}`);
         telaAtual_auth_uso = tela_padrao;  // Agora pode atribuir um novo valor
         window.location.reload(true);
     }
@@ -27,7 +27,7 @@ window.callScreen_auth = function(page) {
     console.log("Switching screen to:", page);
     const solo_container = document.getElementById(`container_${page}`)
     const todos_containers = document.querySelectorAll(".container_content")
-    localStorage.setItem('telaAtual_auth', `ta_auth-${page}`);
+    localStorage.setItem('ls_ultimaTela_auth', `ta_auth-${page}`);
 
     todos_containers.forEach(item => {
         item.style.display = "none"
@@ -35,17 +35,6 @@ window.callScreen_auth = function(page) {
 
     if (solo_container) {solo_container.style.display = "flex"}
 }
-
-// function callScreen_auth(type) {
-//     console.log("Tipo recebido:", type);  // Deve exibir "signup" no console
-//     if (type === 'signup') {
-//         document.getElementById('container_login').style.display = 'none';
-//         document.getElementById('container_signup').style.display = 'block';
-//     } else if (type === 'login') {
-//         document.getElementById('container_login').style.display = 'block';
-//         document.getElementById('container_signup').style.display = 'none';
-//     }
-// }
 
 // Troca a cor da Barra de Baixo dos Input's
 document.getElementById('forms_signup').addEventListener('submit', function(event) {

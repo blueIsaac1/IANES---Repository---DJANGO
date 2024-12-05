@@ -32,20 +32,17 @@ function alterarTextos_geral(messages) {
     // Seções que serão processadas
     const secoes = ['geral', 'navbar'];
 
-    // Obtendo o nome da página atual
-    const currentPage = window.location.pathname.split('/').pop();
-
     // Alterando o título da página baseado na seção "geral"
     // if (messages.geral && messages.geral[0]) {
     //     let novoTitulo;
     //     switch (currentPage) {
-    //         case 'auth.html':
+    //         case 'auth':
     //             novoTitulo = messages.geral[0]['page_title_auth'];
     //             break;
-    //         case 'pagina_ia.html':
+    //         case 'chat':
     //             novoTitulo = messages.geral[0]['page_title_pageIA'];
     //             break;
-    //         case 'index.html':
+    //         case 'index':
     //             novoTitulo = messages.geral[0]['page_title_inicio'];
     //             break;
     //         case 'sobre.html':
@@ -63,7 +60,7 @@ function alterarTextos_geral(messages) {
     // }
 
     // Processar as demais seções para atualizar os textos na página
-    secoes.forEach(secao => {
+    secoes.forEach(secao => {   
         if (messages[secao] && messages[secao][0]) {
             const textos = messages[secao][0];
 

@@ -45,7 +45,9 @@ window.callScreen = function(tela) {
             tela_inicio.style.display = "flex";
             tela_sobre.style.display = "none";
             // Muda o "#" na URL
-            window.location.hash = "inicio"
+            window.location.hash = "home"
+            // Altera a Info da Página atual
+            localStorage.setItem('ls_ultimaTela_index', 'inicio');
             break;
         case 'sobre':
             // Troca a Visibilidade das Telas do Index
@@ -53,6 +55,8 @@ window.callScreen = function(tela) {
             tela_sobre.style.display = "flex";
             // Muda o "#" na URL
             window.location.hash = "sobre"
+            // Altera a Info da Página atual
+            localStorage.setItem('ls_ultimaTela_index', 'sobre');
             break;
         default:
             // Se a tela não for reconhecida, você pode definir um comportamento padrão
@@ -63,6 +67,7 @@ window.callScreen = function(tela) {
                 tela_sobre.style.display = "none";
             }
             window.location.hash = "inicio"
+            localStorage.setItem('ls_ultimaTela_index', 'inicio');
             break;
     }
     setTimeout(() => rolarPara("topo_screen"), 100);
@@ -201,8 +206,27 @@ if (typeof loading_page === 'function') {
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Pegar a URL da página atual e armazená-la no localStorage
-    const janelaAtual_url = window.location.href;
-    localStorage.setItem('ultimaJanela', janelaAtual_url);
+    const janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
+    const telaAtual_auth = localStorage.getItem('ls_ultimaTela_auth');
+    const telaAtual_index = localStorage.getItem('ls_ultimaTela_index');
+
+    if (janelaAtual === "auth" && telaAtual_auth == null) {
+        localStorage.setItem('ls_ultimaTela_auth', `ta_auth-login`);
+    } else if (janelaAtual === "auth" && telaAtual_auth != null) {
+        localStorage.setItem('ls_ultimaTela_auth', telaAtual_auth);
+    } 
+
+    if (janelaAtual === "index" && telaAtual_index == null) {
+        localStorage.setItem('ls_ultimaTela_index', 'inicio');
+    } else if (janelaAtual === "index" && telaAtual_index != null) {
+        localStorage.setItem('ls_ultimaTela_index', telaAtual_index);
+    } 
+    
+    localStorage.setItem('ultimaJanela', janelaAtual);
+
+    console.log("🌹 Janela Atual: ", janelaAtual)
+    console.log("🌹 Tela Auth Atual: ", telaAtual_auth)
+    console.log("🌹 Tela Index Atual: ", telaAtual_index)
 
     // Esperar os arquivos necessários serem carregados
     const arquivosCarregados = await findRequiredFiles();
