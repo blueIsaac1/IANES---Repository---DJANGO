@@ -87,7 +87,7 @@
                                 <i class='bx bxs-pencil pencil_icon'></i>
                                 <p id="texto_chatIA_renomar" class="pencil_text">Renomear</p>
                             </div>
-                            <div onclick="askForDelete()" class="roomsExtraOptions_item" id="sideBar_excluir">
+                            <div onclick="askForDelete('{{ room.id }}')" class="roomsExtraOptions_item" id="sideBar_excluir">
                                 <i class='bx bxs-trash trash_icon'></i>
                                 <p id="texto_chatIA_delete" class="trash_text">Excluir</p>
                             </div>
@@ -209,7 +209,7 @@
                 {% if room and room.id %}
                 <div class="confSalaDelC_bot_colum salaDelt_bcBot">
                     <p onclick="toggleOverlay_confDelete()" id="texto_chatIA_deleteRoom_cancel" class="confSalaDel_btn btn_can">Cancelar</p>
-                    <a href="{% url 'delete_room' pk=room.id %}" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
+                    <a onclick="confirmDelete({{ room.id }})" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
                 </div>
                 {% endif %}
             </div>

@@ -668,10 +668,14 @@ function toggleOverlay_confDelete() {
     } else {return}
 }
 
-function askForDelete() {
+function askForDelete(roomId) {
     const btn_delete = document.getElementById("texto_chatIA_deleteRoom_delete")
     const btn_cancel = document.getElementById("texto_chatIA_deleteRoom_cancel")
     toggleOverlay_confDelete()
+}
+function confirmDelete(roomId) {
+    let deleteBtn = document.getElementById("texto_chatIA_deleteRoom_delete")
+    deleteBtn.attributes('href', `{% url 'delete_room' pk=${roomId} %}`)
 }
 
 // Clique no overlay ou no botão de fechar do Confirmar Delete da Sala
