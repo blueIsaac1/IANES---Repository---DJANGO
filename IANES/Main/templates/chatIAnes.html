@@ -204,12 +204,12 @@
             <div class="confSalaDelC_bot">
                 <div class="confSalaDelC_bot_colum salaDelt_bcTop">
                     <p id="texto_chatIA_deleteRoom2">Isso excluirá o Chat:</p>
-                    <span id="roomTitle_atual">{{ room.title }}</span>
+                    <span id="roomTitle_atual"></span>
                 </div>
                 {% if room and room.id %}
                 <div class="confSalaDelC_bot_colum salaDelt_bcBot">
                     <p onclick="toggleOverlay_confDelete()" id="texto_chatIA_deleteRoom_cancel" class="confSalaDel_btn btn_can">Cancelar</p>
-                    <a onclick="confirmDelete({{ room.id }})" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
+                    <a href="#" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
                 </div>
                 {% endif %}
             </div>
@@ -247,6 +247,6 @@
     <script src="{% static 'js/--chatIAnes.js' %}"></script>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
-
+    {% comment %} funfa {% endcomment %}
 </body>
 </html>

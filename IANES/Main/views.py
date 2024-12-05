@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 
 global pasta_dados
-pasta_dados = 'IANES/Main/DADOS'
+pasta_dados = './DADOS'
 if pasta_dados:
     print('Pasta de dados carregada.')
 
@@ -74,7 +74,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     # Verifica se o arquivo já existe
     if os.path.exists(caminho_arquivo):
         # Se existir, abre para ler os dados existentes
-        with open(caminho_arquivo, 'r') as file:
+        with open(caminho_arquivo, 'r', encoding='utf-8') as file:
             try:
                 conversas = json.load(file)
             except json.JSONDecodeError:
@@ -102,7 +102,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     conversas.append(nova_conversa)
 
     # Salva a lista de conversas de volta no arquivo JSON
-    with open(caminho_arquivo, 'w') as file:
+    with open(caminho_arquivo, 'w', encoding='utf-8') as file:
         json.dump(conversas, file, indent=5, ensure_ascii=False)
 
 
@@ -317,20 +317,28 @@ def processar_respostas_finais(respostas):
                 logger.error(f"Pontuação inválida recebida: '{score_str}'")
                 continue
 
-            resultado = {
-                'programa': pagina['arquivo'],
-                'pontuacao': score,
-                'justificativa': descricao.strip()
-            }
-
-            resultados.append(resultado)
+            if score > 0:
+                resultado = {
+                    'programa': pagina['arquivo'],
+                    'pontuacao': score,
+                    'justificativa': descricao.strip()
+                }
+                resultados.append(resultado)
+            else:
+                logger.info(f"Programa '{pagina['arquivo']}' recebeu pontuação 0 e será ignorado.")
 
         # Ordena os resultados pela pontuação, do maior para o menor
         resultados_ordenados = sorted(resultados, key=lambda x: x['pontuacao'], reverse=True)
 
+        # Filtra apenas os que têm pontuação maior que 0
+        resultados_relevantes = [res for res in resultados_ordenados if res['pontuacao'] > 0]
+
+        # Seleciona até 3 melhores resultados
+        melhores_resultados = resultados_relevantes[:3]
+
         if resultados_ordenados:
-            num_resultados = len(resultados_ordenados)
-            top_n = min(3, num_resultados)
+            num_resultados = len(melhores_resultados)
+            top_n = max(3, num_resultados)
             melhores_resultados = resultados_ordenados[:top_n]
 
             mensagem = "Com base nas suas respostas, recomendo as seguintes opções:\n\n"
@@ -395,7 +403,6 @@ def send_message(request, pk):
         user_message_text = request.POST.get('user_message')
 
         if user_message_text:
-            
             user_message_instance = UserMessage.objects.create(
                 text=user_message_text,
                 user=current_room.user
@@ -421,228 +428,151 @@ def send_message(request, pk):
                     current_room.bot_response.add(bot_response_instance)
 
                     return redirect('list_messages', pk=current_room.id)
-                try:
-                    parameter_index = request.session.get('parameter_index', 0)
-                    respostas = request.session.get('responses', {})
-                    perguntas = request.session.get('perguntas', {})
-                    perguntas_keys = list(perguntas.keys())
 
-                    if parameter_index < len(perguntas_keys):
-                        current_question_key = perguntas_keys[parameter_index]
-
-                    if current_question_key in ["nome", "nome_empresa", "projeto", "publicoalvo"]:
-                            if not user_message_text.strip():
-                                bot_response_text = "Por favor, preencha o campo corretamente. Este campo não pode ficar em branco."
-                            else:
-                                respostas[current_question_key] = user_message_text.strip()
-                                parameter_index += 1
-                                request.session['parameter_index'] = parameter_index
-                                request.session['responses'] = respostas
-                    elif current_question_key == "lucro":
-                        if user_message_text.strip().upper() in ['EP', 'EPP', 'D+']:
-                            respostas[current_question_key] = user_message_text.strip().upper()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        else:
-                            bot_response_text = "Por favor, insira uma faixa de lucro válida: 'EP', 'EPP' ou 'D+'."
-                    elif current_question_key == "numero_colaboradores":
-                        resposta_limpa = re.sub(r'[^0-9]', '', user_message_text)
-                        try:
-                            respostas[current_question_key] = int(resposta_limpa)
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        except ValueError:
-                            bot_response_text = "Erro! Por favor, insira apenas números sem decimais."
-                    elif current_question_key == "CNPJ":
-                        if user_message_text.strip().lower() == 'não':
-                            respostas[current_question_key] = user_message_text.strip()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        elif re.match(r'\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}', user_message_text.strip()):
-                            respostas[current_question_key] = user_message_text.strip()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        else:
-                            bot_response_text = "CNPJ inválido. Por favor, insira no formato XX.XXX.XXX/XXXX-XX ou digite 'Não'."
-                    elif current_question_key == "Email":
-                        if "@" in user_message_text and "." in user_message_text:
-                            respostas[current_question_key] = user_message_text.strip()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        else:
-                            bot_response_text = "E-mail inválido. Por favor, insira um e-mail válido que contenha '@' e '.'."
-                    elif current_question_key == "orcamento":
-                        resposta_limpa = re.sub(r'[^0-9,\.]', '', user_message_text)
-                        try:
-                            respostas[current_question_key] = float(resposta_limpa.replace(",", "."))
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        except ValueError:
-                            bot_response_text = "Por favor, insira um valor numérico válido para o orçamento."
-                    elif current_question_key == "extensao":
-                        if user_message_text.strip().lower() in ["regional", "nacional", "global"]:
-                            respostas[current_question_key] = user_message_text.strip()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        else:
-                            bot_response_text = "Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global."
-                    elif current_question_key == "tempo":
-                        try:
-                            respostas[current_question_key] = int(user_message_text)
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        except ValueError:
-                            bot_response_text = "Por favor, insira um número inteiro para a duração do projeto."
-                    elif current_question_key == "itensfinanciaveis":
-                        if user_message_text.strip().lower() in ["sim", "não", "nao"]:
-                            respostas[current_question_key] = user_message_text.strip()
-                            parameter_index += 1
-                            request.session['parameter_index'] = parameter_index
-                            request.session['responses'] = respostas
-                        else:
-                            bot_response_text = "Por favor, responda com 'sim' ou 'não'."
-                    elif current_question_key == "tema":
-                        try:
-                            tema_escolhido = int(user_message_text)
-                            if tema_escolhido in temas:
-                                respostas[current_question_key] = temas[tema_escolhido]
-                                # Obtém a lista de vertentes para o tema escolhido
-                                vertentes_list = vertentes_dict.get(tema_escolhido, [])
-                                # Adiciona a pergunta de vertente ao dicionário de perguntas
-                                perguntas["vertente"] = "Escolha a vertente:\n" + "\n".join(
-                                    [f"{i+1}: {v}" for i, v in enumerate(vertentes_list)]
-                                )
-                                # Insere 'vertente' em 'perguntas_keys' após a posição atual
-                                perguntas_keys = request.session.get('perguntas_keys')
-                                perguntas_keys.insert(parameter_index + 1, "vertente")
-                                # Atualiza as perguntas e chaves na sessão
-                                request.session['perguntas'] = perguntas
-                                request.session['perguntas_keys'] = perguntas_keys
-                                # Atualiza o índice e as respostas
-                                parameter_index += 1
-                                request.session['parameter_index'] = parameter_index
-                                request.session['responses'] = respostas
-                            else:
-                                bot_response_text = f"Por favor, escolha um número entre 1 e {len(temas)}."
-                        except ValueError:
-                            bot_response_text = "Por favor, insira um número válido para o tema."
-                    elif current_question_key == "vertente":
-                        tema_escolhido = list(temas.keys())[list(temas.values()).index(respostas['tema'])]
-                        vertentes_list = vertentes_dict.get(tema_escolhido, [])
-                        try:
-                            escolha_vertente = int(user_message_text)
-                            if 1 <= escolha_vertente <= len(vertentes_list):
-                                respostas[current_question_key] = vertentes_list[escolha_vertente - 1]
-                                parameter_index += 1
-                                request.session['parameter_index'] = parameter_index
-                                request.session['responses'] = respostas
-                            else:
-                                bot_response_text = f"Escolha um número entre 1 e {len(vertentes_list)}."
-                        except ValueError:
-                            bot_response_text = "Por favor, insira um número válido para a vertente."
-                    else:
-                        # Caso padrão
-                        respostas[current_question_key] = user_message_text.strip()
-                        parameter_index += 1
-                        request.session['parameter_index'] = parameter_index
-                        request.session['responses'] = respostas
-
-                    # Se não houve erro, envia a próxima pergunta
-                    if 'bot_response_text' not in locals():
-                        if parameter_index < len(perguntas_keys):
-                            next_question_key = perguntas_keys[parameter_index]
-                            bot_response_text = perguntas[next_question_key]
-                            if next_question_key == 'orcamento':
-                                cotacao = obter_cotacao_dolar()
-                                bot_response_text = f"Cotação atual do dólar: R$ {cotacao:.2f}\n" + perguntas[next_question_key]
-                        else:
-                            # Processamento final das respostas
-                            respostas_finais = request.session.get('responses', {})
-                            bot_response_text = processar_respostas_finais(respostas_finais)
-                            # Limpa as variáveis de sessão
-                            request.session.pop('collecting_parameters', None)
-                            request.session.pop('parameter_index', None)
-                            request.session.pop('responses', None)
-                            request.session.pop('perguntas', None)
-                    elif parameter_index >= len(perguntas_keys):
-                        # Não há mais perguntas, processa as respostas finais
-                        respostas_finais = request.session.get('responses', {})
-                        respostas_finais = request.session.get('responses', {})
-                        bot_response_text = processar_respostas_finais(respostas_finais)
-                        # Limpa as variáveis de sessão
-                        request.session.pop('collecting_parameters', None)
-                        request.session.pop('parameter_index', None)
-                        request.session.pop('responses', None)
-                        request.session.pop('perguntas', None)
-                    else:
-                        # Houve erro, então repetimos a mesma pergunta
-                        bot_response_text = "\n" + perguntas[current_question_key]
-                except Exception as e:
-                    bot_response_text = f"Erro: {str(e)}"
-                    # Limpa as variáveis de sessão em caso de erro
-                    request.session.pop('collecting_parameters', None)
-                    request.session.pop('parameter_index', None)
-                    request.session.pop('responses', None)
-                    request.session.pop('perguntas', None)
-
-                # Salva a resposta do bot como uma mensagem
-                bot_response_instance = BotResponse.objects.create(
-                    text=bot_response_text
-                )
-
-                current_room.bot_response.add(bot_response_instance)
-                user_message_instance = UserMessage.objects.create(
-                    user=current_room.user,
-                    text=user_message_text,
-                    created_at=None
-                )
-                print('usr_txt: ', user_message_text)
-                print('bot_txt: ', bot_response_text)
-                print('crnt_usr: ', current_room.user)
-                print('prmt_indx: ', parameter_index)
-                salvar_conversa_em_json(
-                    room_id=current_room.id, 
-                    current_user=current_room.user, 
-                    user_message_text=user_message_text, 
-                    bot_response_text=bot_response_text)
-
-                return redirect('list_messages', pk=current_room.id)
-
-            elif user_message_text.strip().upper() == "IANES":
-                # Inicia o processo de coleta de dados
+            if not request.session.get('collecting_parameters') and user_message_text.upper() == "IANES":
                 request.session['collecting_parameters'] = True
                 request.session['parameter_index'] = 0
                 request.session['responses'] = {}
 
-                # Define as perguntas iniciais
                 perguntas = OrderedDict([
-                    ("nome", "Por favor, insira o nome da pessoa responsável: "),
-                    ("nome_empresa", "Por favor, insira o nome da empresa responsável: "),
-                    ("lucro", "Qual é a faixa de lucro da empresa? (EP, EPP, D+): "),
-                    ("numero_colaboradores", "Por favor, insira o número de colaboradores do projeto: "),
-                    ("CNPJ", "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'): "),
-                    ("Email", "Por favor, insira o e-mail do responsável pelo projeto: "),
-                    ("projeto", "Por favor, informe o nome do projeto: "),
-                    ("orcamento", "Qual é o orçamento previsto para o projeto em reais (R$)? "),
-                    ("extensao", "Qual é a extensão geográfica do projeto? (Regional, Nacional ou Global): "),
-                    ("tempo", "Qual é a duração prevista do projeto em meses? "),
-                    ("publicoalvo", "Quem é o público-alvo do projeto? "),
-                    ("itensfinanciaveis", "Os itens do projeto podem ser financiados? (Sim ou Não): "),
+                    ("nome", "Por favor, insira o nome da pessoa responsável:"),
+                    ("nome_empresa", "Por favor, insira o nome da empresa responsável:"),
+                    ("lucro", "Qual é a faixa de lucro da empresa? (EP, EPP, D+):"),
+                    ("numero_colaboradores", "Por favor, insira o número de colaboradores do projeto:"),
+                    ("CNPJ", "Por favor, forneça o CNPJ da empresa (se não possuir, informe 'Não'):"),
+                    ("Email", "Por favor, insira o e-mail do responsável pelo projeto:"),
+                    ("projeto", "Por favor, informe o nome do projeto:"),
+                    ("orcamento", "Qual é o orçamento previsto para o projeto em reais (R$)?"),
+                    ("extensao", "Qual é a extensão geográfica do projeto? (Regional, Nacional ou Global):"),
+                    ("tempo", "Qual é a duração prevista do projeto em meses?"),
+                    ("publicoalvo", "Quem é o público-alvo do projeto?"),
+                    ("itensfinanciaveis", "Os itens do projeto podem ser financiados? (Sim ou Não):"),
                     ("tema", f"Escolha o tema do projeto (1-{len(temas)}):\n" + "\n".join([f"{k}: {v}" for k, v in temas.items()])),
                     # A pergunta 'vertente' será adicionada dinamicamente após a escolha do tema
                 ])
-                perguntas_keys = list(perguntas.keys())
                 request.session['perguntas'] = perguntas
-                request.session['perguntas_keys'] = perguntas_keys
+                request.session['perguntas_keys'] = list(perguntas.keys())
                 bot_response_text = perguntas["nome"]
+                bot_response_instance = BotResponse.objects.create(
+                    text=bot_response_text
+                )
+                current_room.bot_response.add(bot_response_instance)
+                return redirect('list_messages', pk=current_room.id)
+
+            # Processo de coleta de respostas
+            if request.session.get('collecting_parameters'):
+                perguntas = request.session['perguntas']
+                parameter_index = request.session['parameter_index']
+                respostas = request.session['responses']
+
+                perguntas_keys = list(perguntas.keys())
+                current_question_key = perguntas_keys[parameter_index]
+
+                bot_response_text = None
+
+                # Validação de respostas com base na pergunta
+                if current_question_key in ["nome", "nome_empresa", "projeto", "publicoalvo"]:
+                    if not user_message_text:
+                        bot_response_text = "O campo não pode estar vazio. Por favor, insira novamente."
+                    else:
+                        respostas[current_question_key] = user_message_text
+
+                elif current_question_key == "lucro":
+                    if user_message_text.upper() in ['EP', 'EPP', 'D+']:
+                        respostas[current_question_key] = user_message_text.upper()
+                    else:
+                        bot_response_text = "Por favor, insira uma faixa de lucro válida: EP, EPP ou D+."
+
+                elif current_question_key == "numero_colaboradores":
+                    try:
+                        respostas[current_question_key] = int(user_message_text)
+                    except ValueError:
+                        bot_response_text = "Por favor, insira um número válido para os colaboradores."
+
+                elif current_question_key == "CNPJ":
+                    if user_message_text.lower() == 'não' or re.match(r'\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}', user_message_text):
+                        respostas[current_question_key] = user_message_text
+                    else:
+                        bot_response_text = "CNPJ inválido. Insira no formato XX.XXX.XXX/XXXX-XX ou 'Não'."
+
+                elif current_question_key == "Email":
+                    if "@" in user_message_text and "." in user_message_text:
+                        respostas[current_question_key] = user_message_text
+                    else:
+                        bot_response_text = "Por favor, insira um e-mail válido."
+
+                elif current_question_key == "orcamento":
+                    try:
+                        respostas[current_question_key] = float(user_message_text.replace(",", "."))
+                    except ValueError:
+                        bot_response_text = "Por favor, insira um valor válido para o orçamento."
+
+                elif current_question_key == "extensao":
+                    if user_message_text.strip().lower() in ["regional", "nacional", "global"]:
+                        respostas[current_question_key] = user_message_text.strip()
+                    else:
+                        bot_response_text = "Extensão inválida. Por favor, escolha entre Regional, Nacional ou Global."
+                
+                elif current_question_key == "tempo":
+                    try:
+                        respostas[current_question_key] = int(user_message_text)
+                    except ValueError:
+                        bot_response_text = "Por favor, insira um número inteiro para a duração do projeto."
+                elif current_question_key == "itensfinanciaveis":
+                    if user_message_text.strip().lower() in ["sim", "não", "nao"]:
+                        respostas[current_question_key] = user_message_text.strip()
+                    else:
+                        bot_response_text = "Por favor, responda com 'sim' ou 'não'."
+                elif current_question_key == "tema":
+                    try:
+                        tema_escolhido = int(user_message_text)
+                        if tema_escolhido in temas:
+                            respostas[current_question_key] = temas[tema_escolhido]
+                            # Obtém a lista de vertentes para o tema escolhido
+                            vertentes_list = vertentes_dict.get(tema_escolhido, [])
+                            # Adiciona a pergunta de vertente ao dicionário de perguntas
+                            perguntas["vertente"] = "Escolha a vertente:\n" + "\n".join(
+                                [f"{i+1}: {v}" for i, v in enumerate(vertentes_list)]
+                            )
+                            # Insere 'vertente' em 'perguntas_keys' após a posição atual
+                            perguntas_keys = request.session.get('perguntas_keys')
+                            perguntas_keys.insert(parameter_index + 1, "vertente")
+                            # Atualiza as perguntas e chaves na sessão
+                            request.session['perguntas'] = perguntas
+                            request.session['perguntas_keys'] = perguntas_keys
+                        else:
+                            bot_response_text = f"Por favor, escolha um número entre 1 e {len(temas)}."
+                    except ValueError:
+                        bot_response_text = "Por favor, insira um número válido para o tema."
+                elif current_question_key == "vertente":
+                    tema_escolhido = list(temas.keys())[list(temas.values()).index(respostas['tema'])]
+                    vertentes_list = vertentes_dict.get(tema_escolhido, [])
+                    try:
+                        escolha_vertente = int(user_message_text)
+                        if 1 <= escolha_vertente <= len(vertentes_list):
+                            respostas[current_question_key] = vertentes_list[escolha_vertente - 1]
+                        else:
+                            bot_response_text = f"Escolha um número entre 1 e {len(vertentes_list)}."
+                    except ValueError:
+                        bot_response_text = "Por favor, insira um número válido para a vertente."
+
+                # Continua para próxima pergunta
+                if not bot_response_text:
+                    parameter_index += 1
+                    request.session['parameter_index'] = parameter_index
+                    request.session['responses'] = respostas
+
+                    if parameter_index < len(perguntas_keys):
+                        bot_response_text = perguntas[perguntas_keys[parameter_index]]
+                    else:
+                        bot_response_text = "Coleta de dados concluída, sua resposta está sendo gerada. Obrigado!"
+                        respostas_finais = request.session.get('responses', {})
+                        bot_response_text = processar_respostas_finais(respostas_finais)
+                        # Finaliza o processo
+                        request.session.pop('collecting_parameters', None)
+                        request.session.pop('parameter_index', None)
+                        request.session.pop('responses', None)
+                        request.session.pop('perguntas', None)
 
                 # Salva a resposta do bot como uma mensagem
                 bot_response_instance = BotResponse.objects.create(
@@ -659,6 +589,11 @@ def send_message(request, pk):
                                 current_user = current_user_text,
                                 user_message_text=user_message_text,
                                 bot_response_text=bot_response_text)
+                
+                print('usr_txt: ', user_message_text)
+                print('bot_txt: ', bot_response_text)
+                print('crnt_usr: ', current_room.user)
+                print('prmt_indx: ', parameter_index)
                 print('penultimo bloco')
 
                 return redirect('list_messages', pk=current_room.id)
@@ -684,8 +619,7 @@ def send_message(request, pk):
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
-                current_room.bot_response.add(bot_response_instance)
-                      
+                current_room.bot_response.add(bot_response_instance)               
                 current_user_text = str(current_room.user)
                 salvar_conversa_em_json(room_id=current_room.id,
                                 current_user = current_user_text,
@@ -816,17 +750,17 @@ def list_messages(request, pk=None):
 def delete_room(request, pk):
     room_to_delete = get_object_or_404(Room, pk=pk)
     room_to_delete.delete()
-    
-    with open('conversas.json', 'r') as file:
-        data = json.load(file)
-    
+
+    # with open('conversas.json', 'r') as file:
+    #     data = json.load(file)
+
     try:
         data = [x for x in data if x['room_id'] != pk]
     except Exception as e:
         pass
 
-    with open('conversas.json', 'w') as file:
-        json.dump(data, file, indent=5)
+    # with open('conversas.json', 'w') as file:
+    #     json.dump(data, file, indent=5)
 
     last_room = Room.objects.order_by('-created_at').first()
     if not last_room:
@@ -834,7 +768,7 @@ def delete_room(request, pk):
     else:
         last_room = Room.objects.order_by('-created_at').first()
         return redirect('list_messages', pk=last_room.id)
-    
+
     # else:   
     #     logger.error(f"Erro ao deletar a sala com ID {id}: {e}")
     #     return render(request, 'errors_template.html', {'error_message': 'Erro ao tentar deletar a sala.', "error_description": {e}})
@@ -991,3 +925,5 @@ def download_pdf(request, pk):
     doc.build(story)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='conversation_report.pdf')
+
+#funfa
