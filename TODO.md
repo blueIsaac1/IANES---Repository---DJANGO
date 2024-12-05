@@ -21,7 +21,10 @@
 - VERIFICAR - Troca de Salas FUNCIONA, porem nao marca qual sala esta selecionado. DEIXA PRO FRANCISCO // Esta com problemas, devido ao URL.
 - Textos que sao adicionados automaticamente, como as listas de temas não sao traduzidos AINDA, pois esqueci de pegar os seus ID's
 - Erro de merda: "Ianes: Erro: unsupported operand type(s) for +=: 'NoneType' and 'str'" // Resolvido
-- Campo de Input bugado. CHICO CONSEGUE RESOLVER?
+- Campo de Input bugado. CHICO CONSEGUE RESOLVER? // Consigo, RESOLVIDO
+
+- Ao trocar de paginas, ele nao traduz o title... Adicionar aos btns de trocar, uma funcao que pega o data-lang, e o conteudo dentro
+a funcao, troca apenas o titles
 
 # ADICIONAR:
 

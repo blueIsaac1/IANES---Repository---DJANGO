@@ -675,12 +675,17 @@ function askForDelete(roomId) {
     setConfirmDelete(roomId)
 }
 function setConfirmDelete(roomId) {
+<<<<<<< HEAD
     let deleteBtn = document.getElementById("texto_chatIA_deleteRoom_delete");
     let rtAtual = document.getElementById("roomTitle_atual");
     let nomeChat = document.getElementById(`room_name_p-${roomId}`);
     deleteBtn.setAttribute('href', `/delete-room/${roomId}/`);
     rtAtual.textContent = nomeChat.textContent
 
+=======
+    let deleteBtn = document.getElementById("texto_chatIA_deleteRoom_delete")
+    deleteBtn.setAttribute('href', `{% url 'delete_room' pk=${roomId} %}`)
+>>>>>>> 2dfcf4592788600dafd2bff632b9028aa5c367be
 }
 
 // Clique no overlay ou no botão de fechar do Confirmar Delete da Sala

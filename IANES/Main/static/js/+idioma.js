@@ -32,32 +32,34 @@ function alterarTextos_geral(messages) {
     // Seções que serão processadas
     const secoes = ['geral', 'navbar'];
 
-    // Alterando o título da página baseado na seção "geral"
-    // if (messages.geral && messages.geral[0]) {
-    //     let novoTitulo;
-    //     switch (currentPage) {
-    //         case 'auth':
-    //             novoTitulo = messages.geral[0]['page_title_auth'];
-    //             break;
-    //         case 'chat':
-    //             novoTitulo = messages.geral[0]['page_title_pageIA'];
-    //             break;
-    //         case 'index':
-    //             novoTitulo = messages.geral[0]['page_title_inicio'];
-    //             break;
-    //         case 'sobre.html':
-    //             novoTitulo = messages.geral[0]['page_title_sobre'];
-    //             break;
-    //         default:
-    //             console.log('Página não reconhecida. Título não alterado.');
-    //             break;
-    //     }
+    // Pegar a URL da página atual e armazená-la no localStorage
+    let janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
+    let telaAtual_auth = localStorage.getItem('ls_ultimaTela_auth');
+    let telaAtual_index = localStorage.getItem('ls_ultimaTela_index');
 
-    //     // Se um título foi definido, altera o título da página
-    //     if (novoTitulo) {
-    //         document.title = novoTitulo;
-    //     }
-    // }
+    console.log("🤣 Janela Atual: ", janelaAtual)
+    console.log("🤣 Tela Auth Atual: ", telaAtual_auth)
+    console.log("🤣 Tela Index Atual: ", telaAtual_index)
+
+    if (janelaAtual === "auth" && telaAtual_auth != null) {
+        if (telaAtual_auth === "ta_auth-login") {
+            novoTitulo = messages.geral[0]['page_title_auth_login'];
+            document.title = novoTitulo;
+        } else if (telaAtual_auth === "ta_auth-signup") {
+            novoTitulo = messages.geral[0]['page_title_auth_signup'];
+            document.title = novoTitulo;
+        }
+    }
+
+    if (janelaAtual === "index" && telaAtual_auth != null) {
+        if (telaAtual_auth === "inicio") {
+            novoTitulo = messages.geral[0]['page_title_index_inicio'];
+            document.title = novoTitulo;
+        } else if (telaAtual_auth === "sobre") {
+            novoTitulo = messages.geral[0]['page_title_index_sobre'];
+            document.title = novoTitulo;
+        }
+    }
 
     // Processar as demais seções para atualizar os textos na página
     secoes.forEach(secao => {   
