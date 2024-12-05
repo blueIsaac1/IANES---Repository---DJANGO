@@ -925,5 +925,3 @@ def download_pdf(request, pk):
     doc.build(story)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='conversation_report.pdf')
-
-#funfa
