@@ -9,7 +9,7 @@
     <meta http-equiv="cache-control" content="private" />
     <!-- Define a: Linguagens do Conteudo -->
     <meta http-equiv="content-language" content="pt-br, pt, en-US, fr" />
-    <title>Bem-vindo ao IAnes!</title>
+    <title>IAnes - Autenticação</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- Import do CSS Principal com Aplicações Gerais -->
@@ -266,23 +266,23 @@
                             <!-- Erros Posiveis -->
                             <div class="div_alerts" id="div_user_inv">
                                 <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_user_inv">Usuário Inválido! Entre 6 e 30 caracteres. Apenas letras, números, '-' ou '_'</p>
+                                <p class="alert_text" id="texto_alert_user_inv">Usuário Inválido! Entre 6 e 30 caracteres. Apenas letras, números, '-' ou '_'.</p>
                             </div>
                         </div>
                         <!-- Input 2: Email -->
                         <div class="div_input_user div_input_sec">
                             <div class="div_input_user_label div_input_label">
-                                <p id="texto_signup_user">E-mail</p>
+                                <p id="texto_signup_email">E-mail</p>
                             </div>
                             <div class="div_input_user_area div_input_area" id="div_input_user_area">
                                 <ion-icon class="icon_email_signup email_icons" id="email_signup_icon" name="mail-outline"></ion-icon>
-                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="email" id="input_signup_email" placeholder="Digite o seu E-mail">
+                                <input tabindex=2 class="input_signup_email_area input_area" type="email" name="email" id="input_signup_email" placeholder="Digite o seu E-mail (nome@dominio.extensão)">
                                 <span class="input_extra"></span>
                             </div>
                             <!-- Erros Posiveis -->
                             <div class="div_alerts" id="div_email_inv">
                                 <ion-icon class="alert_icon" name="alert-circle-outline"></ion-icon>
-                                <p class="alert_text" id="texto_alert_email_inv">E-mail Inválido!</p>
+                                <p class="alert_text" id="texto_alert_email_inv">E-mail Inválido! Verifique a formatação (nome@dominio.extensão)</p>
                             </div>
                         </div>
                         <!-- Input 3: Signup -->
@@ -300,8 +300,8 @@
                                         onmouseout="hideTooltip('tooltip_senha_signup')" 
                                         onclick="alterarEye('signup')">
                                         <ion-icon class="eye_icons" id="eye_icon_signup" name="eye-outline"></ion-icon>
-                                        <p id="tooltip_eye_signup_open" class="tooltip_auth tooltip_senha_signup tooltip_show">Mostrar Senha</p>
-                                        <p id="tooltip_eye_signup_close" class="tooltip_auth tooltip_senha_signup tooltip_hide" style="display: none;">Esconder Senha</p>
+                                        <p id="tooltip_eye_signup_open" class="tooltip_auth tooltip_senha_signup tooltip_show">Mostrar senha</p>
+                                        <p id="tooltip_eye_signup_close" class="tooltip_auth tooltip_senha_signup tooltip_hide" style="display: none;">Esconder senha</p>
                                     </div>
                                 </span>
                             </div>
@@ -316,13 +316,13 @@
                                     <div class="div_senhaInvalida" id="container_listaValidacoes">
                                         <p id="texto_signup_senhaInvalida">Validações:</p>
                                         <ul id="tooltip_senhaInvalida">
-                                            <li class="item_listaValidacoes" data-condition="length">A senha deve ter pelo menos 8 caracteres.</li>
-                                            <li class="item_listaValidacoes" data-condition="uppercase">A senha deve ter pelo menos uma letra maiúscula.</li>
-                                            <li class="item_listaValidacoes" data-condition="lowercase">A senha deve ter pelo menos uma letra minúscula.</li>
-                                            <li class="item_listaValidacoes" data-condition="numbers">A senha deve ter pelo menos 2 dígitos numéricos.</li>
-                                            <li class="item_listaValidacoes" data-condition="special">A senha deve ter pelo menos 2 caracteres especiais.</li>
-                                            <li class="item_listaValidacoes" data-condition="consecutive">Não pode ter mais de 2 dígitos ou letras iguais consecutivos.</li>
-                                            <li class="item_listaValidacoes" data-condition="irregular">A senha não pode conter caracteres irregulares como vírgulas, pontos, dois pontos ou espaços.</li>
+                                            <li id="item_listValid_length" class="item_listaValidacoes" data-condition="length">A senha deve ter pelo menos 8 caracteres.</li>
+                                            <li id="item_listValid_uppercase" class="item_listaValidacoes" data-condition="uppercase">A senha deve ter pelo menos uma letra maiúscula.</li>
+                                            <li id="item_listValid_lowercase" class="item_listaValidacoes" data-condition="lowercase">A senha deve ter pelo menos uma letra minúscula.</li>
+                                            <li id="item_listValid_numbers" class="item_listaValidacoes" data-condition="numbers">A senha deve ter pelo menos 2 dígitos numéricos.</li>
+                                            <li id="item_listValid_special" class="item_listaValidacoes" data-condition="special">A senha deve ter pelo menos 2 caracteres especiais.</li>
+                                            <li id="item_listValid_consecutive" class="item_listaValidacoes" data-condition="consecutive">Não pode ter mais de 2 dígitos ou letras iguais consecutivos.</li>
+                                            <li id="item_listValid_irregular" class="item_listaValidacoes" data-condition="irregular">A senha não pode conter caracteres irregulares como vírgulas, pontos, dois pontos ou espaços.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -343,8 +343,8 @@
                                         onmouseout="hideTooltip('tooltip_senha_signupConf')" 
                                         onclick="alterarEye('signupConf')">
                                         <ion-icon class="eye_icons" id="eye_icon_signupConf" name="eye-outline"></ion-icon>
-                                        <p id="tooltip_eye_signupConf_open" class="tooltip_auth tooltip_senha_signupConf tooltip_show">Mostrar Senha</p>
-                                        <p id="tooltip_eye_signupConf_close" class="tooltip_auth tooltip_senha_signupConf tooltip_hide" style="display: none;">Esconder Senha</p>
+                                        <p id="tooltip_eye_signupConf_open" class="tooltip_auth tooltip_senha_signupConf tooltip_show">Mostrar senha</p>
+                                        <p id="tooltip_eye_signupConf_close" class="tooltip_auth tooltip_senha_signupConf tooltip_hide" style="display: none;">Esconder senha</p>
                                     </div>
                                 </span>
                             </div>
@@ -357,7 +357,7 @@
                         <div class="div_concordoTermsPriv">
                             <input tabindex=5 type="checkbox" name="CheckConcordo" id="check_concordo_TermPriv">
                             <div class="div_texto_concordo">
-                                <p id="texto_auth_concordo_pt1">Concordo com os</p>    
+                                <p id="texto_auth_concordo_pt1">Concordo com os</p>    Termos de Serviço
                                 <span onclick="callScreen_auth('termos')" class="link_hover_animation" id="texto_auth_concordo_term">Termos de Serviço</span>
                                 <p id="texto_auth_concordo_pt2">e</p>
                                 <span onclick="callScreen_auth('politic')" class="link_hover_animation" id="texto_auth_concordo_priv">Política de Privacidade</span>
