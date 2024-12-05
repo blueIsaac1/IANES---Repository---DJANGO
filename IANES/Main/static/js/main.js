@@ -45,7 +45,7 @@ window.callScreen = function(tela) {
             tela_inicio.style.display = "flex";
             tela_sobre.style.display = "none";
             // Muda o "#" na URL
-            window.location.hash = "home"
+            window.location.hash = "inicio"
             // Altera a Info da Página atual
             localStorage.setItem('ls_ultimaTela_index', 'inicio');
             break;
@@ -206,9 +206,9 @@ if (typeof loading_page === 'function') {
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Pegar a URL da página atual e armazená-la no localStorage
-    const janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
-    const telaAtual_auth = localStorage.getItem('ls_ultimaTela_auth');
-    const telaAtual_index = localStorage.getItem('ls_ultimaTela_index');
+    let janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
+    let telaAtual_auth = localStorage.getItem('ls_ultimaTela_auth');
+    let telaAtual_index = localStorage.getItem('ls_ultimaTela_index');
 
     if (janelaAtual === "auth" && telaAtual_auth == null) {
         localStorage.setItem('ls_ultimaTela_auth', `ta_auth-login`);

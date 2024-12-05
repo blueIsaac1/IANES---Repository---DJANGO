@@ -1,8 +1,9 @@
 {
     "geral": [{
-        "page_title_inicio": "IAnes - Bem-vindo!",
-        "page_title_sobre": "IAnes - Sobre",
-        "page_title_auth": "IAnes - Autenticação"
+        "page_title_index_inicio": "IAnes | Bem-vindo!",
+        "page_title_index_sobre": "IAnes | Sobre RAILO",
+        "page_title_auth_login": "IAnes | Entrar no Perfil",
+        "page_title_auth_signup": "IAnes | Criar um Perfil"
     }],
     "navbar": [{
         "tooltip_logo": "IAnes aqui!",
