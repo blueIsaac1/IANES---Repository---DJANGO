@@ -357,9 +357,10 @@ function enviarMensagem(tipo) {
 }
 
 // Variável para a mensagem inicial do bot
-const msgInicial_ianes = null
-if (document.getElementById("texto_chatIA_botInicialMsg")) {
-    msgInicial_ianes = document.getElementById("texto_chatIA_botInicialMsg").textContent;
+let msgInicial_ianes = null
+let botInicialMsg = document.getElementById("texto_chatIA_botInicialMsg")
+if (botInicialMsg) {
+    msgInicial_ianes = botInicialMsg.textContent;
 }
 
 function baixarConversaComoPDF() {

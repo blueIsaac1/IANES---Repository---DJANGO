@@ -162,15 +162,12 @@
                     </ul>
     
                 {% else %}
-                <div class="no-room-selected">
-                    <p>Selecione uma sala para ver as mensagens.</p>
-                </div>
+                    <div class="no-room-selected">
+                        <p>Selecione uma sala para ver as mensagens.</p>
+                    </div>
                 {% endif %}
-            </div>
-            {% if room %}
-            
-            {% endif %}
-            </div>
+                </div>
+            </div>  
 
             {% if room %}
             <form method="POST"  action="{% url 'send_message' room.id %}" id="inputTo_ianes_form" class="chat_input_form">
