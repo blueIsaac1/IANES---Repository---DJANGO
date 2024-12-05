@@ -163,16 +163,18 @@ window.onload = function() {
 };
 
 // Quando a textarea estiver seleciona "focus" ele muda a cor da borda
-textarea.addEventListener('focus', () => {
-    form_ianes.classList.add('textarea_focused');
-    contadorCaracteres.classList.add('contadorCaracteres_focused')
-    btn_rolarConvesa.classList.add('btn_rolarConvesa_focused')
-});
-textarea.addEventListener('blur', () => {
-    form_ianes.classList.remove('textarea_focused');
-    contadorCaracteres.classList.remove('contadorCaracteres_focused')
-    btn_rolarConvesa.classList.remove('btn_rolarConvesa_focused')
-});
+if (textarea) {
+    textarea.addEventListener('focus', () => {
+        form_ianes.classList.add('textarea_focused');
+        contadorCaracteres.classList.add('contadorCaracteres_focused')
+        btn_rolarConvesa.classList.add('btn_rolarConvesa_focused')
+    });
+    textarea.addEventListener('blur', () => {
+        form_ianes.classList.remove('textarea_focused');
+        contadorCaracteres.classList.remove('contadorCaracteres_focused')
+        btn_rolarConvesa.classList.remove('btn_rolarConvesa_focused')
+    });
+}
 
 // Função para mostrar e esconder uma tooltip especifica
 function showTooltip(tooltipType, tooltipId) {
@@ -326,18 +328,20 @@ function adicionar_PicImgs() {
 
 // Função para Ajustar a Textarea e as Áreas de Input e Chat
 function ajustarAlturaTextarea() {
-    textarea.style.height = "auto"; // Reseta a altura para recalcular
-    const novaAltura = Math.min(textarea.scrollHeight, parseInt(getComputedStyle(textarea).maxHeight));
-    textarea.style.height = novaAltura + "px";
-
-    // Calcular a nova altura proporcional para o input_area
-    const percentInputArea = Math.min(5 + (novaAltura / 10), 50); // Limita em 50% no máximo
-    const percentChatMessages = 100 - percentInputArea; // Mantém o total em 100%
-
-    // Aplica as novas alturas
-    chats_section.style.height = percentChatMessages + "%";
-
-    atualizarIconeRolar();
+    if (textarea) {
+        textarea.style.height = "auto"; // Reseta a altura para recalcular
+        const novaAltura = Math.min(textarea.scrollHeight, parseInt(getComputedStyle(textarea).maxHeight));
+        textarea.style.height = novaAltura + "px";
+    
+        // Calcular a nova altura proporcional para o input_area
+        const percentInputArea = Math.min(5 + (novaAltura / 10), 50); // Limita em 50% no máximo
+        const percentChatMessages = 100 - percentInputArea; // Mantém o total em 100%
+    
+        // Aplica as novas alturas
+        chats_section.style.height = percentChatMessages + "%";
+    
+        atualizarIconeRolar();
+    }
 }
 
 // Simula um envio de mensagem
@@ -353,7 +357,10 @@ function enviarMensagem(tipo) {
 }
 
 // Variável para a mensagem inicial do bot
-const msgInicial_ianes = document.getElementById("texto_chatIA_botInicialMsg").textContent;
+const msgInicial_ianes = null
+if (document.getElementById("texto_chatIA_botInicialMsg")) {
+    msgInicial_ianes = document.getElementById("texto_chatIA_botInicialMsg").textContent;
+}
 
 function baixarConversaComoPDF() {
     const { jsPDF } = window.jspdf; // Acessa a biblioteca jsPDF
@@ -384,23 +391,26 @@ function baixarConversaComoPDF() {
     doc.save("conversa.pdf");
 }
 
-textarea.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        if (!event.shiftKey) {
-            event.preventDefault();
-            enviarMensagem('normal');
-            form_ianes.submit();
-        } else {
-            textarea.value += "\n";
-            ajustarAlturaTextarea();
+if (textarea) {
+    textarea.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            if (!event.shiftKey) {
+                event.preventDefault();
+                enviarMensagem('normal');
+                form_ianes.submit();
+            } else {
+                textarea.value += "\n";
+                ajustarAlturaTextarea();
+            }
         }
-    }
-});
+    });
+}
 
 // Função para contar os caracteres e atualizar o contador com pontuação de milhares
 let idiomaCount = "pt-BR"
 function contarCaracteres() {
-    const caracteres = textarea.value.length;
+    if (textarea) {
+        const caracteres = textarea.value.length;
     // Formata o número com pontos de milhar
     console.log(idiomaAtual_chatIAnes)
     if (idiomaAtual_chatIAnes === "n_escolheu" || idiomaAtual_chatIAnes === null) {
@@ -409,16 +419,19 @@ function contarCaracteres() {
         idiomaCount = idiomaAtual_chatIAnes
     }
     contadorCaracteres.textContent = new Intl.NumberFormat(`${idiomaCount}`).format(caracteres);
+    }
 }
 
 // Função para habilitar ou desabilitar o botão com base nos caracteres
 function habilitarBotao() {
-    if (textarea.value.trim() === "") {
-        botaoEnviar.classList.add("btn_desativado");
-        botaoEnviar.classList.remove("btn_ativado");
-    } else {
-        botaoEnviar.classList.remove("btn_desativado");
-        botaoEnviar.classList.add("btn_ativado");
+    if (textarea) {
+        if (textarea.value.trim() === "") {
+            botaoEnviar.classList.add("btn_desativado");
+            botaoEnviar.classList.remove("btn_ativado");
+        } else {
+            botaoEnviar.classList.remove("btn_desativado");
+            botaoEnviar.classList.add("btn_ativado");
+        }
     }
 }
 
@@ -613,7 +626,9 @@ async function confirmRenameRoom(roomID) {
 }
 
 // Escutador de no input para configura-lo
-textarea.addEventListener("input", configInput);
+if (textarea) {
+    textarea.addEventListener("input", configInput);
+}
 
 function configInput() {
     ajustarAlturaTextarea();
@@ -683,3 +698,9 @@ ajustarAltura_main()
 expandSidebar()
 adicionar_PicImgs()
 configInput_onLoad()
+// Use o setTimeout para dar o foco no elemento após 1 segundo
+setTimeout(() => {
+    if (textarea) {
+        textarea.focus();
+    }
+}, 0);

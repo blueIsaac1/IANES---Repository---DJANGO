@@ -47,5 +47,117 @@
           "current_user": "ctdev23",
           "user_message": "isaac",
           "bot_response": "Erro: unsupported operand type(s) for +=: 'NoneType' and 'str'"
+     },
+     {
+          "room_id": 93,
+          "timestamp": "2024-12-05T12:08:32.744423+00:00",
+          "current_user": "Francisco",
+          "user_message": "asdas",
+          "bot_response": "That's just a random string of letters.  Is there anything I can help you with?\n"
+     },
+     {
+          "room_id": 93,
+          "timestamp": "2024-12-05T12:08:34.325904+00:00",
+          "current_user": "Francisco",
+          "user_message": "asdas",
+          "bot_response": "That's not a question or a statement that I can respond to meaningfully.  Is there something else I can help you with?\n"
+     },
+     {
+          "room_id": 93,
+          "timestamp": "2024-12-05T12:08:35.553303+00:00",
+          "current_user": "Francisco",
+          "user_message": "asdas",
+          "bot_response": "That's not a question or a request.  Is there anything I can help you with?\n"
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:11:31.657480+00:00",
+          "current_user": "Francisco",
+          "user_message": "IANES",
+          "bot_response": "Por favor, insira o nome da pessoa responsável: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:11:40.483858+00:00",
+          "current_user": "Francisco",
+          "user_message": "pedro",
+          "bot_response": "\nPor favor, insira o nome da pessoa responsável: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:11:50.683521+00:00",
+          "current_user": "Francisco",
+          "user_message": "pedro",
+          "bot_response": "\nPor favor, insira o nome da empresa responsável: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:11:59.962136+00:00",
+          "current_user": "Francisco",
+          "user_message": "qwe",
+          "bot_response": "\nQual é a faixa de lucro da empresa? (EP, EPP, D+): "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:12:05.864084+00:00",
+          "current_user": "Francisco",
+          "user_message": "e",
+          "bot_response": "\nQual é a faixa de lucro da empresa? (EP, EPP, D+): "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:12:11.599161+00:00",
+          "current_user": "Francisco",
+          "user_message": "EP",
+          "bot_response": "\nQual é a faixa de lucro da empresa? (EP, EPP, D+): "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:25.982078+00:00",
+          "current_user": "Francisco",
+          "user_message": "d",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:30.513142+00:00",
+          "current_user": "Francisco",
+          "user_message": "s",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:41.194571+00:00",
+          "current_user": "Francisco",
+          "user_message": "asd",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:42.852795+00:00",
+          "current_user": "Francisco",
+          "user_message": "asd",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:43.834962+00:00",
+          "current_user": "Francisco",
+          "user_message": "asd",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:44.500101+00:00",
+          "current_user": "Francisco",
+          "user_message": "asd",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
+     },
+     {
+          "room_id": 94,
+          "timestamp": "2024-12-05T13:16:45.166836+00:00",
+          "current_user": "Francisco",
+          "user_message": "asd",
+          "bot_response": "\nPor favor, insira o número de colaboradores do projeto: "
      }
 ]

@@ -431,7 +431,6 @@ iframe {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
     overflow: hidden;
     position: relative;
     z-index: 400;
