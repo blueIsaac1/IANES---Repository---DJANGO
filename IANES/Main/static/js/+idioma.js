@@ -27,10 +27,53 @@ function detectarPreferido_Idioma() {
     aplicarIdioma(lang);
 }
 
+// Função genérica para atualizar o título com base na chave
+async function atualizarTitulo(chave) {
+    let secaoGeral = 'geral';
+    let messages
+    dataLang = document.body.getAttribute("data-lang")
+    // Carrega o arquivo JSON do idioma selecionado
+    try {
+        const response = await fetch(`../static/page_languages/lang_${dataLang}.json`);
+        if (!response.ok) throw new Error(`Falha ao carregar traduções: ${dataLang}`);
+        
+        messages = await response.json();
+
+    } catch (error) {
+        console.error('Erro ao carregar o arquivo de linguagens:', error);
+    }
+
+    if (messages[secaoGeral] && messages[secaoGeral][0]) {
+        const texto = messages[secaoGeral][0];
+        if (texto[chave]) {
+            document.title = texto[chave];
+            console.log(`Título atualizado para: ${texto[chave]}`);
+        } else {
+            console.error(`Chave "${chave}" não encontrada em "secaoGeral".`);
+        }
+    } else {
+        console.error(`Seção "secaoGeral" não encontrada no messages.`);
+    }
+}
+
 // Função que altera textos gerais (seções "geral" e "navbar")
-function alterarTextos_geral(messages) {
+async function alterarTextos_geral() {
     // Seções que serão processadas
-    const secoes = ['geral', 'navbar'];
+    let secaoGeral = 'geral';
+    const secaoNavbar = 'navbar';
+    dataLang = document.body.getAttribute("data-lang")
+
+    let messages
+    // Carrega o arquivo JSON do idioma selecionado
+    try {
+        const response = await fetch(`../static/page_languages/lang_${dataLang}.json`);
+        if (!response.ok) throw new Error(`Falha ao carregar traduções: ${dataLang}`);
+        
+        messages = await response.json();
+
+    } catch (error) {
+        console.error('Erro ao carregar o arquivo de linguagens:', error);
+    }
 
     // Pegar a URL da página atual e armazená-la no localStorage
     let janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
@@ -41,42 +84,35 @@ function alterarTextos_geral(messages) {
     console.log("🤣 Tela Auth Atual: ", telaAtual_auth)
     console.log("🤣 Tela Index Atual: ", telaAtual_index)
 
+    // Processar a lógica de atualização do título
     if (janelaAtual === "auth" && telaAtual_auth != null) {
         if (telaAtual_auth === "ta_auth-login") {
-            novoTitulo = messages.geral[0]['page_title_auth_login'];
-            document.title = novoTitulo;
+            atualizarTitulo("page_title_auth_login");
         } else if (telaAtual_auth === "ta_auth-signup") {
-            novoTitulo = messages.geral[0]['page_title_auth_signup'];
-            document.title = novoTitulo;
+            atualizarTitulo("page_title_auth_signup");
         }
-    }
-
-    if (janelaAtual === "index" && telaAtual_auth != null) {
+    } else if (janelaAtual === "index" && telaAtual_auth != null) {
         if (telaAtual_auth === "inicio") {
-            novoTitulo = messages.geral[0]['page_title_index_inicio'];
-            document.title = novoTitulo;
+            atualizarTitulo("page_title_index_inicio");
         } else if (telaAtual_auth === "sobre") {
-            novoTitulo = messages.geral[0]['page_title_index_sobre'];
-            document.title = novoTitulo;
+            atualizarTitulo("page_title_index_sobre");
         }
     }
 
     // Processar as demais seções para atualizar os textos na página
-    secoes.forEach(secao => {   
-        if (messages[secao] && messages[secao][0]) {
-            const textos = messages[secao][0];
+    if (messages[secaoNavbar] && messages[secaoNavbar][0]) {
+        const textos = messages[secaoNavbar][0];
 
-            // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
-            for (let chave in textos) {
-                const elemento = document.getElementById(chave);
-                if (elemento) {
-                    elemento.textContent = textos[chave];
-                } else {
-                    console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
-                }
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
             }
         }
-    });
+    }
 }
 
 // Função que altera textos de configurações (seção "config")
@@ -92,6 +128,8 @@ function alterarTextos_config(messages) {
             const elemento = document.getElementById(chave);
             if (elemento) {
                 elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
             }
         }
     }
@@ -99,6 +137,23 @@ function alterarTextos_config(messages) {
 
 function alterarTextos_auth(messages) {
     console.log("☎ Chamou Texto Autenticação")
+
+    // Seção a ser processada
+    const secao = 'auth';
+
+    if (messages[secao] && messages[secao][0]) {
+        const textos = messages[secao][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+            }
+        }
+    }
 }
 
 function alterarTextos_index(messages) {
@@ -215,7 +270,7 @@ async function aplicarIdioma(lang) {
     else {langSet_arq = lang}
     
     // Atributos do Body
-    document.body.setAttribute("data-lang", `${lang}`);
+    document.body.setAttribute("data-lang", `${langSet_arq}`);
 
     // Carrega o arquivo JSON do idioma selecionado
     try {
@@ -224,11 +279,16 @@ async function aplicarIdioma(lang) {
         
         const arq_messages = await response.json();
 
-        alterarTextos_geral(arq_messages);
+        let janelaAtual = document.querySelector('body').getAttribute('aria-thisPage');
+        alterarTextos_geral();
         alterarTextos_config(arq_messages);
-        alterarTextos_auth(arq_messages);
-        alterarTextos_index(arq_messages);
-        alterarTextos_paginaIA(arq_messages);
+        if (janelaAtual === 'auth') {
+            alterarTextos_auth(arq_messages);
+        } else if (janelaAtual === 'index') {
+            alterarTextos_index(arq_messages);
+        } else if (janelaAtual === 'chat') {
+            alterarTextos_paginaIA(arq_messages);
+        }
 
     } catch (error) {
         console.error('Erro ao carregar o arquivo de linguagens:', error);

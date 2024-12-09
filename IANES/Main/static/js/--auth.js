@@ -34,6 +34,8 @@ window.callScreen_auth = function(page) {
     })
 
     if (solo_container) {solo_container.style.display = "flex"}
+
+    alterarTextos_geral()
 }
 
 // Troca a cor da Barra de Baixo dos Input's
