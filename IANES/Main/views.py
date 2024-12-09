@@ -74,7 +74,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     # Verifica se o arquivo já existe
     if os.path.exists(caminho_arquivo):
         # Se existir, abre para ler os dados existentes
-        with open(caminho_arquivo, 'r', encoding='utf-8') as file:
+        with open(caminho_arquivo, 'r') as file:
             try:
                 conversas = json.load(file)
             except json.JSONDecodeError:
@@ -290,14 +290,15 @@ def get_gemini_analysis(content, user_inputs, max_retries=3):
             lines = analysis_text.split('\n', 1)
             score_str = lines[0].strip()
             descricao = lines[1].strip() if len(lines) > 1 else "Justificativa não fornecida."
-
+            
             return score_str, descricao
+            
 
         except Exception as e:
             if attempt == max_retries - 1:
                 logger.error(f"Erro na análise Gemini: {e}")
                 return "0", "Erro na análise"
-            time.sleep(2 ** attempt)
+            time.sleep(10 ** attempt)
     return "0", "Erro após várias tentativas"
 
 
@@ -333,13 +334,10 @@ def processar_respostas_finais(respostas):
         # Filtra apenas os que têm pontuação maior que 0
         resultados_relevantes = [res for res in resultados_ordenados if res['pontuacao'] > 0]
 
-        # Seleciona até 3 melhores resultados
-        melhores_resultados = resultados_relevantes[:3]
-
         if resultados_ordenados:
-            num_resultados = len(melhores_resultados)
+            num_resultados = len(resultados_relevantes)
             top_n = max(3, num_resultados)
-            melhores_resultados = resultados_ordenados[:top_n]
+            melhores_resultados = resultados_relevantes[:top_n]
 
             mensagem = "Com base nas suas respostas, recomendo as seguintes opções:\n\n"
 
