@@ -54,6 +54,8 @@ function aplicarTemaLight() {
     document.documentElement.style.setProperty('--color_tema-fundo_1_alt', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-vermelho-main)');
+    document.documentElement.style.setProperty('--color_tema-fundo_botMsg', 'var(--color-azul-medio)');
+    document.documentElement.style.setProperty('--color_tema-fundo-tema_var2', 'var(--color-vermelho-res)');
     
     // --- Header
     
@@ -104,6 +106,8 @@ function aplicarTemaDark() {
     document.documentElement.style.setProperty('--color_tema-fundo_1_alt', 'var(--color-azul-bruto)');
     document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-azul-bruto)');
+    document.documentElement.style.setProperty('--color_tema-fundo_botMsg', 'var(--color-full-white)');
+    document.documentElement.style.setProperty('--color_tema-fundo-tema_var2', 'var(--color-azul-res)');
 
     // --- Header
     

@@ -50,7 +50,7 @@ iframe {
     justify-content: flex-start;
     align-items: center;
     /* background-color: var(--color-fundo-claro_var3); */
-    background-color: var(--color_tema-fundo-tema_alt);
+    background-color: var(--color_tema-fundo-tema_var2);
     border: none;
     border-radius: 0 1vw 0 0;
     z-index: 450;
@@ -128,7 +128,7 @@ iframe {
     margin: 0;
     font-size: 1.2vw;
     font-weight: bold;
-    color: var(--color_tema-text_2);
+    color: #ffffff;
 }
 
 /* Botões */
@@ -141,7 +141,7 @@ iframe {
     gap: 0.5vw;
     
     padding: 0.4vw;
-    background-color: var(--color_tema-btn-bg_1);
+    background-color: var(--color_tema-btn-bg_2);
     border: none;
     border-radius: 0.4vw; 
     cursor: pointer;
@@ -151,7 +151,7 @@ iframe {
     top: 1vw;
 }
 .btn_sideBar_header:hover {
-    background-color: var(--color_tema-btn-bg_2);
+    background-color: var(--color_tema-btn-bg_1);
 }
 
 /* Botões Invidualmente */
@@ -226,7 +226,7 @@ iframe {
     border: none;
     border-radius: 0.4vw;
     background-color: var(--color_tema-tooltip-bg);
-    padding: 0.6vw;
+    padding: 0.4vw;
     position: absolute;
     transition: opacity 0.3s ease-in-out;    
 
@@ -308,7 +308,7 @@ iframe {
     align-items: center;
     font-size: 1vw;
     font-weight: 500;
-    color: var(--color_tema-text_2);
+    color: #ffffff;
     font-family: var(--font-montserrat);
     margin-left: 0.4vw;
 }
@@ -319,7 +319,7 @@ iframe {
     font-family: var(--font-montserrat);
     margin-left: 0.4vw;
     font-weight: 400;
-    color: var(--color_tema-text_2); 
+    color: #ffffff; 
     background-color: transparent;
 
     width: 90%;
@@ -357,7 +357,7 @@ iframe {
     cursor: pointer;
     background-color: transparent;
     font-size: 1.4vw;
-    color: var(--color_tema-text_2);
+    color: #ffffff;
     padding: 0.4vw;
 }
 
@@ -378,8 +378,8 @@ iframe {
     right: 0;
     transform: translateX(100%) translateY(80%);
     padding: 0.6vw;
-    background-color: var(--color_tema-fundo-tema_alt);
-    border: var(--color_tema-fundo-tema) solid 0.1vw;
+    background-color: var(--color_tema-fundo-tema_var2);
+    border: #ffffff solid 0.1vw;
     border-radius: 0 0.6vw 0.6vw 0.6vw;
     z-index: 453;
 }
@@ -401,18 +401,18 @@ iframe {
 }
 
 .roomsExtraOptions_item:hover {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 .roomsExtraOptions_item i {
     font-size: 1.4vw;
-    color: var(--color_tema-text_2);
+    color: #ffffff;
 }
 
 .roomsExtraOptions_item p {
     font-size: 1vw;
     font-weight: 500;
-    color: var(--color_tema-text_2);
+    color: #ffffff;
 }
 
 .roomsExtraOptions_item .trash_icon {
@@ -573,7 +573,7 @@ iframe {
 }
 
 .bot {
-    background-color: var(--color_tema-fundo_2);
+    background-color: var(--color_tema-fundo_botMsg);
     align-self: flex-start;
     border: none;
     border-radius: 0 0.4rem 0.4rem 0.4rem;
@@ -585,7 +585,7 @@ iframe {
 }
 
 .bot p {
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 .user {
