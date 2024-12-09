@@ -576,7 +576,7 @@ iframe {
     background-color: var(--color_tema-fundo_2);
     align-self: flex-start;
     border: none;
-    border-radius: 0 0.4vw 0.4vw 0.4vw;
+    border-radius: 0 0.4rem 0.4rem 0.4rem;
     position: relative;
 }
 
@@ -739,7 +739,7 @@ Retorna ao ponto inicial
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
     padding: 0.4vw;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     border-radius: 0.8vw 0.8vw 0vw 0vw;
     cursor: pointer;
     transition: .3s ease-in-out background-color, 0.1s ease-in-out border;;
@@ -750,12 +750,12 @@ Retorna ao ponto inicial
 
 .btn_rolarConvesa ion-icon {
     font-size: 1.5rem;
-    color: #000000;
+    color: var(--color_tema-text_1);
     transform: translateY(0%);
 }
 
 .btn_rolarConvesa_focused {
-    border: 0.2vw solid  var(--color-vermelho-medio);
+    border: 0.2vw solid  var(--color_tema-btn-bg_alt);
 }
 
 /* @keyframes kicking_arrow_scrollTo {
@@ -766,7 +766,7 @@ Retorna ao ponto inicial
 } */
 
 .btn_rolarConvesa:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
 }
 
 .btn_rolarConvesa:hover ion-icon {
@@ -839,7 +839,7 @@ Retorna ao ponto inicial
 
 .confirms_popups p {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 1vw;
     font-weight: bold;
 }
 
@@ -864,11 +864,11 @@ Retorna ao ponto inicial
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1;
-    color: #000000;
+    color: var(--color_tema-text_1);
 
     position: absolute;
     padding: 0.6vw 1vw;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     border-radius: 0.8vw 0.8vw 0vw 0vw;
     top: 0;
     right: 0;
@@ -878,7 +878,7 @@ Retorna ao ponto inicial
 }
 
 .contadorCaracteres_focused {
-    border: solid var(--color-vermelho-medio) 0.2vw;
+    border: solid var(--color_tema-fundo_1_alt) 0.2vw;
 }
 
 /* -------------- Configuração de Tamanho das Salas */
@@ -932,7 +932,7 @@ Retorna ao ponto inicial
 }
 
 .ov_confSalaDel_container {
-    background-color: var(--color-fundo-claro);
+    background-color: var(--color_tema-fundo-tema);
     width: 30vw;
     height: auto;
     border: none;
@@ -962,7 +962,7 @@ Retorna ao ponto inicial
 
 .confSalaDelC_top h1 {
     font-size: var(--tamanho_font_config_s1);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 700;
     text-align: left;
 }
@@ -1005,14 +1005,14 @@ Retorna ao ponto inicial
 }
 .salaDelt_bcTop p {
     font-size: var(--tamanho_font_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: 500;
     text-align: left;
     text-wrap: pretty;
 }
 .salaDelt_bcTop span {
     font-size: var(--tamanho_font_config_s2);
-    color: #000000;
+    color: var(--color_tema-text_1);
     font-weight: bold;
     text-align: left;
     text-wrap: pretty;
@@ -1043,13 +1043,13 @@ Retorna ao ponto inicial
 }
 
 .btn_can {
-    color: #000000;
+    color: var(--color_tema-text_1);
     background-color: transparent;
-    border: 0.15vw #000000 solid;
+    border: 0.15vw var(--color_tema-text_1) solid;
 }
 .btn_can:hover {
-    color: #ffffff;
-    background-color: #000000;
+    color: var(--color_tema-text_2);
+    background-color: var(--color_tema-text_1);
 }
 
 .btn_del {
@@ -1078,7 +1078,7 @@ Retorna ao ponto inicial
     position: relative;
 }
 #texto_chatIA_noRoomSelect {
-    color: var(--color_tema-text_2);
+    color: var(--color_tema-text_1);
     font-size: 1.6vw;
     font-weight: 600;
     text-wrap: pretty;

@@ -74,90 +74,104 @@
           "timestamp": "2024-12-05T13:11:31.657480+00:00",
           "current_user": "Francisco",
           "user_message": "IANES",
-          "bot_response": "Por favor, insira o nome da pessoa respons�vel: "
+          "bot_response": "Por favor, insira o nome da pessoa responsÃ¡vel: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:11:40.483858+00:00",
           "current_user": "Francisco",
           "user_message": "pedro",
-          "bot_response": "\nPor favor, insira o nome da pessoa respons�vel: "
+          "bot_response": "\nPor favor, insira o nome da pessoa responsÃ¡vel: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:11:50.683521+00:00",
           "current_user": "Francisco",
           "user_message": "pedro",
-          "bot_response": "\nPor favor, insira o nome da empresa respons�vel: "
+          "bot_response": "\nPor favor, insira o nome da empresa responsÃ¡vel: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:11:59.962136+00:00",
           "current_user": "Francisco",
           "user_message": "qwe",
-          "bot_response": "\nQual � a faixa de lucro da empresa? (EP, EPP, D+): "
+          "bot_response": "\nQual Ã© a faixa de lucro da empresa? (EP, EPP, D+): "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:12:05.864084+00:00",
           "current_user": "Francisco",
           "user_message": "e",
-          "bot_response": "\nQual � a faixa de lucro da empresa? (EP, EPP, D+): "
+          "bot_response": "\nQual Ã© a faixa de lucro da empresa? (EP, EPP, D+): "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:12:11.599161+00:00",
           "current_user": "Francisco",
           "user_message": "EP",
-          "bot_response": "\nQual � a faixa de lucro da empresa? (EP, EPP, D+): "
+          "bot_response": "\nQual Ã© a faixa de lucro da empresa? (EP, EPP, D+): "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:25.982078+00:00",
           "current_user": "Francisco",
           "user_message": "d",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:30.513142+00:00",
           "current_user": "Francisco",
           "user_message": "s",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:41.194571+00:00",
           "current_user": "Francisco",
           "user_message": "asd",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:42.852795+00:00",
           "current_user": "Francisco",
           "user_message": "asd",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:43.834962+00:00",
           "current_user": "Francisco",
           "user_message": "asd",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:44.500101+00:00",
           "current_user": "Francisco",
           "user_message": "asd",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
      },
      {
           "room_id": 94,
           "timestamp": "2024-12-05T13:16:45.166836+00:00",
           "current_user": "Francisco",
           "user_message": "asd",
-          "bot_response": "\nPor favor, insira o n�mero de colaboradores do projeto: "
+          "bot_response": "\nPor favor, insira o nÃºmero de colaboradores do projeto: "
+     },
+     {
+          "room_id": 95,
+          "timestamp": "2024-12-09T21:48:28.155628+00:00",
+          "current_user": "ctdev23",
+          "user_message": "sd",
+          "bot_response": "sd could stand for many things.  To understand what you mean, I need more context.  For example, are you referring to:\n\n* **Secure Digital (SD) card?**  A type of flash memory card used in various devices.\n* **Standard Deviation (SD)?** A statistical measure of the dispersion of a dataset.\n* **Something else entirely?**  Perhaps an abbreviation specific to your field or a typo.\n\nPlease provide more information!\n"
+     },
+     {
+          "room_id": 98,
+          "timestamp": "2024-12-09T22:00:00.482684+00:00",
+          "current_user": "Francisco",
+          "user_message": "oi",
+          "bot_response": "Oi!  How can I help you today?\n"
      }
 ]
