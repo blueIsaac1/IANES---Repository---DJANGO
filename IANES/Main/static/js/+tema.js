@@ -39,6 +39,7 @@ function aplicarTemaLight() {
 
     // Alterando :roots
     document.documentElement.style.setProperty('--color_tema-fundo-tema', 'var(--color-fundo-claro)');
+    document.documentElement.style.setProperty('--color_tema-fundo-tema_alt', 'var(--color-fundo-escuro)');
     document.documentElement.style.setProperty('--color_tema-cinza-hover-bg', 'var(--color-cinza_hover_bg_light)');
     document.documentElement.style.setProperty('--color_tema-text_1', 'var(--color-full-black)');
     document.documentElement.style.setProperty('--color_tema-text_2', 'var(--color-full-white)');
@@ -50,6 +51,7 @@ function aplicarTemaLight() {
     document.documentElement.style.setProperty('--color_tema-svg_1', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-fundo_1', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-fundo_2', 'var(--color-azul-medio)');
+    document.documentElement.style.setProperty('--color_tema-fundo_1_alt', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-vermelho-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-vermelho-main)');
     
@@ -87,6 +89,7 @@ function aplicarTemaDark() {
     
     // Alterando :roots
     document.documentElement.style.setProperty('--color_tema-fundo-tema', 'var(--color-fundo-escuro)');
+    document.documentElement.style.setProperty('--color_tema-fundo-tema_alt', 'var(--color-fundo-claro)');
     document.documentElement.style.setProperty('--color_tema-cinza-hover-bg', 'var(--color-cinza_hover_bg_dark)');
     document.documentElement.style.setProperty('--color_tema-text_1', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-text_2', 'var(--color-full-black)');
@@ -98,6 +101,7 @@ function aplicarTemaDark() {
     document.documentElement.style.setProperty('--color_tema-svg_1', 'var(--color-full-white)');
     document.documentElement.style.setProperty('--color_tema-fundo_1', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-fundo_2', 'var(--color-vermelho-medio)');
+    document.documentElement.style.setProperty('--color_tema-fundo_1_alt', 'var(--color-azul-bruto)');
     document.documentElement.style.setProperty('--color_tema-text_c1', 'var(--color-azul-medio)');
     document.documentElement.style.setProperty('--color_tema-text_c2', 'var(--color-azul-bruto)');
 

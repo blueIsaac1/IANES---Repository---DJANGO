@@ -14,9 +14,11 @@
     --color-fundo-escuro: #000E1D;
 
     --color_tema-fundo-tema: var(--color-fundo-claro);
+    --color_tema-fundo-tema_alt: var(--color-fundo-escuro);
     --color_tema-cinza-hover-bg: var(--color-cinza_hover_bg_light);
     --color_tema-fundo_1: var(--color-vermelho-medio);
     --color_tema-fundo_2: var(--color-azul-medio);
+    --color_tema-fundo_1_alt: var(--color-vermelho-medio);
 
     --color_tema-text_1: var(--color-full-black);
     --color_tema-text_2: var(--color-full-white);

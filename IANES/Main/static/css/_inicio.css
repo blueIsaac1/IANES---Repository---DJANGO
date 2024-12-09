@@ -544,9 +544,26 @@
     width: 100%;
     text-align: left;
     font-size: 1.2vw;
-    letter-spacing: 1.5;
+    line-height: 1.5;
     text-wrap: pretty;
     padding: 1vw;
+}
+.maisIARE_blocoNotas_box ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding: 1vw;
+    margin-left: 2vw;
+    list-style-type: decimal;
+}
+.maisIARE_blocoNotas_box li {
+    color: var(--color_tema-text_1);
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.2vw;
+    line-height: 1.5;
+    text-wrap: pretty;
+    margin-bottom: 0.5vw;
 }
 #blocoNotas-categoria-box-nenhuma {
     margin-top: 2vw;

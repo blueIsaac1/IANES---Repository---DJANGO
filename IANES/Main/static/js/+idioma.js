@@ -60,7 +60,8 @@ async function atualizarTitulo(chave) {
 async function alterarTextos_geral() {
     // Seções que serão processadas
     let secaoGeral = 'geral';
-    const secaoNavbar = 'navbar';
+    let secaoNavbar = 'navbar';
+    let secaoFooter = 'footer';
     dataLang = document.body.getAttribute("data-lang")
 
     let messages
@@ -113,12 +114,26 @@ async function alterarTextos_geral() {
             }
         }
     }
+    // Processar as demais seções para atualizar os textos na página
+    if (messages[secaoFooter] && messages[secaoFooter][0]) {
+        const textos = messages[secaoFooter][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+            }
+        }
+    }
 }
 
 // Função que altera textos de configurações (seção "config")
 function alterarTextos_config(messages) {
     // Seção a ser processada
-    const secao = 'config';
+    let secao = 'config';
 
     if (messages[secao] && messages[secao][0]) {
         const textos = messages[secao][0];
@@ -139,7 +154,43 @@ function alterarTextos_auth(messages) {
     console.log("☎ Chamou Texto Autenticação")
 
     // Seção a ser processada
-    const secao = 'auth';
+    let secao = 'auth';
+    let auth_placeholder = 'auth_placeholder';
+
+    if (messages[secao] && messages[secao][0]) {
+        const textos = messages[secao][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+            }
+        }
+    }
+
+    if (messages[auth_placeholder] && messages[auth_placeholder][0]) {
+        const textos = messages[auth_placeholder][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (elemento) {
+                elemento.setAttribute("placeholder", textos[chave]);
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+            }
+        }
+    }
+}
+
+function alterarTextos_index(messages) {
+    console.log("☎ Chamou Texto Index")
+
+    // Seção a ser processada
+    let secao = 'index';
 
     if (messages[secao] && messages[secao][0]) {
         const textos = messages[secao][0];
@@ -156,12 +207,49 @@ function alterarTextos_auth(messages) {
     }
 }
 
-function alterarTextos_index(messages) {
-    console.log("☎ Chamou Texto Index")
-}
-
 function alterarTextos_paginaIA(messages) {
     console.log("☎ Chamou Texto PaginaIA")
+
+    // Seção a ser processada
+    let secao = 'PaginaIA';
+
+    if (messages[secao] && messages[secao][0]) {
+        const textos = messages[secao][0];
+
+        // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
+        for (let chave in textos) {
+            const elemento = document.getElementById(chave);
+            if (chave === "tp_opcoes") {
+                tpOpcoes_all = document.querySelectorAll(".tp_opcoes")
+                tpOpcoes_all.forEach(tp => {
+                    tp.textContent = textos[chave];
+                })
+            }
+            if (chave === "tp_copiar") {
+                tpOpcoes_all = document.querySelectorAll(".tp_copiar")
+                tpOpcoes_all.forEach(tp => {
+                    tp.textContent = textos[chave];
+                })
+            }
+            if (chave === "tp_narrar") {
+                tpOpcoes_all = document.querySelectorAll(".tp_narrar")
+                tpOpcoes_all.forEach(tp => {
+                    tp.textContent = textos[chave];
+                })
+            }
+            if (chave === "rename_area") {
+                tpOpcoes_all = document.querySelectorAll(".rename_area")
+                tpOpcoes_all.forEach(tp => {
+                    tp.textContent = textos[chave];
+                })
+            }
+            if (elemento) {
+                elemento.textContent = textos[chave];
+            } else {
+                console.log("Elemento Nao Encontrado para traduzir: ", elemento, chave)
+            }
+        }
+    }
 }
 
 // Função para Aplicar o Check
@@ -289,6 +377,7 @@ async function aplicarIdioma(lang) {
         } else if (janelaAtual === 'chat') {
             alterarTextos_paginaIA(arq_messages);
         }
+        console.info("Idioma da Página alterado:", janelaAtual)
 
     } catch (error) {
         console.error('Erro ao carregar o arquivo de linguagens:', error);

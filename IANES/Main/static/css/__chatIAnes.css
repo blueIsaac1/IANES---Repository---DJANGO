@@ -50,7 +50,7 @@ iframe {
     justify-content: flex-start;
     align-items: center;
     /* background-color: var(--color-fundo-claro_var3); */
-    background-color: var(--color-azul-escuro);
+    background-color: var(--color_tema-fundo-tema_alt);
     border: none;
     border-radius: 0 1vw 0 0;
     z-index: 450;
@@ -80,13 +80,13 @@ iframe {
     justify-content: center;
     align-items: center;
     font-size: 1vw;
-    color: #ffffff;
+    color: var(--color_tema-tp-text_1);
     font-weight: 500;
     white-space: nowrap;
 
     border: none;
     border-radius: 0.6vw;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-tooltip-bg);
     padding: 0.6vw;
     position: absolute;
     transition: opacity 0.3s ease-in-out;
@@ -128,7 +128,7 @@ iframe {
     margin: 0;
     font-size: 1.2vw;
     font-weight: bold;
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 /* Botões */
@@ -141,7 +141,7 @@ iframe {
     gap: 0.5vw;
     
     padding: 0.4vw;
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
     border: none;
     border-radius: 0.4vw; 
     cursor: pointer;
@@ -151,7 +151,7 @@ iframe {
     top: 1vw;
 }
 .btn_sideBar_header:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
 }
 
 /* Botões Invidualmente */
@@ -219,13 +219,13 @@ iframe {
     justify-content: center;
     align-items: center;
     font-size: 1vw;
-    color: #ffffff;
+    color: var(--color_tema-tp-text_1);
     font-weight: 500;
     white-space: nowrap;
 
     border: none;
     border-radius: 0.4vw;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-tooltip-bg);
     padding: 0.6vw;
     position: absolute;
     transition: opacity 0.3s ease-in-out;    
@@ -280,11 +280,11 @@ iframe {
 }
 
 .btn_trocarSalas:hover {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 .btn_trocarSalas_select {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 .roomsNames {
@@ -308,7 +308,7 @@ iframe {
     align-items: center;
     font-size: 1vw;
     font-weight: 500;
-    color: #ffffff;
+    color: var(--color_tema-text_2);
     font-family: var(--font-montserrat);
     margin-left: 0.4vw;
 }
@@ -319,7 +319,7 @@ iframe {
     font-family: var(--font-montserrat);
     margin-left: 0.4vw;
     font-weight: 400;
-    color: #ffffff; 
+    color: var(--color_tema-text_2); 
     background-color: transparent;
 
     width: 90%;
@@ -335,7 +335,7 @@ iframe {
 }
 
 .rename_area:focus {
-    border: solid 0.1vw var(--color-azul-bruto);
+    border: solid 0.1vw var(--color_tema-btn-bg_alt);
     padding: 0.1vw;
 }
 
@@ -357,12 +357,12 @@ iframe {
     cursor: pointer;
     background-color: transparent;
     font-size: 1.4vw;
-    color: #ffffff;
+    color: var(--color_tema-text_2);
     padding: 0.4vw;
 }
 
 .btn_roomsEP:hover i {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 /* Box das Opções extras */
@@ -378,8 +378,8 @@ iframe {
     right: 0;
     transform: translateX(100%) translateY(80%);
     padding: 0.6vw;
-    background-color: var(--color-azul-escuro);
-    border: #ffffff solid 0.1vw;
+    background-color: var(--color_tema-fundo-tema_alt);
+    border: var(--color_tema-fundo-tema) solid 0.1vw;
     border-radius: 0 0.6vw 0.6vw 0.6vw;
     z-index: 453;
 }
@@ -406,13 +406,13 @@ iframe {
 
 .roomsExtraOptions_item i {
     font-size: 1.4vw;
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 .roomsExtraOptions_item p {
     font-size: 1vw;
     font-weight: 500;
-    color: #ffffff;
+    color: var(--color_tema-text_2);
 }
 
 .roomsExtraOptions_item .trash_icon {
@@ -475,13 +475,17 @@ iframe {
 }
 
 #ianes_pic {
-    width: 2.5vw;
+    width: 3.2vw;
     height: auto;
     position: absolute;
     background-color: transparent;
     top: 0;
     left: 0;
     transform: translateX(-150%) translateY(0%);
+    background-color: #ffffff;
+    padding: 0.2vw;
+    border: none;
+    border-radius: 0.5vw;
 }
 
 
@@ -519,7 +523,7 @@ iframe {
 
 .extraOptions_IAnes_Itens ion-icon {
     font-size: 1.2vw;
-    color: #000000;
+    color: var(--color_tema-text_1);
     padding: 0.2vw;
     border: none;
     border-radius: 0.4vw;
@@ -532,19 +536,19 @@ iframe {
 }
 
 .extraOptions_IAnes_Itens ion-icon:hover {
-    background-color: var(--color-cinza_hover_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
 }
 
 .extraOptions_IAnes .tp_extraO_IA {
     display: none;
     position: absolute;
     font-size: 0.8vw;
-    color: #ffffff;
+    color: var(--color_tema-tp-text_1);
     white-space: nowrap;
     padding: 0.2vw 0.6vw;
     border: none;
     border-radius: 0.4vw;
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-tooltip-bg);
     top: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(15%);
@@ -552,7 +556,7 @@ iframe {
 }
 
 .message {
-    max-width: 60%;
+    max-width: 80%;
     padding: 0.8vw;
     overflow-wrap: anywhere;
     display: flex;
@@ -569,7 +573,7 @@ iframe {
 }
 
 .bot {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-fundo_2);
     align-self: flex-start;
     border: none;
     border-radius: 0 0.4vw 0.4vw 0.4vw;
@@ -585,14 +589,14 @@ iframe {
 }
 
 .user {
-    background-color: var(--color-cinza_chat_bg_light);
+    background-color: var(--color_tema-cinza-hover-bg);
     align-self: flex-end;
     border: none;
     border-radius: 0.4vw 0 0.4vw 0.4vw;
 }
 
 .user p {
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .chat_input_form {
@@ -608,14 +612,14 @@ iframe {
     width: 80%;
     height: auto;
     padding: 0.5vw;
-    background-color: #ffffff;
+    background-color: var(--color_tema-fundo-tema);
     border-radius: 0.4vw;
     transition: 0.1s ease-in-out border;
     border: solid var(--color-cinza) 0.2vw;
 }
 
 .textarea_focused {
-    border: solid var(--color-vermelho-medio) 0.2vw;
+    border: solid var(--color_tema-fundo_1_alt) 0.2vw;
 }
 
 .chat_input_form textarea {
@@ -631,12 +635,12 @@ iframe {
     min-height: auto;
     max-height: 12vw;
     
-
+    background-color: transparent;
     font-size: 1.2rem;
     font-family: var(--font-montserrat);
     font-weight: 500;
     line-height: 1.5;
-    color: #000000;
+    color: var(--color_tema-text_1);
 }
 
 .chat_input_form button {
@@ -651,7 +655,7 @@ iframe {
 }
 
 .chat_input_form button:hover {
-    background-color: var(--color-azul-medio);
+    background-color: var(--color_tema-btn-bg_2);
 }
 
 .chat_input_form button:hover #icon_aviao {
@@ -669,7 +673,7 @@ iframe {
 
 /* Configuraçoes de Botao Ativiado ou Desativado */
 .btn_ativado {
-    background-color: var(--color-vermelho-medio);
+    background-color: var(--color_tema-btn-bg_1);
     pointer-events: all;
 }
 
@@ -1066,4 +1070,21 @@ Retorna ao ponto inicial
     font-weight: bold;
     text-wrap: pretty;
     text-align: center;
+}
+
+.no-room-selected {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#texto_chatIA_noRoomSelect {
+    color: var(--color_tema-text_2);
+    font-size: 1.6vw;
+    font-weight: 600;
+    text-wrap: pretty;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
 }

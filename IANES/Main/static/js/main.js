@@ -70,6 +70,7 @@ window.callScreen = function(tela) {
             localStorage.setItem('ls_ultimaTela_index', 'inicio');
             break;
     }
+    alterarTextos_geral()
     setTimeout(() => rolarPara("topo_screen"), 100);
 };
 
@@ -243,4 +244,17 @@ document.addEventListener('DOMContentLoaded', async function () {
     const footer = document.getElementById('footer');
     console.log("Header:", header);
     console.log("Footer:", footer);
+
+    // Versão Atual
+    let versaoAtual = "v1.0"
+    let texto_versaoAtual = document.getElementById("texto_footer-version")
+    if (texto_versaoAtual) {
+        texto_versaoAtual.textContent = versaoAtual
+    }
+    // Copyright
+    let copyrightAtual = "IAnes © 2024-2024"
+    let texto_copyrightAtual = document.getElementById("texto_footer-copyright")
+    if (texto_copyrightAtual) {
+        texto_copyrightAtual.textContent = copyrightAtual
+    }
 });
