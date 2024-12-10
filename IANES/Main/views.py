@@ -40,21 +40,26 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
+from reportlab.lib.utils import ImageReader
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 import io
 from datetime import datetime
 from django.http import FileResponse
+import random
+from io import BytesIO
 
 logger = logging.getLogger(__name__)
 
 GOOGLE_API_KEY = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'
 
+global email_destino
+email_destino = 'none@gmail.com'
 global pasta_dados
-pasta_dados = './DADOS'
-if pasta_dados:
-    print('Pasta de dados carregada.')
+pasta_dados = './IANES/Main/DADOS'
+verificacao = os.access(f'{pasta_dados}', os.F_OK)
+print(f'Pasta de dados carregada: {verificacao}')
 
 def catch_error_404(request, exception):
     return render(request, 'errors_template.html', {'error_message': 'URL não encontrada. | URL not found.'}, status=404)
@@ -74,7 +79,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     # Verifica se o arquivo já existe
     if os.path.exists(caminho_arquivo):
         # Se existir, abre para ler os dados existentes
-        with open(caminho_arquivo, 'r') as file:
+        with open(caminho_arquivo, 'r', encoding='utf-8') as file:
             try:
                 conversas = json.load(file)
             except json.JSONDecodeError:
@@ -102,7 +107,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     conversas.append(nova_conversa)
 
     # Salva a lista de conversas de volta no arquivo JSON
-    with open(caminho_arquivo, 'w') as file:
+    with open(caminho_arquivo, 'w', encoding='utf-8') as file:
         json.dump(conversas, file, indent=5, ensure_ascii=False)
 
 
@@ -431,9 +436,12 @@ def send_message(request, pk):
                 request.session['collecting_parameters'] = True
                 request.session['parameter_index'] = 0
                 request.session['responses'] = {}
-
+                
+                global aleatorio
+                aleatorio = random.randint(1000, 9999)
+                
                 perguntas = OrderedDict([
-                    ("comecar", "podemos começar?"),
+                    ("comecar", f"Para inciar, digite o código de segurança ({aleatorio}) ou 'sair' para cancelar:"),
                     ("nome", "Por favor, insira o nome da pessoa responsável:"),
                     ("nome_empresa", "Por favor, insira o nome da empresa responsável:"),
                     ("lucro", "Qual é a faixa de lucro da empresa? (EP, EPP, D+):"),
@@ -467,6 +475,7 @@ def send_message(request, pk):
 
             # Processo de coleta de respostas
             if request.session.get('collecting_parameters'):
+                codSeguranca = aleatorio
                 perguntas = request.session['perguntas']
                 parameter_index = request.session['parameter_index']
                 respostas = request.session['responses']
@@ -489,6 +498,15 @@ def send_message(request, pk):
                     else:
                         bot_response_text = "Por favor, insira uma faixa de lucro válida: EP, EPP ou D+."
 
+                elif current_question_key == "comecar":
+                    if user_message_text.isdigit():
+                        if int(user_message_text) == codSeguranca:
+                            respostas[current_question_key] = f'Código de segurança {user_message_text}'
+                        else:
+                            bot_response_text = f"Por favor, insira o código {codSeguranca} ou então 'sair' para cancelar."
+                    else:
+                        bot_response_text = "Por favor, insira apenas números."
+
                 elif current_question_key == "numero_colaboradores":
                     try:
                         respostas[current_question_key] = int(user_message_text)
@@ -496,7 +514,7 @@ def send_message(request, pk):
                         bot_response_text = "Por favor, insira um número válido para os colaboradores."
 
                 elif current_question_key == "CNPJ":
-                    if user_message_text.lower() == 'não' or re.match(r'\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}', user_message_text):
+                    if user_message_text.lower() in ['não', 'nao'] or re.match(r'\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}', user_message_text):
                         respostas[current_question_key] = user_message_text
                     else:
                         bot_response_text = "CNPJ inválido. Insira no formato XX.XXX.XXX/XXXX-XX ou 'Não'."
@@ -504,6 +522,7 @@ def send_message(request, pk):
                 elif current_question_key == "Email":
                     if "@" in user_message_text and "." in user_message_text:
                         respostas[current_question_key] = user_message_text
+                        email_destino = user_message_text
                     else:
                         bot_response_text = "Por favor, insira um e-mail válido."
 
@@ -807,12 +826,98 @@ def gerar_pdf(nome_arquivo="relatorio.pdf", pk=None): # atribuir o response da i
     elif not isinstance(relatorio, (list, tuple)):
         relatorio = [str(relatorio)]
         
+
     c = canvas.Canvas(nome_arquivo, pagesize=A4)
-    c.drawString(100, 800, "Descrição do Projeto:")
-    text = c.beginText(100, 780)
+
+    c.setFillColor(colors.red)              
+    c.setFont("Helvetica-Bold", 20)          
+    c.drawString(100, 800, "Relatório em PDF - IAnes")
+
+    imgGet = requests.get('https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/3932a9bcb74c20bdb3c85f4d80c678a24184cef4/_midia/_logotipos/ianesFavicon_PretaA.png')
+    imagemIanes = ImageReader(BytesIO(imgGet.content))
+    c.drawImage(imagemIanes, 450, 750, 80, 80)
+
+    # Voltar para cor preta e tamanho padrão para as informações abaixo
+    c.setFillColor(colors.black)
+    c.setFont("Helvetica-Bold", 12)
+
+    data_atual = datetime.now().strftime("%d/%m/%Y - %H:%M")
+    current_room = get_object_or_404(Room, id=pk)
+    current_user_text = str(current_room.user)
+    c.drawString(100, 780, f"Data: {data_atual}")
+    c.drawString(100, 760, f"ID da sala: {pk}")
+    c.drawString(100, 740, f"Usuário da Sala: {current_user_text}")
+    c.line(50, 730, 550, 730)
+
+    c.drawString(100, 700, "Relatório da Consulta:")
+    text = c.beginText(100, 680)
     text.setFont("Helvetica", 12)
     text.setLeading(14)
-    text.textLines(relatorio)
+    larguraMaxLinha = 450
+
+    def verifica_paginacao():
+        """ Verifica se atingimos o rodapé da página, caso sim, cria uma nova página. """
+        if text.getY() < 100:
+            # Finaliza a página atual
+            c.drawText(text)
+            c.showPage()
+
+            # Inicia novo objeto de texto na nova página
+            # Caso queira repetir o título ou cabeçalho a cada página, faça aqui novamente
+            new_text = c.beginText(100, 800)
+            new_text.setFont('Helvetica', 12)
+            new_text.setLeading(14)
+            return new_text
+        return text
+
+    for linha in relatorio:
+        if ':' in linha:
+            emissor, mensagem = linha.split(':', 1)
+            emissor = emissor.strip()
+            mensagem = mensagem.strip()
+        else:
+            emissor = "Anônimo"
+            mensagem = linha.strip()
+
+        # Cor do emissor
+        if emissor == "Ianes":
+            text.setFillColor(colors.red)
+        else:
+            text.setFillColor(colors.blue)
+
+        # Imprime o emissor + ":" na mesma linha
+        text.textOut(emissor + ": ")
+
+        # Volta para o preto
+        text.setFillColor(colors.black)
+
+        # Quebra de linha para mensagem
+        text.textLine("")
+        text = verifica_paginacao()
+
+        # Quebra de linha manual da mensagem
+        palavras = mensagem.split()
+        linha_atual = ""
+        for p in palavras:
+            test_line = (linha_atual + " " + p).strip()
+            # Medir largura da linha
+            if c.stringWidth(test_line, 'Helvetica', 12) > larguraMaxLinha:
+                # Imprime a linha atual e começa uma nova
+                text.textLine(linha_atual)
+                text = verifica_paginacao()
+                linha_atual = p
+            else:
+                linha_atual = test_line
+
+        # Imprime a última linha da mensagem se existir
+        if linha_atual:
+            text.textLine(linha_atual)
+            text = verifica_paginacao()
+
+        # Linha em branco após a mensagem (opcional)
+        text.textLine("")
+        text = verifica_paginacao()
+
     c.drawText(text)
     c.save()
     print("PDF gerado com sucesso.")
@@ -846,7 +951,7 @@ def enviar_email(com_remetente, para_destinatario, nome_arquivo):
         print(f"Erro ao enviar o e-mail: {e}")
 
 def acessar_ultima_conversa_json(pk):
-    with open('conversas.json', 'r') as file:
+    with open('conversas.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
         print(data)
         result = []
@@ -861,13 +966,18 @@ def acessar_ultima_conversa_json(pk):
         
 # Função principal para gerar PDF e enviar e-mail
 def processar_e_enviar_pdf(request, pk):
-    nome_arquivo_pdf = "descricao_projeto.pdf"
+
+    nome_arquivo_pdf = "relatorio_analise.pdf"
     email_remetente = "ianesbr8@gmail.com"
-    email_destinatario = "isaaccleitondasilva@gmail.com"
+    if email_destino != 'none@gmail.com':
+        print(email_destino)
+        email_destinatario = email_destino
+    else:
+        email_destinatario = 'pedrosiqueirarp@gmail.com'
     gerar_pdf(nome_arquivo_pdf, pk=pk)
     try:
         enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
-        return HttpResponse('Hello, World!')
+        return redirect(request.META.get('HTTP_REFERER', '/'))
     except Exception as e:
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
