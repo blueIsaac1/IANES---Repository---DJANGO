@@ -10,7 +10,7 @@
 function detectarPreferido_ColorScheme() {
     // Pega o tema salvo no local storage, em 0, 1, 2 ou 3 caso nenhum é "null"
     let temaSalvo = localStorage.getItem('situacaoTema');
-
+    let tema
     // Se não houver tema salvo, inicializa como 'n_escolheu'
     if (temaSalvo === null) {
         tema = 'n_escolheu';
@@ -157,12 +157,13 @@ async function uptadeCheck_tema(tema) {
 
     // --- Atualiza o Texto e Ícone do Tema Atual
     let iconType
-    let tema_p_text = document.getElementById(`tema_${tema}_p`).textContent
-    if (tema === "device") {
+    let tema_p_text = document.getElementById(`tema_${temaSet}_p`).textContent
+
+    if (temaSet === "device") {
         iconType = "search"
-    } else if (tema === "light") {
+    } else if (temaSet === "light") {
         iconType = "sunny"
-    } else if (tema === "dark") {
+    } else if (temaSet === "dark") {
         iconType = "moon"
     }
 
@@ -193,7 +194,7 @@ function aplicarTema(tema) {
     console.log("🎈 O tema atual é: ", tema)
 
     uptadeCheck_tema(tema)
-
+    
     // Aplicação do tema baseado na situação
 
     // verifica se é "True" ou "False". Sintaxe:

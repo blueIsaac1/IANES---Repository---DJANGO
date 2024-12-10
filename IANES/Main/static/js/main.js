@@ -135,13 +135,13 @@ function executarFuncoes() {
         appendInList_lang();
     }
     // Essas DEVEM ser as EXECUTADAS DEPOIS de qualquer coisa que é aplicada ao Header
-    if (typeof detectarPreferido_Idioma === 'function') {
-        console.log("⚙ Detectando idioma preferido");
-        detectarPreferido_Idioma();
-    }
     if (typeof detectarPreferido_ColorScheme === 'function') {
         console.log("⚙ Detectando esquema de cores preferido");
         detectarPreferido_ColorScheme();  
+    }
+    if (typeof detectarPreferido_Idioma === 'function') {
+        console.log("⚙ Detectando idioma preferido");
+        detectarPreferido_Idioma();
     }
     // Ouvintes para os Cliques nos Botões para Alterar o Idioma ou o Tema
     if (typeof listenBtn_lang === 'function') {

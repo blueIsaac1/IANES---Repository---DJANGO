@@ -2,7 +2,7 @@
 function detectarPreferido_Idioma() {
     // Pega o idioma salvo no local storage, pode ser uma string como 'en', 'pt', etc.
     let idiomaSalvo = localStorage.getItem('situacaoIdioma');
-
+    let lang
     // Se não houver idioma salvo, inicializa como 'n_escolheu'
     if (idiomaSalvo === null) {
         lang = 'n_escolheu';
@@ -284,7 +284,7 @@ async function uptadeCheck_lang(lang) {
        unicoCheck_lang.classList.add(class_check_lang)
    }
 
-       // --- Atualiza o Texto e Ícone do Idioma Atual
+    // --- Atualiza o Texto e Ícone do Idioma Atual
     // Carregar arquivosLang necessários usando findRequiredFiles
     const arquivosLang = await findRequiredFiles();
     if (!arquivosLang || !arquivosLang.langsDisponiveis) {
@@ -310,9 +310,20 @@ async function uptadeCheck_lang(lang) {
         let langTextoAtual = document.getElementById("texto_header_confSec-lang_atual");
         if (langTextoAtual) {
             langTextoAtual.textContent = lang_p_text;
-            langTextoAtual.setAttribute("aria-tema-atual", lang_p_text);
+            langTextoAtual.setAttribute("aria-lang-atual", lang_p_text);
         }
+        
+        // Atualiza o Texto dos Idiomas
+        let tema = localStorage.getItem('situacaoTema');
+        if (tema === "n_escolheu") {temaSet = "device"}
+        else {temaSet = tema}
 
+        let tema_p_text = document.getElementById(`tema_${temaSet}_p`).textContent
+        let temaTextoAtual = document.getElementById("texto_header_confSec-tema_atual");
+        if (temaTextoAtual) {
+            temaTextoAtual.textContent = tema_p_text;
+        }
+        
         // Exemplo: usar `has_botTalk` para lógica adicional
         let botTalkAtual = document.getElementById("langBotTalk_Atual");
         let class_botTalkAtual = "botTalk_Yes_Atual";
@@ -363,6 +374,7 @@ async function aplicarIdioma(lang) {
 
     // Re-Verificação, se lang for "n_escolheu" ou "device"
     // Ele pega a Language Preferida do Navegador
+    let langSet_arq
     if (lang === "device" || lang === "n_escolheu") {langSet_arq = prefersLanguage}
     else {langSet_arq = lang}
     
@@ -372,6 +384,7 @@ async function aplicarIdioma(lang) {
     // Carrega o arquivo JSON do idioma selecionado
     try {
         const response = await fetch(`../static/page_languages/lang_${langSet_arq}.json`);
+        
         if (!response.ok) throw new Error(`Falha ao carregar traduções: ${langSet_arq}`);
         
         const arq_messages = await response.json();

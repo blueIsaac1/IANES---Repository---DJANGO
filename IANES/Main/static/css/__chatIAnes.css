@@ -87,7 +87,7 @@ iframe {
     border: none;
     border-radius: 0.6vw;
     background-color: var(--color_tema-tooltip-bg);
-    padding: 0.6vw;
+    padding: 0.4vw;
     position: absolute;
     transition: opacity 0.3s ease-in-out;
     
@@ -581,6 +581,9 @@ iframe {
 }
 
 .bot:first-child {
+    margin-bottom: 0%;
+}
+.bot:nth-child(2) {
     margin-bottom: 0%;
 }
 
