@@ -118,7 +118,7 @@ async function findRequiredFiles() {
 }
 
 // Função principal que chama outras funções
-function executarFuncoes({ langsDisponiveis, temasDisponiveis }) {
+function executarFuncoes() {
     // Carregando a Página de Index
     if (typeof detectar_pagina === 'function') {
         console.log("⚙ Detectando Página atual e Configurando");
@@ -129,15 +129,10 @@ function executarFuncoes({ langsDisponiveis, temasDisponiveis }) {
         console.log("⚙ Detectando se o Usuário está Autenticado");
         detectar_usuario_autenticado();
     }
-    // Adicionando Idiomas na Lista
-    if (langsDisponiveis && typeof appendInList_lang === 'function') {
-        console.log("⚙ Inserindo Idiomas Disponíveis");
-        appendInList_lang(langsDisponiveis);
-    }
-    // Adicionando Temas na Lista
-    if (temasDisponiveis && typeof appendInList_tema === 'function') {
-        console.log("⚙ Inserindo Temas Disponíveis");
-        appendInList_tema(temasDisponiveis);
+    // Detectando se o usuário está autenticado
+    if (typeof appendInList_lang === 'function') {
+        console.log("⚙ Adicionando os Idiomas Disponíveis");
+        appendInList_lang();
     }
     // Essas DEVEM ser as EXECUTADAS DEPOIS de qualquer coisa que é aplicada ao Header
     if (typeof detectarPreferido_Idioma === 'function') {
@@ -229,15 +224,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.log("🌹 Tela Auth Atual: ", telaAtual_auth)
     console.log("🌹 Tela Index Atual: ", telaAtual_index)
 
-    // Esperar os arquivos necessários serem carregados
-    const arquivosCarregados = await findRequiredFiles();
-
-    if (arquivosCarregados) {
-        // Passar os arquivos carregados para a função principal
-        executarFuncoes(arquivosCarregados);
-    } else {
-        console.error("Erro ao carregar os arquivos necessários. Funções não executadas.");
-    }
+    executarFuncoes();
 
     // Verifique se os elementos header e footer estão no DOM
     const header = document.getElementById('header');

@@ -639,7 +639,7 @@ header {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 0.6vw;
+    gap: 0.4vw;
     width: auto;
     height: auto;
     max-height: 20vw;

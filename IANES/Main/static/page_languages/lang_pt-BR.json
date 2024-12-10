@@ -43,7 +43,12 @@
         "texto_header_confSec_btn-lang": "Idioma",
         "texto_header_confLang_sumario": "O IAnes tem suporte para esse idioma",
         "texto_header_confSec_btn-tema": "Aparência",
-        "texto_confOptions_sec-leave": "Sair"
+        "texto_confOptions_sec-leave": "Sair",
+        "lang_device_p": "Autodetectar",
+        "tema_device_p": "Autodetectar",
+        "tema_light_p": "Claro",
+        "tema_dark_p": "Escuro",
+        "inProductionAlert": "Em produção"
     }],
     "auth": [{
         "texto_login_titulo": "Entre no seu Perfil",
@@ -156,7 +161,8 @@
         "texto_chatIA_noRoomFound": "Nenhuma sala disponível.",
         "texto_chatIA_noRoomSelect": "Selecione uma sala para ver as mensagens.",
         "texto_chatIA_botInicialMsg1": "Olá! Eu sou o IAnes, estou aqui para lhe ajudar. Vamos iniciar a consulta?",
-        "texto_chatIA_botInicialMsg2": "Digite 'IANES' na Caixa de Texto abaixo, para Iniciar. E responda as perguntas corretamente para ter um resultado mais preciso.",
+        "texto_chatIA_botInicialMsg2": "Digite 'IANES' na caixa de texto abaixo, para Iniciar. Eu irei perguntar qual o Idioma deseja realizar a consulta. Para encerrar, digite 'Sair'.",
+        "texto_chatIA_botInicialMsg3": "E responda as perguntas corretamente para ter um resultado mais preciso.",
         "texto_chatIA_deleteRoom1": "Excluir sala?",
         "texto_chatIA_deleteRoom2": "Isso excluirá o Chat:",
         "texto_chatIA_deleteRoom_cancel": "Cancelar",

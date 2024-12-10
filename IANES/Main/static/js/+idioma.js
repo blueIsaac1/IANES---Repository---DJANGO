@@ -141,6 +141,12 @@ function alterarTextos_config(messages) {
         // Atualiza os elementos da página com IDs que correspondem às chaves do JSON
         for (let chave in textos) {
             const elemento = document.getElementById(chave);
+            if (chave === "inProductionAlert") {
+                tpOpcoes_all = document.querySelectorAll(".inProductionAlert")
+                tpOpcoes_all.forEach(tp => {
+                    tp.textContent = textos[chave];
+                })
+            }
             if (elemento) {
                 elemento.textContent = textos[chave];
             } else {
@@ -148,6 +154,9 @@ function alterarTextos_config(messages) {
             }
         }
     }
+
+    
+
 }
 
 function alterarTextos_auth(messages) {

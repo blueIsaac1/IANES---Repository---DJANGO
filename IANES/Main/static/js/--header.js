@@ -131,7 +131,67 @@ function updateBotTalks() {
 }
 
 // Função que preenche a lista de idiomas com base no JSON
-function appendInList_lang(arq_langDisp) {
+function appendInList_lang() {
+
+    // Lista interna dos Idiomas, Excessão da
+    arq_langDisp = {
+        "pt-BR": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_br.png",
+            "lang_p_text": "Português (Brasil)",
+            "has_botTalk": true
+        },
+        "en-US": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/1b0a81c63dd7522aa041fade75030d023c5ed11e/_midia/_flag/flag_us.png",
+            "lang_p_text": "English (United States)",
+            "has_botTalk": true
+        },
+        "fr": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_fr.png",
+            "lang_p_text": "Français",
+            "has_botTalk": true
+        },
+        "es": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_es.png",
+            "lang_p_text": "Español",
+            "has_botTalk": true
+        },
+        "zh": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_zh.png",
+            "lang_p_text": "中文 (Zhōngwén)",
+            "has_botTalk": true
+        },
+        "pt": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_pt.png",
+            "lang_p_text": "Português (Portugal)",
+            "has_botTalk": false
+        },
+        "it": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_it.png",
+            "lang_p_text": "Italiano",
+            "has_botTalk": false
+        },
+        "de": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_de.png",
+            "lang_p_text": "Deutsch",
+            "has_botTalk": false
+        },
+        "ru": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_ru.png",
+            "lang_p_text": "Русский",
+            "has_botTalk": false
+        },
+        "eo": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_eo.png",
+            "lang_p_text": "Esperanto",
+            "has_botTalk": false
+        },
+        "en-UK": {
+            "srcFlag": "https://raw.githubusercontent.com/Francisco-Neves-15/ianes-front---repository/c622aeb1cc207a6415bfe271ee45c05493f6558e/_midia/_flag/flag_uk.png",
+            "lang_p_text": "English (United Kingdom)",
+            "has_botTalk": false
+        }
+    }
+
     // Referência ao container da lista (sem limpar o conteúdo atual)
     const langListContainer = document.getElementById('lang_Options_list');
 
@@ -201,8 +261,8 @@ function appendInList_lang(arq_langDisp) {
     updateBotTalks();
 }
 
-// Adiciona os Itens de Tema
-function appendInList_tema(arq_temaDisp) {
+// Adiciona os Itens de Tema - DESATIVADA
+function appendInList_tema() {
     // Referência ao container da lista (sem limpar o conteúdo atual)
     const temaListContainer = document.getElementById('tema_Options_list');
 

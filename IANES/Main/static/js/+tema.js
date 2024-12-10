@@ -156,35 +156,29 @@ async function uptadeCheck_tema(tema) {
     }
 
     // --- Atualiza o Texto e Ícone do Tema Atual
-    // Carregar arquivosTema necessários usando findRequiredFiles
-    const arquivosTema = await findRequiredFiles();
-    if (!arquivosTema || !arquivosTema.temasDisponiveis) {
-        console.error("Temas disponíveis não foram carregados.");
-        return;
+    let iconType
+    let tema_p_text = document.getElementById(`tema_${tema}_p`).textContent
+    if (tema === "device") {
+        iconType = "search"
+    } else if (tema === "light") {
+        iconType = "sunny"
+    } else if (tema === "dark") {
+        iconType = "moon"
     }
 
-    let temasDisponiveis = arquivosTema.temasDisponiveis;
-
-    // --- Atualiza o Texto e Ícone do Tema Atual
-    let temaInfo = temasDisponiveis[temaSet];
-    if (temaInfo) {
-        let { iconType, tema_p_text } = temaInfo;
-
-        // Atualizar ícone
-        let temaIconAtual = document.getElementById("temaAtual_Icon");
-        if (temaIconAtual) {
-            temaIconAtual.setAttribute("name", iconType);
-        }
-
-        // Atualizar texto
-        let temaTextoAtual = document.getElementById("texto_header_confSec-tema_atual");
-        if (temaTextoAtual) {
-            temaTextoAtual.textContent = tema_p_text;
-            temaTextoAtual.setAttribute('aria-tema-atual', tema_p_text)
-        }
-    } else {
-        console.warn(`Informações para o tema "${temaSet}" não foram encontradas.`);
+    // Atualizar ícone
+    let temaIconAtual = document.getElementById("temaAtual_Icon");
+    if (temaIconAtual) {
+        temaIconAtual.setAttribute("name", iconType);
     }
+
+    // Atualizar texto
+    let temaTextoAtual = document.getElementById("texto_header_confSec-tema_atual");
+    if (temaTextoAtual) {
+        temaTextoAtual.textContent = tema_p_text;
+        temaTextoAtual.setAttribute('aria-tema-atual', tema_p_text)
+    }
+
 }
 
 // Função para aplicar o tema com base no valor de situacao_tema
