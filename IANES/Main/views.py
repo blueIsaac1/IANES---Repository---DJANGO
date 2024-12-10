@@ -102,7 +102,7 @@ def salvar_conversa_em_json(room_id, current_user, user_message_text, bot_respon
     conversas.append(nova_conversa)
 
     # Salva a lista de conversas de volta no arquivo JSON
-    with open(caminho_arquivo, 'w', encoding='utf-8') as file:
+    with open(caminho_arquivo, 'w') as file:
         json.dump(conversas, file, indent=5, ensure_ascii=False)
 
 
@@ -433,6 +433,7 @@ def send_message(request, pk):
                 request.session['responses'] = {}
 
                 perguntas = OrderedDict([
+                    ("comecar", "podemos começar?"),
                     ("nome", "Por favor, insira o nome da pessoa responsável:"),
                     ("nome_empresa", "Por favor, insira o nome da empresa responsável:"),
                     ("lucro", "Qual é a faixa de lucro da empresa? (EP, EPP, D+):"),
@@ -450,11 +451,18 @@ def send_message(request, pk):
                 ])
                 request.session['perguntas'] = perguntas
                 request.session['perguntas_keys'] = list(perguntas.keys())
-                bot_response_text = perguntas["nome"]
+                bot_response_text = perguntas["comecar"]
                 bot_response_instance = BotResponse.objects.create(
                     text=bot_response_text
                 )
                 current_room.bot_response.add(bot_response_instance)
+                current_user_text = str(current_room.user)
+                salvar_conversa_em_json(
+                    room_id=current_room.id,
+                    current_user=current_user_text,
+                    user_message_text=user_message_text,
+                    bot_response_text=bot_response_text
+                )
                 return redirect('list_messages', pk=current_room.id)
 
             # Processo de coleta de respostas
@@ -830,7 +838,7 @@ def enviar_email(com_remetente, para_destinatario, nome_arquivo):
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
-        server.login(com_remetente, "swxumxhmbhiorqvq")  # Substitua pela sua senha de aplicativo
+        server.login(com_remetente, "cmxsuikbljgunnzy")  # Substitua pela sua senha de aplicativo
         server.sendmail(com_remetente, para_destinatario, msg.as_string())
         server.quit()
         print("E-mail enviado com sucesso.")
@@ -859,6 +867,7 @@ def processar_e_enviar_pdf(request, pk):
     gerar_pdf(nome_arquivo_pdf, pk=pk)
     try:
         enviar_email(email_remetente, email_destinatario, nome_arquivo_pdf)
+        return HttpResponse('Hello, World!')
     except Exception as e:
         logger.error(f"Erro inesperado. Detalhes: {str(e)}")
         return render(request, 'errors_template.html', {'error_message': "Erro Inesperado", 'error_description': str(e)})
