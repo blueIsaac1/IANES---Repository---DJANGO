@@ -115,7 +115,11 @@
                         </li>  
                         <li class="message bot">
                             <img id="ianes_pic" src="" alt="IAnes Pic">
-                            <p id="texto_chatIA_botInicialMsg2">Digite 'IANES' na Caixa de Texto abaixo, para Iniciar. E responda as perguntas corretamente para ter um resultado mais preciso.</p>
+                            <p id="texto_chatIA_botInicialMsg2">Digite 'IANES' na caixa de texto abaixo, para Iniciar. Eu irei perguntar qual o Idioma deseja realizar a consulta. Para encerrar, digite 'Sair'.</p>
+                        </li>  
+                        <li class="message bot">
+                            <img id="ianes_pic" src="" alt="IAnes Pic">
+                            <p id="texto_chatIA_botInicialMsg3">E responda as perguntas corretamente para ter um resultado mais preciso.</p>
                         </li>  
                         {% for message in messages %}
                             {% if message.user_message %}
@@ -215,7 +219,7 @@
                     <p onclick="toggleOverlay_confDelete()" id="texto_chatIA_deleteRoom_cancel" class="confSalaDel_btn btn_can">Cancelar</p>
                     <a href="#" id="texto_chatIA_deleteRoom_delete" class="confSalaDel_btn btn_del">Excluir</a>
                 </div>
-                {% endif %} 
+                {% endif %}
             </div>
 
         </div>
