@@ -16,16 +16,22 @@ O projeto IANES é uma aplicação que interage com um banco de dados MongoDB pa
 
 - Python
 - Django
-- MongoDB
+- Js, Html e Css
+- Json
+- Beautiful Soup e UrlLib
+- SQlite
 - Google Generative AI API
 - Google Translate API
+- Docker
+- Git
+- Windows Server 2025
+
 
 ## Pré-requisitos
 
 Antes de executar o projeto, você precisa ter o seguinte instalado:
 
 - Python 3.x
-- MongoDB
 - pip (gerenciador de pacotes do Python)
 
 ## Instalação
@@ -33,7 +39,7 @@ Antes de executar o projeto, você precisa ter o seguinte instalado:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu_usuario/IANES.git
+   git clone https://github.com/blueIsaac1/IANES---Repository---DJANGO
    cd IANES
    ```
 
@@ -51,14 +57,9 @@ Antes de executar o projeto, você precisa ter o seguinte instalado:
    pip install -r requirements.txt
    ```
 
-   **Nota:** Certifique-se de que o arquivo `requirements.txt` contém todas as bibliotecas necessárias, como `pymongo`, `google-generativeai`, `googletrans`, `Django`, etc.
+   **Nota:** Certifique-se de que o arquivo `requirements.txt` contém todas as bibliotecas necessárias, como `google-generativeai`, `googletrans`, `Django`, etc.
 
-4. Configure o MongoDB:
-
-   - Certifique-se de que o MongoDB está em execução localmente na porta padrão (27017).
-   - Crie um banco de dados chamado `IANES` e as coleções necessárias.
-
-5. Configure as credenciais da API:
+4. Configure as credenciais da API:
 
    - Substitua a chave da API no código pelo seu próprio valor.
 
