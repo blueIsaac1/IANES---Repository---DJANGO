@@ -2,11 +2,10 @@
 
 ## Descrição
 
-O projeto IANES é uma aplicação que interage com um banco de dados MongoDB para gerenciar e analisar dados relacionados a investimentos. A aplicação permite que os usuários insiram informações sobre projetos e recomenda as melhores opções de investimento com base em análises de dados.
+O projeto IANES é uma aplicação que interage com Json's para gerenciar e analisar dados relacionados a investimentos. A aplicação permite que os usuários insiram informações sobre projetos e recomenda as melhores opções de investimento com base em análises de dados.
 
 ## Funcionalidades
 
-- Conexão com um banco de dados MongoDB.
 - Carregamento de dados de várias coleções.
 - Análise de conteúdo usando a API Gemini.
 - Interface de usuário para entrada de dados.
